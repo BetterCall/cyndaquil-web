@@ -27,5 +27,5 @@ export interface UserQuery {
 }
 
 export interface UserQueryVariables {
-  userId: number;
+  id: number;
 }

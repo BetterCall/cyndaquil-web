@@ -1,9 +1,14 @@
 import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button } from "../../components/button";
+import { Header } from "../../components/header";
+import { SendIcon } from "../../components/icons";
+
 import { Loading } from "../../components/loading";
+import { UserForm } from "../../components/users";
+import { DashboardLayout } from "../../layouts/dashboard.layout";
+
 import { EDIT_USER, USER } from "../../queries/user.queries";
 import {
   EditUserMutation,
@@ -11,18 +16,17 @@ import {
 } from "../../__generated__/EditUserMutation";
 import { EditUserInput } from "../../__generated__/globalTypes";
 import { UserQuery, UserQueryVariables } from "../../__generated__/UserQuery";
-import { UserForm } from "./user-form";
 
 type IEditUser = {
-  userId: string;
+  id: string;
 };
 
 export const EditUser = () => {
-  const { userId } = useParams<IEditUser>();
+  const { id } = useParams<IEditUser>();
   const client = useApolloClient();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!userId) {
+    if (!id) {
       navigate("/");
     }
   }, []);
@@ -40,7 +44,7 @@ export const EditUser = () => {
 
   const { data } = useQuery<UserQuery, UserQueryVariables>(USER, {
     variables: {
-      userId: +userId!,
+      id: +id!,
     },
   });
 
@@ -64,7 +68,7 @@ export const EditUser = () => {
 
     const { data } = await mutation({
       variables: {
-        userId: 1,
+        id: +id!,
         input: {
           ...input,
           ...(password != "" && { password }),
@@ -74,7 +78,7 @@ export const EditUser = () => {
 
     if (data?.editUser.ok) {
       client.writeFragment({
-        id: `User:${userId}`,
+        id: `User:${id}`,
         fragment: gql`
           fragment EditedUser on User {
             email
@@ -88,7 +92,7 @@ export const EditUser = () => {
           lastname: input.lastname,
         },
       });
-      navigate(`/users/${userId}`);
+      navigate(`/users/${id}`);
     }
   };
 
@@ -96,14 +100,28 @@ export const EditUser = () => {
     return <Loading />;
   }
   return (
-    <div className="mt-5 flex flex-col justify-center items-center px-5">
-      <h4 className="font-semibold text-2xl mb-3">Edit User Profile</h4>
-      <UserForm
-        loading={loading}
-        register={register}
-        submit={handleSubmit(submit)}
-        formState={formState}
+    <DashboardLayout>
+      <Header
+        title={`${data?.user?.result?.firstname} ${data?.user?.result?.lastname}`}
+        subtitle={data?.user?.result?.email}
+        buttons={[
+          {
+            actionText: "Modifier",
+            bgColor: "indigo",
+            textColor: "white",
+            link: `/users/${id}`,
+            icon: <SendIcon />,
+          },
+        ]}
       />
-    </div>
+      <div className="main-container">
+        <UserForm
+          loading={loading}
+          register={register}
+          submit={handleSubmit(submit)}
+          formState={formState}
+        />
+      </div>
+    </DashboardLayout>
   );
 };

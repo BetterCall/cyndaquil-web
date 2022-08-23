@@ -26,8 +26,8 @@ export const LOGIN_MUTATION = gql`
 
 export const EDIT_USER = gql`
 
-        mutation EditUserMutation ( $userId : Int! , $input : EditUserInput! ) {
-            editUser( userId : $userId , input : $input ) {
+        mutation EditUserMutation ( $ id : Int! , $input : EditUserInput! ) {
+            editUser(  id : $ id , input : $input ) {
                 ok 
                 error 
             }
@@ -69,8 +69,8 @@ query SearchUsersQuery( $limit : Int! , $offset : Int! , $where :UserFiltersInpu
 
 export const USER = gql`
 
-query UserQuery ( $userId : Int! ) {
-    user( userId : $userId ) {
+query UserQuery ( $ id : Int! ) {
+    user(  id : $ id ) {
         ok 
         error 
         result {

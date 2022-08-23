@@ -1,12 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import {
-  useNavigate,
-  createSearchParams,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
-import { FormError } from "../../../components/form-error";
+import { useNavigate, createSearchParams } from "react-router-dom";
+import { FormError } from "../form-error";
 interface ISearchForm {
   search: string;
 }
@@ -30,14 +25,11 @@ export const SearchUserInput = () => {
     });
   };
 
-  const [searchParams, setSearchParams] = useSearchParams();
   // @ts-ignore
-  console.log("term", searchParams.get("term"));
-
   return (
     <div className="bg-gray-800 py-12 w-full flex flex-col px-5 items-center">
       <form
-        className="grid gap-3 mt-5 w-full items-center max-w-screen-2xl"
+        className="grid gap-3 w-full items-center max-w-screen-2xl"
         onSubmit={handleSubmit(onSearchSubmit)}
         placeholder="search"
       >

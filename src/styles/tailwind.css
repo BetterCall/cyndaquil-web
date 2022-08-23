@@ -10,5 +10,13 @@
   .btn {
     @apply py-3 px-5 bg-gray-800 text-white font-medium text-lg  focus:outline-none hover:opacity-90 transition-colors;
   }
+
+  .main-container {
+    @apply  py-8 px-6
+  }
+
+  .label { 
+    @apply mb-1.5 font-medium text-base text-gray-800
+  } 
   
 @tailwind utilities;

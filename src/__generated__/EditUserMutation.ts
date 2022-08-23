@@ -20,6 +20,6 @@ export interface EditUserMutation {
 }
 
 export interface EditUserMutationVariables {
-  userId: number;
+  id: number;
   input: EditUserInput;
 }

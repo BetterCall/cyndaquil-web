@@ -1,0 +1,52 @@
+import { gql } from '@apollo/client'
+
+
+export const CREATE_EQUIPMENT_CATEGORY = gql`
+
+        mutation CreateEquipmentCategoryMutation ( $input : CreateEquipmentCategoryInput! ) {
+            createEquipmentCategory(  input : $input ) {
+                ok 
+                error 
+                id
+            }
+        }
+
+`
+
+export const EDIT_EQUIPMENT_CATEGORY = gql`
+
+        mutation EditEquipmentCategoryMutation ( $id : Int! , $input : EditEquipmentCategoryInput! ) {
+            editEquipmentCategory( id : $id , input : $input ) {
+                ok 
+                error 
+            }
+        }
+
+`
+
+export const EQUIPMENT_CATEGORIES = gql`
+
+query EquipmentCategoriesQuery  {
+    equipmentCategories{
+        results {
+            id
+            name
+        }
+    }
+}
+`
+
+export const EQUIPMENT_CATEGORY = gql`
+
+query EquipmentCategoryQuery ( $id : Int! ) {
+    equipmentCategory( id : $id ) {
+        ok 
+        error 
+        result {
+            id 
+            name
+        }
+    }
+}
+
+`
