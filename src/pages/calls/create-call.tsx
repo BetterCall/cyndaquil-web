@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 
@@ -12,22 +12,20 @@ import {
   CreateCallMutation,
   CreateCallMutationVariables,
 } from "../../__generated__/CreateCallMutation";
-import { DashboardLayout } from "../../layouts/dashboard.layout";
 import { Header } from "../../components/header";
 import { DashboardIcon } from "../../components/icons";
+import { parseSearchParams } from "../../helpers/clean-object";
 
 export const CreateCall = () => {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
 
-  const { register, handleSubmit, getValues, setValue, formState } =
-    useForm<CreateCallInput>({
-      mode: "all",
-      defaultValues: {
-        additionalInformations: "",
-        customerId: null,
-        siteId: null,
-      },
-    });
+  const form = useForm<CreateCallInput>({
+    mode: "all",
+    defaultValues: {
+      ...parseSearchParams(params),
+    },
+  });
 
   const [mutation, { loading }] = useMutation<
     CreateCallMutation,
@@ -36,13 +34,7 @@ export const CreateCall = () => {
 
   const submit = async () => {
     if (loading) return;
-    const { siteId, customerId, ...input } = getValues();
-
-    console.log({
-      ...(siteId && { siteId: +siteId }),
-      ...(customerId && { customerId: +customerId }),
-      ...input,
-    });
+    const { siteId, customerId, ...input } = form.getValues();
 
     const { data, errors } = await mutation({
       variables: {
@@ -54,7 +46,6 @@ export const CreateCall = () => {
       },
     });
 
-    console.log("errors ", errors);
     if (data?.createCall.ok) {
       navigate(`/calls`, {
         replace: true,
@@ -63,9 +54,9 @@ export const CreateCall = () => {
   };
 
   return (
-    <DashboardLayout>
+    <>
       <Header
-        title="Nouveau Contact"
+        title="Nouvel Appel "
         subtitle="Créer un nouveau contact"
         buttons={[
           {
@@ -79,13 +70,12 @@ export const CreateCall = () => {
       />
       <div className="main-container">
         <CallForm
-          setValue={setValue}
           loading={loading}
-          register={register}
-          submit={handleSubmit(submit)}
-          formState={formState}
+          submit={submit}
+          form={form}
+          disabledFields={Object.keys(parseSearchParams(params))}
         />
       </div>
-    </DashboardLayout>
+    </>
   );
 };

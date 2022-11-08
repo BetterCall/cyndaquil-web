@@ -1,17 +1,15 @@
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { emplacementIdsVar } from "../../../apollo";
+import { SelectBenefit } from "../../../components/benefits";
 import { Button } from "../../../components/button";
-import { Card } from "../../../components/cards";
+import { Card, CardHeader } from "../../../components/cards";
 import { FormHeader } from "../../../components/form";
-import { FormError } from "../../../components/form-error";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { useEquipmentCategories } from "../../../hooks/useEquipementCategories";
-import { useSite } from "../../../hooks/useSite";
-import { DashboardLayout } from "../../../layouts/dashboard.layout";
 import { GENERATE_CONTRACT } from "../../../queries/contracts.queries";
 import { SITE_EMPLACEMENTS } from "../../../queries/sites.queries";
 import {
@@ -22,7 +20,6 @@ import {
   SiteEmplacementsQuery,
   SiteEmplacementsQueryVariables,
 } from "../../../__generated__/SiteEmplacementsQuery";
-import { Building } from "./building";
 
 type ICreateContractParams = {
   id: string;
@@ -32,10 +29,18 @@ interface ICreateForm {
   name: string;
 }
 
+type RowType = {
+  emplacementId: number;
+  benefitId: number;
+  categoryId: number;
+};
+
 export const CreateContract = () => {
   const navigate = useNavigate();
   const { data: categoriesData } = useEquipmentCategories();
-  const emplacementIds = useReactiveVar(emplacementIdsVar);
+
+  const [rows, setRows] = useState<RowType[]>([]);
+
   const { id } = useParams<ICreateContractParams>();
   useEffect(() => {
     emplacementIdsVar([]);
@@ -69,69 +74,88 @@ export const CreateContract = () => {
 
     const { name } = getValues();
 
-    const { data: mData } = await mutate({
-      variables: {
-        input: {
-          name,
-          emplacementIds,
-          siteId: +id!,
-        },
-      },
+    console.log("input ", {
+      name,
+      rows: rows.map((row) => ({
+        emplacementId: parseInt(row.emplacementId + ""),
+        benefitId: parseInt(row.benefitId + ""),
+      })),
+      siteId: +id!,
     });
 
-    console.log(mData);
-    if (mData?.generateContract?.ok) {
-      console.log("ok");
-    }
+    // const { data: mData } = await mutate({
+    //   variables: {
+    //     input: {
+    //       name,
+    //       rows: rows.map((row) => ({
+    //         emplacementId: parseInt(row.emplacementId + ""),
+    //         benefitId: parseInt(row.benefitId + ""),
+    //       })),
+    //       siteId: +id!,
+    //     },
+    //   },
+    // });
+
+    // if (mData?.generateContract?.ok) {
+    // }
   };
 
-  const toggleEmplacementId = (id: number) => {
-    var index = emplacementIds.indexOf(id);
-    let newArray = [];
-    console.log("index ,n", index);
+  const toggleRow = (emplacementId, categoryId) => {
+    console.log("ROWS ", rows);
+    var index = rows.findIndex(
+      (element) => element?.emplacementId === emplacementId
+    );
+    console.log("INDEX ", index);
+    let newArray: any[] = [];
     if (index === -1) {
-      newArray = [...emplacementIds, id];
+      newArray = [...rows, { emplacementId, categoryId, benefitId: -1 }];
     } else {
-      newArray = emplacementIds.filter((i) => i !== id);
+      newArray = rows;
+      newArray = newArray.filter(
+        (element) => element.emplacementId !== emplacementId
+      );
     }
 
-    console.log("newArray ,", newArray);
-    emplacementIdsVar([...newArray]);
-    console.log("emplacementIds ", emplacementIds);
+    setRows([...newArray]);
   };
 
   const toggleCategoryId = (id: number, checked: boolean) => {
-    const emplacements: any = [];
+    const rowsAdded: any = [];
     data?.siteEmplacements?.result?.buildings?.forEach((building) => {
       building?.entrances?.forEach((entrance) => {
         entrance?.floors?.forEach((floor) => {
           floor?.emplacements?.forEach((emplacement) => {
             if (emplacement.category?.id === id) {
-              emplacements.push(emplacement.id);
+              rowsAdded.push({
+                emplacementId: emplacement.id,
+                benefitId: -1,
+                categoryId: id,
+              });
             }
           });
         });
       });
     });
 
-    console.log(emplacements);
-
-    let newArray = [];
+    // TO DO
+    let newArray: any[] = [];
     if (checked) {
-      newArray = [...emplacementIds, ...emplacements];
+      newArray = [...rowsAdded, ...rows];
       // @ts-ignore
       newArray = [...new Set(newArray)];
     } else {
-      newArray = emplacementIds.filter((i) => !emplacements.includes(i));
+      newArray = rows;
+      newArray = newArray.filter((row) => {
+        console.log("row ", row);
+        return row.categoryId !== id;
+      });
     }
 
-    console.log("newArray ,", newArray);
-    emplacementIdsVar([...newArray]);
-    console.log("emplacementIds ", emplacementIds);
+    setRows([...newArray]);
   };
 
   return (
-    <DashboardLayout>
+    <>
       <Header
         title={data?.siteEmplacements?.result?.name ?? ""}
         subtitle="Un sous titre un peu long"
@@ -147,93 +171,181 @@ export const CreateContract = () => {
       />
 
       <div className="main-container">
-        <div className="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-          <div className="w-full xl:w-1/4 px-4 mb-4 md:mb-0 relative">
-            <div className=" xl:h-screen  xl:sticky  xl:top-8">
-              <Card>
-                <FormHeader subtitle="" title="Selection Rapide" />
-                {categoriesData?.equipmentCategories?.results?.map(
-                  (category) => (
-                    <div key={`category-${category.id}`}>
-                      <input
-                        type="checkbox"
-                        className="mr-2"
-                        onClick={(event) => {
-                          //@ts-ignore
-                          toggleCategoryId(category.id, event.target.checked);
-                        }}
-                      />
-                      {category.id} {category.name}
-                    </div>
-                  )
-                )}
-              </Card>
-            </div>
-          </div>
-          <div className="w-full xl:w-1/4 px-4 mb-4 md:mb-0 relative">
-            <div className=" xl:h-screen  xl:sticky  xl:top-8">
-              <Card>
-                <FormHeader subtitle="" title="Liste des equipements" />
-                {data?.siteEmplacements?.result?.name} <br />
-                emplacements : <br />
-                {emplacementIds.map((id) => (
-                  <div>{id}</div>
-                ))}
-                <Button
-                  onClick={generate}
-                  canClick={true}
-                  loading={loading}
-                  actionText={"Générer le contrat"}
-                />
-              </Card>
-            </div>
-          </div>
-          <div className="w-full xl:w-1/2   px-4 mb-4 md:mb-0">
-            <Card>
-              <FormHeader subtitle="" title="Liste des equipements" />
+        <div className="w-full  mb-4 md:mb-0">
+          <Card>
+            <CardHeader title="Information Générales" />
+            <input
+              {...register("name", { required: "name required" })}
+              placeholder="Nom du contrat"
+              className="input w-full mb-5"
+            />
+            <textarea className="input w-full" rows={4} />
+          </Card>
+        </div>
 
-              <input
-                {...register("name", { required: "name required" })}
-                placeholder="firstname"
-                className="input w-full mb-5"
-              />
-              {errors.name?.message && (
-                <FormError message={errors.name?.message} />
-              )}
-              {data?.siteEmplacements?.result?.buildings?.map((building) => (
-                <div className="px-4">
-                  <FormHeader subtitle={building.name} title="Batiment" />
-                  {building?.entrances?.map((entrance) => (
-                    <div className="px-4">
-                      <FormHeader subtitle={entrance.name} title="Entrée" />
-                      {entrance?.floors?.map((floor) => (
-                        <div className="px-4">
-                          <FormHeader subtitle={floor.name} title="Etage" />
-                          {floor.emplacements?.map((emplacement) => (
-                            <div>
-                              <input
-                                checked={emplacementIds.includes(
-                                  emplacement.id
-                                )}
-                                type="checkbox"
-                                className="mr-2"
-                                onClick={() =>
-                                  toggleEmplacementId(emplacement.id)
+        <div className="flex flex-wrap -mx-4 -mb-4 md:mb-0">
+          <div className="w-full px-4 mb-4 md:mb-0 relative">
+            <Card>
+              <FormHeader subtitle="" title="Selection Rapide" />
+
+              <table className="table-auto w-full">
+                <thead>
+                  <tr className="text-xs text-gray-500">
+                    <th className="padding-table  font-medium text-left w-25">
+                      Tous
+                    </th>
+                    <th className="padding-table  font-medium text-center">
+                      Nombre
+                    </th>
+                    <th className="padding-table  font-medium text-center ">
+                      Type
+                    </th>
+                    <th className="padding-table  font-medium text-center ">
+                      Service
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {categoriesData?.equipmentCategories?.results?.map(
+                    (category, index) => (
+                      <tr
+                        key={`category-${category.id}`}
+                        className={`text-xs ${index % 2 ? "" : "bg-gray-50"} `}
+                      >
+                        <td className="flex padding-table">
+                          <input
+                            type="checkbox"
+                            className="cursor-pointer "
+                            onChange={(event) => {
+                              //@ts-ignore
+                              console.log(event.target.checked);
+                              toggleCategoryId(
+                                category.id,
+                                event.target.checked
+                              );
+                            }}
+                          />
+                        </td>
+
+                        <td className="padding-table text-center">
+                          <input
+                            className="input"
+                            disabled
+                            value={
+                              rows.filter(
+                                (row) => row.categoryId === category.id
+                              ).length
+                            }
+                          />
+                        </td>
+                        <td className="padding-table text-center">
+                          <div className="relative">{category?.name}</div>
+                        </td>
+                        <td className="padding-table text-center">
+                          <SelectBenefit
+                            error={false}
+                            categoryId={category?.id || -1}
+                            setValue={(e) => {
+                              const newRows = rows;
+                              newRows.map((row) => {
+                                if (row.categoryId === category.id) {
+                                  row.benefitId = e.target.value;
                                 }
-                              />
-                              {emplacement.id} {emplacement.category?.name}
-                            </div>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              ))}
+                              });
+                              console.log(newRows);
+                              setRows([...newRows]);
+                            }}
+                          />
+                        </td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+              </table>
             </Card>
           </div>
+
+          {data?.siteEmplacements?.result?.buildings?.map((building) => (
+            <div className="w-full px-4  ">
+              <Card>
+                <CardHeader title={`Batiment ${building.name}`} />
+                {building?.entrances?.map((entrance) => (
+                  <div className="px-4 border-b mb-4 pb-2">
+                    <div className="text-xl mb-2">Entrée {entrance.name}</div>
+                    {entrance?.floors?.map((floor) => (
+                      <div className="px-4 mb-2">
+                        <div className="font-bold mb-1">
+                          Etage : {floor.name} :
+                        </div>
+                        {floor.emplacements?.map((emplacement) => {
+                          const index = rows.findIndex(
+                            (row) => row?.emplacementId === emplacement.id
+                          );
+
+                          return (
+                            <div className=" flex row mb-2">
+                              <input
+                                checked={index !== -1}
+                                type="checkbox"
+                                className="mr-2 cursor-pointer "
+                                onClick={() =>
+                                  toggleRow(
+                                    emplacement.id,
+                                    emplacement.category?.id
+                                  )
+                                }
+                                id={`emplacement-${emplacement.id}`}
+                              />
+
+                              <div className="flex row justify-around w-full">
+                                <div className="w-full md:mr-2">
+                                  <div className="relative">
+                                    <select
+                                      className="input appearance-none w-full "
+                                      disabled
+                                    >
+                                      <option
+                                        value={"row.emplacement.category.name}"}
+                                      >
+                                        {emplacement.category?.name} {index}{" "}
+                                        {rows[index]?.benefitId} dsd
+                                      </option>
+                                    </select>
+                                  </div>
+                                </div>
+                                {index !== -1 ? (
+                                  <SelectBenefit
+                                    error={rows[index].benefitId === -1}
+                                    categoryId={emplacement.category?.id || -1}
+                                    value={rows[index].benefitId}
+                                    setValue={(e) => {
+                                      const newRows = rows;
+                                      newRows[index].benefitId = e.target.value;
+                                      setRows([...newRows]);
+                                    }}
+                                  />
+                                ) : (
+                                  <div className="w-full"></div>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </Card>
+            </div>
+          ))}
         </div>
+        <Button
+          onClick={generate}
+          canClick={true}
+          loading={loading}
+          actionText={"Générer le contrat"}
+        />
       </div>
-    </DashboardLayout>
+    </>
   );
 };

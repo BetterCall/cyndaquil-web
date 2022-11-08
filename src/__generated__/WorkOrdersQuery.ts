@@ -3,11 +3,18 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WorkOrderFiltersInput, WorkOrderStatus } from "./globalTypes";
+import { WorkOrderFiltersInput, WorkOrderType, WorkOrderStatus } from "./globalTypes";
 
 // ====================================================
 // GraphQL query operation: WorkOrdersQuery
 // ====================================================
+
+export interface WorkOrdersQuery_workOrders_results_user {
+  __typename: "User";
+  id: number;
+  firstname: string;
+  lastname: string;
+}
 
 export interface WorkOrdersQuery_workOrders_results_customer_category {
   __typename: "CustomerCategory";
@@ -32,6 +39,11 @@ export interface WorkOrdersQuery_workOrders_results {
   __typename: "WorkOrder";
   id: number;
   name: string;
+  description: string | null;
+  type: WorkOrderType;
+  date: string | null;
+  start: string | null;
+  end: string | null;
   status: WorkOrderStatus;
   lat: number;
   lng: number;
@@ -39,8 +51,9 @@ export interface WorkOrdersQuery_workOrders_results {
   street: string;
   postal: string;
   city: string;
-  customer: WorkOrdersQuery_workOrders_results_customer;
-  site: WorkOrdersQuery_workOrders_results_site;
+  user: WorkOrdersQuery_workOrders_results_user | null;
+  customer: WorkOrdersQuery_workOrders_results_customer | null;
+  site: WorkOrdersQuery_workOrders_results_site | null;
 }
 
 export interface WorkOrdersQuery_workOrders {

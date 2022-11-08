@@ -9,7 +9,7 @@
 
 export interface DuplicateEntraceMutation_duplicateEntrance {
   __typename: "DuplicateEntranceOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   id: number | null;
 }

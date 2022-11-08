@@ -32,7 +32,7 @@ export interface ContactQuery_contact_result {
 
 export interface ContactQuery_contact {
   __typename: "ContactOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   result: ContactQuery_contact_result | null;
 }

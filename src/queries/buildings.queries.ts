@@ -12,16 +12,30 @@ export const CREATE_BUILDING = gql`
 
 `
 
-export const EDIT_BUILDING = gql`
-
-        mutation EditBuildingMutation ( $id : Int!,  $input : EditBuildingInput! ) {
-            editBuilding( id : $id, input : $input ) {
+export const UPDATE_BUILDING = gql`
+        mutation UpdateBuildingMutation ( $id : Int!,  $input : UpdateBuildingInput! ) {
+            updateBuilding( id : $id, input : $input ) {
                 ok 
                 error 
             }
         }
+`
+
+
+export const REMOVE_BUILDING = gql`
+
+
+        mutation RemoveBuildingMutation($id : Int! ) {
+            removeBuilding( id : $id ) {
+                ok 
+                error
+            }
+            
+        }
+
 
 `
+
 
 export const BUILDING = gql`
 

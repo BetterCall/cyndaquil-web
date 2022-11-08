@@ -5,38 +5,29 @@ import { cleanObject } from "../../helpers/clean-object";
 import { CustomerFiltersInput } from "../../__generated__/globalTypes";
 import { Button } from "../button";
 import { CustomerCategoriesInput } from "../customer-categories/customer-categories-input";
-import { FormError } from "../form-error";
-interface ISearchForm {
-  search: string;
-}
-export const SearchCustomerInput = () => {
+
+export const SearchCustomerInput = (defaultValues) => {
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-  } = useForm<CustomerFiltersInput>({
-    defaultValues: { search: "", categoryId: null, postal: null, city: null },
+  const form = useForm<CustomerFiltersInput>({
+    defaultValues,
     mode: "onSubmit",
   });
 
   const onSearchSubmit = () => {
-    const input = getValues();
+    const input = form.getValues();
     navigate({
       pathname: "/customers",
       search: `?${createSearchParams(cleanObject(input))}`,
     });
   };
 
-  const [isFormOpened, setIsFormOpened] = useState(false);
+  const [isFormOpened, setIsFormOpened] = useState(
+    Object.values(defaultValues).some((v) => v)
+  );
 
   return (
-    <div className="bg-white px-4 py-2 w-full flex flex-col items-center">
-      <form
-        className="grid gap-3 w-full items-center  px-2"
-        onSubmit={handleSubmit(onSearchSubmit)}
-      >
+    <div className="searchCard">
+      <div className="grid gap-3 w-full items-center  px-2">
         <div className="flex row items-center justify-between">
           <div className="flex row align-text-center items-center">
             <label
@@ -59,7 +50,7 @@ export const SearchCustomerInput = () => {
             <input
               placeholder="Rechercher un client"
               autoComplete="off"
-              {...register("search", {
+              {...form.register("search", {
                 minLength: 3,
                 required: false,
               })}
@@ -87,10 +78,7 @@ export const SearchCustomerInput = () => {
           <div className="px-4 ">
             <div className="flex flex-wrap -mx-4 -mb-4 md:mb-0">
               <div className="w-full md:w-1/3 p-3">
-                <CustomerCategoriesInput
-                  getValues={getValues}
-                  register={register}
-                />
+                <CustomerCategoriesInput form={form} />
               </div>
               <div className="w-full md:w-1/3 p-3">
                 <p className="label">Ville</p>
@@ -98,7 +86,7 @@ export const SearchCustomerInput = () => {
                   className="input w-full"
                   type="text"
                   placeholder="Ville"
-                  {...register("city", {
+                  {...form.register("city", {
                     required: false,
                   })}
                 />
@@ -107,7 +95,7 @@ export const SearchCustomerInput = () => {
               <div className="w-full md:w-1/3 p-3">
                 <p className="label">Code Postal</p>
                 <input
-                  {...register("postal", {
+                  {...form.register("postal", {
                     required: false,
                   })}
                   className="input w-full"
@@ -118,14 +106,16 @@ export const SearchCustomerInput = () => {
             </div>
             <div className="flex justify-between">
               <div></div>
-              <Button canClick={true} actionText="Rechercher" loading={false} />
+              <Button
+                canClick={true}
+                actionText="Rechercher"
+                loading={false}
+                onClick={onSearchSubmit}
+              />
             </div>
           </div>
         )}
-        {errors.search && (
-          <FormError message={"Faites une recherche avec minimum 3 lettres"} />
-        )}
-      </form>
+      </div>
     </div>
   );
 };

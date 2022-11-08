@@ -1,16 +1,16 @@
 import React from "react";
+import { UseFormReturn } from "react-hook-form";
 import { useCustomerCategories } from "../../hooks/useCustomerCategories";
 
 interface ICustomerCategoriesInput {
-  register: any;
-  getValues: any;
+  form: UseFormReturn<any, any>;
 }
 
 export const CustomerCategoriesInput: React.FC<ICustomerCategoriesInput> = ({
-  register,
-  getValues,
+  form,
 }) => {
-  const { data, loading } = useCustomerCategories();
+  const { data } = useCustomerCategories();
+  const value = form.watch("categoryId");
   return (
     <div className="w-full">
       <p className="label">Type de client</p>
@@ -31,11 +31,15 @@ export const CustomerCategoriesInput: React.FC<ICustomerCategoriesInput> = ({
 
         <select
           className="input appearance-none w-full"
-          {...register("categoryId")}
+          {...form.register("categoryId")}
         >
           <option value={undefined}>-</option>
-          {data?.customerCategories?.results?.map((category) => (
-            <option value={category.id} key={`category-${category.id}`}>
+          {data?.customerCategories?.results?.map((category: any) => (
+            <option
+              selected={value === category.id}
+              value={category.id}
+              key={`category-${category.id}`}
+            >
               {category.name}
             </option>
           ))}

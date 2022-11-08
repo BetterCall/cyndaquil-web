@@ -1,13 +1,14 @@
 import { useLazyQuery } from "@apollo/client";
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "../../components/button";
 import { Header } from "../../components/header";
 import { SendIcon } from "../../components/icons";
+import { Row } from "../../components/tables";
+import { SearchWorkOrdersInput } from "../../components/work-orders";
+import { parseParams } from "../../helpers/clean-object";
 import { useMe } from "../../hooks/useMe";
-import { DashboardLayout } from "../../layouts/dashboard.layout";
 import { WORK_ORDERS } from "../../queries/work-orders.queries";
-import { WorkOrderFiltersInput } from "../../__generated__/globalTypes";
 import {
   WorkOrdersQuery,
   WorkOrdersQueryVariables,
@@ -24,31 +25,18 @@ export const WorkOrders = () => {
   >(WORK_ORDERS);
 
   const [searchParams] = useSearchParams();
-  const [where, setParams] = useState<WorkOrderFiltersInput>({});
   useEffect(() => {
-    let temp: any = {};
-    const numbers = ["siteId", "customerId"];
-    searchParams.forEach((value, key) => {
-      if (numbers.includes(key)) {
-        temp[key] = parseInt(value);
-      } else {
-        temp[key] = value;
-      }
-    });
-
-    setParams(temp);
-    console.log("temps  ", temp);
     search({
       fetchPolicy: "network-only",
       variables: {
         limit,
         offset: 0,
-        where: temp,
+        where: parseParams(searchParams),
       },
     });
   }, [searchParams]);
   return (
-    <DashboardLayout>
+    <>
       <Header
         title={" Liste des Bon d'intervention"}
         subtitle="Modifier les informations du client"
@@ -63,30 +51,28 @@ export const WorkOrders = () => {
         ]}
       />
       <div className="main-container">
+        <SearchWorkOrdersInput {...parseParams(searchParams)} />
+
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           <table className="table-auto w-full">
             <thead>
               <tr className="text-xs text-gray-500 text-left">
-                <th className="pb-3 font-medium">Utilisateur</th>
-                <th className="pb-3 font-medium text-center">Code Postal</th>
-                <th className="pb-3 font-medium text-center">Client</th>
-                <th className="pb-3 font-medium text-center">Site</th>
-                <th className="pb-3 font-medium text-center">Etat</th>
-                <th className="pb-3 font-medium text-right">Action</th>
+                <th className="padding-table font-medium">Utilisateur</th>
+                <th className="padding-table font-medium text-center">
+                  Code Postal
+                </th>
+                <th className="padding-table font-medium text-center">
+                  Client
+                </th>
+                <th className="padding-table font-medium text-center">Site</th>
+                <th className="padding-table font-medium text-center">Etat</th>
+                <th className="padding-table font-medium text-right">Action</th>
               </tr>
             </thead>
             <tbody>
               {data?.workOrders?.results?.map((workOrder, index) => (
-                <tr
-                  key={`workOrder-${workOrder.id}`}
-                  className={`text-xs  ${index % 2 ? "bg-gray-50" : ""} `}
-                >
-                  <td className="flex py-3">
-                    <img
-                      className="w-8 h-8 mr-4 object-cover rounded-md"
-                      src="https://images.unsplash.com/photo-1559893088-c0787ebfc084?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80"
-                      alt=""
-                    />
+                <Row index={index} key={`workOrder-${workOrder.id}`}>
+                  <td className="padding-table flex">
                     <div>
                       <p
                         className="font-medium  cursor-pointer"
@@ -99,19 +85,25 @@ export const WorkOrders = () => {
                       </p>
                     </div>
                   </td>
-                  <td className="text-center "> {workOrder.status}</td>
-                  <td className="text-center "> {workOrder.postal} </td>
-                  <td className="text-center ">
+                  <td className="padding-table text-center ">
+                    {" "}
+                    {workOrder.status}
+                  </td>
+                  <td className="padding-table text-center ">
+                    {" "}
+                    {workOrder.postal}{" "}
+                  </td>
+                  <td className="padding-table text-center ">
                     {workOrder?.customer?.name ?? "-"}
                   </td>
-                  <td className="text-center ">
+                  <td className="padding-table text-center ">
                     {workOrder?.site?.name ?? "-"}
                   </td>
 
-                  <td className="text-right">
+                  <td className="padding-table text-right">
                     <span
                       onClick={() =>
-                        navigate(`/work-orders/${workOrder.id}/edit`)
+                        navigate(`/work-orders/${workOrder.id}/update`)
                       }
                       className="inline-block mr-2  cursor-pointer "
                     >
@@ -131,7 +123,7 @@ export const WorkOrders = () => {
 
                     <span
                       onClick={() =>
-                        navigate(`/work-orders/${workOrder.id}/edit`)
+                        navigate(`/work-orders/${workOrder.id}/update`)
                       }
                       className="inline-block  cursor-pointer"
                     >
@@ -149,7 +141,7 @@ export const WorkOrders = () => {
                       </svg>
                     </span>
                   </td>
-                </tr>
+                </Row>
               ))}
             </tbody>
           </table>
@@ -165,12 +157,13 @@ export const WorkOrders = () => {
                 variables: {
                   offset: data?.workOrders?.results?.length,
                   limit,
+                  where: parseParams(searchParams),
                 },
               });
             }}
           />
         )}
       </div>
-    </DashboardLayout>
+    </>
   );
 };

@@ -1,28 +1,22 @@
 import React from "react";
-import { FormState, UseFormRegister } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
 import { Button } from "../button";
 import { FormError } from "../form-error";
 
-import {
-  CreateCustomerCategoryInput,
-  EditCustomerCategoryInput,
-} from "../../__generated__/globalTypes";
-
 interface ICustomerCategoryForm {
   loading: boolean;
-  register: UseFormRegister<any>;
   submit: any;
-  formState:
-    | FormState<CreateCustomerCategoryInput>
-    | FormState<EditCustomerCategoryInput>;
+  form: UseFormReturn<any, any>;
 }
 
 export const CustomerCategoryForm: React.FC<ICustomerCategoryForm> = ({
   loading,
-  register,
   submit,
-  formState: { isValid, errors },
+  form: {
+    register,
+    formState: { isValid, errors },
+  },
 }) => {
   return (
     <section className="bg-white py-4 px-4">
@@ -40,7 +34,7 @@ export const CustomerCategoryForm: React.FC<ICustomerCategoryForm> = ({
           </div>
           <div className="w-full">
             <div className=" h-full overflow-hidden bg-white rounded-md">
-              <div className="flex flex-wrap pb-3 -m-3">
+              <div className="flex flex-wrap  -m-3">
                 <div className="w-full p-3">
                   <p className="mb-1.5 font-medium text-base text-coolGray-800">
                     Nom de la catégorie

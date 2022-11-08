@@ -1,26 +1,22 @@
 import React from "react";
-import { FormState, UseFormRegister } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { Button } from "../button";
 import { FormError } from "../form-error";
-import {
-  CreateEquipmentCategoryInput,
-  EditEquipmentCategoryInput,
-} from "../../__generated__/globalTypes";
 
 interface IEquipmentCategoryForm {
   loading: boolean;
-  register: UseFormRegister<any>;
   submit: any;
-  formState:
-    | FormState<CreateEquipmentCategoryInput>
-    | FormState<EditEquipmentCategoryInput>;
+  form: UseFormReturn<any, any>;
 }
 
 export const EquipmentCategoryForm: React.FC<IEquipmentCategoryForm> = ({
   loading,
-  register,
   submit,
-  formState: { isValid, errors },
+
+  form: {
+    register,
+    formState: { isValid, errors },
+  },
 }) => {
   return (
     <form

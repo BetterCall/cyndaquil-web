@@ -1,11 +1,10 @@
 import { useQuery } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Header } from "../../components/header";
 import { SendIcon } from "../../components/icons";
 import { WorkOrdersList } from "../../components/work-orders";
-import { DashboardLayout } from "../../layouts/dashboard.layout";
 import { USER } from "../../queries/user.queries";
 import { UserQuery, UserQueryVariables } from "../../__generated__/UserQuery";
 
@@ -28,7 +27,7 @@ export const User = () => {
     },
   });
   return (
-    <DashboardLayout>
+    <>
       <Header
         title={`${data?.user?.result?.firstname} ${data?.user?.result?.lastname}`}
         subtitle={data?.user?.result?.email}
@@ -37,7 +36,7 @@ export const User = () => {
             actionText: "Modifier",
             bgColor: "indigo",
             textColor: "white",
-            link: `/users/${id}/edit`,
+            link: `/users/${id}/update`,
             icon: <SendIcon />,
           },
         ]}
@@ -49,6 +48,6 @@ export const User = () => {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </>
   );
 };

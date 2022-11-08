@@ -23,11 +23,10 @@ export const LOGIN_MUTATION = gql`
 
 `
 
+export const UPDATE_USER = gql`
 
-export const EDIT_USER = gql`
-
-        mutation EditUserMutation ( $ id : Int! , $input : EditUserInput! ) {
-            editUser(  id : $ id , input : $input ) {
+        mutation UpdateUserMutation ( $ id : Int! , $input : UpdateUserInput! ) {
+            updateUser(  id : $ id , input : $input ) {
                 ok 
                 error 
             }
@@ -37,24 +36,8 @@ export const EDIT_USER = gql`
 
 export const USERS = gql`
 
-query UsersQuery( $limit : Int! , $offset : Int!   ) {
-    users( limit : $limit , offset : $offset  ) {
-        hasMore , 
-        results {
-            id 
-            firstname
-            lastname
-            email
-            role
-        }
-    }
-}
-`
-
-export const SEARCH_USERS = gql`
-
-query SearchUsersQuery( $limit : Int! , $offset : Int! , $where :UserFiltersInput! ) {
-    searchUsers( limit : $limit , offset : $offset, where : $where  ) {
+query UsersQuery( $limit : Int   , $offset : Int  , $where :UsersFiltersInput!  ) {
+    users( limit : $limit , offset : $offset, where : $where ) {
         hasMore , 
         results {
             id 

@@ -11,6 +11,7 @@ export interface CustomerCategoriesQuery_customerCategories_results {
   __typename: "CustomerCategory";
   id: number;
   name: string;
+  customersCount: number;
 }
 
 export interface CustomerCategoriesQuery_customerCategories {

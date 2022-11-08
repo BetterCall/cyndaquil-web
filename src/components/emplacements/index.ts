@@ -1,7 +1,7 @@
 import { CreateEmplacement } from './create-emplacement'
-import { Emplacement } from './emplacement'
+import { RemoveEmplacement } from './remove-emplacement'
 
 export {
     CreateEmplacement,
-    Emplacement
+    RemoveEmplacement
 }

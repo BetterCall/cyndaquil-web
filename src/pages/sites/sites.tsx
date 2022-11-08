@@ -1,17 +1,14 @@
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/button";
-import { CardHeader } from "../../components/cards";
 import { Header } from "../../components/header";
 import { SendIcon } from "../../components/icons";
 import { SearchSiteInput } from "../../components/sites";
-import { parseParams } from "../../helpers/clean-object";
+import { parseSearchParams } from "../../helpers/clean-object";
 import { useMe } from "../../hooks/useMe";
-import { DashboardLayout } from "../../layouts/dashboard.layout";
 import { SITES } from "../../queries/sites.queries";
-import { SiteFiltersInput, UserRole } from "../../__generated__/globalTypes";
 import {
   SitesQuery,
   SitesQueryVariables,
@@ -28,24 +25,19 @@ export const Sites = () => {
   >(SITES);
 
   const [searchParams] = useSearchParams();
-  const [where, setParams] = useState<SiteFiltersInput>({});
   useEffect(() => {
-    const temp = parseParams(searchParams);
-    console.log("temps , ", temp);
-
-    setParams(temp);
-    console.log("temps  ", temp);
+    console.log({ searchParams: parseSearchParams(searchParams) });
     search({
       fetchPolicy: "network-only",
       variables: {
         limit,
         offset: 0,
-        where: temp,
+        where: parseSearchParams(searchParams),
       },
     });
   }, [searchParams]);
   return (
-    <DashboardLayout>
+    <>
       <Header
         title={"Liste des Copropriétés"}
         subtitle={""}
@@ -60,32 +52,36 @@ export const Sites = () => {
         ]}
       />
 
-      <SearchSiteInput />
       <div className="main-container">
+        <SearchSiteInput {...parseSearchParams(searchParams)} />
+
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           <table className="table-auto w-full">
             <thead>
               <tr className="text-xs text-gray-500 text-left">
-                <th className="pb-3 font-medium">Nom</th>
-                <th className="pb-3 font-medium text-center">Ville</th>
-                <th className="pb-3 font-medium text-center">Code Postal</th>
-                <th className="pb-3 font-medium text-center">Rôle</th>
-                <th className="pb-3 font-medium text-center">Complet</th>
-                <th className="pb-3 font-medium text-right">Action</th>
+                <th className="padding-table  font-medium">Nom</th>
+                <th className="padding-table  font-medium text-center">
+                  Ville
+                </th>
+                <th className="padding-table  font-medium text-center">
+                  Code Postal
+                </th>
+                <th className="padding-table  font-medium text-center">Rôle</th>
+                <th className="padding-table  font-medium text-center">
+                  Complet
+                </th>
+                <th className="padding-table  font-medium text-right">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
               {data?.sites?.results?.map((site, index) => (
                 <tr
                   key={`site-${site.id}`}
-                  className={`text-xs  ${index % 2 ? "bg-gray-50" : ""} `}
+                  className={`text-xs   ${index % 2 ? "" : "bg-gray-50"} `}
                 >
-                  <td className="flex py-3">
-                    <img
-                      className="w-8 h-8 mr-4 object-cover rounded-md"
-                      src="https://images.unsplash.com/photo-1559893088-c0787ebfc084?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80"
-                      alt=""
-                    />
+                  <td className="flex padding-table ">
                     <div>
                       <p
                         className="font-medium  cursor-pointer"
@@ -98,18 +94,22 @@ export const Sites = () => {
                       </p>
                     </div>
                   </td>
-                  <td className="font-medium text-center ">{site.city}</td>
-                  <td className="font-medium text-center ">{site.postal}</td>
-                  <td className="text-center font-medium">
+                  <td className="padding-table font-medium text-center ">
+                    {site.city}
+                  </td>
+                  <td className="padding-table  font-medium text-center ">
+                    {site.postal}
+                  </td>
+                  <td className="padding-table text-center font-medium">
                     {site.customer?.name}
                   </td>
-                  <td className="font-medium text-center ">
+                  <td className="padding-table font-medium text-center ">
                     {site.completed ? "yrs" : "no"}
                   </td>
 
-                  <td className="text-right">
+                  <td className="padding-table text-right">
                     <span
-                      onClick={() => navigate(`/sites/${site.id}/edit`)}
+                      onClick={() => navigate(`/sites/${site.id}/update`)}
                       className="inline-block mr-2  cursor-pointer "
                     >
                       <svg
@@ -127,7 +127,7 @@ export const Sites = () => {
                     </span>
 
                     <span
-                      onClick={() => navigate(`/sites/${site.id}/edit`)}
+                      onClick={() => navigate(`/sites/${site.id}/update`)}
                       className="inline-block  cursor-pointer"
                     >
                       <svg
@@ -161,7 +161,7 @@ export const Sites = () => {
                   variables: {
                     offset: data?.sites?.results?.length,
                     limit,
-                    where: {},
+                    where: parseSearchParams(searchParams),
                   },
                 });
               }}
@@ -169,6 +169,6 @@ export const Sites = () => {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </>
   );
 };

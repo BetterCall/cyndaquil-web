@@ -22,7 +22,7 @@ export interface EntranceQuery_entrance_result {
 
 export interface EntranceQuery_entrance {
   __typename: "EntranceOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   result: EntranceQuery_entrance_result | null;
 }

@@ -1,39 +1,40 @@
 import React from "react";
-import { FormState, UseFormRegister } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
 import { Button } from "../button";
-import { FormError } from "../form-error";
 
-import {
-  CreateBuildingInput,
-  EditBuildingInput,
-} from "../../__generated__/globalTypes";
-
-interface ISiteForm {
+interface IBuildingForm {
   loading: boolean;
-  register: UseFormRegister<any>;
   submit: any;
-  formState: FormState<CreateBuildingInput> | FormState<EditBuildingInput>;
+  form: UseFormReturn<any, any>;
 }
 
-export const BuildingForm: React.FC<ISiteForm> = ({
+export const BuildingForm: React.FC<IBuildingForm> = ({
   loading,
-  register,
   submit,
-  formState: { isValid, errors },
+  form,
 }) => {
   return (
-    <form
-      className="grid max-w-screen-sm w-full gap-3 mt-5 mb-5 "
-      onSubmit={submit}
-    >
-      <input
-        {...register("name", { required: "name required" })}
-        className="input "
-      />
-      {errors.name?.message && <FormError message={errors.name?.message} />}
-
-      <Button canClick={isValid} loading={loading} actionText="Valider" />
-    </form>
+    <div className="flex flex-wrap ">
+      <div className="w-full py-3">
+        <p className="mb-1.5 font-medium text-base text-coolGray-800">
+          Nom du Batiment
+        </p>
+        <input
+          className="w-full input"
+          type="text"
+          {...form.register("name", { required: "name required" })}
+          placeholder="Nom du Batiment"
+        />
+      </div>
+      <div className="w-full p-3 flex justify-center align-items-center">
+        <Button
+          canClick={form.formState.isValid}
+          loading={loading}
+          actionText="Valider"
+          onClick={submit}
+        />
+      </div>
+    </div>
   );
 };

@@ -13,10 +13,10 @@ export const CREATE_EMPLACEMENT = gql`
 
 `
 
-export const DELETE_EMPLACEMENT = gql`
+export const REMOVE_EMPLACEMENT = gql`
 
-        mutation DeleteEmplacementMutation( $id : Int! ){
-            deleteEmplacement ( id : $id ) {
+        mutation RemoveEmplacementMutation( $id : Int! ){
+            removeEmplacement ( id : $id ) {
                 ok 
                 error 
             }

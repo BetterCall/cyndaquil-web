@@ -14,27 +14,11 @@ import {
 } from "../../__generated__/CreateBuildingMutation";
 import { CreateBuildingInput } from "../../__generated__/globalTypes";
 
-type ICreateBuildingParams = {
-  id: string;
-};
-
-export const CreateBuilding = () => {
+export const CreateBuilding = ({ id }: any) => {
   const client = useApolloClient();
-  const { id } = useParams<ICreateBuildingParams>();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!id) {
-      navigate("/sites");
-    }
-  }, []);
-
-  const { register, handleSubmit, getValues, setValue, formState } =
-    useForm<CreateBuildingInput>({
-      mode: "all",
-      defaultValues: {
-        name: "",
-      },
-    });
+  const form = useForm<CreateBuildingInput>({
+    mode: "all",
+  });
 
   const [mutation, { loading }] = useMutation<
     CreateBuildingMutation,
@@ -43,7 +27,7 @@ export const CreateBuilding = () => {
 
   const submit = async () => {
     if (loading) return;
-    const input = getValues();
+    const input = form.getValues();
 
     const { data } = await mutation({
       variables: {
@@ -59,7 +43,6 @@ export const CreateBuilding = () => {
         query: SITE,
         variables: { id: +id! },
       });
-      console.log("query result ", queryResult);
       client.writeQuery({
         query: SITE,
         variables: {
@@ -82,21 +65,14 @@ export const CreateBuilding = () => {
           },
         },
       });
-      navigate(`/sites/${id}`, {
-        replace: true,
-      });
+
+      form.setValue("name", "");
     }
   };
 
   return (
-    <div className="mt-5 flex flex-col justify-center items-center px-5">
-      <h4 className="font-semibold text-2xl mb-3">Nouveau Bâtiment</h4>
-      <BuildingForm
-        loading={loading}
-        register={register}
-        submit={handleSubmit(submit)}
-        formState={formState}
-      />
+    <div className="w-full">
+      <BuildingForm loading={loading} form={form} submit={submit} />
     </div>
   );
 };

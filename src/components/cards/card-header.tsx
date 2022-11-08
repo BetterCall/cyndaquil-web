@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../../layouts/link";
 
 type IHeaderButton = {
   title: string;
@@ -9,16 +9,21 @@ type IHeaderButton = {
 
 interface ICardHeader {
   title: string;
+  subtitle?: string;
   button?: IHeaderButton;
 }
 
-export const CardHeader: React.FC<ICardHeader> = ({ title, button }) => {
+export const CardHeader: React.FC<ICardHeader> = ({
+  title,
+  subtitle,
+  button,
+}) => {
   return (
-    <div className="mb-6">
+    <div className="mb-4">
       <div className="flex flex-wrap items-center mb-3">
         <div>
           <h3 className="text-xl font-bold">{title}</h3>
-          <p className="text-sm text-gray-500">Changes in current tasks</p>
+          {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
         </div>
 
         {button && (

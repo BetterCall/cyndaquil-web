@@ -2,7 +2,6 @@ import { gql } from "@apollo/client"
 
 
 export const CREATE_ENTRANCE = gql`
-
     mutation CreateEntranceMutation( $input : CreateEntranceInput! ) {
         createEntrance( input : $input ) {
             ok 
@@ -10,8 +9,17 @@ export const CREATE_ENTRANCE = gql`
             id 
         }
     }
+`
 
+export const UPDATE_ENTRANCE = gql`
 
+    mutation UpdateEntranceMutation( $id : Int! ,  $input : UpdateEntranceInput!) {
+        updateEntrance ( id : $id  , input : $input )  {
+            ok
+            error
+        }
+    }
+ 
 `
 
 export const ENTRANCE = gql` 
@@ -33,7 +41,6 @@ export const ENTRANCE = gql`
 
 `
 
-
 export const DUPLICATE_ENTRANCE = gql`
 
     mutation DuplicateEntraceMutation( $entranceId : Int! ) {
@@ -47,10 +54,10 @@ export const DUPLICATE_ENTRANCE = gql`
 
 `
 
-export const DELETE_ENTRANCE = gql`
+export const REMOVE_ENTRANCE = gql`
 
-    mutation DeleteEntranceMutation( $id : Int! ) {
-        deleteEntrance(id : $id ) {
+    mutation RemoveEntranceMutation( $id : Int! ) {
+        removeEntrance(id : $id ) {
             ok 
             error 
             id

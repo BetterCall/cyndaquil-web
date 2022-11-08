@@ -15,7 +15,7 @@ export interface CustomerCategoryQuery_customerCategory_result {
 
 export interface CustomerCategoryQuery_customerCategory {
   __typename: "CustomerCategoryOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   result: CustomerCategoryQuery_customerCategory_result | null;
 }

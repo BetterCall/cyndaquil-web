@@ -50,7 +50,6 @@ export const Login = () => {
       authTokenVar(data.login.token);
       isLoggedInVar(true);
     }
-    console.log(data?.login);
     setError(data?.login?.error);
   };
 

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { UserRole } from "./globalTypes";
+import { UsersFiltersInput, UserRole } from "./globalTypes";
 
 // ====================================================
 // GraphQL query operation: UsersQuery
@@ -29,6 +29,7 @@ export interface UsersQuery {
 }
 
 export interface UsersQueryVariables {
-  limit: number;
-  offset: number;
+  limit?: number | null;
+  offset?: number | null;
+  where: UsersFiltersInput;
 }

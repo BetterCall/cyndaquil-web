@@ -27,7 +27,7 @@ export interface BugQuery_bug_result {
 
 export interface BugQuery_bug {
   __typename: "BugOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   result: BugQuery_bug_result | null;
 }

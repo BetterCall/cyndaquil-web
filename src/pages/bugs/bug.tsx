@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Header } from "../../components/header";
 import { SendIcon } from "../../components/icons";
-import { DashboardLayout } from "../../layouts/dashboard.layout";
 
 export const Bug = () => {
   type ICustomerParams = {
@@ -18,7 +17,7 @@ export const Bug = () => {
   }, []);
 
   return (
-    <DashboardLayout>
+    <>
       <Header
         title="Bug"
         subtitle="Un sous titre un peu long"
@@ -27,11 +26,11 @@ export const Bug = () => {
             actionText: "Modifier",
             bgColor: "indigo",
             textColor: "white",
-            link: "/bugs/edit",
+            link: "/bugs/update",
             icon: <SendIcon />,
           },
         ]}
       />
-    </DashboardLayout>
+    </>
   );
 };

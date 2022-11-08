@@ -32,7 +32,7 @@ export interface FloorsQuery_floors_results {
 
 export interface FloorsQuery_floors {
   __typename: "FloorsOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   results: FloorsQuery_floors_results[] | null;
 }

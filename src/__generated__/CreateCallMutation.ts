@@ -11,7 +11,7 @@ import { CreateCallInput } from "./globalTypes";
 
 export interface CreateCallMutation_createCall {
   __typename: "CreateCallOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   id: number | null;
 }

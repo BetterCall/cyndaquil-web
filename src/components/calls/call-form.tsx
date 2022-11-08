@@ -1,48 +1,64 @@
 import React from "react";
-import { FormState, UseFormRegister } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
 import { Button } from "../button";
-import { FormError } from "../form-error";
-
-import { CreateCallInput } from "../../__generated__/globalTypes";
 import { CustomerInput } from "../customers";
 import { SiteInput } from "../sites/site-input";
 import { ContactInput } from "../contacts";
+import { Card } from "antd";
+import { FormHeader } from "../form";
 
 interface ICallForm {
-  setValue: any;
   loading: boolean;
-  register: UseFormRegister<any>;
   submit: any;
-  formState: FormState<CreateCallInput>;
+  form: UseFormReturn<any, any>;
+  disabledFields?: string[];
 }
 
 export const CallForm: React.FC<ICallForm> = ({
-  setValue,
   loading,
-  register,
   submit,
-  formState: { isValid, errors },
+  form,
+  disabledFields = [],
 }) => {
   return (
-    <form
-      className="grid max-w-screen-sm w-full gap-3 mt-5 mb-5 "
-      onSubmit={submit}
-    >
-      <ContactInput setValue={setValue} canCreate={true} />
-      <CustomerInput setValue={setValue} canCreate={true} />
-      <SiteInput setValue={setValue} canCreate={true} />
+    <Card>
+      <FormHeader title="ss" subtitle="dddd" />
+      <div className="w-full  ">
+        <ContactInput
+          disabled={disabledFields.includes("contactId")}
+          form={form}
+        />
+        <CustomerInput
+          disabled={disabledFields.includes("customerId")}
+          form={form}
+          canSelectAddress={false}
+        />
+        <SiteInput
+          disabled={disabledFields.includes("siteId")}
+          form={form}
+          canSelectAddress={false}
+        />
 
-      <input
-        {...register("additionalInformations", { required: "name required" })}
-        placeholder="Informations"
-        className="input "
-      />
-      {errors.additionalInformations?.message && (
-        <FormError message={errors.additionalInformations?.message} />
-      )}
-
-      <Button canClick={isValid} loading={loading} actionText="Valider" />
-    </form>
+        <div className="w-full ">
+          <p className="label">Nom</p>
+          <textarea
+            {...form.register("additionalInformations", {
+              required: "name required",
+            })}
+            placeholder="Informations"
+            className="input w-full"
+          />
+        </div>
+        <div className="w-full ">
+          <Button
+            canClick={form.formState.isValid}
+            loading={loading}
+            actionText="Valider"
+            onClick={submit}
+          />
+        </div>
+      </div>
+    </Card>
   );
 };

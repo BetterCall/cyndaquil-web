@@ -17,7 +17,7 @@ export interface UserQuery_user_result {
 
 export interface UserQuery_user {
   __typename: "UserOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   result: UserQuery_user_result | null;
 }

@@ -68,20 +68,20 @@ export const CONTACTS = gql`
     }
 `
 
-export const DELETE_CONTACT = gql`
+export const REMOVE_CONTACT = gql`
 
-    mutation DeleteContactMutation( $id :Int !  ) {
-        deleteContact( id : $id ) {
+    mutation RemoveContactMutation( $id :Int !  ) {
+        removeContact( id : $id ) {
             ok 
             error 
         }
     }
 `
 
-export const EDIT_CONTACT = gql`
+export const UPDATE_CONTACT = gql`
 
-    mutation EditContactMutation( $id :Int! , $input : EditContactInput! ) {
-        editContact( id : $id  , input : $input ) {
+    mutation UpdateContactMutation( $id :Int! , $input : UpdateContactInput! ) {
+        updateContact( id : $id  , input : $input ) {
             ok
             error
         }

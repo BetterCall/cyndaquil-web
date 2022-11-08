@@ -55,11 +55,6 @@ export const CONTRACT = gql`
         id
         status
 
-        rows {
-            category
-            quantity
-            unitPrice
-        }
         
         customer {
             ...CustomerPart
@@ -71,20 +66,31 @@ export const CONTRACT = gql`
         site {
             ...SitePart
         }
-        
-        emplacements {
-          id
-          emplacement {
+
+
+        rows {
             id
-            floor {
+            emplacement {
                 id
-                name
+                floor {
+                    id
+                    name
+
+                    entrance {
+                        id
+                        name
+
+                        building {
+                            id 
+                            name
+                        }
+                    }
+                }
+                category {
+                    id
+                    name
+                }
             }
-            category {
-                id
-                name
-            }
-          }
         }
       }
     }

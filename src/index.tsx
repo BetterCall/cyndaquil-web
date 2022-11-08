@@ -1,20 +1,32 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import { ConfigProvider } from "antd";
+import frFR from "antd/es/locale/fr_FR";
+
 import { ApolloProvider } from "@apollo/client";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "antd/dist/antd.min.css";
 import "./styles/styles.css";
+import "./styles/main.css";
 import { client } from "./apollo";
 import { HelmetProvider } from "react-helmet-async";
+import moment from "moment";
+// @ts-ignore
+import localization from "moment/locale/fr";
+
+moment.updateLocale("fr", localization);
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <HelmetProvider>
-        <App />
-      </HelmetProvider>
+      <ConfigProvider locale={frFR}>
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
+      </ConfigProvider>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")

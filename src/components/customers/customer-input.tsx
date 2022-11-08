@@ -1,5 +1,6 @@
-import { gql, useApolloClient, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import React, { useState, useEffect } from "react";
+import { UseFormReturn } from "react-hook-form";
 import { useLazyCustomer } from "../../hooks/useCustomer";
 import { useDebounce } from "../../hooks/useDebounce";
 import { CUSTOMERS } from "../../queries/customers.queries";
@@ -8,35 +9,49 @@ import {
   CustomersQueryVariables,
 } from "../../__generated__/CustomersQuery";
 
-import { CreateCustomerForm } from "./create-customer-form";
-
 interface ICustomerInput {
-  setValue: any;
-  defaultValue?: number;
-  canCreate?: boolean;
+  form: UseFormReturn<any, any>;
   canSelectAddress?: boolean;
+  disabled?: boolean;
 }
 
 export const CustomerInput: React.FC<ICustomerInput> = ({
-  setValue,
-  defaultValue,
-  canCreate = false,
+  form: { getValues, setValue },
   canSelectAddress = true,
+  disabled = false,
 }) => {
-  const client = useApolloClient();
-
   const [isOpened, setIsOpened] = useState(false);
   const [searchFn, { data, loading, called, fetchMore }] = useLazyQuery<
     CustomersQuery,
     CustomersQueryVariables
   >(CUSTOMERS);
   const [lazyCustomer] = useLazyCustomer();
-
-  const [search, setSearch] = useState("");
-
-  const [hasBeenSelected, setSelected] = useState(!!defaultValue);
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
-  const debouncedSearchTerm = useDebounce(search, 500);
+  const [hasBeenSelected, setSelected] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async (id) => {
+      const { data: customerData } = await lazyCustomer({
+        variables: { id: +id },
+      });
+      if (customerData?.customer?.result) {
+        setIsOpened(false);
+        setSelected(true);
+        setSearch(customerData?.customer?.result?.name);
+        setSelectedCustomer(customerData?.customer?.result);
+        setValue("customerId", id);
+      }
+    };
+
+    const customerId = getValues("customerId");
+    if (customerId) {
+      fetchData(customerId);
+    }
+  }, []);
+
+  const [displayedSearch, setSearch] = useState("");
+  const debouncedSearchTerm = useDebounce(displayedSearch, 500);
+
   useEffect(
     () => {
       if (debouncedSearchTerm) {
@@ -46,7 +61,7 @@ export const CustomerInput: React.FC<ICustomerInput> = ({
             limit: 2,
             offset: 0,
             where: {
-              search,
+              search: displayedSearch,
             },
           },
         });
@@ -56,80 +71,24 @@ export const CustomerInput: React.FC<ICustomerInput> = ({
   );
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (defaultValue) {
-        const { data: customerData } = await lazyCustomer({
-          variables: { id: +defaultValue },
-        });
-        console.log(customerData);
-        if (customerData?.customer?.result) {
-          setIsOpened(false);
-          setSelected(true);
-          setSearch(customerData?.customer?.result?.name);
-          setSelectedCustomer(customerData?.customer?.result);
-          setValue("customerId", customerData?.customer?.result?.id);
-        }
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
     if (!hasBeenSelected) setValue("customerId", null);
   }, [hasBeenSelected]);
-
-  const [create, setCreate] = useState(false);
-  const onCompleted = (id: number) => {
-    const customer = client.readFragment({
-      id: `Customer:${id}`, // The value of the to-do item's cache ID
-      fragment: gql`
-        fragment CustomerCreated on Customer {
-          id
-          name
-        }
-      `,
-    });
-
-    setIsOpened(false);
-    setSearch(customer.name);
-    setSelected(true);
-    setValue("customerId", id);
-
-    setCreate(false);
-  };
-
-  if (create) {
-    return (
-      <>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setCreate(false);
-          }}
-          className={`mt-5 text-lg w-full font-medium focus:outline-none text-white py-4  transition-colors  bg-gray-700 hover:bg-gray-800  `}
-        >
-          annuler
-        </button>
-        <CreateCustomerForm onCompleted={onCompleted} />
-      </>
-    );
-  }
 
   return (
     <div className="flex flex-col">
       <label className="label">Client</label>
       <input
+        disabled={disabled}
         className="input mb-3"
         onChange={(e) => {
-          console.log(e.target.value);
           setSearch(e.target.value);
           setSelected(false);
+          setValue("customerId", null);
         }}
-        value={search}
+        value={displayedSearch}
       />
 
-      {isOpened && search !== "" && !hasBeenSelected && (
+      {isOpened && displayedSearch !== "" && !hasBeenSelected && (
         <>
           <label className="text-sm font-bold">Résultats</label>
           <div className="input mb-3 ">
@@ -164,7 +123,7 @@ export const CustomerInput: React.FC<ICustomerInput> = ({
                   fetchMore({
                     variables: {
                       where: {
-                        search,
+                        search: displayedSearch,
                       },
                       limit: 2,
                       offset: data?.customers?.results?.length,
@@ -179,18 +138,6 @@ export const CustomerInput: React.FC<ICustomerInput> = ({
                 }`}
               >
                 {loading ? "Chargement" : "Plus de resultats"}{" "}
-              </button>
-            )}
-
-            {canCreate && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setCreate(true);
-                }}
-                className={`mt-2 text-lg w-full font-medium focus:outline-none text-white py-4  transition-colors  bg-cyan-500 hover:bg-cyan-600  `}
-              >
-                Nouveau Client
               </button>
             )}
           </div>

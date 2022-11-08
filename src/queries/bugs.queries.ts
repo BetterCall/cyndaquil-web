@@ -57,20 +57,20 @@ export const BUGS = gql`
     }
 `
 
-export const DELETE_BUG = gql`
+export const REMOVE_BUG = gql`
 
-    mutation DeleteBugMutation( $id :Int !  ) {
-        deleteBug( id : $id ) {
+    mutation RemoveBugMutation( $id :Int !  ) {
+        removeBug( id : $id ) {
             ok 
             error 
         }
     }
 `
 
-export const EDIT_BUG = gql`
+export const UPDATE_BUG = gql`
 
-    mutation EditBugMutation( $id :Int! , $input : EditBugInput! ) {
-        editBug( id : $id  , input : $input ) {
+    mutation UpdateBugMutation( $id :Int! , $input : UpdateBugInput! ) {
+        updateBug( id : $id  , input : $input ) {
             ok
             error
         }

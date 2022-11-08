@@ -13,10 +13,10 @@ export const CREATE_CUSTOMER_CATEGORY = gql`
 
 `
 
-export const EDIT_CUSTOMER_CATEGORY = gql`
+export const UPDATE_CUSTOMER_CATEGORY = gql`
 
-        mutation EditCustomerCategoryMutation ( $id : Int! , $input : EditCustomerCategoryInput! ) {
-            editCustomerCategory( id : $id , input : $input ) {
+        mutation UpdateCustomerCategoryMutation ( $id : Int! , $input : UpdateCustomerCategoryInput! ) {
+            updateCustomerCategory( id : $id , input : $input ) {
                 ok 
                 error 
             }
@@ -31,6 +31,7 @@ query CustomerCategoriesQuery  {
         results {
             id
             name
+            customersCount
         }
     }
 }

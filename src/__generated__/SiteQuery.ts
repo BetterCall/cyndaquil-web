@@ -60,7 +60,7 @@ export interface SiteQuery_site_result {
 
 export interface SiteQuery_site {
   __typename: "SiteOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   result: SiteQuery_site_result | null;
 }

@@ -13,10 +13,10 @@ export const CREATE_EQUIPMENT_CATEGORY = gql`
 
 `
 
-export const EDIT_EQUIPMENT_CATEGORY = gql`
+export const UPDATE_EQUIPMENT_CATEGORY = gql`
 
-        mutation EditEquipmentCategoryMutation ( $id : Int! , $input : EditEquipmentCategoryInput! ) {
-            editEquipmentCategory( id : $id , input : $input ) {
+        mutation UpdateEquipmentCategoryMutation ( $id : Int! , $input : UpdateEquipmentCategoryInput! ) {
+            updateEquipmentCategory( id : $id , input : $input ) {
                 ok 
                 error 
             }
@@ -31,6 +31,12 @@ query EquipmentCategoriesQuery  {
         results {
             id
             name
+
+            benefits {
+                id
+                name
+                price 
+            }
         }
     }
 }
@@ -45,6 +51,12 @@ query EquipmentCategoryQuery ( $id : Int! ) {
         result {
             id 
             name
+
+            benefits  {
+                id
+                name 
+                price
+            }
         }
     }
 }

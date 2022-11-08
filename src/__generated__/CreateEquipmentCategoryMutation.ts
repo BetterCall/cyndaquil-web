@@ -11,7 +11,7 @@ import { CreateEquipmentCategoryInput } from "./globalTypes";
 
 export interface CreateEquipmentCategoryMutation_createEquipmentCategory {
   __typename: "CreateEquipmentCategoryOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   id: number | null;
 }

@@ -27,7 +27,7 @@ export const SearchUserInput = () => {
 
   // @ts-ignore
   return (
-    <div className="bg-gray-800 py-12 w-full flex flex-col px-5 items-center">
+    <div className="searchCard">
       <form
         className="grid gap-3 w-full items-center max-w-screen-2xl"
         onSubmit={handleSubmit(onSearchSubmit)}

@@ -1,12 +1,12 @@
 import { CreateWorkOrder } from './create-work-order'
-import { EditWorkOrder } from './edit-work-order'
+import { UpdateWorkOrder } from './update-work-order'
 import { WorkOrder } from './work-order'
 import { WorkOrders } from './work-orders'
 
 
 export {
     CreateWorkOrder,
-    EditWorkOrder,
+    UpdateWorkOrder,
     WorkOrder,
     WorkOrders
 }

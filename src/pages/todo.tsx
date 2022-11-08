@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../layouts/link";
 
 export const Todo = () => (
   <div className="h-screen flex flex-col items-center justify-center">

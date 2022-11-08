@@ -1,11 +1,11 @@
 import { CreateCustomerCategory } from './create-customer-category'
 import { CustomerCategories } from './customer-categories'
-import { EditCustomerCategory } from './edit-customer-category'
+import { UpdateCustomerCategory } from './update-customer-category'
 
 
 
 export {
     CreateCustomerCategory,
     CustomerCategories,
-    EditCustomerCategory
+    UpdateCustomerCategory
 }

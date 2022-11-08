@@ -1,5 +1,6 @@
-import { gql, useApolloClient, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import React, { useState, useEffect } from "react";
+import { UseFormReturn } from "react-hook-form";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useLazySite } from "../../hooks/useSite";
 import { SITES } from "../../queries/sites.queries";
@@ -7,23 +8,18 @@ import {
   SitesQuery,
   SitesQueryVariables,
 } from "../../__generated__/SitesQuery";
-import { CreateSiteForm } from "./create-site-form";
 
 interface ISiteInput {
-  setValue: any;
-  defaultValue?: number;
-  canCreate?: boolean;
+  form: UseFormReturn<any, any>;
   canSelectAddress?: boolean;
+  disabled?: boolean;
 }
 
 export const SiteInput: React.FC<ISiteInput> = ({
-  setValue,
-  defaultValue,
-  canSelectAddress = true,
-  canCreate = false,
+  form,
+  canSelectAddress = false,
+  disabled = false,
 }) => {
-  const client = useApolloClient();
-
   const [isOpened, setIsOpened] = useState(false);
   const [searchFn, { data, loading, called, fetchMore }] = useLazyQuery<
     SitesQuery,
@@ -32,7 +28,7 @@ export const SiteInput: React.FC<ISiteInput> = ({
   const [lazySite] = useLazySite();
 
   const [search, setSearch] = useState("");
-  const [hasBeenSelected, setSelected] = useState(!!defaultValue);
+  const [hasBeenSelected, setSelected] = useState(false);
   const [selectedSite, setSelectedSite] = useState<any>(null);
   const debouncedSearchTerm = useDebounce(search, 500);
   useEffect(
@@ -54,74 +50,36 @@ export const SiteInput: React.FC<ISiteInput> = ({
   );
 
   useEffect(() => {
-    if (!hasBeenSelected) setValue("siteId", null);
+    if (!hasBeenSelected) form.setValue("siteId", null);
   }, [hasBeenSelected]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (defaultValue) {
-        const { data: siteData } = await lazySite({
-          variables: { id: +defaultValue },
-        });
-        console.log(siteData);
-        if (siteData?.site?.result) {
-          setIsOpened(false);
-          setSelected(true);
-          setSearch(siteData?.site?.result?.name);
-          setSelectedSite(siteData?.site?.result);
-          setValue("siteId", siteData?.site?.result?.id);
-        }
+    const fetchData = async (id) => {
+      const { data: siteData } = await lazySite({
+        variables: { id: +id },
+      });
+      if (siteData?.site?.result) {
+        setIsOpened(false);
+        setSelected(true);
+        setSearch(siteData?.site?.result?.name);
+        setSelectedSite(siteData?.site?.result);
+        form.setValue("siteId", siteData?.site?.result?.id);
       }
     };
 
-    fetchData();
+    const id = form.getValues("siteId");
+    if (id) {
+      fetchData(id);
+    }
   }, []);
-
-  const [create, setCreate] = useState(false);
-  const onCompleted = (id: number) => {
-    const site = client.readFragment({
-      id: `Site:${id}`, // The value of the to-do item's cache ID
-      fragment: gql`
-        fragment SiteCreated on Site {
-          id
-          name
-          city
-        }
-      `,
-    });
-
-    setIsOpened(false);
-    setSearch(`${site.name} - ${site.city}`);
-    setSelected(true);
-    setValue("siteId", id);
-
-    setCreate(false);
-  };
-
-  if (create) {
-    return (
-      <>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setCreate(false);
-          }}
-          className={`mt-5 text-lg w-full font-medium focus:outline-none text-white py-4  transition-colors  bg-gray-700 hover:bg-gray-800  `}
-        >
-          annuler
-        </button>
-        <CreateSiteForm onCompleted={onCompleted} />
-      </>
-    );
-  }
 
   return (
     <div className="flex flex-col">
       <label className="label">Site</label>
       <input
+        disabled={disabled}
         className="input mb-3"
         onChange={(e) => {
-          console.log(e.target.value);
           setSearch(e.target.value);
           setSelected(false);
         }}
@@ -148,7 +106,7 @@ export const SiteInput: React.FC<ISiteInput> = ({
                   setIsOpened(false);
                   setSearch(site.name);
                   setSelected(true);
-                  setValue("siteId", site.id);
+                  form.setValue("siteId", site.id);
                   setSelectedSite(site);
                 }}
               >
@@ -182,18 +140,6 @@ export const SiteInput: React.FC<ISiteInput> = ({
                 {loading ? "Chargement" : "Plus de resultats"}{" "}
               </button>
             )}
-
-            {canCreate && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setCreate(true);
-                }}
-                className={`mt-2 text-lg w-full font-medium focus:outline-none text-white py-4  transition-colors  bg-cyan-500 hover:bg-cyan-600  `}
-              >
-                Nouveau Site
-              </button>
-            )}
           </div>
         </>
       )}
@@ -201,12 +147,12 @@ export const SiteInput: React.FC<ISiteInput> = ({
       {selectedSite && canSelectAddress && (
         <div
           onClick={() => {
-            setValue("street", selectedSite.street);
-            setValue("city", selectedSite.city);
-            setValue("postal", selectedSite.postal);
-            setValue("streetNumber", selectedSite.streetNumber);
-            setValue("lat", selectedSite.lat);
-            setValue("lng", selectedSite.lng);
+            form.setValue("street", selectedSite.street);
+            form.setValue("city", selectedSite.city);
+            form.setValue("postal", selectedSite.postal);
+            form.setValue("streetNumber", selectedSite.streetNumber);
+            form.setValue("lat", selectedSite.lat);
+            form.setValue("lng", selectedSite.lng);
           }}
         >
           set address

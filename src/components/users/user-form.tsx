@@ -1,23 +1,23 @@
 import React from "react";
-import { FormState, UseFormRegister } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { Button } from "../../components/button";
 import { FormError } from "../../components/form-error";
-import { EditUserInput } from "../../__generated__/globalTypes";
 import { Card } from "../cards";
 import { FormHeader } from "../form";
 
 interface IUserForm {
   loading: boolean;
-  register: UseFormRegister<EditUserInput>;
+  form: UseFormReturn<any, any>;
   submit: any;
-  formState: FormState<EditUserInput>;
 }
 
 export const UserForm: React.FC<IUserForm> = ({
   loading,
-  register,
+  form: {
+    register,
+    formState: { isValid, errors },
+  },
   submit,
-  formState: { isValid, errors },
 }) => {
   return (
     <Card>
@@ -26,7 +26,7 @@ export const UserForm: React.FC<IUserForm> = ({
         subtitle="Update your billing details and address."
       />
       <div className="w-full">
-        <div className="flex flex-wrap pb-3 -m-3">
+        <div className="flex flex-wrap  -m-3">
           <div className="w-full  p-3">
             <p className="mb-1.5 font-medium text-base text-coolGray-800">
               Prénom

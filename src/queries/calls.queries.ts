@@ -11,19 +11,19 @@ export const CREATE_CALL = gql`
     }
 `
 
-export const DELETE_CALL = gql`
+export const REMOVE_CALL = gql`
 
-    mutation DeleteCallMutation( $id : Int! ) {
-        deleteCall( id : $id ) {
+    mutation RemoveCallMutation( $id : Int! ) {
+        removeCall( id : $id ) {
             ok 
             error
         }
     }
 
 `
-export const EDIT_CALL = gql`
-    mutation EditCallMutation( $id : Int! ,  $input : EditCallInput! ) {
-        editCall( id : $id ,  input : $input ) {
+export const UPDATE_CALL = gql`
+    mutation UpdateCallMutation( $id : Int! ,  $input : UpdateCallInput! ) {
+        updateCall( id : $id ,  input : $input ) {
             ok 
             error
         }

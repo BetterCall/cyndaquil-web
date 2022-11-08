@@ -5,12 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/button";
 import { Header } from "../../components/header";
 import { SendIcon } from "../../components/icons";
-import { SearchUserInput } from "../../components/users";
 
 import { useMe } from "../../hooks/useMe";
-import { DashboardLayout } from "../../layouts/dashboard.layout";
 import { USERS } from "../../queries/user.queries";
-import { UserRole } from "../../__generated__/globalTypes";
 import {
   UsersQuery,
   UsersQueryVariables,
@@ -25,13 +22,14 @@ export const Users = () => {
     UsersQueryVariables
   >(USERS, {
     variables: {
+      where: {},
       limit,
       offset: 0,
     },
   });
 
   return (
-    <DashboardLayout>
+    <>
       <Header
         title="Liste des Utilisateurs"
         subtitle="Un sous titre un peu long"
@@ -51,23 +49,20 @@ export const Users = () => {
           <table className="table-auto w-full">
             <thead>
               <tr className="text-xs text-gray-500 text-left">
-                <th className="pb-3 font-medium">Nom</th>
-                <th className="pb-3 font-medium text-center">Rôle</th>
-                <th className="pb-3 font-medium text-right">Action</th>
+                <th className="padding-table   font-medium">Nom</th>
+                <th className="padding-table  font-medium text-center">Rôle</th>
+                <th className="padding-table   font-medium text-right">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
               {data?.users?.results?.map((user, index) => (
                 <tr
                   key={`user-${user.id}`}
-                  className={`text-xs  ${index % 2 ? "bg-gray-50" : ""} `}
+                  className={`text-xs   ${index % 2 ? "" : "bg-gray-50"} `}
                 >
-                  <td className="flex py-3">
-                    <img
-                      className="w-8 h-8 mr-4 object-cover rounded-md"
-                      src="https://images.unsplash.com/photo-1559893088-c0787ebfc084?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80"
-                      alt=""
-                    />
+                  <td className="padding-table  flex  ">
                     <div>
                       <p
                         className="font-medium  cursor-pointer"
@@ -78,15 +73,15 @@ export const Users = () => {
                       <p className="text-gray-500">{user.email}</p>
                     </div>
                   </td>
-                  <td className="text-center ">
+                  <td className="padding-table  text-center ">
                     <span className="inline-block py-1 px-2 text-white bg-green-500 rounded-full">
                       {user.role}
                     </span>
                   </td>
 
-                  <td className="text-right">
+                  <td className="padding-table  text-right">
                     <span
-                      onClick={() => navigate(`/users/${user.id}/edit`)}
+                      onClick={() => navigate(`/users/${user.id}/update`)}
                       className="inline-block mr-2  cursor-pointer "
                     >
                       <svg
@@ -104,7 +99,7 @@ export const Users = () => {
                     </span>
 
                     <span
-                      onClick={() => navigate(`/users/${user.id}/edit`)}
+                      onClick={() => navigate(`/users/${user.id}/update`)}
                       className="inline-block  cursor-pointer"
                     >
                       <svg
@@ -150,12 +145,13 @@ export const Users = () => {
                 variables: {
                   offset: data?.users?.results?.length,
                   limit,
+                  where: {},
                 },
               });
             }}
           />
         </div>
       )}
-    </DashboardLayout>
+    </>
   );
 };

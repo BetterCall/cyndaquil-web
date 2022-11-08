@@ -1,6 +1,6 @@
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { SearchCustomerInput } from "../../components/customers";
@@ -9,38 +9,29 @@ import { SendIcon } from "../../components/icons";
 import { parseParams } from "../../helpers/clean-object";
 
 import { useMe } from "../../hooks/useMe";
-import { DashboardLayout } from "../../layouts/dashboard.layout";
 import { CUSTOMERS } from "../../queries/customers.queries";
 import {
   CustomersQuery,
   CustomersQueryVariables,
 } from "../../__generated__/CustomersQuery";
-import {
-  CustomerFiltersInput,
-  UserRole,
-} from "../../__generated__/globalTypes";
+import { CustomerFiltersInput } from "../../__generated__/globalTypes";
 
 export const Customers = () => {
   const { data: meData } = useMe();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const [where, setParams] = useState<CustomerFiltersInput>({});
   useEffect(() => {
-    const temp = parseParams(searchParams);
-    console.log("temps , ", temp);
-    setParams(temp);
     search({
-      fetchPolicy: "network-only",
       variables: {
         limit,
         offset: 0,
-        where: temp,
+        where: parseParams(searchParams),
       },
     });
   }, [searchParams]);
 
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(10);
   const [search, { data, loading, fetchMore }] = useLazyQuery<
     CustomersQuery,
     CustomersQueryVariables
@@ -48,19 +39,20 @@ export const Customers = () => {
     variables: {
       limit,
       offset: 0,
-      where,
+      where: parseParams(searchParams),
     },
+    fetchPolicy: "network-only",
   });
 
   return (
-    <DashboardLayout>
+    <>
       <Header
         title="Liste des Clients"
         subtitle="Un sous titre un peu long"
         buttons={[
           {
             actionText: "Nouveau Client",
-            bgColor: "indigo",
+            bgColor: "",
             textColor: "white",
             link: "/customers/create",
             icon: <SendIcon />,
@@ -68,32 +60,35 @@ export const Customers = () => {
         ]}
       />
 
-      <SearchCustomerInput />
-
       <div className="main-container">
+        <SearchCustomerInput {...parseParams(searchParams)} />
+
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           <table className="table-auto w-full">
             <thead>
               <tr className="text-xs text-gray-500 text-left">
-                <th className="pb-3 font-medium">Nom</th>
-                <th className="pb-3 font-medium">Téléphone</th>
-                <th className="pb-3 font-medium">Email</th>
-                <th className="pb-3 font-medium text-center">Rôle</th>
-                <th className="pb-3 font-medium text-right">Action</th>
+                <th className="padding-table   font-medium text-left ">Nom</th>
+                <th className="padding-table   font-medium text-center ">
+                  Téléphone
+                </th>
+                <th className="padding-table   font-medium text-center ">
+                  Email
+                </th>
+                <th className="padding-table   font-medium text-center">
+                  Rôle
+                </th>
+                <th className="padding-table   font-medium text-right">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
               {data?.customers?.results?.map((user, index) => (
                 <tr
                   key={`user-${user.id}`}
-                  className={`text-xs  ${index % 2 ? "bg-gray-50" : ""} `}
+                  className={`text-xs   ${index % 2 ? "" : "bg-gray-50"} `}
                 >
-                  <td className="flex py-3">
-                    <img
-                      className="w-8 h-8 mr-4 object-cover rounded-md"
-                      src="https://images.unsplash.com/photo-1559893088-c0787ebfc084?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80"
-                      alt=""
-                    />
+                  <td className="padding-table  flex py-3">
                     <div>
                       <p
                         className="font-medium  cursor-pointer"
@@ -104,17 +99,21 @@ export const Customers = () => {
                       <p className="text-gray-500">{user.city}</p>
                     </div>
                   </td>
-                  <td className="font-medium">{user.phone}</td>
-                  <td className="font-medium">{user.email}</td>
-                  <td className="text-center ">
+                  <td className="padding-table  text-center font-medium">
+                    {user.phone}
+                  </td>
+                  <td className="padding-table  text-center  font-medium">
+                    {user.email}
+                  </td>
+                  <td className="padding-table  text-center ">
                     <span className="inline-block py-1 px-2 text-white bg-green-500 rounded-full">
                       {user.category?.name}
                     </span>
                   </td>
 
-                  <td className="text-right">
+                  <td className="padding-table  text-right">
                     <span
-                      onClick={() => navigate(`/customers/${user.id}/edit`)}
+                      onClick={() => navigate(`/customers/${user.id}/update`)}
                       className="inline-block mr-2  cursor-pointer "
                     >
                       <svg
@@ -132,7 +131,7 @@ export const Customers = () => {
                     </span>
 
                     <span
-                      onClick={() => navigate(`/customers/${user.id}/edit`)}
+                      onClick={() => navigate(`/customers/${user.id}/update`)}
                       className="inline-block  cursor-pointer"
                     >
                       <svg
@@ -166,6 +165,7 @@ export const Customers = () => {
                     variables: {
                       offset: data?.customers?.results?.length,
                       limit,
+                      where: parseParams(searchParams),
                     },
                   });
                 }}
@@ -176,6 +176,6 @@ export const Customers = () => {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </>
   );
 };

@@ -9,7 +9,7 @@
 
 export interface DuplicateBuildingMutation_duplicateBuilding {
   __typename: "DuplicateBuildingOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
 }
 

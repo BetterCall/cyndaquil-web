@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, createSearchParams } from "react-router-dom";
+import { cleanObject } from "../../helpers/clean-object";
 import { Button } from "../button";
 import { CustomerInput } from "../customers";
-import { FormError } from "../form-error";
 import { SiteInput } from "../sites/site-input";
 import { UserInput } from "../users";
 
@@ -13,46 +13,29 @@ interface ISearchForm {
   userId: number;
   siteId: number;
 }
-export const CallSearchInput = () => {
+export const CallSearchInput = (defaultValues) => {
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-    setValue,
-  } = useForm<ISearchForm>({
-    defaultValues: { search: "" },
-    mode: "onSubmit",
+  const form = useForm({
+    defaultValues,
+    mode: "all",
   });
+  console.log(defaultValues);
 
   const onSearchSubmit = () => {
-    const input = getValues();
-    const params: any = {};
-
-    for (let key in input) {
-      // @ts-ignore
-      let value = input[key];
-      console.log("value ", value);
-      if (value !== null && value !== "") {
-        params[key] = value;
-      }
-    }
-
+    const input = form.getValues();
     navigate({
       pathname: "/calls",
-      search: `?${createSearchParams(params)}`,
+      search: `?${createSearchParams(cleanObject(input))}`,
     });
   };
 
-  const [isFormOpened, setIsFormOpened] = useState(false);
+  const [isFormOpened, setIsFormOpened] = useState(
+    Object.values(defaultValues).some((v) => v)
+  );
 
   return (
-    <div className="bg-white px-4 py-2 w-full flex flex-col items-center">
-      <form
-        className="grid gap-3 w-full items-center max-w-screen-2xl"
-        onSubmit={handleSubmit(onSearchSubmit)}
-      >
+    <div className="searchCard">
+      <div className="grid gap-3 w-full items-center max-w-screen-2xl">
         <div className="flex row items-center justify-between">
           <div className="flex row align-text-center items-center">
             <label
@@ -75,7 +58,7 @@ export const CallSearchInput = () => {
             <input
               placeholder="Rechercher un client"
               autoComplete="off"
-              {...register("search", {
+              {...form.register("search", {
                 minLength: 3,
                 required: false,
               })}
@@ -103,26 +86,28 @@ export const CallSearchInput = () => {
           <div className="px-4 ">
             <div className="flex flex-wrap -mx-4 -mb-4 md:mb-0">
               <div className="w-full md:w-1/3 p-3">
-                <UserInput setValue={setValue} defaultValue="" />
+                <UserInput form={form} />
               </div>
               <div className="w-full md:w-1/3 p-3">
-                <CustomerInput setValue={setValue} canSelectAddress={false} />
+                <CustomerInput form={form} canSelectAddress={false} />
               </div>
 
               <div className="w-full md:w-1/3 p-3">
-                <SiteInput setValue={setValue} canSelectAddress={false} />
+                <SiteInput form={form} canSelectAddress={false} />
               </div>
             </div>
             <div className="flex justify-between">
               <div></div>
-              <Button canClick={true} actionText="Rechercher" loading={false} />
+              <Button
+                canClick={true}
+                actionText="Rechercher"
+                loading={false}
+                onClick={onSearchSubmit}
+              />
             </div>
           </div>
         )}
-        {errors.search && (
-          <FormError message={"Faites une recherche avec minimum 3 lettres"} />
-        )}
-      </form>
+      </div>
     </div>
   );
 };

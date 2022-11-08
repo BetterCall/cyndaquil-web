@@ -11,7 +11,7 @@ import { CreateContactInput } from "./globalTypes";
 
 export interface CreateContactMutation_createContact {
   __typename: "CreateContactOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   id: number | null;
 }

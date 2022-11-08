@@ -1,28 +1,21 @@
 import { useLazyQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { createSearchParams, Link } from "react-router-dom";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { Button } from "../../components/button";
 import { CallSearchInput } from "../../components/calls";
-import { CustomerInput } from "../../components/customers";
 import { Header } from "../../components/header";
 import { SendIcon } from "../../components/icons";
-import { SiteInput } from "../../components/sites/site-input";
-import { UserInput } from "../../components/users";
-import { DashboardLayout } from "../../layouts/dashboard.layout";
+import { parseParams } from "../../helpers/clean-object";
 import { CALLS } from "../../queries/calls.queries";
 import {
   CallsQuery,
   CallsQueryVariables,
 } from "../../__generated__/CallsQuery";
-import { CallsFiltersInput } from "../../__generated__/globalTypes";
 
 export const Calls = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [where, setParams] = useState<CallsFiltersInput>({});
   const [limit, setLimit] = useState(10);
   const [search, { loading, data, fetchMore, error }] = useLazyQuery<
     CallsQuery,
@@ -31,39 +24,19 @@ export const Calls = () => {
     fetchPolicy: "network-only",
   });
 
-  console.log(error);
-
   useEffect(() => {
-    let temp: any = {};
-    const numbers = ["customerId", "userId", "siteId"];
-    searchParams.forEach((value, key) => {
-      if (numbers.includes(key)) {
-        temp[key] = parseInt(value);
-      } else {
-        temp[key] = value;
-      }
-    });
-    console.log({ temp });
-    setParams(temp);
-    console.log({
-      variables: {
-        limit,
-        offset: 0,
-        where: temp,
-      },
-    });
     search({
       fetchPolicy: "network-only",
       variables: {
         limit,
         offset: 0,
-        where: temp,
+        where: parseParams(searchParams),
       },
     });
   }, [searchParams]);
 
   return (
-    <DashboardLayout>
+    <>
       <Header
         title="Liste des Appels"
         subtitle="Un sous titre un peu long"
@@ -78,47 +51,50 @@ export const Calls = () => {
         ]}
       />
 
-      <CallSearchInput />
-
       <div className="main-container">
+        <CallSearchInput {...parseParams(searchParams)} />
+
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           <table className="table-auto w-full">
             <thead>
               <tr className="text-xs text-gray-500 text-left">
-                <th className="pb-3 font-medium">Utilisateur</th>
-                <th className="pb-3 font-medium text-center">Client</th>
-                <th className="pb-3 font-medium text-center">Site</th>
-                <th className="pb-3 font-medium text-right">Action</th>
+                <th className=" padding-table font-medium">Utilisateur</th>
+                <th className=" padding-table font-medium text-center">
+                  Client
+                </th>
+                <th className=" padding-table font-medium text-center">Site</th>
+                <th className=" padding-table font-medium text-right">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
               {data?.calls?.results?.map((call, index) => (
                 <tr
                   key={`call-${call.id}`}
-                  className={`text-xs  ${index % 2 ? "bg-gray-50" : ""} `}
+                  className={`text-xs  ${index % 2 ? "" : "bg-gray-50"} `}
                 >
-                  <td className="flex py-3">
-                    <img
-                      className="w-8 h-8 mr-4 object-cover rounded-md"
-                      src="https://images.unsplash.com/photo-1559893088-c0787ebfc084?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80"
-                      alt=""
-                    />
+                  <td className="flex  padding-table ">
                     <div>
                       <p
-                        className="font-medium  cursor-pointer"
+                        className="font-medium cursor-pointer"
                         onClick={() => navigate(`/calls/${call.id}`)}
                       >
                         {call?.user?.firstname} {call?.user?.lastname}
                       </p>
                     </div>
                   </td>
-                  <td className="text-center ">{call?.customer?.name}</td>
-                  <td className="text-center ">{call?.site?.name}</td>
+                  <td className=" padding-table text-center ">
+                    {call?.customer?.name}
+                  </td>
+                  <td className=" padding-table text-center ">
+                    {call?.site?.name}
+                  </td>
 
-                  <td className="text-right">
+                  <td className=" padding-table text-right">
                     <span
-                      onClick={() => navigate(`/calls/${call.id}/edit`)}
-                      className="inline-block mr-2  cursor-pointer "
+                      onClick={() => navigate(`/calls/${call.id}/update`)}
+                      className="inline-block mr-2 cursor-pointer "
                     >
                       <svg
                         width="18"
@@ -135,8 +111,8 @@ export const Calls = () => {
                     </span>
 
                     <span
-                      onClick={() => navigate(`/calls/${call.id}/edit`)}
-                      className="inline-block  cursor-pointer"
+                      onClick={() => navigate(`/calls/${call.id}/update`)}
+                      className="inline-block cursor-pointer"
                     >
                       <svg
                         width="20"
@@ -168,12 +144,13 @@ export const Calls = () => {
                 variables: {
                   offset: data?.calls?.results?.length,
                   limit,
+                  where: parseParams(searchParams),
                 },
               });
             }}
           />
         )}
       </div>
-    </DashboardLayout>
+    </>
   );
 };

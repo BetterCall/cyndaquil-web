@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WorkOrderStatus } from "./globalTypes";
+import { WorkOrderType, WorkOrderStatus } from "./globalTypes";
 
 // ====================================================
 // GraphQL fragment: WorkOrderPart
@@ -13,6 +13,11 @@ export interface WorkOrderPart {
   __typename: "WorkOrder";
   id: number;
   name: string;
+  description: string | null;
+  type: WorkOrderType;
+  date: string | null;
+  start: string | null;
+  end: string | null;
   status: WorkOrderStatus;
   lat: number;
   lng: number;

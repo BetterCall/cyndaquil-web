@@ -7,6 +7,11 @@ export const WORK_ORDER_FRAGMENT = gql`
     fragment WorkOrderPart on WorkOrder {
         id 
         name
+        description
+        type
+        date
+        start
+        end
         status
         lat
         lng
@@ -30,10 +35,10 @@ export const CREATE_WORK_ORDER = gql`
 
 `
 
-export const EDIT_WORK_ORDER = gql`
+export const UPDATE_WORK_ORDER = gql`
 
-        mutation EditWorkOrderMutation ( $ id : Int! , $input : EditWorkOrderInput! ) {
-            editWorkOrder(  id : $ id , input : $input ) {
+        mutation UpdateWorkOrderMutation ( $ id : Int! , $input : UpdateWorkOrderInput! ) {
+            updateWorkOrder(  id : $ id , input : $input ) {
                 ok 
                 error
             }
@@ -49,6 +54,12 @@ export const WORK_ORDERS = gql`
             hasMore , 
             results {
                 ...WorkOrderPart
+
+                user {
+                    id
+                    firstname
+                    lastname
+                }
 
                 customer {
                     id 
@@ -77,12 +88,38 @@ query WorkOrderQuery ( $ id : Int! ) {
         ok 
         error 
         result {
+
+
             ...WorkOrderPart
             site  {
                 ...SitePart
             }
             customer  {
                 ...CustomerPart
+            }
+            emplacements {
+                id
+                emplacement {
+                    id
+
+                    category {
+                        id 
+                        name 
+                    }
+
+                    floor {
+                        id
+                        name
+                        entrance {
+                            id
+                            name
+                            building {
+                                id
+                                name
+                            }
+                        }
+                    }
+                }
             }
         }
     }

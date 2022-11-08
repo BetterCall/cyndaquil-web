@@ -11,7 +11,7 @@ import { CreateCustomerInput } from "./globalTypes";
 
 export interface CreateCustomerMutation_createCustomer {
   __typename: "CreateCustomerOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   id: number | null;
 }

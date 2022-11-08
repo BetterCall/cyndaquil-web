@@ -11,7 +11,7 @@ import { CreateWorkOrderInput } from "./globalTypes";
 
 export interface CreateWorkOrderMutation_createWorkOrder {
   __typename: "CreateWorkOrderOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   id: number | null;
 }

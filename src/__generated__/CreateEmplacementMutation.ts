@@ -11,7 +11,7 @@ import { CreateEmplacementInput } from "./globalTypes";
 
 export interface CreateEmplacementMutation_createEmplacement {
   __typename: "CreateEmplacementOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   id: number | null;
 }

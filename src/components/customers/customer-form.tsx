@@ -1,33 +1,27 @@
 import React from "react";
-import { FormState, UseFormRegister } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
 import { AddressInputs } from "../address-inputs";
 import { Button } from "../button";
-import { FormError } from "../form-error";
 
 import { useCustomerCategories } from "../../hooks/useCustomerCategories";
 
-import {
-  CreateCustomerInput,
-  EditCustomerInput,
-} from "../../__generated__/globalTypes";
 import { FormHeader } from "../form";
 import { Card } from "../cards";
 
 interface ICustomerForm {
   loading: boolean;
-  register: UseFormRegister<any>;
   submit: any;
-  formState: FormState<CreateCustomerInput> | FormState<EditCustomerInput>;
+  form: UseFormReturn<any, any>;
 }
 
 export const CustomerForm: React.FC<ICustomerForm> = ({
   loading,
-  register,
   submit,
-  formState: { isValid, errors },
+
+  form,
 }) => {
-  const { data, loading: categoriesLoading } = useCustomerCategories();
+  const { data } = useCustomerCategories();
   return (
     <Card>
       <FormHeader
@@ -35,7 +29,7 @@ export const CustomerForm: React.FC<ICustomerForm> = ({
         subtitle="Update your billing details and address."
       />
       <div className="w-full">
-        <div className="flex flex-wrap pb-3 -m-3">
+        <div className="flex flex-wrap  -m-3">
           <div className="w-full md:w-1/2 p-3">
             <p className="mb-1.5 font-medium text-base text-coolGray-800">
               Nom du client
@@ -43,12 +37,9 @@ export const CustomerForm: React.FC<ICustomerForm> = ({
             <input
               className="w-full input"
               type="text"
-              {...register("name", { required: "name required" })}
+              {...form.register("name", { required: "name required" })}
               placeholder="firstname"
             />
-            {errors.name?.message && (
-              <FormError message={errors.name?.message} />
-            )}
           </div>
           <div className="w-full md:w-1/2 p-3">
             <p className="mb-1.5 font-medium text-base text-coolGray-800">
@@ -70,7 +61,7 @@ export const CustomerForm: React.FC<ICustomerForm> = ({
               </svg>
 
               <select
-                {...register("categoryId", {
+                {...form.register("categoryId", {
                   required: "Category required",
                 })}
                 className="input appearance-none w-full"
@@ -89,23 +80,17 @@ export const CustomerForm: React.FC<ICustomerForm> = ({
             </p>
             <input
               className="w-full input"
-              {...register("email", { required: "email required" })}
+              {...form.register("email", { required: "email required" })}
               placeholder="email"
             />
-            {errors.email?.message && (
-              <FormError message={errors.email?.message} />
-            )}
           </div>
           <div className="w-full md:w-1/2 p-3">
             <p className="label">Téléphone</p>
             <input
               className="w-full input"
-              {...register("phone", { required: "phone required" })}
+              {...form.register("phone", { required: "phone required" })}
               placeholder="phone"
             />
-            {errors.phone?.message && (
-              <FormError message={errors.phone?.message} />
-            )}
           </div>
           <div className="w-full p-3 ">
             <div className="flex flex-wrap">
@@ -120,10 +105,10 @@ export const CustomerForm: React.FC<ICustomerForm> = ({
         </div>
       </div>
 
-      <AddressInputs register={register} errors={errors} />
+      <AddressInputs form={form} />
 
       <Button
-        canClick={isValid}
+        canClick={form.formState.isValid}
         loading={loading}
         actionText="Valider"
         onClick={submit}

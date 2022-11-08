@@ -15,7 +15,6 @@ import {
   CreateCustomerCategoryMutation,
   CreateCustomerCategoryMutationVariables,
 } from "../../__generated__/CreateCustomerCategoryMutation";
-import { DashboardLayout } from "../../layouts/dashboard.layout";
 import { Header } from "../../components/header";
 import { SendIcon } from "../../components/icons";
 
@@ -23,13 +22,9 @@ export const CreateCustomerCategory = () => {
   const client = useApolloClient();
   const navigate = useNavigate();
 
-  const { register, handleSubmit, getValues, formState } =
-    useForm<CreateCustomerCategoryInput>({
-      mode: "all",
-      defaultValues: {
-        name: "",
-      },
-    });
+  const form = useForm<CreateCustomerCategoryInput>({
+    mode: "all",
+  });
 
   const [mutation, { loading }] = useMutation<
     CreateCustomerCategoryMutation,
@@ -38,7 +33,7 @@ export const CreateCustomerCategory = () => {
 
   const submit = async () => {
     if (loading) return;
-    const input = getValues();
+    const input = form.getValues();
 
     const { data } = await mutation({
       variables: {
@@ -74,7 +69,7 @@ export const CreateCustomerCategory = () => {
   };
 
   return (
-    <DashboardLayout>
+    <>
       <Header
         title="Nouvelle Catégorie de client"
         subtitle="Un sous titre un peu long"
@@ -89,13 +84,8 @@ export const CreateCustomerCategory = () => {
         ]}
       />
       <div className="main-container">
-        <CustomerCategoryForm
-          loading={loading}
-          register={register}
-          submit={handleSubmit(submit)}
-          formState={formState}
-        />
+        <CustomerCategoryForm loading={loading} submit={submit} form={form} />
       </div>
-    </DashboardLayout>
+    </>
   );
 };

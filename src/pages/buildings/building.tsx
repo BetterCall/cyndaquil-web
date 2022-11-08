@@ -1,13 +1,11 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { Floors } from "../entrances/components/floors";
-import {
-  DeleteEntranceBtn,
-  DuplicateEntranceBtn,
-} from "../../components/entrances";
+import { RemoveEntranceBtn } from "../../components/entrances";
 import { useBuilding } from "../../hooks/useBuiding";
+import { Link } from "../../layouts/link";
 
 type IBuildingParams = {
   buildingId: string;
@@ -44,8 +42,8 @@ export const Building = () => {
                   className="w-full md:w-1/2"
                 >
                   <div className="flex justify-between">
-                    <DuplicateEntranceBtn id={entrance.id} refetch={refetch} />
-                    <DeleteEntranceBtn
+                    {/* <DuplicateEntranceBtn id={entrance.id} refetch={refetch} /> */}
+                    <RemoveEntranceBtn
                       buildingId={+buildingId!}
                       id={entrance.id}
                     />

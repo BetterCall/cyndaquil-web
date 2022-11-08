@@ -18,12 +18,7 @@ export const Floors: React.FC<IFloorsProps> = ({ entranceId }) => {
     <div className="overflow-x-auto ">
       <div className="py-4 inline-block min-w-full ">
         <div className="overflow-hidden">
-          <div className="min-w-full ">
-            <FloorsList
-              entranceId={entranceId}
-              floors={data?.floors?.results || []}
-            />
-          </div>
+          <div className="min-w-full "></div>
         </div>
       </div>
     </div>

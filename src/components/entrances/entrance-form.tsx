@@ -1,57 +1,57 @@
 import React from "react";
-import { FormState, UseFormRegister } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
-import { AddressInputs } from "../address-inputs";
 import { Button } from "../button";
-import { FormError } from "../form-error";
 
-import {
-  CreateEntranceInput,
-  EditCustomerInput,
-} from "../../__generated__/globalTypes";
-
-interface ICustomerForm {
-  loading: boolean;
-  register: UseFormRegister<any>;
+interface IEntranceForm {
   submit: any;
-  formState: FormState<CreateEntranceInput>;
+  loading: boolean;
+
+  form: UseFormReturn<any, any>;
 }
 
-export const EntranceForm: React.FC<ICustomerForm> = ({
-  loading,
-  register,
+export const EntranceForm: React.FC<IEntranceForm> = ({
   submit,
-  formState: { isValid, errors },
+  loading,
+  form: {
+    register,
+    formState: { isValid },
+  },
 }) => {
   return (
-    <form
-      className="grid max-w-screen-sm w-full gap-3 mt-5 mb-5 "
-      onSubmit={submit}
-    >
-      <input
-        {...register("name", { required: "name required" })}
-        placeholder="Name"
-        className="input "
-      />
-      {errors.name?.message && <FormError message={errors.name?.message} />}
-
-      <input
-        {...register("stagesCount", { required: "phone required" })}
-        placeholder="Nombre d'étages"
-        className="input "
-      />
-      {errors.stagesCount?.message && (
-        <FormError message={errors.stagesCount?.message} />
-      )}
-      <input
-        {...register("basementsCount", { required: "phone required" })}
-        placeholder="Nb de Sous-Sol"
-        className="input "
-      />
-      {errors.basementsCount?.message && (
-        <FormError message={errors.basementsCount?.message} />
-      )}
-      <Button canClick={isValid} loading={loading} actionText="Valider" />
-    </form>
+    <div className="w-full">
+      <div className="w-full p-3">
+        <p className="label">Nom</p>
+        <input
+          {...register("name", { required: "name required" })}
+          placeholder="Name"
+          className="w-full input"
+        />
+      </div>
+      <div className="w-full p-3">
+        <p className="label">Nom</p>
+        <input
+          {...register("stagesCount", { required: "phone required" })}
+          placeholder="Nombre d'étages"
+          className="w-full input"
+        />
+      </div>
+      <div className="w-full p-3">
+        <p className="label">Nom</p>
+        <input
+          {...register("basementsCount", { required: "phone required" })}
+          placeholder="Nb de Sous-Sol"
+          className="w-full input"
+        />
+      </div>
+      <div className="w-full p-3">
+        <Button
+          canClick={isValid}
+          loading={loading}
+          actionText="Valider"
+          onClick={submit}
+        />
+      </div>
+    </div>
   );
 };

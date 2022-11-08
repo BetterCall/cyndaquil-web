@@ -11,7 +11,7 @@ import { CreateBuildingInput } from "./globalTypes";
 
 export interface CreateBuildingMutation_createBuilding {
   __typename: "CreateBuildingOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   id: number | null;
 }

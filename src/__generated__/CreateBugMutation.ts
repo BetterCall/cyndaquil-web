@@ -11,7 +11,7 @@ import { CreateBugInput } from "./globalTypes";
 
 export interface CreateBugMutation_createBug {
   __typename: "CreateBugOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   id: number | null;
 }

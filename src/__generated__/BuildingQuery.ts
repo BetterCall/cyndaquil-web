@@ -22,7 +22,7 @@ export interface BuildingQuery_building_result {
 
 export interface BuildingQuery_building {
   __typename: "BuildingOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   result: BuildingQuery_building_result | null;
 }

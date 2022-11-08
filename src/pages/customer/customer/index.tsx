@@ -5,18 +5,17 @@ import { useParams } from "react-router-dom";
 
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
-import { DashboardLayout } from "../../../layouts/dashboard.layout";
 
 import { CUSTOMER } from "../../../queries/customers.queries";
 import {
   CustomerQuery,
   CustomerQueryVariables,
 } from "../../../__generated__/CustomerQuery";
-import { Card, CardHeader } from "../../../components/cards";
 import { SitesList } from "../../../components/sites";
 import { CallsList } from "../../../components/calls";
 import { WorkOrdersList } from "../../../components/work-orders";
 import { ContactsList } from "../../../components/contacts";
+import { PricesList } from "../../../components/prices";
 
 type ICustomerParams = {
   id: string;
@@ -40,7 +39,7 @@ export const Customer = () => {
     },
   });
   return (
-    <DashboardLayout>
+    <>
       <Header
         title={data?.customer?.result?.name ?? ""}
         subtitle="Un sous titre un peu long"
@@ -49,7 +48,7 @@ export const Customer = () => {
             actionText: "Modifier",
             bgColor: "indigo",
             textColor: "white",
-            link: `/customers/${data?.customer?.result?.id}/edit`,
+            link: `/customers/${data?.customer?.result?.id}/update`,
             icon: <SendIcon />,
           },
         ]}
@@ -60,6 +59,7 @@ export const Customer = () => {
           <div className="w-full xl:w-1/2   px-4 mb-4 md:mb-0">
             <SitesList customerId={+id!} />
             <WorkOrdersList />
+            <PricesList customerId={+id!} />
           </div>
           <div className="w-full xl:w-1/2   px-4 mb-4 md:mb-0">
             <ContactsList customerId={+id!} />
@@ -67,6 +67,6 @@ export const Customer = () => {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </>
   );
 };

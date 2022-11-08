@@ -36,10 +36,10 @@ export const CREATE_SITE = gql`
 
 `
 
-export const EDIT_SITE = gql`
+export const UPDATE_SITE = gql`
 
-        mutation EditSiteMutation ( $ id : Int! , $input : EditSiteInput! ) {
-            editSite(  id : $ id , input : $input ) {
+        mutation UpdateSiteMutation ( $ id : Int! , $input : UpdateSiteInput! ) {
+            updateSite(  id : $ id , input : $input ) {
                 ok 
                 error
                 customer {
@@ -125,8 +125,9 @@ query SiteEmplacementsQuery( $id : Int ! ) {
       ok 
       error
       result {
-        id 
-        name 
+ 
+        ...SitePart
+
         buildings {
           id
           name 
@@ -134,15 +135,22 @@ query SiteEmplacementsQuery( $id : Int ! ) {
             id 
             name 
             floors {
-              id
-              name 
+
+            id
+             name 
+            type
+            order 
+
               emplacements {
                 id 
+              
+
                 category {
                   id 
                   name
                 }
-                quotations {
+                
+                contractRows  {
                   id
                   contract {
                     id 
@@ -156,5 +164,7 @@ query SiteEmplacementsQuery( $id : Int ! ) {
       }
     }
   }
+${SITE_FRAGMENT}
+
 `
 

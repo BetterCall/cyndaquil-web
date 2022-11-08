@@ -38,7 +38,7 @@ export interface CustomerQuery_customer_result {
 
 export interface CustomerQuery_customer {
   __typename: "CustomerOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   result: CustomerQuery_customer_result | null;
 }

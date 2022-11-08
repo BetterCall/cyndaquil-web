@@ -17,22 +17,9 @@ interface ICreateWorkOrderForm {
 export const CreateWorkOrderForm: React.FC<ICreateWorkOrderForm> = ({
   onCompleted,
 }) => {
-  const { register, handleSubmit, getValues, setValue, formState, watch } =
-    useForm<CreateWorkOrderInput>({
-      mode: "all",
-      defaultValues: {
-        lat: 0,
-        lng: 0,
-        streetNumber: "",
-        street: "",
-        postal: "",
-        city: "",
-        name: "",
-        additionalInformations: "",
-        customerId: null,
-        siteId: null,
-      },
-    });
+  const form = useForm<CreateWorkOrderInput>({
+    mode: "all",
+  });
 
   const [mutation, { loading }] = useMutation<
     CreateWorkOrderMutation,
@@ -41,7 +28,7 @@ export const CreateWorkOrderForm: React.FC<ICreateWorkOrderForm> = ({
 
   const submit = async () => {
     if (loading) return;
-    const { lat, lng, ...input } = getValues();
+    const { lat, lng, ...input } = form.getValues();
 
     const { data } = await mutation({
       variables: {
@@ -58,14 +45,5 @@ export const CreateWorkOrderForm: React.FC<ICreateWorkOrderForm> = ({
     }
   };
 
-  return (
-    <WorkOrderForm
-      watch={watch}
-      setValue={setValue}
-      loading={loading}
-      register={register}
-      submit={handleSubmit(submit)}
-      formState={formState}
-    />
-  );
+  return <WorkOrderForm loading={loading} submit={submit} form={form} />;
 };

@@ -24,7 +24,7 @@ export interface CreateSiteMutation_createSite_customer {
 
 export interface CreateSiteMutation_createSite {
   __typename: "CreateSiteOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   id: number | null;
   customer: CreateSiteMutation_createSite_customer | null;

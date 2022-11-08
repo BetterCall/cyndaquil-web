@@ -1,24 +1,20 @@
 import { useQuery } from "@apollo/client";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/header";
 import { SendIcon } from "../../components/icons";
 import { useMe } from "../../hooks/useMe";
-import { DashboardLayout } from "../../layouts/dashboard.layout";
 import { CUSTOMER_CATEGORIES } from "../../queries/customer-categories.queries";
 import { CustomerCategoriesQuery } from "../../__generated__/CustomerCategoriesQuery";
-import { UserRole } from "../../__generated__/globalTypes";
 
 export const CustomerCategories = () => {
   const { data: meData } = useMe();
   const navigate = useNavigate();
-  const [limit, setLimit] = useState(10);
-  const { data, loading, fetchMore } =
+  const { data, loading } =
     useQuery<CustomerCategoriesQuery>(CUSTOMER_CATEGORIES);
 
   return (
-    <DashboardLayout>
+    <>
       <Header
         title="Liste des Clients"
         subtitle="Un sous titre un peu long"
@@ -39,19 +35,22 @@ export const CustomerCategories = () => {
             <table className="table-auto w-full">
               <thead>
                 <tr className="text-xs text-gray-500 text-left">
-                  <th className="pb-3 font-medium">Nom</th>
-                  <th className="pb-3 font-medium text-center">Nb. Clients</th>
-                  <th className="pb-3 font-medium text-right">Action</th>
+                  <th className=" font-medium padding-table ">Nom</th>
+                  <th className=" font-medium text-center padding-table ">
+                    Nb. Clients
+                  </th>
+                  <th className=" font-medium text-right padding-table ">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {data?.customerCategories?.results?.map((category, index) => (
                   <tr
                     key={`category-${category.id}`}
-                    className={`text-xs  ${index % 2 ? "bg-gray-50" : ""} `}
+                    className={`text-xs   ${index % 2 ? "" : "bg-gray-50"} `}
                   >
-                    <td className="flex py-3">
-                      <span className="w-8 h-8 mr-4 object-cover rounded-md bg-blue-500" />
+                    <td className="flex padding-table ">
                       <div>
                         <p
                           className="font-medium cursor-pointer"
@@ -61,15 +60,21 @@ export const CustomerCategories = () => {
                         >
                           {category.name}
                         </p>
-                        <p className="text-gray-500"> </p>
+                        <p className="text-gray-500">
+                          {category.customersCount} client{" "}
+                        </p>
                       </div>
                     </td>
-                    <td className="font-medium text-center ">10</td>
+                    <td className="font-medium text-center padding-table  ">
+                      10
+                    </td>
 
-                    <td className="text-right ">
+                    <td className="text-right padding-table ">
                       <span
                         onClick={() =>
-                          navigate(`/customers/categories/${category.id}/edit`)
+                          navigate(
+                            `/customers/categories/${category.id}/update`
+                          )
                         }
                         className="inline-block mr-2  cursor-pointer "
                       >
@@ -89,7 +94,9 @@ export const CustomerCategories = () => {
 
                       <span
                         onClick={() =>
-                          navigate(`/customers/categories/${category.id}/edit`)
+                          navigate(
+                            `/customers/categories/${category.id}/update`
+                          )
                         }
                         className="inline-block  cursor-pointer"
                       >
@@ -114,6 +121,6 @@ export const CustomerCategories = () => {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </>
   );
 };

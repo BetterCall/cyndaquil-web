@@ -11,7 +11,7 @@ import { GenerateContractInput } from "./globalTypes";
 
 export interface GenerateContractMutation_generateContract {
   __typename: "GenerateContractOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   id: number | null;
 }

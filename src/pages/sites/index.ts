@@ -1,12 +1,13 @@
 import { CreateSite } from './create-site'
-import { EditSite } from './edit-site'
+import { UpdateSite } from './update-site'
 import { Site } from './site'
 import { Sites } from './sites'
+import { SiteInit } from './init'
 
 
 export {
     CreateSite,
-    EditSite,
+    UpdateSite,
     Site,
-    Sites
+    Sites, SiteInit
 }

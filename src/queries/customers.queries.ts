@@ -27,10 +27,10 @@ export const CREATE_CUSTOMER = gql`
 
 `
 
-export const EDIT_CUSTOMER = gql`
+export const UPDATE_CUSTOMER = gql`
 
-        mutation EditCustomerMutation ( $id : Int! , $input : EditCustomerInput! ) {
-            editCustomer( id : $id , input : $input ) {
+        mutation UpdateCustomerMutation ( $id : Int! , $input : UpdateCustomerInput! ) {
+            updateCustomer( id : $id , input : $input ) {
                 ok 
                 error 
             }

@@ -1,27 +1,13 @@
 import React from "react";
-import { FormError } from "./form-error";
+import { UseFormReturn } from "react-hook-form";
 
 interface IAddressInputsProps {
-  register: any;
-  errors: any;
+  form: UseFormReturn<any, any>;
 }
 
-export const AddressInputs: React.FC<IAddressInputsProps> = ({
-  register,
-  errors,
-}) => {
+export const AddressInputs: React.FC<IAddressInputsProps> = ({ form }) => {
   return (
     <div className="flex flex-wrap w-full mb-8">
-      <div className="w-full mb-8 pb-6 border-b border-coolGray-100">
-        <div className="flex flex-wrap items-center justify-between -m-2">
-          <div className="w-full p-2">
-            <h2 className="text-coolGray-900 text-lg font-semibold">Adresse</h2>
-            <p className="text-xs text-coolGray-500 font-medium">
-              Update your billing details and address.
-            </p>
-          </div>
-        </div>
-      </div>
       <div className="w-full ">
         <div className=" h-full overflow-hidden bg-white rounded-md">
           <div className="flex flex-wrap -m-3 mb-3">
@@ -31,12 +17,11 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({
               </p>
               <input
                 className="w-full input"
-                {...register("streetNumber", { required: "name required" })}
+                {...form.register("streetNumber", {
+                  required: "name required",
+                })}
                 placeholder="streetNumber"
               />
-              {errors.number?.message && (
-                <FormError message={errors.number?.message} />
-              )}
             </div>
             <div className="w-full md:w-1/2 p-3">
               <p className="mb-1.5 font-medium text-base text-coolGray-800">
@@ -51,12 +36,9 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({
               </p>
               <input
                 className="w-full input"
-                {...register("street", { required: "name required" })}
+                {...form.register("street", { required: "name required" })}
                 placeholder="street"
               />
-              {errors.street?.message && (
-                <FormError message={errors.street?.message} />
-              )}
             </div>
 
             <div className="w-full md:w-1/2 p-3">
@@ -65,12 +47,9 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({
               </p>
               <input
                 className="w-full input"
-                {...register("city", { required: "city required" })}
+                {...form.register("city", { required: "city required" })}
                 placeholder="city"
               />
-              {errors.city?.message && (
-                <FormError message={errors.city?.message} />
-              )}
             </div>
             <div className="w-full md:w-1/2 p-3">
               <p className="mb-1.5 font-medium text-base text-coolGray-800">
@@ -78,12 +57,9 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({
               </p>
               <input
                 className="w-full input"
-                {...register("postal", { required: "postal required" })}
+                {...form.register("postal", { required: "postal required" })}
                 placeholder="postal"
               />
-              {errors.postal?.message && (
-                <FormError message={errors.postal?.message} />
-              )}
             </div>
 
             <div className="w-full md:w-1/2 p-3">
@@ -92,12 +68,9 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({
               </p>
               <input
                 className="w-full input"
-                {...register("lat", { required: "name required" })}
+                {...form.register("lat", { required: "name required" })}
                 placeholder="lat"
               />
-              {errors.lat?.message && (
-                <FormError message={errors.lat?.message} />
-              )}
             </div>
             <div className="w-full md:w-1/2 p-3">
               <p className="mb-1.5 font-medium text-base text-coolGray-800">
@@ -105,12 +78,9 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({
               </p>
               <input
                 className="w-full input"
-                {...register("lng", { required: "name required" })}
+                {...form.register("lng", { required: "name required" })}
                 placeholder="lng"
               />
-              {errors.lng?.message && (
-                <FormError message={errors.lng?.message} />
-              )}
             </div>
           </div>
         </div>

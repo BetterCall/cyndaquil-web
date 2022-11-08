@@ -1,9 +1,9 @@
 import { Building } from './building'
 import { CreateBuilding } from './create-building'
-import { EditBuilding } from './edit-building'
+import { UpdateBuilding } from './update-building'
 
 export {
     Building,
     CreateBuilding,
-    EditBuilding,
+    UpdateBuilding,
 }

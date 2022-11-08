@@ -11,7 +11,7 @@ import { FloorReordered } from "./globalTypes";
 
 export interface ReorderFloorsMutation_reorderFloors {
   __typename: "ReorderFloorOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
 }
 

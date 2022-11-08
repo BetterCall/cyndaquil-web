@@ -1,6 +1,6 @@
 import { CreateCustomer } from "./create-customer";
 import { Customer } from "./customer";
 import { Customers } from "./customers";
-import { EditCustomer } from "./edit-customer";
+import { UpdateCustomer } from "./update-customer";
 
-export { CreateCustomer, Customer, Customers, EditCustomer };
+export { CreateCustomer, Customer, Customers, UpdateCustomer };

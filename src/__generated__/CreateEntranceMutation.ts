@@ -11,7 +11,7 @@ import { CreateEntranceInput } from "./globalTypes";
 
 export interface CreateEntranceMutation_createEntrance {
   __typename: "CreateEntranceOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   id: number | null;
 }

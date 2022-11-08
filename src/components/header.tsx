@@ -1,6 +1,6 @@
 import React from "react";
 import { useMe } from "../hooks/useMe";
-import { Link } from "react-router-dom";
+import { Link } from "../layouts/link";
 
 type IHeaderButton = {
   bgColor: string;
@@ -22,9 +22,9 @@ export const Header: React.FC<IHeaderProps> = ({
 }) => {
   const { data, loading } = useMe();
   return (
-    <section className="py-8 px-6 bg-white">
+    <section className="py-6 px-6 ">
       <div className="flex flex-wrap -mx-3 items-center">
-        <div className="w-full lg:w-1/2 flex items-center  lg:mb-0 px-3">
+        <div className="w-full   md:w-1/2 flex items-center lg:mb-0 px-3">
           <span className="inline-flex justify-center items-center w-16 h-16 mr-4 bg-indigo-500 rounded">
             <svg
               className="h-7 w-7 text-white"
@@ -44,7 +44,7 @@ export const Header: React.FC<IHeaderProps> = ({
           </div>
         </div>
         {buttons.length > 0 && (
-          <div className="w-full mt-5 lg:w-auto ml-auto px-3">
+          <div className="w-full  mt-5 xl:mt-0 md:w-auto ml-auto px-3">
             {buttons.map((button) => (
               <Link to={button.link}>
                 <a

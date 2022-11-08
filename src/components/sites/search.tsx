@@ -4,37 +4,30 @@ import { useNavigate, createSearchParams } from "react-router-dom";
 import { cleanObject } from "../../helpers/clean-object";
 import { SiteFiltersInput } from "../../__generated__/globalTypes";
 import { Button } from "../button";
-import { FormError } from "../form-error";
 
-export const SearchSiteInput = () => {
+export const SearchSiteInput = (defaultValues) => {
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-  } = useForm<SiteFiltersInput>({
-    defaultValues: { search: "" },
-    mode: "onSubmit",
+  const form = useForm<SiteFiltersInput>({
+    defaultValues,
+    mode: "all",
   });
 
   const onSearchSubmit = () => {
-    const input = getValues();
+    const input = form.getValues();
     navigate({
       pathname: "/sites",
       search: `?${createSearchParams(cleanObject(input))}`,
     });
   };
 
-  const [isFormOpened, setIsFormOpened] = useState(false);
+  const [isFormOpened, setIsFormOpened] = useState(
+    Object.values(defaultValues).some((v) => v)
+  );
 
   return (
     <>
-      <div className="bg-white px-6 py-2 w-full flex flex-col items-center">
-        <form
-          className="grid gap-3 w-full items-center "
-          onSubmit={handleSubmit(onSearchSubmit)}
-        >
+      <div className="searchCard">
+        <div className="grid gap-3 w-full items-center ">
           <div className="flex row items-center justify-between">
             <div className="flex row align-text-center items-center">
               <label
@@ -57,7 +50,7 @@ export const SearchSiteInput = () => {
               <input
                 placeholder="Rechercher un client"
                 autoComplete="off"
-                {...register("search", {
+                {...form.register("search", {
                   minLength: 3,
                   required: false,
                 })}
@@ -114,7 +107,7 @@ export const SearchSiteInput = () => {
                     className="input w-full"
                     type="text"
                     placeholder="Ville"
-                    {...register("city", {})}
+                    {...form.register("city", {})}
                   />
                 </div>
 
@@ -124,7 +117,7 @@ export const SearchSiteInput = () => {
                     className="input w-full"
                     type="text"
                     placeholder="Code Postal"
-                    {...register("postal", {})}
+                    {...form.register("postal", {})}
                   />
                 </div>
               </div>
@@ -134,16 +127,12 @@ export const SearchSiteInput = () => {
                   canClick={true}
                   actionText="Rechercher"
                   loading={false}
+                  onClick={onSearchSubmit}
                 />
               </div>
             </div>
           )}
-          {errors.search && (
-            <FormError
-              message={"Faites une recherche avec minimum 3 lettres"}
-            />
-          )}
-        </form>
+        </div>
       </div>
     </>
   );

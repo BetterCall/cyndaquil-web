@@ -7,15 +7,23 @@
 // GraphQL query operation: EquipmentCategoryQuery
 // ====================================================
 
+export interface EquipmentCategoryQuery_equipmentCategory_result_benefits {
+  __typename: "Benefit";
+  id: number;
+  name: string;
+  price: number;
+}
+
 export interface EquipmentCategoryQuery_equipmentCategory_result {
   __typename: "EquipmentCategory";
   id: number;
   name: string;
+  benefits: EquipmentCategoryQuery_equipmentCategory_result_benefits[] | null;
 }
 
 export interface EquipmentCategoryQuery_equipmentCategory {
   __typename: "EquipmentCategoryOutput";
-  ok: boolean;
+  ok: boolean | null;
   error: string | null;
   result: EquipmentCategoryQuery_equipmentCategory_result | null;
 }

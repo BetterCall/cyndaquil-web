@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
     ApolloClient,
     InMemoryCache,
@@ -14,8 +16,12 @@ export const isLoggedInVar = makeVar(Boolean(token));
 export const authTokenVar = makeVar(token);
 export const emplacementIdsVar: ReactiveVar<number[]> = makeVar([0])
 
+
+
+const uri = "http://192.168.1.152:4000/graphql"
+
 const httpLink = createHttpLink({
-    uri: "http://192.168.1.152:4000/graphql",
+    uri
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -36,7 +42,7 @@ export const client = new ApolloClient({
                     users: {
                         // Don't cache separate results based on
                         // any of this field's arguments.
-                        keyArgs: false,
+                        keyArgs: ["where", ["search", "role"]],
                         // Concatenate the incoming list items with
                         // the existing list items.
                         merge(existing = {}, incoming, { args }): any {
@@ -47,23 +53,6 @@ export const client = new ApolloClient({
                         },
                     },
 
-                    searchUsers: {
-                        // Don't cache separate results based on
-                        // any of this field's arguments.
-                        keyArgs: ["where", ["search", "role"]],
-
-                        // Concatenate the incoming list items with
-                        // the existing list items.
-                        merge(existing = {}, incoming, { args }): any {
-                            let array = [...(existing.results || []), ...incoming.results]
-                            //@ts-ignore
-                            const results = Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
-                            return {
-                                ...incoming,
-                                results
-                            }
-                        },
-                    },
 
                     bugs: {
                         // Don't cache separate results based on
@@ -107,7 +96,7 @@ export const client = new ApolloClient({
                     sites: {
                         // Don't cache separate results based on
                         // any of this field's arguments.
-                        keyArgs: ["where", ["search", "customerId", "postal", "city"]],
+                        keyArgs: ["where", ["search", "customerId", "siteId", "postal", "city"]],
 
                         // Concatenate the incoming list items with
                         // the existing list items.
@@ -171,7 +160,7 @@ export const client = new ApolloClient({
                     contacts: {
                         // Don't cache separate results based on
                         // any of this field's arguments.
-                        keyArgs: ["where", ["search"]],
+                        keyArgs: ["where", ["search", "siteId", "customerId"]],
 
                         // Concatenate the incoming list items with
                         // the existing list items.
@@ -185,6 +174,82 @@ export const client = new ApolloClient({
                             }
                         },
                     },
+
+                    workOrders: {
+                        // Don't cache separate results based on
+                        // any of this field's arguments.
+                        keyArgs: ["where", ["search", "userId", "status", "postal", "date", "customerId", "siteId"]],
+
+                        // Concatenate the incoming list items with
+                        // the existing list items.
+                        merge(existing = {}, incoming, { args }): any {
+                            let array = [...(existing.results || []), ...incoming.results]
+                            //@ts-ignore
+                            const results = Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
+                            return {
+                                ...incoming,
+                                results
+                            }
+                        },
+                    },
+
+                    references: {
+                        // Don't cache separate results based on
+                        // any of this field's arguments.
+                        keyArgs: ["where", ["search", "brandId"]],
+
+                        // Concatenate the incoming list items with
+                        // the existing list items.
+                        merge(existing = {}, incoming, { args }): any {
+                            let array = [...incoming.results, ...(existing.results || [])]
+                            //@ts-ignore
+                            const results = Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
+                            return {
+                                ...incoming,
+                                results
+                            }
+                        },
+                    },
+
+
+                    benefits: {
+                        // Don't cache separate results based on
+                        // any of this field's arguments.
+                        keyArgs: ["where", ["categoryId"]],
+
+                        // Concatenate the incoming list items with
+                        // the existing list items.
+                        merge(existing = {}, incoming, { args }): any {
+                            let array = [...incoming.results, ...(existing.results || [])]
+                            //@ts-ignore
+                            const results = Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
+                            return {
+                                ...incoming,
+                                results
+                            }
+                        },
+                    },
+
+                    prices: {
+                        // Don't cache separate results based on
+                        // any of this field's arguments.
+                        keyArgs: ["where", ["benefitId", "customerId"]],
+
+                        // Concatenate the incoming list items with
+                        // the existing list items.
+                        merge(existing = {}, incoming, { args }): any {
+                            let array = [...incoming.results, ...(existing.results || [])]
+                            //@ts-ignore
+                            const results = Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
+                            return {
+                                ...incoming,
+                                results
+                            }
+                        },
+                    },
+
+
+
 
                     isLoggedIn: {
                         read() {

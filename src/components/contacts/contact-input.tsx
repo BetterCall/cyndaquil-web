@@ -1,25 +1,22 @@
-import { gql, useApolloClient, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import React, { useState, useEffect } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { CONTACTS } from "../../queries/contacts.queries";
-
-import { CreateContactForm } from "./create-contact-form";
 
 import {
   ContactsQuery,
   ContactsQueryVariables,
 } from "../../__generated__/ContactsQuery";
+import { UseFormReturn } from "react-hook-form";
 
 interface IContactInput {
-  setValue: any;
-  defaultValue?: string;
-  canCreate?: boolean;
+  form: UseFormReturn<any, any>;
+  disabled?: boolean;
 }
 
 export const ContactInput: React.FC<IContactInput> = ({
-  setValue,
-  defaultValue,
-  canCreate = false,
+  form,
+  disabled = false,
 }) => {
   const [isOpened, setIsOpened] = useState(false);
   const [searchFn, { data, loading, called, fetchMore }] = useLazyQuery<
@@ -27,8 +24,8 @@ export const ContactInput: React.FC<IContactInput> = ({
     ContactsQueryVariables
   >(CONTACTS);
 
-  const [search, setSearch] = useState(defaultValue);
-  const [hasBeenSelected, setSelected] = useState(!!defaultValue);
+  const [search, setSearch] = useState("");
+  const [hasBeenSelected, setSelected] = useState(false);
 
   const debouncedSearchTerm = useDebounce(search, 500);
   useEffect(
@@ -50,37 +47,8 @@ export const ContactInput: React.FC<IContactInput> = ({
   );
 
   useEffect(() => {
-    if (!hasBeenSelected) setValue("contactId", null);
+    if (!hasBeenSelected) form.setValue("contactId", null);
   }, [hasBeenSelected]);
-
-  const [create, setCreate] = useState(false);
-  const onCompleted = (contactCreated: any) => {
-    console.log("contact ", contactCreated);
-
-    setIsOpened(false);
-    setSearch(`${contactCreated.firstname} ${contactCreated.lastname} `);
-    setSelected(true);
-    setValue("contactId", contactCreated.id);
-
-    setCreate(false);
-  };
-
-  if (create) {
-    return (
-      <>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setCreate(false);
-          }}
-          className={`mt-5 text-lg w-full font-medium focus:outline-none text-white py-4  transition-colors  bg-gray-700 hover:bg-gray-800  `}
-        >
-          annuler
-        </button>
-        <CreateContactForm onCompleted={onCompleted} />
-      </>
-    );
-  }
 
   return (
     <div className="flex flex-col">
@@ -88,11 +56,11 @@ export const ContactInput: React.FC<IContactInput> = ({
       <input
         className="input mb-3"
         onChange={(e) => {
-          console.log(e.target.value);
           setSearch(e.target.value);
           setSelected(false);
         }}
         value={search}
+        disabled={disabled}
       />
 
       {isOpened && search !== "" && !hasBeenSelected && (
@@ -115,7 +83,7 @@ export const ContactInput: React.FC<IContactInput> = ({
                   setIsOpened(false);
                   setSearch(`${contact.firstname} ${contact.lastname} `);
                   setSelected(true);
-                  setValue("contactId", contact.id);
+                  form.setValue("contactId", contact.id);
                 }}
               >
                 <h2 className="">
@@ -150,18 +118,6 @@ export const ContactInput: React.FC<IContactInput> = ({
                 }`}
               >
                 {loading ? "Chargement" : "Plus de resultats"}{" "}
-              </button>
-            )}
-
-            {canCreate && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setCreate(true);
-                }}
-                className={`mt-2 text-lg w-full font-medium focus:outline-none text-white py-4  transition-colors  bg-cyan-500 hover:bg-cyan-600  `}
-              >
-                Nouveau Contact
               </button>
             )}
           </div>

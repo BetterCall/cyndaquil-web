@@ -1,12 +1,10 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useMe } from "../../hooks/useMe";
-import { DashboardLayout } from "../../layouts/dashboard.layout";
+import { Link } from "../../layouts/link";
 import { EQUIPMENT_CATEGORIES } from "../../queries/equipment-categories.queries";
 import { EquipmentCategoriesQuery } from "../../__generated__/EquipmentCategoriesQuery";
-import { UserRole } from "../../__generated__/globalTypes";
 
 export const EquipmentCategories = () => {
   const { data: meData } = useMe();
@@ -15,7 +13,7 @@ export const EquipmentCategories = () => {
     useQuery<EquipmentCategoriesQuery>(EQUIPMENT_CATEGORIES);
 
   return (
-    <DashboardLayout>
+    <>
       <section className="py-8 px-6 bg-white">
         <div className="flex flex-wrap -mx-3 items-center">
           <div className="w-full lg:w-1/2 flex items-center mb-5 lg:mb-0 px-3">
@@ -116,38 +114,39 @@ export const EquipmentCategories = () => {
           <table className="table-auto w-full">
             <thead>
               <tr className="text-xs text-gray-500 text-left">
-                <th className="pb-3 font-medium">Utilisateur</th>
-                <th className="pb-3 font-medium text-center">
+                <th className=" padding-table font-medium">Utilisateur</th>
+                <th className=" padding-table font-medium text-center">
                   Nb. Equipements
                 </th>
-                <th className="pb-3 font-medium text-right">Action</th>
+                <th className=" padding-table font-medium text-right">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
               {data?.equipmentCategories?.results?.map((category, index) => (
                 <tr
                   key={`category-${category.id}`}
-                  className={`text-xs  ${index % 2 ? "bg-gray-50" : ""} `}
+                  className={`text-xs   ${index % 2 ? "" : "bg-gray-50"} `}
                 >
-                  <td className="flex py-3">
-                    <span className="w-8 h-8 mr-4 object-cover rounded-md bg-red-500" />
+                  <td className="flex padding-table ">
                     <div>
                       <p
                         className="font-medium  cursor-pointer"
                         onClick={() =>
-                          navigate(`/equipments/categories/${category.id}`)
+                          navigate(`/equipments/category/${category.id}`)
                         }
                       >
                         {category?.name}
                       </p>
                     </div>
                   </td>
-                  <td className="text-center ">10 </td>
+                  <td className="text-center padding-table  ">10 </td>
 
-                  <td className="text-right">
+                  <td className="text-right padding-table ">
                     <span
                       onClick={() =>
-                        navigate(`/equipments/categories/${category.id}/edit`)
+                        navigate(`/equipments/categories/${category.id}/update`)
                       }
                       className="inline-block mr-2  cursor-pointer "
                     >
@@ -191,6 +190,6 @@ export const EquipmentCategories = () => {
           </table>
         </div>
       </div>
-    </DashboardLayout>
+    </>
   );
 };
