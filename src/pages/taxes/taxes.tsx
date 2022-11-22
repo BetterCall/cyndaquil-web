@@ -1,119 +1,80 @@
 import { useLazyQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/button";
 import { Header } from "../../components/header";
 import { SendIcon } from "../../components/icons";
-import { SearchContractsInput } from "../../components/contracts";
-import { parseParams } from "../../helpers/clean-object";
-import { useMe } from "../../hooks/useMe";
-import { CONTRACTS } from "../../queries/contracts.queries";
-import {
-  ContractsQuery,
-  ContractsQueryVariables,
-} from "../../__generated__/ContractsQuery";
+import { TAXES } from "../../queries/taxes.queries";
 
-export const Contracts = () => {
-  const { data: meData } = useMe();
+import { TaxesQuery } from "../../__generated__/TaxesQuery";
+
+export const Taxes = () => {
   const navigate = useNavigate();
-  const [limit, setLimit] = useState(10);
+  const [search, { data, loading }] = useLazyQuery<TaxesQuery>(TAXES);
 
-  const [search, { data, loading, fetchMore, error }] = useLazyQuery<
-    ContractsQuery,
-    ContractsQueryVariables
-  >(CONTRACTS);
-
-  const [searchParams] = useSearchParams();
   useEffect(() => {
     search({
       fetchPolicy: "network-only",
-      variables: {
-        limit,
-        offset: 0,
-        where: parseParams(searchParams),
-      },
     });
-  }, [searchParams]);
+  }, []);
+
   return (
     <>
       <Header
-        title="Liste des Contrats"
-        subtitle="Un sous titre un peu long"
+        title={"Liste des Taxes"}
+        subtitle={""}
         buttons={[
           {
-            actionText: "Nouveau Contrat",
+            actionText: "Nouvelle Taxe",
             bgColor: "indigo",
             textColor: "white",
-            link: "/contracts/create",
+            link: `/taxes/create`,
             icon: <SendIcon />,
           },
         ]}
       />
-      <div className="main-container">
-        <SearchContractsInput {...parseParams(searchParams)} />
 
+      <div className="main-container">
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           <table className="table-auto w-full">
             <thead>
               <tr className="text-xs text-gray-500 text-left">
-                <th className="  padding-table font-medium text-left">
-                  Utilisateur
+                <th className="padding-table   font-medium">Nom</th>
+                <th className="padding-table   font-medium text-center">
+                  Valeur
                 </th>
-                <th className="  padding-table font-medium text-center">
-                  Code Postal
-                </th>
-                <th className="  padding-table font-medium text-center">
-                  Client
-                </th>
-                <th className="  padding-table font-medium text-center">
-                  Site
-                </th>
-                <th className="  padding-table font-medium text-center">
-                  Etat
-                </th>
-                <th className="  padding-table font-medium text-right">
+                <th className="padding-table   font-medium text-right">
                   Action
                 </th>
               </tr>
             </thead>
             <tbody>
-              {data?.contracts?.results?.map((contract, index) => (
+              {data?.taxes?.results?.map((taxe, index) => (
                 <tr
-                  key={`contract-${contract.id}`}
+                  key={`taxe-${taxe.id}`}
                   className={`text-xs   ${index % 2 ? "" : "bg-gray-50"} `}
                 >
-                  <td className="flex   padding-table ">
-                    <div>
-                      <p
-                        className="font-medium  cursor-pointer"
-                        onClick={() => navigate(`/contracts/${contract.id}`)}
-                      >
-                        {contract.name}
-                      </p>
-                      <p className="text-gray-500"></p>
-                    </div>
-                  </td>
-                  <td className="  padding-table  text-center ">
-                    {" "}
-                    {contract.status}
-                  </td>
-                  <td className="   padding-table  text-center ">
-                    {" "}
-                    {contract.customer.name}{" "}
-                  </td>
-                  <td className="  padding-table  text-center ">
-                    {contract?.madeBy.firstname} {contract?.madeBy.lastname}
-                  </td>
-                  <td className="  padding-table  text-center ">
-                    {contract?.site?.name ?? "-"}
+                  <td className="  py-3 padding-table  ">
+                    <p
+                      className="font-medium  cursor-pointer"
+                      onClick={() => navigate(`/taxes/${taxe.id}`)}
+                    >
+                      {taxe?.name}
+                    </p>
                   </td>
 
-                  <td className="  padding-table  text-right">
+                  <td className="py-3 padding-table text-center ">
+                    <p
+                      className="font-medium  cursor-pointer"
+                      onClick={() => navigate(`/taxes/${taxe.id}`)}
+                    >
+                      {taxe?.value} %
+                    </p>
+                  </td>
+
+                  <td className="text-right padding-table ">
                     <span
-                      onClick={() =>
-                        navigate(`/contracts/${contract.id}/update`)
-                      }
+                      onClick={() => navigate(`/taxes/${taxe.id}/update`)}
                       className="inline-block mr-2  cursor-pointer "
                     >
                       <svg
@@ -131,9 +92,7 @@ export const Contracts = () => {
                     </span>
 
                     <span
-                      onClick={() =>
-                        navigate(`/work-orders/${contract.id}/update`)
-                      }
+                      onClick={() => navigate(`/taxes/${taxe.id}/update`)}
                       className="inline-block  cursor-pointer"
                     >
                       <svg
@@ -155,23 +114,6 @@ export const Contracts = () => {
             </tbody>
           </table>
         </div>
-
-        {data?.contracts?.hasMore && (
-          <Button
-            canClick={!loading}
-            loading={loading}
-            actionText="Plus"
-            onClick={() => {
-              fetchMore({
-                variables: {
-                  offset: data?.contracts?.results?.length,
-                  limit,
-                  where: parseParams(searchParams),
-                },
-              });
-            }}
-          />
-        )}
       </div>
     </>
   );

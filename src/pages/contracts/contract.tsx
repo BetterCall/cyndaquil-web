@@ -4,8 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Card, CardHeader } from "../../components/cards";
 import { Header } from "../../components/header";
 import { SendIcon } from "../../components/icons";
-import { WorkOrdersList } from "../../components/work-orders";
-import { objectMap } from "../../helpers/object";
 import { CONTRACT } from "../../queries/contracts.queries";
 import {
   ContractQuery,
@@ -32,27 +30,7 @@ export const Contract = () => {
     },
   });
 
-  const formatToEquipement = (arr) => {
-    console.log("ARR ", arr);
-    let sorted = arr.reduce((prev, curr) => {
-      const temp = prev;
-      const id = "" + curr.emplacement?.category?.id ?? "10";
-      console.log("curr ", id);
-      temp[id] = [...(temp[id] ?? []), curr];
-      // @ts-ignore
-      return temp;
-    }, []);
-
-    const formated: any[] = [];
-    Object.keys(sorted).map((key) => {
-      formated.push(sorted[key]);
-    });
-
-    console.log("formated ", formated);
-    console.log("sorted ", sorted);
-
-    return formated;
-  };
+  console.log("DATA ", data?.contract?.result?.rows);
 
   return (
     <>
@@ -219,29 +197,78 @@ export const Contract = () => {
                 <div className="flex flex-wrap -mx-2"></div>
               </Card>
             </div>
-            <div className="w-full xl:w-1/2 xl:pr-4 mb-4 md:mb-0"></div>
+
+            <div className="w-full xl:w-1/2 xl:pr-4    mb-4 md:mb-0">
+              <Card>
+                <CardHeader title="Résumé" />
+
+                <div className=" ">
+                  <div className="mt-4 px-4">
+                    <div className="mb-2  flex justify-between">
+                      <span>Quantité </span>
+                      <span className=" font-medium">
+                        {data?.contract.result?.equipmentCount}
+                      </span>
+                    </div>
+                    <div className="mb-2  flex justify-between">
+                      <span>Montant HT</span>
+                      <span className=" font-medium">
+                        {data?.contract.result?.price} € HT
+                      </span>
+                    </div>
+
+                    <div className="mb-2  flex justify-between  border-b pb-2">
+                      <span>Montant TVA </span>
+                      <span className=" font-medium">
+                        {data?.contract.result?.taxePrice} %
+                      </span>
+                    </div>
+
+                    <div className=" flex justify-between font-medium text-lg mt-2">
+                      <span className=" font-medium">Montant Estimatif</span>
+                      <span className=" font-medium">
+                        {(data?.contract.result?.taxePrice ?? 0) +
+                          (data?.contract.result?.price ?? 0)}{" "}
+                        € TTC
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
             <div className="w-full xl:w-1/2 xl:pr-4    mb-4 md:mb-0">
               {data?.contract?.result?.rows?.map((row: any, index: number) => (
                 <Card>
-                  <CardHeader title={row.category} />
+                  <CardHeader title={row.benefit?.name} />
 
                   <div className=" ">
                     <div key={`row-${index}`} className="mt-4 px-4">
                       <div className="mb-2  flex justify-between">
                         <span>Quantité </span>
-                        <span>{row.quantity}</span>
+                        <span className=" font-medium">{row.price}</span>
                       </div>
-                      <div className="mb-2  flex justify-between border-b pb-2">
+                      <div className="mb-2  flex justify-between">
                         <span>Prix Unitaire </span>
+                        <span className=" font-medium">{row.price} € HT</span>
+                      </div>
+
+                      <div className="mb-2  flex justify-between  border-b pb-2">
+                        <span>Taux TVA </span>
+                        <span className=" font-medium">{row.taxe} %</span>
+                      </div>
+
+                      <div className=" flex justify-between font-medium text-lg mt-2">
+                        <span className=" font-medium">Montant Estimatif</span>
                         <span className=" font-medium">
-                          {row.unitPrice} € HT
+                          {row.taxePrice * row.quantity} € HT
                         </span>
                       </div>
 
                       <div className=" flex justify-between font-medium text-lg mt-2">
                         <span className=" font-medium">Montant Estimatif</span>
                         <span className=" font-medium">
-                          {row.unitPrice * row.quantity} € HT
+                          {row.price * row.quantity} € HT
                         </span>
                       </div>
                     </div>
@@ -249,87 +276,11 @@ export const Contract = () => {
                 </Card>
               ))}
             </div>
-            <div className="w-full xl:w-1/2  mb-4 md:mb-0">
-              <Card>
-                <CardHeader title="Total" />
-
-                <div className=" ">
-                  <div className="mt-4 px-4">
-                    <div className="mb-2 flex justify-between">
-                      <span>Nombre d'équipement</span>
-                      <span>20</span>
-                    </div>
-
-                    <div className="mb-2  flex justify-between">
-                      <span>Montant HT</span>
-                      <span>xx € HT</span>
-                    </div>
-                    <div className="mb-2  flex justify-between border-b pb-2">
-                      <span>Montant TVA</span>
-                      <span className=" font-medium">xx € HT</span>
-                    </div>
-
-                    <div className=" flex justify-between font-medium text-lg mt-2">
-                      <span className=" font-medium">Montant Estimatif</span>
-                      <span className=" font-medium">xx € TTC</span>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-            </div>
 
             <div className="w-full mb-4 md:mb-0">
               <Card>
                 <CardHeader title="Détails" />
-                <div className="">
-                  {formatToEquipement(data?.contract?.result?.rows ?? []).map(
-                    (eq) => {
-                      console.log(eq);
-
-                      return eq.map((row) => (
-                        <div className="mt-4">
-                          <div className="font-bold">
-                            Batiment :{" "}
-                            {eq.emplacement?.floor?.entrance.building.name}
-                          </div>
-                          <div className="mx-2">
-                            <div className="font-medium">
-                              Entrée : {eq.emplacement?.floor?.entrance.name}
-                            </div>
-                            <div className="mx-2">
-                              Etage : {eq.emplacement?.floor?.name} : Equipement
-                              :{" "}
-                              <span className="font-bold">
-                                1 {eq.emplacement?.category?.name}{" "}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      ));
-
-                      return (
-                        <div className="mt-4">
-                          <div className="font-bold">
-                            Batiment :{" "}
-                            {eq.emplacement?.floor?.entrance.building.name}
-                          </div>
-                          <div className="mx-2">
-                            <div className="font-medium">
-                              Entrée : {eq.emplacement?.floor?.entrance.name}
-                            </div>
-                            <div className="mx-2">
-                              Etage : {eq.emplacement?.floor?.name} : Equipement
-                              :{" "}
-                              <span className="font-bold">
-                                1 {eq.emplacement?.category?.name}{" "}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    }
-                  )}
-                </div>
+                <div className=""></div>
               </Card>
             </div>
           </div>

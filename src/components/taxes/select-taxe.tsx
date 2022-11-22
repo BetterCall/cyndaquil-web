@@ -1,21 +1,23 @@
+import { useQuery } from "@apollo/client";
 import React from "react";
-import { UseFormReturn } from "react-hook-form";
-import { useCustomerCategories } from "../../hooks/useCustomerCategories";
+import { TAXES } from "../../queries/taxes.queries";
+import { TaxesQuery } from "../../__generated__/TaxesQuery";
 
-interface ICustomerCategoriesInput {
-  form: UseFormReturn<any, any>;
+interface ISelectBenefitInput {
+  setValue: any;
+  error?: boolean;
+  value?: any;
 }
 
-export const CustomerCategoriesInput: React.FC<ICustomerCategoriesInput> = ({
-  form,
+export const SelectTaxe: React.FC<ISelectBenefitInput> = ({
+  setValue,
+  error,
+  value,
 }) => {
-  const { data } = useCustomerCategories();
-  const value = form.watch("categoryId");
+  const { data } = useQuery<TaxesQuery>(TAXES);
 
-  console.log(data);
   return (
     <div className="w-full">
-      <p className="label">Type de clients</p>
       <div className="relative">
         <svg
           className="absolute right-4 top-1/2 transform -translate-y-1/2"
@@ -32,17 +34,19 @@ export const CustomerCategoriesInput: React.FC<ICustomerCategoriesInput> = ({
         </svg>
 
         <select
-          className="input appearance-none w-full"
-          {...form.register("categoryId")}
+          className={`input appearance-none w-full  ${
+            error && " border-red-500"
+          } `}
+          onChange={(e) => setValue(e)}
         >
-          <option value={undefined}>-</option>
-          {data?.customerCategories?.results?.map((category: any) => (
+          <option value={-1}>-</option>
+          {data?.taxes?.results?.map((benefit: any) => (
             <option
-              selected={value === category.id}
-              value={category.id}
-              key={`category-${category.id}`}
+              value={benefit.id}
+              key={`benefit-${benefit.id}`}
+              selected={benefit.id == value}
             >
-              {category.name}
+              {benefit.name}
             </option>
           ))}
         </select>

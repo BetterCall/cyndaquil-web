@@ -136,27 +136,30 @@ query SiteEmplacementsQuery( $id : Int ! ) {
             name 
             floors {
 
-            id
-             name 
-            type
-            order 
+                id
+                name 
+                type
+                order 
 
-              emplacements {
-                id 
-              
-
-                category {
-                  id 
-                  name
-                }
-                
-                contractRows  {
-                  id
-                  contract {
+                emplacements {
                     id 
-                    status
-                  }
-                }
+
+
+                    category {
+                        id 
+                        name
+                    }
+                    
+                    contractRows  {
+                        id  
+                        contractRow {
+                            id
+                            contract {
+                                id 
+                                status
+                            }
+                        }
+                    }
               }
             }
           }

@@ -1,12 +1,7 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
-import { useEquipmentCategories } from "../../hooks/useEquipementCategories";
-import { BENEFITS } from "../../queries/benefits.queries";
-import {
-  BenefitsQuery,
-  BenefitsQueryVariables,
-} from "../../__generated__/BenefitsQuery";
+import { useBenefits } from "../../hooks/useBenefits";
 
 interface IBenefitsInput {
   form: UseFormReturn<any, any>;
@@ -17,9 +12,10 @@ export const BenefitsInput: React.FC<IBenefitsInput> = ({
   form,
   disabled = false,
 }) => {
-  const { data } = useQuery<BenefitsQuery, BenefitsQueryVariables>(BENEFITS, {
-    variables: { where: {} },
+  const { data } = useBenefits({
+    where: {},
   });
+
   const value = form.watch("benefitId");
 
   return (

@@ -31,7 +31,7 @@ export const BRAND = gql`
 export const REMOVE_BRAND = gql`
 
     mutation RemoveBrandMutation( $id : Int! ) {
-        removeCall( id : $id ) {
+        removeBrand( id : $id ) {
             ok 
             error
         }

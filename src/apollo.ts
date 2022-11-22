@@ -14,7 +14,6 @@ const token = localStorage.getItem(LOCALSTORAGE_TOKEN);
 
 export const isLoggedInVar = makeVar(Boolean(token));
 export const authTokenVar = makeVar(token);
-export const emplacementIdsVar: ReactiveVar<number[]> = makeVar([0])
 
 
 

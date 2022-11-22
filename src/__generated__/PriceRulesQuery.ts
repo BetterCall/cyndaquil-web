@@ -49,7 +49,7 @@ export interface PriceRulesQuery {
 }
 
 export interface PriceRulesQueryVariables {
-  limit: number;
-  offset: number;
+  limit?: number | null;
+  offset?: number | null;
   where: PriceRulesFiltersInput;
 }

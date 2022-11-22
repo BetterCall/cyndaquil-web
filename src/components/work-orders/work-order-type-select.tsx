@@ -40,7 +40,7 @@ export const WorkOrderTypeSelect: React.FC<IWorkOrderTypeSelect> = ({
               key={`type-${value}`}
               selected={value === type}
             >
-              {type}
+              {value}
             </option>
           ))}
         </select>

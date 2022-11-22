@@ -17,17 +17,16 @@ import {
 } from "../../__generated__/UpdateBenefitMutation";
 
 type IUpdateBenefitParams = {
-  categoryId: string;
-  benefitId: string;
+  id: string;
 };
 
 export const UpdateBenefit = () => {
   const client = useApolloClient();
 
-  const { categoryId, benefitId } = useParams<IUpdateBenefitParams>();
+  const { id } = useParams<IUpdateBenefitParams>();
   const navigate = useNavigate();
   useEffect(() => {
-    if (!categoryId || !benefitId) {
+    if (!id) {
       navigate("/benefits");
     }
   }, []);
@@ -43,7 +42,7 @@ export const UpdateBenefit = () => {
 
   const { data: qData } = useQuery<BenefitQuery, BenefitQueryVariables>(
     BENEFIT,
-    { variables: { id: +benefitId! } }
+    { variables: { id: +id! } }
   );
 
   useEffect(() => {
@@ -60,7 +59,7 @@ export const UpdateBenefit = () => {
       console.log(input);
       const { data } = await mutation({
         variables: {
-          id: +benefitId!,
+          id: +id!,
           input: {
             ...input,
             price: parseFloat((input.price + "").replace(",", ".")),
@@ -73,7 +72,7 @@ export const UpdateBenefit = () => {
       }
 
       client.writeFragment({
-        id: `Benefit:${benefitId}`,
+        id: `Benefit:${id}`,
         fragment: gql`
           fragment UpdateedBenefit on Benefit {
             name
@@ -85,8 +84,6 @@ export const UpdateBenefit = () => {
           price: input.price,
         },
       });
-
-      navigate(`/equipments/category/${categoryId}`);
     } catch (e) {
       console.log(e);
     }

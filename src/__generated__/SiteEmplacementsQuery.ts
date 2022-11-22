@@ -15,23 +15,29 @@ export interface SiteEmplacementsQuery_siteEmplacements_result_buildings_entranc
   name: string;
 }
 
-export interface SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors_emplacements_contractRows_contract {
+export interface SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors_emplacements_contractRows_contractRow_contract {
   __typename: "Contract";
   id: number;
   status: ContractStatus;
 }
 
-export interface SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors_emplacements_contractRows {
+export interface SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors_emplacements_contractRows_contractRow {
   __typename: "ContractRow";
   id: number;
-  contract: SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors_emplacements_contractRows_contract;
+  contract: SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors_emplacements_contractRows_contractRow_contract;
+}
+
+export interface SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors_emplacements_contractRows {
+  __typename: "ContractRowToEmplacement";
+  id: number;
+  contractRow: SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors_emplacements_contractRows_contractRow | null;
 }
 
 export interface SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors_emplacements {
   __typename: "Emplacement";
   id: number;
   category: SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors_emplacements_category | null;
-  contractRows: SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors_emplacements_contractRows[] | null;
+  contractRows: SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors_emplacements_contractRows[];
 }
 
 export interface SiteEmplacementsQuery_siteEmplacements_result_buildings_entrances_floors {

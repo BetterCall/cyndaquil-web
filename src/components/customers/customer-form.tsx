@@ -22,6 +22,7 @@ export const CustomerForm: React.FC<ICustomerForm> = ({
   form,
 }) => {
   const { data } = useCustomerCategories();
+  console.log(data);
   return (
     <Card>
       <FormHeader
@@ -43,7 +44,7 @@ export const CustomerForm: React.FC<ICustomerForm> = ({
           </div>
           <div className="w-full md:w-1/2 p-3">
             <p className="mb-1.5 font-medium text-base text-coolGray-800">
-              Type de client
+              Type de clients
             </p>
             <div className="relative">
               <svg

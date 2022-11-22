@@ -56,6 +56,12 @@ query EquipmentCategoryQuery ( $id : Int! ) {
                 id
                 name 
                 price
+
+                taxe {
+                    id
+                    name
+                    value
+                }
             }
         }
     }

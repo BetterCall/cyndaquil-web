@@ -97,6 +97,7 @@ query WorkOrderQuery ( $ id : Int! ) {
             customer  {
                 ...CustomerPart
             }
+            
             emplacements {
                 id
                 emplacement {

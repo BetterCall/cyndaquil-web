@@ -251,6 +251,19 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
                   },
                 ]}
               />
+
+              <ExpendableLink
+                icon={<SendIcon />}
+                title="Taxes"
+                url="/taxes"
+                submenus={[
+                  {
+                    icon: <SendIcon />,
+                    title: "Nouvelle Taxe",
+                    url: "/taxes/create",
+                  },
+                ]}
+              />
             </ul>
             <h3 className="mb-2 text-xs uppercase text-gray-500 font-medium">
               Secondary

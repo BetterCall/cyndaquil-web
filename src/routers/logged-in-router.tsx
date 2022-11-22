@@ -7,7 +7,12 @@ import { Home } from "../pages/home";
 import { CreateBuilding, UpdateBuilding, Building } from "../pages/buildings";
 import { CreateCall, Calls } from "../pages/calls";
 
-import { Contract, Contracts, CreateContract } from "../pages/contracts";
+import {
+  Contract,
+  Contracts,
+  CreateContract,
+  UpdateContract,
+} from "../pages/contracts";
 import {
   CreateCustomerCategory,
   CustomerCategories,
@@ -58,6 +63,8 @@ import { DashboardLayout } from "../layouts/dashboard.layout";
 import { Equipment } from "../pages/equipments/equipment";
 import { CreateBenefit, UpdateBenefit } from "../pages/benefits";
 import { CreatePrice, UpdatePrice, Prices } from "../pages/prices";
+import { CreateTaxe, UpdateTaxe, Taxes, Taxe } from "../pages/taxes";
+import { Benefits } from "../pages/benefits/benefits";
 
 export const LoggedInRouter = () => {
   const { data, loading, error } = useMe();
@@ -76,6 +83,7 @@ export const LoggedInRouter = () => {
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<User />} />
           <Route path="/users/:id/update" element={<UpdateUser />} />
+
           <Route path="/customers" element={<Customers />} />
           <Route path="/customers/create" element={<CreateCustomer />} />
           <Route path="/customers/:id" element={<Customer />} />
@@ -116,11 +124,6 @@ export const LoggedInRouter = () => {
             element={<UpdateBuilding />}
           />
 
-          <Route
-            path="/sites/:id/contracts/create"
-            element={<CreateContract />}
-          />
-
           {/* Equipments Categories */}
           <Route
             path="/equipments/categories"
@@ -139,7 +142,9 @@ export const LoggedInRouter = () => {
           <Route path="/calls/create" element={<CreateCall />} />
 
           <Route path="/contracts" element={<Contracts />} />
+          <Route path="/contracts/create" element={<CreateContract />} />
           <Route path="/contracts/:id" element={<Contract />} />
+          <Route path="/contracts/:id/update" element={<UpdateContract />} />
 
           <Route path="/work-orders" element={<WorkOrders />} />
           <Route path="/work-orders/create" element={<CreateWorkOrder />} />
@@ -149,7 +154,6 @@ export const LoggedInRouter = () => {
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/contacts/:id" element={<Contact />} />
           <Route path="/contacts/create" element={<CreateContact />} />
-          <Route path="/contacts/:id/update" element={<Todo />} />
 
           <Route path="/equipments" element={<Equipments />} />
           <Route path="/equipments/:id" element={<Equipment />} />
@@ -161,15 +165,10 @@ export const LoggedInRouter = () => {
             element={<EquipmentCategory />}
           />
 
-          <Route
-            path="/equipments/category/:categoryId/new-benefit"
-            element={<CreateBenefit />}
-          />
-
-          <Route
-            path="/equipments/category/:categoryId/benefits/:benefitId/update"
-            element={<UpdateBenefit />}
-          />
+          <Route path="/benefits" element={<Benefits />} />
+          <Route path="/benefits/:id" element={<Todo />} />
+          <Route path="/benefits/create" element={<CreateBenefit />} />
+          <Route path="/benefits/:id/update" element={<UpdateBenefit />} />
 
           <Route path="/bugs" element={<Bugs />} />
           <Route path="/bugs/:id" element={<Bug />} />
@@ -193,6 +192,11 @@ export const LoggedInRouter = () => {
           <Route path="/prices" element={<Prices />} />
           <Route path="/prices/create" element={<CreatePrice />} />
           <Route path="/prices/:id/update" element={<UpdatePrice />} />
+
+          <Route path="/taxes" element={<Taxes />} />
+          <Route path="/taxes/create" element={<CreateTaxe />} />
+          <Route path="/taxes/:id" element={<Taxe />} />
+          <Route path="/taxes/:id/update" element={<UpdateTaxe />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

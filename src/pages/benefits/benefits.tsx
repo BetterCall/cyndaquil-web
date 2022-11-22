@@ -1,119 +1,81 @@
 import { useLazyQuery } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../components/button";
 import { Header } from "../../components/header";
 import { SendIcon } from "../../components/icons";
-import { SearchContractsInput } from "../../components/contracts";
-import { parseParams } from "../../helpers/clean-object";
-import { useMe } from "../../hooks/useMe";
-import { CONTRACTS } from "../../queries/contracts.queries";
+import { parseSearchParams } from "../../helpers/clean-object";
+import { BENEFITS } from "../../queries/benefits.queries";
 import {
-  ContractsQuery,
-  ContractsQueryVariables,
-} from "../../__generated__/ContractsQuery";
+  BenefitsQuery,
+  BenefitsQueryVariables,
+} from "../../__generated__/BenefitsQuery";
+import { BenefitFiltersInput } from "../../__generated__/globalTypes";
 
-export const Contracts = () => {
-  const { data: meData } = useMe();
+export const Benefits = () => {
   const navigate = useNavigate();
-  const [limit, setLimit] = useState(10);
 
-  const [search, { data, loading, fetchMore, error }] = useLazyQuery<
-    ContractsQuery,
-    ContractsQueryVariables
-  >(CONTRACTS);
-
+  const [search, { data, loading, fetchMore }] = useLazyQuery<
+    BenefitsQuery,
+    BenefitsQueryVariables
+  >(BENEFITS);
   const [searchParams] = useSearchParams();
   useEffect(() => {
     search({
       fetchPolicy: "network-only",
       variables: {
-        limit,
-        offset: 0,
-        where: parseParams(searchParams),
+        where: parseSearchParams(searchParams),
       },
     });
   }, [searchParams]);
   return (
     <>
       <Header
-        title="Liste des Contrats"
-        subtitle="Un sous titre un peu long"
+        title={"Liste des Services"}
+        subtitle={""}
         buttons={[
           {
-            actionText: "Nouveau Contrat",
+            actionText: "Nouveau Service",
             bgColor: "indigo",
             textColor: "white",
-            link: "/contracts/create",
+            link: `/benefits/create`,
             icon: <SendIcon />,
           },
         ]}
       />
-      <div className="main-container">
-        <SearchContractsInput {...parseParams(searchParams)} />
 
+      <div className="main-container">
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           <table className="table-auto w-full">
             <thead>
               <tr className="text-xs text-gray-500 text-left">
-                <th className="  padding-table font-medium text-left">
-                  Utilisateur
-                </th>
-                <th className="  padding-table font-medium text-center">
-                  Code Postal
-                </th>
-                <th className="  padding-table font-medium text-center">
-                  Client
-                </th>
-                <th className="  padding-table font-medium text-center">
-                  Site
-                </th>
-                <th className="  padding-table font-medium text-center">
-                  Etat
-                </th>
-                <th className="  padding-table font-medium text-right">
+                <th className="padding-table   font-medium">Nom</th>
+                <th className="padding-table   font-medium text-right">
                   Action
                 </th>
               </tr>
             </thead>
             <tbody>
-              {data?.contracts?.results?.map((contract, index) => (
+              {data?.benefits?.results?.map((benefit, index) => (
                 <tr
-                  key={`contract-${contract.id}`}
+                  key={`benefit-${benefit.id}`}
                   className={`text-xs   ${index % 2 ? "" : "bg-gray-50"} `}
                 >
-                  <td className="flex   padding-table ">
+                  <td className="flex py-3 padding-table  ">
                     <div>
                       <p
                         className="font-medium  cursor-pointer"
-                        onClick={() => navigate(`/contracts/${contract.id}`)}
+                        onClick={() => navigate(`/benefits/${benefit.id}`)}
                       >
-                        {contract.name}
+                        {benefit?.name || "-"}
                       </p>
-                      <p className="text-gray-500"></p>
+                      <p className="text-gray-500">fd</p>
                     </div>
                   </td>
-                  <td className="  padding-table  text-center ">
-                    {" "}
-                    {contract.status}
-                  </td>
-                  <td className="   padding-table  text-center ">
-                    {" "}
-                    {contract.customer.name}{" "}
-                  </td>
-                  <td className="  padding-table  text-center ">
-                    {contract?.madeBy.firstname} {contract?.madeBy.lastname}
-                  </td>
-                  <td className="  padding-table  text-center ">
-                    {contract?.site?.name ?? "-"}
-                  </td>
 
-                  <td className="  padding-table  text-right">
+                  <td className="text-right padding-table ">
                     <span
-                      onClick={() =>
-                        navigate(`/contracts/${contract.id}/update`)
-                      }
+                      onClick={() => navigate(`/benefits/${benefit.id}/update`)}
                       className="inline-block mr-2  cursor-pointer "
                     >
                       <svg
@@ -131,9 +93,7 @@ export const Contracts = () => {
                     </span>
 
                     <span
-                      onClick={() =>
-                        navigate(`/work-orders/${contract.id}/update`)
-                      }
+                      onClick={() => navigate(`/benefits/${benefit.id}/update`)}
                       className="inline-block  cursor-pointer"
                     >
                       <svg
@@ -155,23 +115,6 @@ export const Contracts = () => {
             </tbody>
           </table>
         </div>
-
-        {data?.contracts?.hasMore && (
-          <Button
-            canClick={!loading}
-            loading={loading}
-            actionText="Plus"
-            onClick={() => {
-              fetchMore({
-                variables: {
-                  offset: data?.contracts?.results?.length,
-                  limit,
-                  where: parseParams(searchParams),
-                },
-              });
-            }}
-          />
-        )}
       </div>
     </>
   );

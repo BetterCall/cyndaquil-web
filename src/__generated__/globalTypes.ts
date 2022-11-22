@@ -87,6 +87,7 @@ export interface CreateBenefitInput {
   name: string;
   price: number;
   categoryId: number;
+  taxeId: number;
 }
 
 export interface CreateBrandInput {
@@ -202,6 +203,11 @@ export interface CreateSupplierInput {
   description?: string | null;
 }
 
+export interface CreateTaxeInput {
+  name: string;
+  value: number;
+}
+
 export interface CreateWorkOrderInput {
   lat: number;
   lng: number;
@@ -251,6 +257,7 @@ export interface LoginInput {
 export interface PriceRulesFiltersInput {
   benefitId?: number | null;
   customerId?: number | null;
+  categoryId?: number | null;
 }
 
 export interface ReferencesFiltersInput {
@@ -260,8 +267,11 @@ export interface ReferencesFiltersInput {
 }
 
 export interface RowsInput {
+  price: number;
+  categoryId: number;
   benefitId: number;
-  emplacementId: number;
+  taxeId: number;
+  emplacementIds: number[];
 }
 
 export interface SiteFiltersInput {
@@ -279,6 +289,7 @@ export interface UpdateBenefitInput {
   name?: string | null;
   price?: number | null;
   categoryId?: number | null;
+  taxeId?: number | null;
 }
 
 export interface UpdateBrandInput {
@@ -389,6 +400,11 @@ export interface UpdateSupplierInput {
   city?: string | null;
   name?: string | null;
   description?: string | null;
+}
+
+export interface UpdateTaxeInput {
+  name?: string | null;
+  value?: number | null;
 }
 
 export interface UpdateUserInput {

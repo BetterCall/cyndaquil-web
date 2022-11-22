@@ -62,7 +62,7 @@ export const UPDATE_PRICE_RULE = gql`
 
 `
 export const PRICE_RULES = gql`
-    query PriceRulesQuery( $limit : Int! , $offset : Int! , $where : PriceRulesFiltersInput! ) {
+    query PriceRulesQuery( $limit : Int  , $offset : Int  , $where : PriceRulesFiltersInput! ) {
         priceRules( limit : $limit , offset : $offset ,  where: $where  ) {
             hasMore
             results {

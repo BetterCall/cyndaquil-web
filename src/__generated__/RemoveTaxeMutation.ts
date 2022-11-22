@@ -4,19 +4,19 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: RemoveBrandMutation
+// GraphQL mutation operation: RemoveTaxeMutation
 // ====================================================
 
-export interface RemoveBrandMutation_removeBrand {
-  __typename: "RemoveBrandOutput";
+export interface RemoveTaxeMutation_removeTaxe {
+  __typename: "RemoveTaxeOutput";
   ok: boolean | null;
   error: string | null;
 }
 
-export interface RemoveBrandMutation {
-  removeBrand: RemoveBrandMutation_removeBrand;
+export interface RemoveTaxeMutation {
+  removeTaxe: RemoveTaxeMutation_removeTaxe;
 }
 
-export interface RemoveBrandMutationVariables {
+export interface RemoveTaxeMutationVariables {
   id: number;
 }

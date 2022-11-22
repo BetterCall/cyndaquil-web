@@ -249,7 +249,7 @@ export const Site = () => {
           <Button
             actionText="Nouvelle proposition"
             canClick={true}
-            onClick={() => navigate(`/sites/${id}/contracts/create`)}
+            onClick={() => navigate(`/contracts/create?siteId=${id}`)}
           />
         </div>
 

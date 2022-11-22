@@ -1,21 +1,47 @@
-import React from "react";
-import { UseFormReturn } from "react-hook-form";
-import { useCustomerCategories } from "../../hooks/useCustomerCategories";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import React, { useEffect } from "react";
+import { PRICE_RULES } from "../../queries/prices.queries";
+import {
+  PriceRulesQuery,
+  PriceRulesQueryVariables,
+} from "../../__generated__/PriceRulesQuery";
 
-interface ICustomerCategoriesInput {
-  form: UseFormReturn<any, any>;
+interface ISelectPriceInput {
+  setValue: any;
+  error?: boolean;
+  value?: any;
+  customerId?: number;
+  benefitId?: number;
+  categoryId?: number;
 }
 
-export const CustomerCategoriesInput: React.FC<ICustomerCategoriesInput> = ({
-  form,
+export const SelectPrice: React.FC<ISelectPriceInput> = ({
+  setValue,
+  error,
+  value,
+  customerId,
+  benefitId,
+  categoryId,
 }) => {
-  const { data } = useCustomerCategories();
-  const value = form.watch("categoryId");
+  const [searchFn, { data }] = useLazyQuery<
+    PriceRulesQuery,
+    PriceRulesQueryVariables
+  >(PRICE_RULES);
 
-  console.log(data);
+  useEffect(() => {
+    searchFn({
+      variables: {
+        where: {
+          ...(customerId && { customerId }),
+          ...(benefitId && benefitId !== -1 && { benefitId }),
+          ...(categoryId && { categoryId }),
+        },
+      },
+    });
+  }, [customerId, benefitId, categoryId]);
+
   return (
     <div className="w-full">
-      <p className="label">Type de clients</p>
       <div className="relative">
         <svg
           className="absolute right-4 top-1/2 transform -translate-y-1/2"
@@ -32,17 +58,19 @@ export const CustomerCategoriesInput: React.FC<ICustomerCategoriesInput> = ({
         </svg>
 
         <select
-          className="input appearance-none w-full"
-          {...form.register("categoryId")}
+          className={`input appearance-none w-full  ${
+            error && " border-red-500"
+          } `}
+          onChange={(e) => setValue(e)}
         >
-          <option value={undefined}>-</option>
-          {data?.customerCategories?.results?.map((category: any) => (
+          <option value={-1}>-</option>
+          {data?.priceRules?.results?.map((rule: any) => (
             <option
-              selected={value === category.id}
-              value={category.id}
-              key={`category-${category.id}`}
+              value={rule.id}
+              key={`rule-${rule.id}`}
+              selected={rule.id == value}
             >
-              {category.name}
+              {rule.amount} {rule.type === "PERCENT" ? "%" : "€"}
             </option>
           ))}
         </select>

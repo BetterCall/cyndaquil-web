@@ -63,7 +63,7 @@ export const EquipmentCategory = () => {
                 button={{
                   title: "Nouveau Service",
                   icon: <SendIcon />,
-                  url: `/equipments/category/${id}/new-benefit`,
+                  url: `/benefits/create?categoryId=${id}`,
                 }}
               />
               <table className="table-auto w-full">
@@ -72,6 +72,9 @@ export const EquipmentCategory = () => {
                     <th className="padding-table  font-medium">Nom</th>
                     <th className="padding-table text-center font-medium">
                       Prix
+                    </th>
+                    <th className="padding-table text-center font-medium">
+                      TVA
                     </th>
                     <th className="padding-table  font-medium text-right">
                       Action
@@ -98,6 +101,12 @@ export const EquipmentCategory = () => {
                         <td className="padding-table text-center">
                           <p className="font-medium  cursor-pointer">
                             {benefit.price} € HT
+                          </p>
+                        </td>
+
+                        <td className="padding-table text-center">
+                          <p className="font-medium  cursor-pointer">
+                            {benefit.taxe?.name ?? "-"}
                           </p>
                         </td>
 
@@ -141,7 +150,7 @@ export const EquipmentCategory = () => {
                 button={{
                   title: "Nouveau Service d",
                   icon: <SendIcon />,
-                  url: `/equipments/category/${id}/new-benefit`,
+                  url: `/benefits/create?categoryId=${id}`,
                 }}
               />
               <table className="table-auto w-full">

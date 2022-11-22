@@ -55,6 +55,9 @@ export const CONTRACT = gql`
         id
         status
 
+        equipmentCount
+        price 
+        taxePrice
         
         customer {
             ...CustomerPart
@@ -70,9 +73,25 @@ export const CONTRACT = gql`
 
         rows {
             id
-            emplacement {
+            price
+            quantity
+            taxe
+            taxePrice
+            
+            benefit {
                 id
-                floor {
+                name
+
+                taxe {
+                    id
+                    name
+                    value
+                }
+            }
+            emplacements {
+                id
+                emplacement {
+                    floor {
                     id
                     name
 
@@ -90,6 +109,8 @@ export const CONTRACT = gql`
                     id
                     name
                 }
+                }
+                
             }
         }
       }
