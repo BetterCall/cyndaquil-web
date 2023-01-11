@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
     ApolloClient,
     InMemoryCache,
@@ -8,14 +6,15 @@ import {
     ReactiveVar,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+
 import { LOCALSTORAGE_TOKEN } from "./contants";
 
 const token = localStorage.getItem(LOCALSTORAGE_TOKEN);
 
 export const isLoggedInVar = makeVar(Boolean(token));
 export const authTokenVar = makeVar(token);
-
-
+export const godModeVar = makeVar(false);
+export const adminTokenVar = makeVar("");
 
 const uri = "http://192.168.1.152:4000/graphql"
 
@@ -38,6 +37,7 @@ export const client = new ApolloClient({
         typePolicies: {
             Query: {
                 fields: {
+
                     users: {
                         // Don't cache separate results based on
                         // any of this field's arguments.
@@ -51,7 +51,6 @@ export const client = new ApolloClient({
                             }
                         },
                     },
-
 
                     bugs: {
                         // Don't cache separate results based on
@@ -70,7 +69,6 @@ export const client = new ApolloClient({
                             }
                         },
                     },
-
 
                     customers: {
                         // Don't cache separate results based on
@@ -95,7 +93,7 @@ export const client = new ApolloClient({
                     sites: {
                         // Don't cache separate results based on
                         // any of this field's arguments.
-                        keyArgs: ["where", ["search", "customerId", "siteId", "postal", "city"]],
+                        keyArgs: ["where", ["search", "customerId", "managerId", "siteId", "postal", "city"]],
 
                         // Concatenate the incoming list items with
                         // the existing list items.
@@ -104,30 +102,6 @@ export const client = new ApolloClient({
                             //@ts-ignore
                             const results = Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
 
-                            return {
-                                ...incoming,
-                                results
-                            }
-                            // return [...existing, ...incoming];
-                        },
-                    },
-
-                    floors: {
-                        // Don't cache separate results based on
-                        // any of this field's arguments.
-                        keyArgs: ["entranceId"],
-
-                        // Concatenate the incoming list items with
-                        // the existing list items.
-                        merge(existing = {}, incoming, { args }): any {
-
-                            let array = [...incoming.results, ...(existing.results || [])]
-                            //@ts-ignore
-                            const results = Array.from(new Set(array.map(JSON.stringify))).map(JSON.parse);
-
-                            // let basementsArray = [...incoming.basements, ...(existing.basements || [])]
-                            // //@ts-ignore
-                            // const basements = Array.from(new Set(basementsArray.map(JSON.stringify))).map(JSON.parse);
                             return {
                                 ...incoming,
                                 results
@@ -174,6 +148,15 @@ export const client = new ApolloClient({
                         },
                     },
 
+                    workOrder: {
+                        read(_, { args, toReference }) {
+                            return toReference({
+                                __typename: 'WorkOrder',
+                                id: args?.id,
+                            });
+                        }
+                    },
+
                     workOrders: {
                         // Don't cache separate results based on
                         // any of this field's arguments.
@@ -209,7 +192,6 @@ export const client = new ApolloClient({
                             }
                         },
                     },
-
 
                     benefits: {
                         // Don't cache separate results based on
@@ -247,17 +229,21 @@ export const client = new ApolloClient({
                         },
                     },
 
-
-
-
                     isLoggedIn: {
                         read() {
                             return isLoggedInVar();
                         },
                     },
+
                     token: {
                         read() {
                             return authTokenVar();
+                        },
+                    },
+
+                    godMode: {
+                        read() {
+                            return godModeVar();
                         },
                     },
 

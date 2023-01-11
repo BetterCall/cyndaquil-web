@@ -26,7 +26,9 @@ export interface ContactQuery_contact_result {
   lastname: string;
   phone: string | null;
   email: string | null;
+  customerId: number | null;
   customer: ContactQuery_contact_result_customer | null;
+  siteId: number | null;
   site: ContactQuery_contact_result_site | null;
 }
 

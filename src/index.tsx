@@ -8,9 +8,12 @@ import { ApolloProvider } from "@apollo/client";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+
 import "antd/dist/antd.min.css";
+import "react-calendar/dist/Calendar.css";
 import "./styles/styles.css";
 import "./styles/main.css";
+
 import { client } from "./apollo";
 import { HelmetProvider } from "react-helmet-async";
 import moment from "moment";

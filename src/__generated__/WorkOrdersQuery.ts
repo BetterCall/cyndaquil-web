@@ -67,7 +67,7 @@ export interface WorkOrdersQuery {
 }
 
 export interface WorkOrdersQueryVariables {
-  limit: number;
-  offset: number;
+  limit?: number | null;
+  offset?: number | null;
   where: WorkOrderFiltersInput;
 }

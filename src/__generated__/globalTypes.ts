@@ -19,11 +19,6 @@ export enum ContractStatus {
   Pending = "Pending",
 }
 
-export enum FloorType {
-  Basement = "Basement",
-  Stage = "Stage",
-}
-
 export enum PriceRuleType {
   Percent = "Percent",
 }
@@ -31,13 +26,17 @@ export enum PriceRuleType {
 export enum UserRole {
   Admin = "Admin",
   Client = "Client",
+  Commercial = "Commercial",
   Employee = "Employee",
+  Secretary = "Secretary",
+  Tech = "Tech",
 }
 
 export enum WorkOrderStatus {
-  Accepted = "Accepted",
-  Declined = "Declined",
+  Done = "Done",
+  InProgress = "InProgress",
   Pending = "Pending",
+  Programmed = "Programmed",
 }
 
 export enum WorkOrderType {
@@ -65,14 +64,17 @@ export interface CallsFiltersInput {
   userId?: number | null;
   customerId?: number | null;
   siteId?: number | null;
+  contactId?: number | null;
 }
 
 export interface ContactFiltersInput {
   search?: string | null;
   customerId?: number | null;
   siteId?: number | null;
+  categoryId?: number | null;
   city?: string | null;
   postal?: string | null;
+  birthday?: string | null;
 }
 
 export interface ContractFiltersInput {
@@ -99,16 +101,15 @@ export interface CreateBugInput {
   description?: string | null;
 }
 
-export interface CreateBuildingInput {
-  name: string;
-  siteId: number;
-}
-
 export interface CreateCallInput {
   additionalInformations: string;
   customerId?: number | null;
   siteId?: number | null;
   contactId?: number | null;
+}
+
+export interface CreateContactCategoryInput {
+  name: string;
 }
 
 export interface CreateContactInput {
@@ -118,6 +119,13 @@ export interface CreateContactInput {
   email?: string | null;
   customerId?: number | null;
   siteId?: number | null;
+  categoryId?: number | null;
+}
+
+export interface CreateContractInput {
+  name: string;
+  rows: RowsInput[];
+  siteId: number;
 }
 
 export interface CreateCustomerCategoryInput {
@@ -139,15 +147,11 @@ export interface CreateCustomerInput {
 
 export interface CreateEmplacementInput {
   informations: string;
+  building: string;
+  entrance?: string | null;
+  floor: number;
   categoryId: number;
-  floorId: number;
-}
-
-export interface CreateEntranceInput {
-  name: string;
-  buildingId: number;
-  stagesCount?: number | null;
-  basementsCount?: number | null;
+  siteId: number;
 }
 
 export interface CreateEquipmentCategoryInput {
@@ -157,12 +161,6 @@ export interface CreateEquipmentCategoryInput {
 export interface CreateEquipmentInput {
   informations: string;
   categoryId: number;
-}
-
-export interface CreateFloorInput {
-  name: string;
-  type: FloorType;
-  entranceId: number;
 }
 
 export interface CreatePriceRuleInput {
@@ -189,7 +187,10 @@ export interface CreateSiteInput {
   postal: string;
   city: string;
   name: string;
+  buildingsCount: number;
+  entrancesCount: number;
   customerId?: number | null;
+  managerId?: number | null;
 }
 
 export interface CreateSupplierInput {
@@ -208,6 +209,14 @@ export interface CreateTaxeInput {
   value: number;
 }
 
+export interface CreateUserInput {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  role: UserRole;
+}
+
 export interface CreateWorkOrderInput {
   lat: number;
   lng: number;
@@ -224,6 +233,7 @@ export interface CreateWorkOrderInput {
   customerId?: number | null;
   siteId?: number | null;
   userId?: number | null;
+  status?: WorkOrderStatus | null;
   emplacementIds?: number[] | null;
 }
 
@@ -234,19 +244,17 @@ export interface CustomerFiltersInput {
   postal?: string | null;
 }
 
+export interface EmplacementsFiltersInput {
+  categoryId?: number | null;
+  siteId?: number | null;
+}
+
 export interface EquipmentFiltersInput {
   categoryId?: number | null;
 }
 
-export interface FloorReordered {
-  id: number;
-  order: number;
-}
-
-export interface GenerateContractInput {
-  name: string;
-  rows: RowsInput[];
-  siteId: number;
+export interface LoginAsInput {
+  email: string;
 }
 
 export interface LoginInput {
@@ -277,6 +285,7 @@ export interface RowsInput {
 export interface SiteFiltersInput {
   search?: string | null;
   customerId?: number | null;
+  managerId?: number | null;
   city?: string | null;
   postal?: string | null;
 }
@@ -302,16 +311,15 @@ export interface UpdateBugInput {
   status?: BugStatus | null;
 }
 
-export interface UpdateBuildingInput {
-  name?: string | null;
-  siteId?: number | null;
-}
-
 export interface UpdateCallInput {
   additionalInformations?: string | null;
   customerId?: number | null;
   siteId?: number | null;
   contactId?: number | null;
+}
+
+export interface UpdateContactCategoryInput {
+  name?: string | null;
 }
 
 export interface UpdateContactInput {
@@ -321,6 +329,11 @@ export interface UpdateContactInput {
   email?: string | null;
   customerId?: number | null;
   siteId?: number | null;
+  categoryId?: number | null;
+}
+
+export interface UpdateContractInput {
+  hidden?: boolean | null;
 }
 
 export interface UpdateCustomerCategoryInput {
@@ -340,11 +353,14 @@ export interface UpdateCustomerInput {
   categoryId?: number | null;
 }
 
-export interface UpdateEntranceInput {
-  name?: string | null;
-  buildingId?: number | null;
-  stagesCount?: number | null;
-  basementsCount?: number | null;
+export interface UpdateEmplacementInput {
+  informations?: string | null;
+  building?: string | null;
+  entrance?: string | null;
+  floor?: number | null;
+  categoryId?: number | null;
+  siteId?: number | null;
+  contractId?: number | null;
 }
 
 export interface UpdateEquipmentCategoryInput {
@@ -354,13 +370,6 @@ export interface UpdateEquipmentCategoryInput {
 export interface UpdateEquipmentInput {
   informations?: string | null;
   categoryId?: number | null;
-}
-
-export interface UpdateFloorInput {
-  name?: string | null;
-  type?: FloorType | null;
-  entranceId?: number | null;
-  order?: number | null;
 }
 
 export interface UpdatePriceRuleInput {
@@ -387,7 +396,10 @@ export interface UpdateSiteInput {
   postal?: string | null;
   city?: string | null;
   name?: string | null;
+  buildingsCount?: number | null;
+  entrancesCount?: number | null;
   customerId?: number | null;
+  managerId?: number | null;
   completed?: boolean | null;
 }
 
@@ -430,6 +442,7 @@ export interface UpdateWorkOrderInput {
   customerId?: number | null;
   siteId?: number | null;
   userId?: number | null;
+  status?: WorkOrderStatus | null;
   emplacementIds?: number[] | null;
 }
 

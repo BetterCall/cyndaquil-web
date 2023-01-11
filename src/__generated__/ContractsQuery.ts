@@ -49,7 +49,7 @@ export interface ContractsQuery {
 }
 
 export interface ContractsQueryVariables {
-  limit: number;
-  offset: number;
+  limit?: number | null;
+  offset?: number | null;
   where: ContractFiltersInput;
 }

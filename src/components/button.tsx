@@ -1,6 +1,7 @@
 import React from "react";
 
 interface IButtonProps {
+  bg?: string;
   loading?: boolean;
   canClick?: boolean;
   actionText: string;
@@ -11,17 +12,10 @@ export const Button: React.FC<IButtonProps> = ({
   loading = false,
   canClick = true,
   actionText,
+  bg = "gray",
   onClick = () => null,
 }) => (
-  <button
-    onClick={onClick}
-    disabled={loading}
-    className={`text-lg rounded shadow font-medium focus:outline-none text-white py-2 px-5 transition-colors ${
-      canClick
-        ? "bg-gray-700 hover:bg-gray-800"
-        : "bg-gray-300 pointer-events-none "
-    }`}
-  >
+  <button onClick={onClick} disabled={loading} className={`btn`}>
     {loading ? "Chargement" : actionText}{" "}
   </button>
 );

@@ -33,6 +33,8 @@ export interface ContractQuery_contract_result_customer {
 export interface ContractQuery_contract_result_site {
   __typename: "Site";
   id: number;
+  buildingsCount: number;
+  entrancesCount: number;
   name: string;
   completed: boolean;
   lat: number;
@@ -43,50 +45,17 @@ export interface ContractQuery_contract_result_site {
   city: string;
 }
 
-export interface ContractQuery_contract_result_rows_benefit_taxe {
-  __typename: "Taxe";
-  id: number;
-  name: string;
-  value: number;
-}
-
 export interface ContractQuery_contract_result_rows_benefit {
   __typename: "Benefit";
-  id: number;
-  name: string;
-  taxe: ContractQuery_contract_result_rows_benefit_taxe | null;
-}
-
-export interface ContractQuery_contract_result_rows_emplacements_emplacement_floor_entrance_building {
-  __typename: "Building";
-  id: number;
-  name: string;
-}
-
-export interface ContractQuery_contract_result_rows_emplacements_emplacement_floor_entrance {
-  __typename: "Entrance";
-  id: number;
-  name: string;
-  building: ContractQuery_contract_result_rows_emplacements_emplacement_floor_entrance_building;
-}
-
-export interface ContractQuery_contract_result_rows_emplacements_emplacement_floor {
-  __typename: "Floor";
-  id: number;
-  name: string;
-  entrance: ContractQuery_contract_result_rows_emplacements_emplacement_floor_entrance;
-}
-
-export interface ContractQuery_contract_result_rows_emplacements_emplacement_category {
-  __typename: "EquipmentCategory";
   id: number;
   name: string;
 }
 
 export interface ContractQuery_contract_result_rows_emplacements_emplacement {
   __typename: "Emplacement";
-  floor: ContractQuery_contract_result_rows_emplacements_emplacement_floor | null;
-  category: ContractQuery_contract_result_rows_emplacements_emplacement_category | null;
+  building: string;
+  entrance: string | null;
+  floor: number;
 }
 
 export interface ContractQuery_contract_result_rows_emplacements {
@@ -98,10 +67,11 @@ export interface ContractQuery_contract_result_rows_emplacements {
 export interface ContractQuery_contract_result_rows {
   __typename: "ContractRow";
   id: number;
-  price: number;
+  unitPrice: number;
   quantity: number;
   taxe: number;
   taxePrice: number;
+  totalPrice: number;
   benefit: ContractQuery_contract_result_rows_benefit;
   emplacements: ContractQuery_contract_result_rows_emplacements[];
 }

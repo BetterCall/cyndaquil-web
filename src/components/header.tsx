@@ -1,5 +1,4 @@
 import React from "react";
-import { useMe } from "../hooks/useMe";
 import { Link } from "../layouts/link";
 
 type IHeaderButton = {
@@ -20,12 +19,11 @@ export const Header: React.FC<IHeaderProps> = ({
   subtitle = "",
   buttons = [],
 }) => {
-  const { data, loading } = useMe();
   return (
     <section className="py-6 px-6 ">
       <div className="flex flex-wrap -mx-3 items-center">
         <div className="w-full   md:w-1/2 flex items-center lg:mb-0 px-3">
-          <span className="inline-flex justify-center items-center w-16 h-16 mr-4 bg-indigo-500 rounded">
+          <span className="inline-flex justify-center items-center w-16 h-16 mr-4 bg-red-500 rounded">
             <svg
               className="h-7 w-7 text-white"
               viewBox="0 0 28 28"
@@ -49,7 +47,6 @@ export const Header: React.FC<IHeaderProps> = ({
               <Link to={button.link}>
                 <a
                   className={`inline-flex items-center py-2 px-3 mr-3 text-xs text-${button.textColor}-500 font-medium bg-${button.bgColor}-50 hover:bg-${button.bgColor}-100 rounded `}
-                  href="#"
                 >
                   <span className="inline-block mr-1">
                     {button.icon ?? null}

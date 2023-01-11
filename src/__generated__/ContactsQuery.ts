@@ -9,6 +9,12 @@ import { ContactFiltersInput } from "./globalTypes";
 // GraphQL query operation: ContactsQuery
 // ====================================================
 
+export interface ContactsQuery_contacts_results_category {
+  __typename: "ContactCategory";
+  id: number;
+  name: string;
+}
+
 export interface ContactsQuery_contacts_results_site {
   __typename: "Site";
   id: number;
@@ -28,6 +34,8 @@ export interface ContactsQuery_contacts_results {
   lastname: string;
   phone: string | null;
   email: string | null;
+  birthday: any | null;
+  category: ContactsQuery_contacts_results_category | null;
   site: ContactsQuery_contacts_results_site | null;
   customer: ContactsQuery_contacts_results_customer | null;
 }
@@ -43,7 +51,7 @@ export interface ContactsQuery {
 }
 
 export interface ContactsQueryVariables {
-  limit: number;
-  offset: number;
+  limit?: number | null;
+  offset?: number | null;
   where: ContactFiltersInput;
 }

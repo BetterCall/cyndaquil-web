@@ -1,5 +1,3 @@
-import moment from "moment"
-
 export const formatHour = (base: string | null) => {
     if (!base) return
     const splited = base?.split(':')

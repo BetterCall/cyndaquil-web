@@ -10,6 +10,8 @@
 export interface SitePart {
   __typename: "Site";
   id: number;
+  buildingsCount: number;
+  entrancesCount: number;
   name: string;
   completed: boolean;
   lat: number;

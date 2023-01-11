@@ -10,3 +10,13 @@
   width: 90%!important;
   border-radius:  20px!important;
 }
+
+.react-calendar {
+  border : 0px; 
+  width: 100%;
+}
+
+.react-calendar__tile--active {
+  color : blue ;
+  background-color: red;
+}

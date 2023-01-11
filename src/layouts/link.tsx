@@ -1,10 +1,18 @@
-import { useReactiveVar } from "@apollo/client";
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDebounce } from "../hooks/useDebounce";
 
-export const Link = ({ to, className = "", children }) => {
+interface ILinkProps {
+  to: string;
+  className?: string;
+  children?: any;
+}
+
+export const Link: React.FC<ILinkProps> = ({
+  to,
+  className = "",
+  children,
+}) => {
   const navigate = useNavigate();
 
   const [clickCount, setClickCount] = useState(0);
@@ -12,7 +20,7 @@ export const Link = ({ to, className = "", children }) => {
   useEffect(
     () => {
       if (debouncedClick) {
-        if (clickCount == 1) {
+        if (clickCount === 1) {
           navigate(to);
         } else {
           window.open(to);

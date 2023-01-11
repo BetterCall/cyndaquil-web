@@ -1,0 +1,115 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Header } from "../../../components/header";
+import { SendIcon } from "../../../components/icons";
+
+import { WorkOrderForm } from "../components";
+import { useUpdateWorkOrder, useWorkOrder } from "../hooks";
+
+type IUpdateWorkOrder = {
+  id;
+};
+
+export const UpdateWorkOrder: React.FC = () => {
+  const { id } = useParams<IUpdateWorkOrder>();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!id) {
+      navigate("/");
+    }
+  }, []);
+
+  const { form, loading, submit } = useUpdateWorkOrder({
+    id: +id!,
+    onCompleted: () => {},
+  });
+
+  const { data } = useWorkOrder(+id!);
+  console.log("data ", data);
+
+  useEffect(() => {
+    console.log("data ", data);
+    form.setValue("name", data?.workOrder?.result?.name);
+    form.setValue("type", data?.workOrder?.result?.type);
+    form.setValue("siteId", data?.workOrder?.result?.site?.id);
+
+    form.setValue("description", data?.workOrder?.result?.description);
+    form.setValue("date", data?.workOrder?.result?.date);
+    form.setValue("start", data?.workOrder?.result?.start);
+    form.setValue("end", data?.workOrder?.result?.end);
+
+    form.setValue("name", data?.workOrder?.result?.name);
+    form.setValue("description", data?.workOrder?.result?.description);
+    form.setValue("type", data?.workOrder?.result?.type);
+    form.setValue("status", data?.workOrder?.result?.status);
+
+    form.setValue("date", data?.workOrder?.result?.date);
+    form.setValue("start", data?.workOrder?.result?.start);
+    form.setValue("end", data?.workOrder?.result?.end);
+    // form.setValue("status", data?.workOrder?.result?.status)
+    form.setValue("lat", data?.workOrder?.result?.lat);
+    form.setValue("lng", data?.workOrder?.result?.lng);
+    form.setValue("streetNumber", data?.workOrder?.result?.streetNumber);
+    form.setValue("street", data?.workOrder?.result?.street);
+    form.setValue("postal", data?.workOrder?.result?.postal);
+    form.setValue("city", data?.workOrder?.result?.city);
+    form.setValue("userId", data?.workOrder?.result?.userId);
+    form.setValue("siteId", data?.workOrder?.result?.siteId);
+    form.setValue("customerId", data?.workOrder?.result?.customerId);
+
+    form.setValue(
+      "emplacementIds",
+      data?.workOrder?.result?.emplacements?.map((e) => e.emplacement.id)
+    );
+
+    // emplacements: WorkOrderQuery_workOrder_result_emplacements[] | null;
+  }, [data, form]);
+
+  // useEffect(() => {
+  // console.log("useEffectr");
+  // if (!loaded && data?.workOrder?.ok && data?.workOrder?.result) {
+  // form.setValue("name", data?.workOrder?.result?.name);
+  // form.setValue("type", data?.workOrder?.result?.type);
+  // form.setValue("siteId", data?.workOrder?.result?.site?.id);
+  // form.setValue("customerId", data?.workOrder?.result?.customer?.id);
+  // form.setValue("description", data?.workOrder?.result?.description);
+  // form.setValue("date", data?.workOrder?.result?.date);
+  // form.setValue("start", data?.workOrder?.result?.start);
+  // form.setValue("end", data?.workOrder?.result?.end);
+
+  // form.setValue(
+  //   "emplacementIds",
+  //   data?.workOrder?.result?.emplacements?.map((e) => e.emplacement.id)
+  // );
+
+  // setLoaded(true);
+  // }
+  // }, [data]);
+
+  return (
+    <>
+      <Header
+        title="Modifier le bon d'intervention"
+        subtitle="Modifier le bon d'intervention"
+        buttons={[
+          {
+            actionText: "Annuler",
+            bgColor: "indigo",
+            textColor: "white",
+            link: `/work-order`,
+            icon: <SendIcon />,
+          },
+        ]}
+      />
+      <div className="main-container">
+        <WorkOrderForm
+          loading={loading}
+          submit={submit}
+          form={form}
+          disabledFields={["siteId"]}
+        />
+      </div>
+    </>
+  );
+};

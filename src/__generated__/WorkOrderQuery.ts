@@ -9,31 +9,23 @@ import { WorkOrderType, WorkOrderStatus } from "./globalTypes";
 // GraphQL query operation: WorkOrderQuery
 // ====================================================
 
+export interface WorkOrderQuery_workOrder_result_user {
+  __typename: "User";
+  id: number;
+  firstname: string;
+  lastname: string;
+}
+
 export interface WorkOrderQuery_workOrder_result_site {
   __typename: "Site";
   id: number;
   name: string;
-  completed: boolean;
-  lat: number;
-  lng: number;
-  streetNumber: string;
-  street: string;
-  postal: string;
-  city: string;
 }
 
 export interface WorkOrderQuery_workOrder_result_customer {
   __typename: "Customer";
   id: number;
   name: string;
-  email: string | null;
-  phone: string;
-  streetNumber: string;
-  street: string;
-  postal: string;
-  city: string;
-  lat: number;
-  lng: number;
 }
 
 export interface WorkOrderQuery_workOrder_result_emplacements_emplacement_category {
@@ -42,31 +34,13 @@ export interface WorkOrderQuery_workOrder_result_emplacements_emplacement_catego
   name: string;
 }
 
-export interface WorkOrderQuery_workOrder_result_emplacements_emplacement_floor_entrance_building {
-  __typename: "Building";
-  id: number;
-  name: string;
-}
-
-export interface WorkOrderQuery_workOrder_result_emplacements_emplacement_floor_entrance {
-  __typename: "Entrance";
-  id: number;
-  name: string;
-  building: WorkOrderQuery_workOrder_result_emplacements_emplacement_floor_entrance_building;
-}
-
-export interface WorkOrderQuery_workOrder_result_emplacements_emplacement_floor {
-  __typename: "Floor";
-  id: number;
-  name: string;
-  entrance: WorkOrderQuery_workOrder_result_emplacements_emplacement_floor_entrance;
-}
-
 export interface WorkOrderQuery_workOrder_result_emplacements_emplacement {
   __typename: "Emplacement";
   id: number;
   category: WorkOrderQuery_workOrder_result_emplacements_emplacement_category | null;
-  floor: WorkOrderQuery_workOrder_result_emplacements_emplacement_floor | null;
+  building: string;
+  entrance: string | null;
+  floor: number;
 }
 
 export interface WorkOrderQuery_workOrder_result_emplacements {
@@ -91,7 +65,11 @@ export interface WorkOrderQuery_workOrder_result {
   street: string;
   postal: string;
   city: string;
+  userId: number | null;
+  user: WorkOrderQuery_workOrder_result_user | null;
+  siteId: number | null;
   site: WorkOrderQuery_workOrder_result_site | null;
+  customerId: number | null;
   customer: WorkOrderQuery_workOrder_result_customer | null;
   emplacements: WorkOrderQuery_workOrder_result_emplacements[] | null;
 }

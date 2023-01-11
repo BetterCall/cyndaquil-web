@@ -25,6 +25,8 @@ export interface SitesQuery_sites_results_customer {
 export interface SitesQuery_sites_results {
   __typename: "Site";
   id: number;
+  buildingsCount: number;
+  entrancesCount: number;
   name: string;
   completed: boolean;
   lat: number;

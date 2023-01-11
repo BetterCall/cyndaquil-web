@@ -20,6 +20,15 @@ export interface SiteQuery_site_result_customer {
   category: SiteQuery_site_result_customer_category | null;
 }
 
+export interface SiteQuery_site_result_manager {
+  __typename: "Contact";
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string | null;
+  phone: string | null;
+}
+
 export interface SiteQuery_site_result_contacts {
   __typename: "Contact";
   id: number;
@@ -29,21 +38,11 @@ export interface SiteQuery_site_result_contacts {
   phone: string | null;
 }
 
-export interface SiteQuery_site_result_buildings_entrances {
-  __typename: "Entrance";
-  id: number;
-}
-
-export interface SiteQuery_site_result_buildings {
-  __typename: "Building";
-  id: number;
-  name: string;
-  entrances: SiteQuery_site_result_buildings_entrances[];
-}
-
 export interface SiteQuery_site_result {
   __typename: "Site";
   id: number;
+  buildingsCount: number;
+  entrancesCount: number;
   name: string;
   completed: boolean;
   lat: number;
@@ -54,8 +53,9 @@ export interface SiteQuery_site_result {
   city: string;
   customerId: number | null;
   customer: SiteQuery_site_result_customer | null;
+  managerId: number | null;
+  manager: SiteQuery_site_result_manager | null;
   contacts: SiteQuery_site_result_contacts[];
-  buildings: SiteQuery_site_result_buildings[];
 }
 
 export interface SiteQuery_site {

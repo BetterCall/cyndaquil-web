@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { NotFound } from "../pages/404";
+import { NotFound } from "../modules/404";
 
-import { Login } from "../pages/login";
+import { Login } from "../modules/login";
 
 export const LoggedOutRouter = () => {
   return (
