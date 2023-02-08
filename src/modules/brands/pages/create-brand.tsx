@@ -4,13 +4,16 @@ import { BrandForm } from "../components";
 import { useCreateBrand } from "../hooks";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
+import { toast } from "react-toastify";
 
 export const CreateBrand: React.FC = () => {
   const { form, submit, loading } = useCreateBrand({
     defaultValues: {
       name: "",
     },
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      toast.success("La marque a été créée avec succès");
+    },
   });
 
   return (

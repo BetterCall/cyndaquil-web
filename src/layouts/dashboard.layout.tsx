@@ -208,6 +208,19 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
 
                 <ExpendableLink
                   icon={<SendIcon />}
+                  title="Rendez-vous"
+                  url="/visits"
+                  submenus={[
+                    {
+                      icon: <SendIcon />,
+                      title: "Nouveau Rendez-vous",
+                      url: "/visit/create",
+                    },
+                  ]}
+                />
+
+                <ExpendableLink
+                  icon={<SendIcon />}
                   title="Sites"
                   url="/sites"
                 />
@@ -244,8 +257,8 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
 
                 <ExpendableLink
                   icon={<SendIcon />}
-                  title="Appels"
-                  url="/calls"
+                  title="Demandes"
+                  url="/demands"
                 />
                 <ExpendableLink
                   icon={<SendIcon />}
@@ -301,6 +314,32 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
                       icon: <SendIcon />,
                       title: "Nouvelle Taxe",
                       url: "/taxe/create",
+                    },
+                  ]}
+                />
+
+                <ExpendableLink
+                  icon={<SendIcon />}
+                  title="Règlements"
+                  url="/payments"
+                  submenus={[
+                    {
+                      icon: <SendIcon />,
+                      title: "Nouveau Règlement",
+                      url: "/payment/create",
+                    },
+                  ]}
+                />
+
+                <ExpendableLink
+                  icon={<SendIcon />}
+                  title="Remboursements"
+                  url="/transfers"
+                  submenus={[
+                    {
+                      icon: <SendIcon />,
+                      title: "Nouveau Remboursement",
+                      url: "/transfer/create",
                     },
                   ]}
                 />

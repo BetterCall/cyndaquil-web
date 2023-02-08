@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 
@@ -12,7 +13,12 @@ export const CreateCustomer: React.FC = () => {
     defaultValues: {
       name: "",
     },
-    onCompleted: () => alert("ok"),
+    onCompleted: (id) => {
+      toast.success("Le client a été créé avec succès");
+      navigate(`/customer/${id}`, {
+        replace: true,
+      });
+    },
   });
 
   return (

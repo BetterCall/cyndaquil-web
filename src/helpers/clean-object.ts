@@ -1,4 +1,7 @@
 
+const numbers = ["managerId", "invoiceId", "recordedById", 'paymentId', "contractId", "visitId", "commercialId", "categoryId", "benefitId", "customerId", "siteId", "id", "userId", "targetUserId", "openedById"]
+const decimals = ["amount", "price", "taxPrice"]
+
 export const cleanObject = (object: any): { [k: string]: any; } => {
     const cleaned: any = {}
     Object.keys(object).forEach((key) => {
@@ -12,19 +15,24 @@ export const cleanObject = (object: any): { [k: string]: any; } => {
 
 export const parseParams = (object: any) => {
 
+    console.log('OBJECT', object)
 
-    const numbers = ["managerId", "categoryId", "benefitId", "customerId", "siteId", "id", "userId", "amount"]
     const parsed: any = {}
-    Object.keys(object).forEach((key: any) => {
+    const cleaned = cleanObject(object)
+    console.log('cleaned', cleaned)
+    Object.keys(cleaned).forEach((key: any) => {
 
-        console.log(key)
-        console.log(object[key])
-
-        if (numbers.includes(key) && object[key]) {
+        if (numbers.includes(key) && object[key] !== null) {
             try {
                 parsed[key] = parseInt(object[key]);
             } catch (e) { }
         }
+        else if (decimals.includes(key)) {
+            try {
+                parsed[key] = parseFloat(object[key]);
+            } catch (e) { }
+        }
+
         else if (key === "search" && object[key].length < 1) {
 
         }
@@ -42,11 +50,13 @@ export const parseParams = (object: any) => {
         }
 
     });
+    console.log(object)
+    console.log(cleaned)
+    console.log(parsed)
     return parsed
 }
 
 export const parseSearchParams = (object: any) => {
-    const numbers = ["categoryId", "benefitId", "customerId", "managerId", "siteId", "id", "userId", "amount"]
     const parsed: any = {}
     object.forEach((value: any, key: any) => {
         if (numbers.includes(key)) {
@@ -54,6 +64,15 @@ export const parseSearchParams = (object: any) => {
                 parsed[key] = parseInt(value);
             } catch (e) { }
         }
+        else if (decimals.includes(key)) {
+            try {
+                parsed[key] = parseFloat(value);
+            } catch (e) { }
+        }
+        else if (value == "true" || value == "false") {
+            parsed[key] = value == "true" ? true : false
+        }
+
         else if (key === "search" && value.length < 3) {
 
         }
@@ -62,6 +81,8 @@ export const parseSearchParams = (object: any) => {
         }
 
     });
+
+    console.log(parsed)
 
     return parsed
 } 

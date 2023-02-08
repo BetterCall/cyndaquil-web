@@ -70,7 +70,7 @@ export interface ContractQuery_contract_result_rows {
   unitPrice: number;
   quantity: number;
   taxe: number;
-  taxePrice: number;
+  taxPrice: number;
   totalPrice: number;
   benefit: ContractQuery_contract_result_rows_benefit;
   emplacements: ContractQuery_contract_result_rows_emplacements[];
@@ -82,7 +82,7 @@ export interface ContractQuery_contract_result {
   status: ContractStatus;
   equipmentCount: number;
   price: number;
-  taxePrice: number;
+  taxPrice: number;
   customer: ContractQuery_contract_result_customer;
   site: ContractQuery_contract_result_site;
   rows: ContractQuery_contract_result_rows[] | null;

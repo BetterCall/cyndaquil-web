@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 
@@ -13,7 +14,9 @@ export const CreateCustomerCategory: React.FC = () => {
     defaultValues: {
       name: "",
     },
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      toast.success("La catégorie a été créée avec succès");
+    },
   });
 
   return (

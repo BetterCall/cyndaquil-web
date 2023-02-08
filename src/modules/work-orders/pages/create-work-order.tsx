@@ -4,13 +4,16 @@ import { useCreateWorkOrder } from "../hooks";
 import { WorkOrderForm } from "../components";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
+import { toast } from "react-toastify";
 
 export const CreateWorkOrder: React.FC = () => {
   const { form, submit, loading } = useCreateWorkOrder({
     defaultValues: {
-      emplacementIds: [],
+      rows: [],
     },
-    onCompleted: () => {},
+    onCompleted: () => {
+      toast.success("Le BI a été créée avec succès");
+    },
   });
 
   return (

@@ -15,7 +15,10 @@ export const WorkOrders: React.FC = () => {
   const navigate = useNavigate();
   const [limit] = useState(10);
 
-  const [search, { data, loading, fetchMore }] = useLazyWorkOrders();
+  const [search, { data, error, loading, fetchMore }] = useLazyWorkOrders();
+
+  console.log(data);
+  console.log(error);
 
   const [searchParams] = useSearchParams();
   useEffect(() => {

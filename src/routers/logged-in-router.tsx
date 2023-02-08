@@ -9,7 +9,7 @@ import { BenefitsRouter } from "../modules/benefits/benefits.router";
 import { ProtectedRoute } from "./protected-route";
 import { BrandsRouter } from "../modules/brands/brands.router";
 import { BugsRouter } from "../modules/bugs/bugs.router";
-import { CallsRouter } from "../modules/calls/calls.router";
+import { DemandsRouter } from "../modules/demands/demands.router";
 import { ContactsRouter } from "../modules/contacts/contacts.router";
 import { ContractsRouter } from "../modules/contracts/contracts.router";
 import { CustomersRouter } from "../modules/customer/customers.router";
@@ -25,6 +25,10 @@ import { TaxesRouter } from "../modules/taxes/taxes.router";
 import { UsersRouter } from "../modules/users/users.router";
 import { WorkOrdersRouter } from "../modules/work-orders/work-orders.router";
 import { ContactCategoriesRouter } from "../modules/contact-categories/contact-categories.router";
+import { VisitsRouter } from "../modules/visits/visits.router";
+import { InvoicesRouter } from "../modules/invoices/invoices.router";
+import { PaymentsRouter } from "../modules/payments/payments.router";
+import { TransfersRouter } from "../modules/transfers/transfers.router";
 
 export const LoggedInRouter = () => {
   const { data, loading, error } = useMe();
@@ -46,7 +50,7 @@ export const LoggedInRouter = () => {
           {BenefitsRouter}
           {BrandsRouter}
           {BugsRouter}
-          {CallsRouter}
+          {DemandsRouter}
           {ContactsRouter}
           {ContactCategoriesRouter}
           {ContractsRouter}
@@ -62,6 +66,10 @@ export const LoggedInRouter = () => {
           {TaxesRouter}
           {UsersRouter}
           {WorkOrdersRouter}
+          {VisitsRouter}
+          {InvoicesRouter}
+          {PaymentsRouter}
+          {TransfersRouter}
         </Route>
 
         <Route path="*" element={<NotFound />} />

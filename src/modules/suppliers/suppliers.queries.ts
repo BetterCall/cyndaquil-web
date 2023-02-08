@@ -38,7 +38,7 @@ export const SUPPLIER = gql`
 export const REMOVE_SUPPLIER = gql`
 
     mutation RemoveSupplierMutation( $id : Int! ) {
-        removeCall( id : $id ) {
+        removeSupplier( id : $id ) {
             ok 
             error
         }

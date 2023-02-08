@@ -4,11 +4,14 @@ import { useCreateTaxe } from "../hooks";
 import { TaxeForm } from "../components";
 import { SendIcon } from "../../../components/icons";
 import { Header } from "../../../components/header";
+import { toast } from "react-toastify";
 
 export const CreateTaxe: React.FC = () => {
   const { form, submit, loading } = useCreateTaxe({
     defaultValues: {},
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      toast.success("La taxe a été créée avec succès");
+    },
   });
 
   return (

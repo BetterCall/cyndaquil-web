@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { DashboardIcon } from "../../../components/icons";
 import { PriceForm } from "../components";
@@ -18,12 +19,14 @@ export const UpdatePrice: React.FC = () => {
     }
   }, []);
 
+  const { data, refetch } = usePrice(+id!);
   const { form, submit, loading } = useUpdatePriceRule({
     id: +id!,
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      refetch();
+      toast.success("Le tarif spécial a été modifié avec succès");
+    },
   });
-
-  const { data, refetch } = usePrice(+id!);
 
   useEffect(() => {
     if (data?.priceRule) {

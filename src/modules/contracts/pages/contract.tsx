@@ -5,6 +5,11 @@ import { CardHeader } from "../../../components/cards";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { ContactDetails } from "../../contacts/components";
+import { InvoicesPreview } from "../../invoices/components";
+import {
+  GenerateWorkOrderBtn,
+  WorkOrdersPreview,
+} from "../../work-orders/components";
 
 import { useContract } from "../hooks";
 
@@ -59,12 +64,25 @@ export const Contract: React.FC = () => {
           <div className="right">
             <div className="card">
               <CardHeader title={data?.contract?.result?.site?.name ?? ""} />
-              <div style={{ height: "70%", overflow: "hidden" }}>
-                <ContactDetails
-                  city={`${data?.contract?.result?.site?.postal}, ${data?.contract?.result?.site?.city}`}
-                  phone={data?.contract?.result?.site?.name}
-                />
-              </div>
+              <ContactDetails
+                city={`${data?.contract?.result?.site?.postal}, ${data?.contract?.result?.site?.city}`}
+                phone={data?.contract?.result?.site?.name}
+              />
+            </div>
+          </div>
+        </section>
+        <section className="section">
+          <div className=" left ">
+            <div className="card">
+              <CardHeader title="Bon d'intervention" />
+              <WorkOrdersPreview contractId={+id!} />
+              <GenerateWorkOrderBtn contractId={+id!} />
+            </div>
+          </div>
+          <div className="right">
+            <div className="card">
+              <CardHeader title="Facture" />
+              <InvoicesPreview where={{ contractId: +id! }} />
             </div>
           </div>
         </section>
@@ -89,14 +107,14 @@ export const Contract: React.FC = () => {
                 <div className="mb-2 flex justify-between border-b pb-2">
                   <span>Montant TVA </span>
                   <span className=" font-medium">
-                    {data?.contract.result?.taxePrice} %
+                    {data?.contract.result?.taxPrice} %
                   </span>
                 </div>
 
                 <div className=" flex justify-between font-medium text-lg mt-2">
                   <span className=" font-medium">Montant Estimatif</span>
                   <span className=" font-medium">
-                    {(data?.contract.result?.taxePrice ?? 0) +
+                    {(data?.contract.result?.taxPrice ?? 0) +
                       (data?.contract.result?.price ?? 0)}{" "}
                     € TTC
                   </span>
@@ -129,7 +147,7 @@ export const Contract: React.FC = () => {
 
                   <div className=" flex justify-between font-medium  mt-2">
                     <span className=" font-medium">Montant TVA</span>
-                    <span className=" font-medium">{row.taxePrice} € HT</span>
+                    <span className=" font-medium">{row.taxPrice} € HT</span>
                   </div>
 
                   <div className=" flex justify-between font-medium mt-2">
@@ -139,7 +157,7 @@ export const Contract: React.FC = () => {
                   <div className=" flex justify-between font-medium text-lg mt-2">
                     <span className=" font-medium">Montant TTC</span>
                     <span className=" font-medium">
-                      {row.totalPrice + row.taxePrice} € TTC
+                      {row.totalPrice + row.taxPrice} € TTC
                     </span>
                   </div>
                 </div>

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { Loading } from "../../../components/loading";
@@ -24,12 +25,14 @@ export const UpdateTaxe: React.FC = () => {
     }
   }, []);
 
+  const { data, refetch } = useTaxe(+id!);
   const { form, submit, loading } = useUpdateTaxe({
     id: +id!,
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      refetch();
+      toast.success("La taxe a été modifié avec succès");
+    },
   });
-
-  const { data } = useTaxe(+id!);
 
   useEffect(() => {
     if (data?.taxe?.ok && data?.taxe?.result) {

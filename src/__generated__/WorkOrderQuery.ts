@@ -9,6 +9,12 @@ import { WorkOrderType, WorkOrderStatus } from "./globalTypes";
 // GraphQL query operation: WorkOrderQuery
 // ====================================================
 
+export interface WorkOrderQuery_workOrder_result_invoice {
+  __typename: "Invoice";
+  id: number;
+  totalPrice: number;
+}
+
 export interface WorkOrderQuery_workOrder_result_user {
   __typename: "User";
   id: number;
@@ -65,6 +71,8 @@ export interface WorkOrderQuery_workOrder_result {
   street: string;
   postal: string;
   city: string;
+  invoiceId: number | null;
+  invoice: WorkOrderQuery_workOrder_result_invoice | null;
   userId: number | null;
   user: WorkOrderQuery_workOrder_result_user | null;
   siteId: number | null;

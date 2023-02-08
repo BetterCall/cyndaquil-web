@@ -56,7 +56,7 @@ export const CONTRACT = gql`
 
         equipmentCount
         price 
-        taxePrice
+        taxPrice
         
         customer {
             ...CustomerPart
@@ -75,7 +75,7 @@ export const CONTRACT = gql`
             unitPrice
             quantity
             taxe
-            taxePrice
+            taxPrice
             totalPrice
 
             benefit {

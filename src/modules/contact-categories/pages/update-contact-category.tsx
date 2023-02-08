@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { DashboardIcon } from "../../../components/icons";
 import { Loading } from "../../../components/loading";
@@ -19,16 +20,14 @@ export const UpdateContactCategory = () => {
       navigate("/contacts");
     }
   }, []);
-
+  const { data, refetch } = useContactCategory(+id!);
   const { form, submit, loading } = useUpdateContactCategory({
     id: +id!,
     onCompleted: async () => {
       await refetch();
-      navigate(`/contacts/categories`);
+      toast.success("La catégorie a été modifié avec succès");
     },
   });
-
-  const { data, refetch } = useContactCategory(+id!);
 
   useEffect(() => {
     if (data?.contactCategory?.ok && data?.contactCategory?.result) {

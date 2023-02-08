@@ -1,5 +1,6 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { DashboardIcon } from "../../../components/icons";
 import { parseSearchParams } from "../../../helpers/clean-object";
@@ -14,7 +15,9 @@ export const CreateContact: React.FC = () => {
     defaultValues: {
       ...parseSearchParams(params),
     },
-    onCompleted: () => alert("completed"),
+    onCompleted: () => {
+      toast.success("Le contact a été créé avec succès");
+    },
   });
 
   return (

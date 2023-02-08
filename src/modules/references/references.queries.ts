@@ -30,7 +30,7 @@ export const REFERENCE = gql`
 export const REMOVE_REFERENCE = gql`
 
     mutation RemoveReferenceMutation( $id : Int! ) {
-        removeCall( id : $id ) {
+        removeReference( id : $id ) {
             ok 
             error
         }

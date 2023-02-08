@@ -5,11 +5,14 @@ import { UserForm } from "../components";
 import { SendIcon } from "../../../components/icons";
 import { Header } from "../../../components/header";
 import { CardHeader } from "../../../components/cards";
+import { toast } from "react-toastify";
 
 export const CreateUser: React.FC = () => {
   const { form, submit, loading } = useCreateUser({
     defaultValues: {},
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      toast.success("L'utilisateur a été créé avec succès");
+    },
   });
 
   return (

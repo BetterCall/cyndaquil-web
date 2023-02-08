@@ -6,7 +6,7 @@ interface IProps {
 export const EmptyList: React.FC<IProps> = ({ text }) => {
   return (
     <div className="flex justify-center align-middle py-8 bg-slate-100 rounded border-solid border-slate-200 ">
-      <div className="flex flex-row  justify-center  w-1/2">
+      <div className="flex flex-row  justify-center  w-1/2 md:w-full">
         <div>
           <svg
             width="24"

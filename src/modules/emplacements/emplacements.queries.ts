@@ -57,6 +57,8 @@ export const EMPLACEMENTS = gql`
                     id
                     name
                 }
+
+                categoryId
                 category {
                     id 
                     name

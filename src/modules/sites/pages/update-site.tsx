@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 
@@ -20,12 +21,14 @@ export const UpdateSite = () => {
     }
   }, []);
 
+  const { data, refetch } = useSite(+id!);
   const { form, submit, loading } = useUpdateSite({
     id: +id!,
-    onCompleted: () => alert("saved"),
+    onCompleted: () => {
+      refetch();
+      toast.success("L'immeuble a été modifié avec succès");
+    },
   });
-
-  const { data, refetch } = useSite(+id!);
 
   useEffect(() => {
     if (data?.site?.ok && data?.site?.result) {

@@ -8,13 +8,16 @@ import { ReferenceForm } from "../components";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { useCreateReference } from "../hooks";
+import { toast } from "react-toastify";
 
 export const CreateReference: React.FC = ({}) => {
   const { form, submit, loading } = useCreateReference({
     defaultValues: {
       name: "",
     },
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      toast.success("La référence a été créée avec succès");
+    },
   });
 
   return (

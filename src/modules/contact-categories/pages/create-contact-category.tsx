@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 
@@ -7,16 +8,13 @@ import { ContactCategoryForm } from "../components";
 import { useCreateContactCategory } from "../hooks";
 
 export const CreateContactCategory: React.FC = () => {
-  const navigate = useNavigate();
-
   const { form, submit, loading } = useCreateContactCategory({
     defaultValues: {
       name: "",
     },
-    onCompleted: () =>
-      navigate(`/contacts/categories`, {
-        replace: true,
-      }),
+    onCompleted: () => {
+      toast.success("La catégorie a été créée avec succès");
+    },
   });
 
   return (

@@ -8,8 +8,11 @@ import { CalendarIcon } from "../../../components/icons";
 import { CardHeader } from "../../../components/cards";
 import { WorkOrdersPreview } from "../../work-orders/components";
 import { WorkOrderStatus } from "../../../__generated__/globalTypes";
+import { DemandsPreview } from "../../demands/components";
+import { useNavigate } from "react-router-dom";
 
 export const Admin = () => {
+  const navigate = useNavigate();
   const [, updateState] = useState();
   // @ts-ignore
   const forceUpdate = React.useCallback(() => updateState({}), []);
@@ -101,13 +104,35 @@ export const Admin = () => {
           </div>
         </div>
       </section>
-      <div className="main-container">
-        <div className="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-          <div className="w-full md:w-1/3  px-4 mb-4 md:mb-0"></div>
-        </div>
-      </div>
+      <div className="main-container"></div>
 
       <div className="main-container">
+        <div className="section mb-4">
+          <div className="left">
+            <div className="card">
+              <CardHeader title="Demandes en attente" />
+              {data?.me?.id ? (
+                <DemandsPreview targetUserId={data?.me?.id} treated={false} />
+              ) : null}
+
+              <div className="grid -mx-2 mt-2   justify-items-center ">
+                <div className="w-full md:w-1/2 px-2">
+                  <div
+                    className="btn"
+                    onClick={() =>
+                      navigate(
+                        `/demands?targetUserId=${data?.me?.id}&treated=false`
+                      )
+                    }
+                  >
+                    Mes demandes en attente
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <section className="section">
           <div className="left">
             <div className="card mb-2">

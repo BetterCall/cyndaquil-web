@@ -4,11 +4,14 @@ import { useCreateSupplier } from "../hooks";
 import { SupplierForm } from "../components";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
+import { toast } from "react-toastify";
 
 export const CreateSupplier: React.FC = () => {
   const { form, submit, loading } = useCreateSupplier({
     defaultValues: {},
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      toast.success("Le Fournisseur a été créé avec succès");
+    },
   });
 
   return (

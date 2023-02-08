@@ -28,6 +28,7 @@ export interface EmplacementsQuery_emplacements_results {
   entrance: string | null;
   floor: number;
   site: EmplacementsQuery_emplacements_results_site | null;
+  categoryId: number | null;
   category: EmplacementsQuery_emplacements_results_category | null;
 }
 

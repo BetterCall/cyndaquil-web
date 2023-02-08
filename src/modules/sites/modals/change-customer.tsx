@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "antd";
 import { useUpdateSite } from "../hooks";
 import { CustomerInput } from "../../customer/components";
+import { toast } from "react-toastify";
 
 interface IChangeManagerProps {
   siteId: number;
@@ -17,7 +18,9 @@ export const ChangeCustomer: React.FC<IChangeManagerProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { form, submit, loading } = useUpdateSite({
     id: siteId,
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      toast.success("Le client a été modifié avec succès");
+    },
   });
 
   useEffect(() => {
@@ -28,6 +31,7 @@ export const ChangeCustomer: React.FC<IChangeManagerProps> = ({
     try {
       await submit();
       onCompleted();
+      setIsModalOpen(false);
     } catch (error) {}
   };
   const handleCancel = () => {

@@ -4,11 +4,11 @@ import { DeepPartial, useForm } from "react-hook-form";
 import { CREATE_WORK_ORDER } from "../work-orders.queries";
 import { parseParams } from "../../../helpers/clean-object";
 
-import { CreateWorkOrderInput } from "../../../__generated__/globalTypes";
 import {
     CreateWorkOrderMutation,
     CreateWorkOrderMutationVariables
 } from "../../../__generated__/CreateWorkOrderMutation";
+import { CreateWorkOrderInput } from "../../../__generated__/globalTypes";
 
 
 interface IProps {

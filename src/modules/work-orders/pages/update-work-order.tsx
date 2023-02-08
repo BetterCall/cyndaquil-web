@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 
@@ -20,16 +21,16 @@ export const UpdateWorkOrder: React.FC = () => {
     }
   }, []);
 
+  const { data, refetch } = useWorkOrder(+id!);
   const { form, loading, submit } = useUpdateWorkOrder({
     id: +id!,
-    onCompleted: () => {},
+    onCompleted: () => {
+      refetch();
+      toast.success("Le BI a été modifié avec succès");
+    },
   });
 
-  const { data } = useWorkOrder(+id!);
-  console.log("data ", data);
-
   useEffect(() => {
-    console.log("data ", data);
     form.setValue("name", data?.workOrder?.result?.name);
     form.setValue("type", data?.workOrder?.result?.type);
     form.setValue("siteId", data?.workOrder?.result?.site?.id);
@@ -57,13 +58,6 @@ export const UpdateWorkOrder: React.FC = () => {
     form.setValue("userId", data?.workOrder?.result?.userId);
     form.setValue("siteId", data?.workOrder?.result?.siteId);
     form.setValue("customerId", data?.workOrder?.result?.customerId);
-
-    form.setValue(
-      "emplacementIds",
-      data?.workOrder?.result?.emplacements?.map((e) => e.emplacement.id)
-    );
-
-    // emplacements: WorkOrderQuery_workOrder_result_emplacements[] | null;
   }, [data, form]);
 
   // useEffect(() => {

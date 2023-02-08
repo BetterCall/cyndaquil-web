@@ -5,7 +5,7 @@ import { CardHeader } from "../../../components/cards";
 
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
-import { CallsPreview } from "../../calls/components";
+import { DemandsPreview } from "../../demands/components";
 import { ContactsPreview } from "../../contacts/components";
 import { PricesPreview } from "../../prices/components";
 import { SitesPreview } from "../../sites/components";
@@ -120,7 +120,7 @@ export const Customer: React.FC = () => {
           <div className="left">
             <div className="card">
               <CardHeader title="Appels" />
-              <CallsPreview customerId={+id!} />
+              <DemandsPreview customerId={+id!} />
               <div className="cardFooter">
                 <div className="w-full md:w-1/2 px-2">
                   <div

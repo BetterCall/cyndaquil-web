@@ -8,7 +8,7 @@ import { parseParams } from "../../../helpers/clean-object";
 
 interface IProps {
     defaultValues: CreateSiteInput
-    onCompleted: () => any
+    onCompleted: (id: number) => any
 }
 
 export const useCreateSite = ({ defaultValues, onCompleted }: IProps) => {
@@ -30,8 +30,8 @@ export const useCreateSite = ({ defaultValues, onCompleted }: IProps) => {
                 }
             })
 
-            if (data?.createSite?.ok) {
-                onCompleted()
+            if (data?.createSite?.ok && data?.createSite?.id) {
+                onCompleted(data?.createSite?.id)
             } else {
                 throw Error(data?.createSite?.error ?? "Error")
             }

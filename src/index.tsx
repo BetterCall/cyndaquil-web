@@ -16,6 +16,10 @@ import "./styles/main.css";
 
 import { client } from "./apollo";
 import { HelmetProvider } from "react-helmet-async";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import moment from "moment";
 // @ts-ignore
 import localization from "moment/locale/fr";
@@ -28,6 +32,7 @@ ReactDOM.render(
       <ConfigProvider locale={frFR}>
         <HelmetProvider>
           <App />
+          <ToastContainer />
         </HelmetProvider>
       </ConfigProvider>
     </ApolloProvider>

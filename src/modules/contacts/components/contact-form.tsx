@@ -22,10 +22,7 @@ export const ContactForm: React.FC<IContactForm> = ({
   return (
     <div className="w-full">
       <div className="w-full p-3">
-        <ContactCategoriesInput
-          form={form}
-          disabled={disabledFields.includes("customerId")}
-        />
+        <ContactCategoriesInput form={form} />
       </div>
 
       <div className="w-full p-3">
@@ -65,15 +62,22 @@ export const ContactForm: React.FC<IContactForm> = ({
         />
       </div>
 
-      <div className="w-full p-3">
+      <div className="w-full px-3">
         <CustomerInput
           form={form}
-          disabled={disabledFields.includes("customerId")}
+          disabled={disabledFields.some((ai) =>
+            ["customerId", "siteId"].includes(ai)
+          )}
         />
       </div>
 
-      <div className="w-full p-3">
-        <SiteInput form={form} disabled={disabledFields.includes("siteId")} />
+      <div className="w-full px-3">
+        <SiteInput
+          form={form}
+          disabled={disabledFields.some((ai) =>
+            ["customerId", "siteId"].includes(ai)
+          )}
+        />
       </div>
 
       <div className="w-full p-3">

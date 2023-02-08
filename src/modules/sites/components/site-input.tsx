@@ -18,13 +18,17 @@ export const SiteInput: React.FC<ISiteInput> = ({
   setCustomer = false,
 }) => {
   const [isOpened, setIsOpened] = useState(false);
-  const [searchFn, { data, loading, called, fetchMore }] = useLazySites();
+  const [searchFn, { data, loading, called, fetchMore, error }] =
+    useLazySites();
   const [lazySite] = useLazySite();
 
   const [search, setSearch] = useState("");
   const [hasBeenSelected, setSelected] = useState(false);
   const [selectedSite, setSelectedSite] = useState<any>(null);
   const debouncedSearchTerm = useDebounce(search, 500);
+
+  console.log("data ", { data, loading, called, fetchMore, error });
+  console.log(debouncedSearchTerm);
   useEffect(
     () => {
       if (debouncedSearchTerm) {
@@ -67,8 +71,6 @@ export const SiteInput: React.FC<ISiteInput> = ({
       }
     };
 
-    const id = form.getValues("siteId");
-    console.log("id ", id);
     if (siteId) {
       fetchData(siteId);
     }

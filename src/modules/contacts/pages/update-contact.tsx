@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
@@ -27,7 +28,7 @@ export const UpdateContact: React.FC = () => {
     id: +id!,
     onCompleted: async () => {
       await refetch();
-      alert("ok");
+      toast.success("Le contact a été modifié avec succès");
     },
   });
 

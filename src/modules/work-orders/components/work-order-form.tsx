@@ -18,6 +18,8 @@ import { useUsers } from "../../users/hooks";
 import { CustomerInput } from "../../customer/components";
 import { useLazyEmplacements } from "../../emplacements/hooks";
 import { EmptyList } from "../../../components";
+import { SelectBenefit } from "../../benefits/components";
+import { toast } from "react-toastify";
 
 interface IWorkOrderFormProps {
   loading: boolean;
@@ -33,13 +35,13 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
   disabledFields = [],
 }) => {
   const additionalInformations: string = form.watch("additionalInformations");
-  const rows =
+  const inputRows =
     additionalInformations?.split("\n").length > 4
       ? additionalInformations?.split("\n").length
       : 4;
 
   // @ts-ignore
-  const { date, userId, siteId, emplacementIds = [] } = form.watch();
+  const { date, userId, siteId, rows = [] } = form.watch();
   const { data: usersData } = useUsers({ where: {} });
 
   const [getEmplacements, { data: eData, called }] = useLazyEmplacements();
@@ -51,15 +53,37 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
   }, [siteId]);
 
   const toggleRow = (emplacementId: number) => {
-    console.log("ROWS ", rows);
-    const index = emplacementIds.findIndex((id) => id === emplacementId);
-    let ids = emplacementIds;
+    const index = rows.findIndex((row) => row.emplacementId === emplacementId);
+    let newRows = rows;
     if (index === -1) {
-      ids.push(emplacementId);
+      newRows.push({ emplacementId, benefitId: null });
     } else {
-      ids.splice(index, 1);
+      newRows.splice(index, 1);
     }
-    form.setValue("emplacementIds", ids);
+    form.setValue("rows", newRows);
+  };
+
+  const setRowBanefit = (emplacementId: number, benefitId: number) => {
+    console.log("emplacementId ", emplacementId);
+    console.log("benefitId ", benefitId);
+    const index = rows.findIndex((row) => row.emplacementId === emplacementId);
+    console.log(index);
+    let newRows = rows;
+    if (index !== -1) {
+      newRows[index].benefitId = benefitId;
+    }
+    form.setValue("rows", newRows);
+    console.log("ROWS ", rows);
+  };
+
+  const onSubmit = () => {
+    for (let i = 0; i < rows.length; i++) {
+      if (rows[i].benefitId === null) {
+        toast.error("Veuillez sélectionner un service pour chaque emplacement");
+        return;
+      }
+    }
+    submit();
   };
 
   return (
@@ -85,7 +109,7 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
               </p>
               <textarea
                 style={{ height: "auto" }}
-                rows={rows}
+                rows={inputRows}
                 {...form.register("description", {
                   required: "name required",
                 })}
@@ -247,39 +271,55 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
                 <tbody>
                   {eData?.emplacements.results?.map((emplacement, index) => {
                     const isSelected =
-                      emplacementIds.findIndex((id) => id === emplacement.id) ??
-                      -1;
+                      rows.findIndex(
+                        (row) => row.emplacementId === emplacement.id
+                      ) ?? -1;
 
                     return (
-                      <tr
-                        key={`emplacement-${emplacement.id}`}
-                        className={`text-xs   ${
-                          index % 2 ? "" : "bg-gray-50"
-                        } `}
-                      >
-                        <td className="padding-table ">
-                          <input
-                            checked={isSelected !== -1}
-                            type="checkbox"
-                            className="mr-2 cursor-pointer "
-                            onClick={() => toggleRow(emplacement.id)}
-                            id={`emplacement-${emplacement.id}`}
-                          />
-                        </td>
-                        <td className="padding-table font-medium">
-                          {emplacement.category?.name} {emplacement.id}
-                        </td>
+                      <>
+                        <tr
+                          key={`emplacement-${emplacement.id}`}
+                          className={`text-xs   ${
+                            index % 2 ? "" : "bg-gray-50"
+                          } `}
+                        >
+                          <td className="padding-table ">
+                            <input
+                              checked={isSelected !== -1}
+                              type="checkbox"
+                              className="mr-2 cursor-pointer "
+                              onClick={() => toggleRow(emplacement.id)}
+                              id={`emplacement-${emplacement.id}`}
+                            />
+                          </td>
+                          <td className="padding-table font-medium">
+                            {emplacement.category?.name} {emplacement.id}
+                          </td>
 
-                        <td className="padding-table font-medium text-center">
-                          {emplacement.building}
-                        </td>
-                        <td className="padding-table font-medium text-center ">
-                          {emplacement.entrance}
-                        </td>
-                        <td className="padding-table  font-medium text-center ">
-                          {emplacement.floor}
-                        </td>
-                      </tr>
+                          <td className="padding-table font-medium text-center">
+                            {emplacement.building}
+                          </td>
+                          <td className="padding-table font-medium text-center ">
+                            {emplacement.entrance}
+                          </td>
+                          <td className="padding-table  font-medium text-center ">
+                            {emplacement.floor}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colSpan={5} className={`padding-table `}>
+                            {isSelected !== -1 && emplacement.categoryId ? (
+                              <SelectBenefit
+                                setValue={(e) => {
+                                  const benefitId = parseInt(e.target.value);
+                                  setRowBanefit(emplacement.id, benefitId);
+                                }}
+                                categoryId={emplacement.categoryId!}
+                              />
+                            ) : null}
+                          </td>
+                        </tr>
+                      </>
                     );
                   })}
                 </tbody>
@@ -293,7 +333,7 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
         canClick={form.formState.isValid}
         loading={loading}
         actionText="Valider"
-        onClick={submit}
+        onClick={onSubmit}
       />
     </div>
   );

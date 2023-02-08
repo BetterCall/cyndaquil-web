@@ -50,7 +50,7 @@
   }
 
   .left { 
-    @apply w-full px-4 md:w-1/2 md:pl-4 md:pr-2
+    @apply w-full px-4 mb-2 md:mb-0 md:w-1/2 md:pl-4 md:pr-2
   }  
 
   .right {

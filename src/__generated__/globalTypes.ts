@@ -19,6 +19,31 @@ export enum ContractStatus {
   Pending = "Pending",
 }
 
+export enum DemandType {
+  Call = "Call",
+  Email = "Email",
+  Letter = "Letter",
+  RegistredLetter = "RegistredLetter",
+  SMS = "SMS",
+}
+
+export enum InvoiceRowType {
+  Deducted = "Deducted",
+  Due = "Due",
+  Free = "Free",
+}
+
+export enum InvoiceStatus {
+  Paid = "Paid",
+  Unpaid = "Unpaid",
+}
+
+export enum PaymentType {
+  Check = "Check",
+  Credit = "Credit",
+  Transfer = "Transfer",
+}
+
 export enum PriceRuleType {
   Percent = "Percent",
 }
@@ -32,14 +57,23 @@ export enum UserRole {
   Tech = "Tech",
 }
 
-export enum WorkOrderStatus {
+export enum VisitStatus {
   Done = "Done",
   InProgress = "InProgress",
   Pending = "Pending",
   Programmed = "Programmed",
 }
 
+export enum WorkOrderStatus {
+  Done = "Done",
+  InProgress = "InProgress",
+  Pending = "Pending",
+  Programmed = "Programmed",
+  Unfinished = "Unfinished",
+}
+
 export enum WorkOrderType {
+  Contract = "Contract",
   Control = "Control",
   Installation = "Installation",
   Other = "Other",
@@ -58,13 +92,6 @@ export interface BrandsFiltersInput {
 export interface BugFiltersInput {
   userId?: number | null;
   state?: string | null;
-}
-
-export interface CallsFiltersInput {
-  userId?: number | null;
-  customerId?: number | null;
-  siteId?: number | null;
-  contactId?: number | null;
 }
 
 export interface ContactFiltersInput {
@@ -99,13 +126,6 @@ export interface CreateBrandInput {
 export interface CreateBugInput {
   url: string;
   description?: string | null;
-}
-
-export interface CreateCallInput {
-  additionalInformations: string;
-  customerId?: number | null;
-  siteId?: number | null;
-  contactId?: number | null;
 }
 
 export interface CreateContactCategoryInput {
@@ -145,6 +165,16 @@ export interface CreateCustomerInput {
   categoryId: number;
 }
 
+export interface CreateDemandInput {
+  type: DemandType;
+  object: string;
+  message?: string | null;
+  customerId?: number | null;
+  siteId?: number | null;
+  contactId?: number | null;
+  targetUserId?: number | null;
+}
+
 export interface CreateEmplacementInput {
   informations: string;
   building: string;
@@ -161,6 +191,16 @@ export interface CreateEquipmentCategoryInput {
 export interface CreateEquipmentInput {
   informations: string;
   categoryId: number;
+}
+
+export interface CreateInvoiceInput {
+  workOrderId: number;
+}
+
+export interface CreatePaymentInput {
+  amount: number;
+  type: PaymentType;
+  invoiceId: number;
 }
 
 export interface CreatePriceRuleInput {
@@ -209,12 +249,28 @@ export interface CreateTaxeInput {
   value: number;
 }
 
+export interface CreateTransferInput {
+  amount: number;
+  comment?: string | null;
+  iban: string;
+  customerId: number;
+}
+
 export interface CreateUserInput {
   firstname: string;
   lastname: string;
   email: string;
   password: string;
   role: UserRole;
+}
+
+export interface CreateVisitInput {
+  object: string;
+  description?: string | null;
+  status: VisitStatus;
+  date?: string | null;
+  start?: string | null;
+  customerId: number;
 }
 
 export interface CreateWorkOrderInput {
@@ -234,14 +290,25 @@ export interface CreateWorkOrderInput {
   siteId?: number | null;
   userId?: number | null;
   status?: WorkOrderStatus | null;
-  emplacementIds?: number[] | null;
+  rows?: number[] | null;
 }
 
 export interface CustomerFiltersInput {
   search?: string | null;
   categoryId?: number | null;
+  commercialId?: number | null;
   city?: string | null;
   postal?: string | null;
+}
+
+export interface DemandsFiltersInput {
+  treated?: boolean | null;
+  openedById?: number | null;
+  customerId?: number | null;
+  siteId?: number | null;
+  contactId?: number | null;
+  targetUserId?: number | null;
+  type?: DemandType | null;
 }
 
 export interface EmplacementsFiltersInput {
@@ -253,6 +320,19 @@ export interface EquipmentFiltersInput {
   categoryId?: number | null;
 }
 
+export interface GenerateFromContractInput {
+  contractId: number;
+}
+
+export interface InvoiceFiltersInput {
+  search?: string | null;
+  customerId?: number | null;
+  status?: InvoiceStatus | null;
+  date?: any | null;
+  userId?: number | null;
+  contractId?: number | null;
+}
+
 export interface LoginAsInput {
   email: string;
 }
@@ -260,6 +340,14 @@ export interface LoginAsInput {
 export interface LoginInput {
   email: string;
   password: string;
+}
+
+export interface PaymentFiltersInput {
+  customerId?: number | null;
+  type?: PaymentType | null;
+  date?: any | null;
+  recordedById?: number | null;
+  invoiceId?: number | null;
 }
 
 export interface PriceRulesFiltersInput {
@@ -272,6 +360,11 @@ export interface ReferencesFiltersInput {
   search?: string | null;
   brandId?: number | null;
   categoryId?: number | null;
+}
+
+export interface ResolveDemandInput {
+  treated: boolean;
+  report: string;
 }
 
 export interface RowsInput {
@@ -294,6 +387,12 @@ export interface SuppliersFiltersInput {
   search?: string | null;
 }
 
+export interface TransferFiltersInput {
+  customerId?: number | null;
+  date?: any | null;
+  recordedById?: number | null;
+}
+
 export interface UpdateBenefitInput {
   name?: string | null;
   price?: number | null;
@@ -309,13 +408,6 @@ export interface UpdateBugInput {
   description?: string | null;
   url?: string | null;
   status?: BugStatus | null;
-}
-
-export interface UpdateCallInput {
-  additionalInformations?: string | null;
-  customerId?: number | null;
-  siteId?: number | null;
-  contactId?: number | null;
 }
 
 export interface UpdateContactCategoryInput {
@@ -353,6 +445,16 @@ export interface UpdateCustomerInput {
   categoryId?: number | null;
 }
 
+export interface UpdateDemandInput {
+  type?: DemandType | null;
+  object?: string | null;
+  message?: string | null;
+  customerId?: number | null;
+  siteId?: number | null;
+  contactId?: number | null;
+  targetUserId?: number | null;
+}
+
 export interface UpdateEmplacementInput {
   informations?: string | null;
   building?: string | null;
@@ -370,6 +472,16 @@ export interface UpdateEquipmentCategoryInput {
 export interface UpdateEquipmentInput {
   informations?: string | null;
   categoryId?: number | null;
+}
+
+export interface UpdateInvoiceInput {
+  preTaxePrice: number;
+}
+
+export interface UpdatePaymentInput {
+  amount?: number | null;
+  type?: PaymentType | null;
+  invoiceId?: number | null;
 }
 
 export interface UpdatePriceRuleInput {
@@ -419,11 +531,27 @@ export interface UpdateTaxeInput {
   value?: number | null;
 }
 
+export interface UpdateTransferInput {
+  amount?: number | null;
+  comment?: string | null;
+  iban?: string | null;
+  customerId?: number | null;
+}
+
 export interface UpdateUserInput {
   firstname?: string | null;
   lastname?: string | null;
   email?: string | null;
   password?: string | null;
+}
+
+export interface UpdateVisitInput {
+  object?: string | null;
+  description?: string | null;
+  status?: VisitStatus | null;
+  date?: string | null;
+  start?: string | null;
+  customerId?: number | null;
 }
 
 export interface UpdateWorkOrderInput {
@@ -443,12 +571,20 @@ export interface UpdateWorkOrderInput {
   siteId?: number | null;
   userId?: number | null;
   status?: WorkOrderStatus | null;
-  emplacementIds?: number[] | null;
+  rows?: number[] | null;
 }
 
 export interface UsersFiltersInput {
   search?: string | null;
   role?: UserRole | null;
+}
+
+export interface VisitFiltersInput {
+  search?: string | null;
+  customerId?: number | null;
+  status?: VisitStatus | null;
+  date?: any | null;
+  userId?: number | null;
 }
 
 export interface WorkOrderFiltersInput {
@@ -460,6 +596,7 @@ export interface WorkOrderFiltersInput {
   status?: WorkOrderStatus | null;
   date?: any | null;
   userId?: number | null;
+  contractId?: number | null;
 }
 
 //==============================================================

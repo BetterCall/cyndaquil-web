@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
@@ -21,12 +22,14 @@ export const UpdateCustomerCategory: React.FC = () => {
     }
   }, []);
 
+  const { data, refetch } = useCustomerCategory(+id!);
   const { form, submit, loading } = useUpdateCustomerCategory({
     id: +id!,
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      refetch();
+      toast.success("La catégorie a été modifié avec succès");
+    },
   });
-
-  const { data, refetch } = useCustomerCategory(+id!);
 
   useEffect(() => {
     if (data?.customerCategory?.ok && data?.customerCategory?.result) {

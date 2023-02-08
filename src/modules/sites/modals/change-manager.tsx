@@ -4,6 +4,7 @@ import { useUpdateSite } from "../hooks";
 import { Button } from "../../../components/button";
 import { useContacts } from "../../contacts/hooks";
 import { CardHeader } from "../../../components/cards";
+import { toast } from "react-toastify";
 
 interface IChangeManagerProps {
   siteId: number;
@@ -21,10 +22,16 @@ export const ChangeManager: React.FC<IChangeManagerProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { form, submit, loading } = useUpdateSite({
     id: siteId,
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      form.setValue("managerId", null);
+      toast.success("Le gestionnaire a été modifié avec succès");
+    },
   });
 
   const { data } = useContacts({ where: { customerId } });
+  useEffect(() => {
+    form.setValue("managerId", null);
+  }, [customerId]);
   const selectedId = form.watch("managerId");
 
   useEffect(() => {
@@ -34,6 +41,7 @@ export const ChangeManager: React.FC<IChangeManagerProps> = ({
   const handleOk = async () => {
     try {
       await submit();
+      setIsModalOpen(false);
       onCompleted();
     } catch (error) {}
   };

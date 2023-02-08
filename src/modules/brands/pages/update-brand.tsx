@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 
@@ -20,12 +21,15 @@ export const UpdateBrand = () => {
     }
   }, []);
 
+  const { data, refetch } = useBrand(+id!);
+
   const { form, submit, loading } = useUpdateBrand({
     id: +id!,
-    onCompleted: () => alert("updated"),
+    onCompleted: () => {
+      toast.success("La marque a été modifié avec succès");
+      refetch();
+    },
   });
-
-  const { data } = useBrand(+id!);
 
   useEffect(() => {
     if (data?.brand?.ok && data?.brand?.result) {

@@ -7,7 +7,7 @@ import { CREATE_CUSTOMER } from "../customers.queries";
 
 interface IProps {
     defaultValues: DeepPartial<CreateCustomerInput>
-    onCompleted: () => any
+    onCompleted: (id: number) => any
 }
 
 export const useCreateCustomer = ({ defaultValues, onCompleted }: IProps) => {
@@ -32,8 +32,8 @@ export const useCreateCustomer = ({ defaultValues, onCompleted }: IProps) => {
                 }
             })
 
-            if (data?.createCustomer?.ok) {
-                onCompleted()
+            if (data?.createCustomer?.ok && data?.createCustomer?.id) {
+                onCompleted(data?.createCustomer?.id)
             } else {
                 throw Error(data?.createCustomer?.error ?? "Error")
             }

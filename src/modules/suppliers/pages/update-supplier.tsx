@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { Loading } from "../../../components/loading";
@@ -21,11 +22,14 @@ export const UpdateSupplier: React.FC = () => {
     }
   }, []);
 
+  const { data, refetch } = useSupplier(+id!);
   const { form, submit, loading } = useUpdateSupplier({
     id: +id!,
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      refetch();
+      toast.success("Le fournisseur a été modifié avec succès");
+    },
   });
-  const { data } = useSupplier(+id!);
 
   useEffect(() => {
     if (data?.supplier?.ok && data?.supplier?.result) {

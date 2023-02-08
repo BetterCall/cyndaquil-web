@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { Loading } from "../../../components/loading";
@@ -21,12 +22,14 @@ export const UpdateUser: React.FC = () => {
     }
   }, []);
 
+  const { data, refetch } = useUser(+id!);
   const { form, submit, loading } = useUpdateUser({
     id: +id!,
-    onCompleted: () => alert("to do"),
+    onCompleted: () => {
+      refetch();
+      toast.success("L'utilisateur a été modifié avec succès");
+    },
   });
-
-  const { data, refetch } = useUser(+id!);
 
   useEffect(() => {
     if (data?.user?.ok && data?.user?.result) {

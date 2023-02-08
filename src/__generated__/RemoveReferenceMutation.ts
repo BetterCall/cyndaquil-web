@@ -7,14 +7,14 @@
 // GraphQL mutation operation: RemoveReferenceMutation
 // ====================================================
 
-export interface RemoveReferenceMutation_removeCall {
-  __typename: "RemoveCallOutput";
+export interface RemoveReferenceMutation_removeReference {
+  __typename: "RemoveReferenceOutput";
   ok: boolean | null;
   error: string | null;
 }
 
 export interface RemoveReferenceMutation {
-  removeCall: RemoveReferenceMutation_removeCall;
+  removeReference: RemoveReferenceMutation_removeReference;
 }
 
 export interface RemoveReferenceMutationVariables {

@@ -16,6 +16,8 @@ export const WORK_ORDER_FRAGMENT = gql`
         street
         postal 
         city
+
+
     }
 `
 
@@ -84,6 +86,12 @@ query WorkOrderQuery ( $id : Int! ) {
         result {
             ...WorkOrderPart
 
+            invoiceId 
+            invoice {
+                id
+                totalPrice
+            }
+
             userId
             user {
                 id
@@ -123,4 +131,18 @@ query WorkOrderQuery ( $id : Int! ) {
     }
 }
 ${WORK_ORDER_FRAGMENT}
+`
+
+
+export const GENERATE_FROM_CONTRACT = gql`
+
+    mutation GenerateFromContractMutation ( $input : GenerateFromContractInput! ) {
+        generateFromContract( input : $input ) {
+            id
+            ok
+            error
+        }
+    }
+
+
 `

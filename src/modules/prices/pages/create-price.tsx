@@ -8,6 +8,7 @@ import { FormHeader } from "../../../components/form";
 import { parseSearchParams } from "../../../helpers/clean-object";
 import { PriceForm } from "../components";
 import { useCreatePrice } from "../hooks";
+import { toast } from "react-toastify";
 
 export const CreatePrice: React.FC = () => {
   const [params] = useSearchParams();
@@ -16,7 +17,9 @@ export const CreatePrice: React.FC = () => {
     defaultValues: {
       ...parseSearchParams(params),
     },
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      toast.success("Le prix spécial a été créé avec succès");
+    },
   });
 
   return (

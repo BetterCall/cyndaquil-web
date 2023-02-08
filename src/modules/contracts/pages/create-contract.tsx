@@ -1,6 +1,7 @@
 import { Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { EmptyList } from "../../../components";
 import { Button } from "../../../components/button";
 import { CardHeader } from "../../../components/cards";
@@ -47,7 +48,9 @@ export const CreateContract = () => {
       name: "",
       ...parseSearchParams(params),
     },
-    onCompleted: () => alert("Contract Created"),
+    onCompleted: () => {
+      toast.success("La proposition a été créée avec succès");
+    },
   });
 
   useEffect(() => {
@@ -162,10 +165,6 @@ export const CreateContract = () => {
       );
     }
     return Object.keys(rows).map((key) => {
-      console.log(
-        " ee ",
-        data?.emplacements.results?.map((e) => e.category?.id)
-      );
       if (
         data?.emplacements.results
           ?.map((e) => e.category?.id)

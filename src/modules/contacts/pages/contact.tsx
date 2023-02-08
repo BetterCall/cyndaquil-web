@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "../../../components";
 import { CardHeader } from "../../../components/cards";
 import { Header } from "../../../components/header";
-import { CallsPreview } from "../../calls/components";
+import { DemandsPreview } from "../../demands/components";
 import { ContactDetails } from "../components";
 import { useContact } from "../hooks";
 
@@ -55,7 +55,7 @@ export const Contact = () => {
           <div className="left">
             <div className="card">
               <CardHeader title="appels" />
-              <CallsPreview contactId={+id!} />
+              <DemandsPreview contactId={+id!} />
             </div>
           </div>
         </section>

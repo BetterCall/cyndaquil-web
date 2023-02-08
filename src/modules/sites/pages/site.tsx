@@ -6,7 +6,7 @@ import { CardHeader } from "../../../components/cards";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { ContractStatus } from "../../../__generated__/globalTypes";
-import { CallsPreview } from "../../calls/components";
+import { DemandsPreview } from "../../demands/components";
 import { ContactDetails, ContactsPreview } from "../../contacts/components";
 import { ContractsPreview } from "../../contracts/components";
 import { EmplacementsPreview } from "../../emplacements/components/preview";
@@ -220,10 +220,12 @@ export const Site: React.FC = () => {
 
               <div className="grid -mx-2 mt-2   justify-items-center ">
                 <div className="w-full md:w-1/2 px-2">
-                  <CreateEmplacement
-                    onCompleted={refetch}
-                    defaultValues={{ siteId: +id! }}
-                  />
+                  <div
+                    className="btn"
+                    onClick={() => navigate(`/contact/create?siteId=${id}`)}
+                  >
+                    Nouveau Contact
+                  </div>
                 </div>
               </div>
             </div>
@@ -248,7 +250,7 @@ export const Site: React.FC = () => {
           <div className="right">
             <div className="card mb-2">
               <CardHeader title="Appels" />
-              <CallsPreview siteId={+id!} />
+              <DemandsPreview siteId={+id!} />
 
               <div className="grid -mx-2 mt-2   justify-items-center ">
                 <div className="w-full md:w-1/2 px-2">

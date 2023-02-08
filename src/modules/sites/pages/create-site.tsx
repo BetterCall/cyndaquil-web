@@ -1,5 +1,5 @@
 import React from "react";
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
@@ -9,14 +9,21 @@ import { SiteForm } from "../components";
 import { parseSearchParams } from "../../../helpers/clean-object";
 
 import { useCreateSite } from "../hooks";
+import { toast } from "react-toastify";
 
 export const CreateSite: React.FC = () => {
   const [params] = useSearchParams();
+  const navigate = useNavigate();
   const { form, submit, loading } = useCreateSite({
     defaultValues: {
       ...parseSearchParams(params),
     },
-    onCompleted: () => alert("site"),
+    onCompleted: (id) => {
+      toast.success("Le Site a été enregistré avec succès");
+      navigate(`/site/${id}`, {
+        replace: true,
+      });
+    },
   });
 
   return (

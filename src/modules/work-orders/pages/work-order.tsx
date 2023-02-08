@@ -7,6 +7,8 @@ import { SendIcon } from "../../../components/icons";
 import { CardHeader } from "../../../components/cards";
 import { ContactDetails } from "../../contacts/components";
 import { Loading } from "../../../components";
+import { CreateBenefit } from "../../benefits/pages";
+import { CreateInvoiceBtn } from "../../invoices/components/create-invoice-btn";
 
 export const WorkOrder: React.FC = () => {
   const { id } = useParams();
@@ -45,6 +47,7 @@ export const WorkOrder: React.FC = () => {
             <div className="card">
               <CardHeader title="Etat" />
               {data?.workOrder?.result?.status}
+              <CreateInvoiceBtn workOrderId={+id!} />
             </div>
           </div>
           <div className="w-full md:w-1/2 lg:w-1/4 p-4">
@@ -128,6 +131,21 @@ export const WorkOrder: React.FC = () => {
               </div>
             </div>
           </div>
+        </section>
+
+        <section className="section">
+          <div className="left">
+            <div className="card mb-2">
+              <CardHeader title="Facture" />
+              <div className="mb-7">
+                <p className="text-sm">{data?.workOrder?.result?.invoiceId}</p>
+                <p className="text-sm">
+                  {data?.workOrder?.result?.invoice?.totalPrice}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="right"></div>
         </section>
       </div>
     </>

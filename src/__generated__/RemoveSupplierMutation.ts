@@ -7,14 +7,14 @@
 // GraphQL mutation operation: RemoveSupplierMutation
 // ====================================================
 
-export interface RemoveSupplierMutation_removeCall {
-  __typename: "RemoveCallOutput";
+export interface RemoveSupplierMutation_removeSupplier {
+  __typename: "RemoveSupplierOutput";
   ok: boolean | null;
   error: string | null;
 }
 
 export interface RemoveSupplierMutation {
-  removeCall: RemoveSupplierMutation_removeCall;
+  removeSupplier: RemoveSupplierMutation_removeSupplier;
 }
 
 export interface RemoveSupplierMutationVariables {

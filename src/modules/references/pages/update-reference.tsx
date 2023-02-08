@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { Loading } from "../../../components/loading";
@@ -21,13 +22,14 @@ export const UpdateReference: React.FC = () => {
       navigate("/");
     }
   }, []);
-
+  const { data, refetch } = useReference(+id!);
   const { form, loading, submit } = useUpdateReference({
     id: +id!,
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      refetch();
+      toast.success("La référence a été modifiée avec succès");
+    },
   });
-
-  const { data } = useReference(+id!);
 
   useEffect(() => {
     if (data?.reference?.ok && data?.reference?.result) {

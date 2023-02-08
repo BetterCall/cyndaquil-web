@@ -1,5 +1,6 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { parseSearchParams } from "../../../helpers/clean-object";
@@ -11,7 +12,9 @@ export const CreateBenefit: React.FC = () => {
 
   const { form, submit, loading } = useCreateBenefit({
     defaultValues: parseSearchParams(params),
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      toast.success("Le service a été créé avec succès");
+    },
   });
 
   return (

@@ -7,6 +7,7 @@ import { BenefitForm } from "../components";
 
 import { useBenefit } from "../hooks/useBenefit";
 import { useUpdateBenefit } from "../hooks";
+import { toast } from "react-toastify";
 
 type IUpdateBenefitParams = {
   id: string;
@@ -24,7 +25,10 @@ export const UpdateBenefit = () => {
   const { data: qData, refetch } = useBenefit(+id!);
   const { form, submit, loading } = useUpdateBenefit({
     id: +id!,
-    onCompleted: () => refetch(),
+    onCompleted: () => {
+      toast.success("Le service a été modifié avec succès");
+      refetch();
+    },
   });
 
   useEffect(() => {
