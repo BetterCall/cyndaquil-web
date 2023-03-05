@@ -8,9 +8,10 @@ import { UpdateBrandMutation, UpdateBrandMutationVariables } from "../../../__ge
 interface IProps {
     id: number,
     onCompleted: () => any
+    onError: (message: string) => any
 }
 
-export const useUpdateBrand = ({ id, onCompleted }: IProps) => {
+export const useUpdateBrand = ({ id, onCompleted, onError }: IProps) => {
 
     const form = useForm<UpdateBrandInput>({
         mode: "all",
@@ -37,6 +38,7 @@ export const useUpdateBrand = ({ id, onCompleted }: IProps) => {
 
         } catch (error) {
             console.log(error)
+            onError(error.message)
         }
     }
 

@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { UserRole } from "./globalTypes";
+
 // ====================================================
 // GraphQL query operation: UserQuery
 // ====================================================
@@ -13,6 +15,7 @@ export interface UserQuery_user_result {
   firstname: string;
   lastname: string;
   email: string;
+  role: UserRole;
 }
 
 export interface UserQuery_user {

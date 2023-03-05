@@ -7,10 +7,18 @@
 // GraphQL query operation: ReferenceQuery
 // ====================================================
 
+export interface ReferenceQuery_reference_result_brand {
+  __typename: "Brand";
+  id: number;
+  name: string;
+}
+
 export interface ReferenceQuery_reference_result {
   __typename: "Reference";
   id: number;
   name: string;
+  brandId: number | null;
+  brand: ReferenceQuery_reference_result_brand | null;
 }
 
 export interface ReferenceQuery_reference {

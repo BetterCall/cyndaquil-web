@@ -1,32 +1,36 @@
 import React, { useState, useEffect } from "react";
+import { UseFormReturn } from "react-hook-form";
 import { useDebounce } from "../../../hooks/useDebounce";
-import { useLazyReferences } from "../hooks";
 
-interface IReferenceInput {
-  setValue: any;
-  defaultValue?: string;
-  canCreate?: boolean;
+import { useLazyReference, useLazyReferences } from "../hooks";
+
+interface IProps {
+  form: UseFormReturn<any, any>;
+  disabled?: boolean;
 }
 
-export const ReferenceInput: React.FC<IReferenceInput> = ({
-  setValue,
-  defaultValue,
-  canCreate = false,
+export const ReferenceInput: React.FC<IProps> = ({
+  form,
+  disabled = false,
 }) => {
+  const limit = 10;
   const [isOpened, setIsOpened] = useState(false);
-  const [searchFn, { data, loading, called, fetchMore }] = useLazyReferences();
+  const [searchFn, { data, loading, called, fetchMore, error }] =
+    useLazyReferences();
+  const [fetchReference] = useLazyReference();
 
-  const [search, setSearch] = useState(defaultValue);
-  const [hasBeenSelected, setSelected] = useState(!!defaultValue);
-
+  const [search, setSearch] = useState("");
+  const [hasBeenSelected, setSelected] = useState(false);
+  const [selectedReference, setSelectedReference] = useState<any>(null);
   const debouncedSearchTerm = useDebounce(search, 500);
+
   useEffect(
     () => {
       if (debouncedSearchTerm) {
         setIsOpened(true);
         searchFn({
           variables: {
-            limit: 2,
+            limit,
             offset: 0,
             where: {
               search,
@@ -38,25 +42,64 @@ export const ReferenceInput: React.FC<IReferenceInput> = ({
     [debouncedSearchTerm] // Only call effect if debounced search term changes
   );
 
+  const categoryId = form.watch("categoryId");
+  console.log(data);
+  useEffect(
+    () => {
+      console.log(categoryId);
+      if (categoryId) {
+        setIsOpened(true);
+        searchFn({
+          variables: {
+            limit,
+            offset: 0,
+            where: {
+              categoryId: +categoryId,
+            },
+          },
+        });
+        setSelectedReference(null);
+        setSearch("");
+        setIsOpened(true);
+        setSelected(false);
+      }
+    },
+    [categoryId] // Only call effect if debounced search term changes
+  );
+
   useEffect(() => {
-    if (!hasBeenSelected) setValue("brandId", null);
+    if (!hasBeenSelected) form.setValue("referenceId", null);
   }, [hasBeenSelected]);
 
-  const [create, setCreate] = useState(false);
-  const onCompleted = (brandCreated: any) => {
-    setIsOpened(false);
-    setSearch(`${brandCreated.name}`);
-    setSelected(true);
-    setValue("brandId", brandCreated.id);
+  const referenceId = form.getValues("referenceId");
 
-    setCreate(false);
-  };
+  useEffect(() => {
+    const fetchData = async (id) => {
+      const { data: referenceData } = await fetchReference({
+        variables: { id: +id },
+      });
+      if (referenceData?.reference?.result) {
+        setIsOpened(false);
+        setSelected(true);
+        setSearch(
+          `${referenceData?.reference?.result?.brand?.name} - ${referenceData?.reference?.result?.name}`
+        );
+        setSelectedReference(referenceData?.reference?.result);
+        form.setValue("referenceId", referenceData?.reference?.result?.id);
+      }
+    };
+
+    if (referenceId) {
+      fetchData(referenceId);
+    }
+  }, [referenceId]);
 
   return (
     <div className="flex flex-col">
-      <label className="text-sm font-bold">Reference</label>
+      <label className="label">Reference</label>
       <input
-        className="input mb-3"
+        disabled={disabled}
+        className="input"
         onChange={(e) => {
           setSearch(e.target.value);
           setSelected(false);
@@ -64,72 +107,64 @@ export const ReferenceInput: React.FC<IReferenceInput> = ({
         value={search}
       />
 
-      {isOpened && search !== "" && !hasBeenSelected && (
-        <>
-          <label className="text-sm font-bold">Résultats</label>
-          <div className="input mb-3 ">
-            {loading && <h2>Chargement ...</h2>}
+      {((isOpened && search !== "") || (isOpened && categoryId)) &&
+        !hasBeenSelected && (
+          <>
+            <label className="text-sm font-bold">Résultats</label>
+            <div className="input mb-3 ">
+              {loading && <h2>Chargement ...</h2>}
 
-            {called && data?.references?.results?.length == 0 && (
-              <>
-                <h2>Aucun resultat</h2>
-              </>
-            )}
+              {called && data?.references?.results?.length == 0 && (
+                <>
+                  <h2>Aucun resultat</h2>
+                </>
+              )}
 
-            {data?.references?.results?.map((brand) => (
-              <div
-                className="mb-3 cursor-pointer"
-                key={`brand-${brand.id}`}
-                onClick={() => {
-                  setIsOpened(false);
-                  setSearch(`${brand.name}`);
-                  setSelected(true);
-                  setValue("brandId", brand.id);
-                }}
-              >
-                <h2 className="">· {brand.name}</h2>
-              </div>
-            ))}
+              {data?.references?.results?.map((reference) => (
+                <div
+                  className="mb-3 cursor-pointer"
+                  key={`reference-${reference.id}`}
+                  onClick={() => {
+                    setIsOpened(false);
+                    setSearch(reference.name);
+                    setSelected(true);
+                    form.setValue("referenceId", reference.id);
+                    setSelectedReference(reference);
+                  }}
+                >
+                  <h2>
+                    {reference.brand?.name} - {reference.name}
+                  </h2>
+                </div>
+              ))}
 
-            {data?.references.hasMore && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  fetchMore({
-                    variables: {
-                      where: {
-                        search,
+              {data?.references.hasMore && (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    fetchMore({
+                      variables: {
+                        where: {
+                          search,
+                        },
+                        limit,
+                        offset: data?.references?.results?.length,
                       },
-                      limit: 2,
-                      offset: data?.references?.results?.length,
-                    },
-                  });
-                }}
-                disabled={loading}
-                className={`text-lg w-full font-medium focus:outline-none text-white py-4  transition-colors ${
-                  !loading
-                    ? "bg-gray-700 hover:bg-gray-800"
-                    : "bg-gray-300 pointer-events-none "
-                }`}
-              >
-                {loading ? "Chargement" : "Plus de resultats"}{" "}
-              </button>
-            )}
-
-            {canCreate && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setCreate(true);
-                }}
-                className={`mt-2 text-lg w-full font-medium focus:outline-none text-white py-4  transition-colors  bg-cyan-500 hover:bg-cyan-600  `}
-              >
-                Nouveau Marque
-              </button>
-            )}
-          </div>
-        </>
-      )}
+                    });
+                  }}
+                  disabled={loading}
+                  className={`text-lg font-medium focus:outline-none text-white py-4  transition-colors ${
+                    !loading
+                      ? "bg-gray-700 hover:bg-gray-800"
+                      : "bg-gray-300 pointer-events-none "
+                  }`}
+                >
+                  {loading ? "Chargement" : "Plus de resultats"}{" "}
+                </button>
+              )}
+            </div>
+          </>
+        )}
     </div>
   );
 };

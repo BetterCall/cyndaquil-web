@@ -63,7 +63,7 @@ export const WorkOrdersPreview: React.FC<WordOrderProps> = ({
                       className="font-medium  cursor-pointer"
                       onClick={() => navigate(`/work-order/${workOrder.id}`)}
                     >
-                      {workOrder.name}
+                      {workOrder.object}
                     </p>
                     <p className="text-gray-500">
                       {workOrder.streetNumber} {workOrder.street}

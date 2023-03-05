@@ -10,8 +10,14 @@ query BugQuery( $id : Int! ) {
         result {
             id
             url
+            object
+            critical
             description
             status
+
+            report
+
+            createdAt
 
             user {
                 id 
@@ -45,8 +51,9 @@ export const BUGS = gql`
             results  {
                 id 
                 url
-                description
-
+                status
+                object
+                critical
                 user {
                     id
                     firstname

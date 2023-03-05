@@ -58,48 +58,57 @@ export const Site: React.FC = () => {
           <div className="left">
             <div className="card">
               <CardHeader title="Client" />
-              <div className="flex justify-between mb-2">
-                <div className="flex items-center">
-                  <div>
-                    <div className="flex mb-2">
-                      <h3 className="font-medium  mr-2 ">
-                        {data?.site?.result?.customer?.name}{" "}
-                      </h3>
-                      <span
-                        onClick={() =>
-                          navigate(
-                            `/sites?customerId=${data?.site?.result?.customer?.id}`
-                          )
-                        }
-                        className="cursor-pointer inline-block py-1 px-2 text-xs bg-blue-50 text-blue-500 rounded"
-                      >
-                        72 Sites
-                      </span>
+              {data?.site?.result?.customer ? (
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <div className="flex items-center">
+                      <div>
+                        <div className="flex mb-2">
+                          <h3 className="font-medium  mr-2 ">
+                            {data?.site?.result?.customer?.name}{" "}
+                          </h3>
+                          <span
+                            onClick={() =>
+                              navigate(
+                                `/sites?customerId=${data?.site?.result?.customer?.id}`
+                              )
+                            }
+                            className="cursor-pointer inline-block py-1 px-2 text-xs bg-blue-50 text-blue-500 rounded"
+                          >
+                            72 Sites
+                          </span>
+                        </div>
+                      </div>
                     </div>
+                    <button className="self-start mt-2 focus:outline-none">
+                      <svg
+                        className="h-3 w-3 text-gray-200"
+                        viewBox="0 0 12 4"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 0.666687C5.26667 0.666687 4.66667 1.26669 4.66667 2.00002C4.66667 2.73335 5.26667 3.33335 6 3.33335C6.73333 3.33335 7.33333 2.73335 7.33333 2.00002C7.33333 1.26669 6.73333 0.666687 6 0.666687ZM1.33333 0.666687C0.6 0.666687 0 1.26669 0 2.00002C0 2.73335 0.6 3.33335 1.33333 3.33335C2.06667 3.33335 2.66667 2.73335 2.66667 2.00002C2.66667 1.26669 2.06667 0.666687 1.33333 0.666687ZM10.6667 0.666687C9.93333 0.666687 9.33333 1.26669 9.33333 2.00002C9.33333 2.73335 9.93333 3.33335 10.6667 3.33335C11.4 3.33335 12 2.73335 12 2.00002C12 1.26669 11.4 0.666687 10.6667 0.666687Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </button>
                   </div>
+                  <div className="mb-7">
+                    <p className="text-sm">
+                      Informations Supplementaires sur le client
+                    </p>
+                  </div>
+                  <ContactDetails
+                    phone="0616070635"
+                    email="bryann@brovia.com"
+                  />
                 </div>
-                <button className="self-start mt-2 focus:outline-none">
-                  <svg
-                    className="h-3 w-3 text-gray-200"
-                    viewBox="0 0 12 4"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M6 0.666687C5.26667 0.666687 4.66667 1.26669 4.66667 2.00002C4.66667 2.73335 5.26667 3.33335 6 3.33335C6.73333 3.33335 7.33333 2.73335 7.33333 2.00002C7.33333 1.26669 6.73333 0.666687 6 0.666687ZM1.33333 0.666687C0.6 0.666687 0 1.26669 0 2.00002C0 2.73335 0.6 3.33335 1.33333 3.33335C2.06667 3.33335 2.66667 2.73335 2.66667 2.00002C2.66667 1.26669 2.06667 0.666687 1.33333 0.666687ZM10.6667 0.666687C9.93333 0.666687 9.33333 1.26669 9.33333 2.00002C9.33333 2.73335 9.93333 3.33335 10.6667 3.33335C11.4 3.33335 12 2.73335 12 2.00002C12 1.26669 11.4 0.666687 10.6667 0.666687Z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </button>
-              </div>
-              <div className="mb-7">
-                <p className="text-sm">
-                  Informations Supplementaires sur le client
-                </p>
-              </div>
-              <ContactDetails phone="0616070635" email="bryann@brovia.com" />
+              ) : (
+                <EmptyList text="Aucun Client" />
+              )}
 
-              <div className="flex flex-wrap -mx-2">
+              <div className="flex flex-wrap -mx-2 mt-3">
                 <div className="w-full md:w-1/2 px-2 mb-2 md:mb-0">
                   <div className="btn">
                     <svg

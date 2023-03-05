@@ -61,4 +61,8 @@
     @apply w-full px-4  
   }
 
+  .error-message {
+    @apply text-red-500 text-sm font-medium
+  }
+
 @tailwind utilities;

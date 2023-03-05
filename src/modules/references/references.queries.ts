@@ -21,6 +21,12 @@ export const REFERENCE = gql`
             result {
                 id
                 name
+
+                brandId 
+                brand {
+                    id
+                    name
+                }
             }
         }
     }
@@ -53,6 +59,12 @@ export const REFERENCES = gql`
             results {
                 id
                 name
+
+                brandId 
+                brand {
+                    id 
+                    name 
+                }
             }
         }
     }

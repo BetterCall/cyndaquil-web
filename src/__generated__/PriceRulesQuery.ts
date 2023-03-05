@@ -21,7 +21,13 @@ export interface PriceRulesQuery_priceRules_results_benefit {
   name: string;
 }
 
-export interface PriceRulesQuery_priceRules_results_category {
+export interface PriceRulesQuery_priceRules_results_customerCategory {
+  __typename: "CustomerCategory";
+  id: number;
+  name: string;
+}
+
+export interface PriceRulesQuery_priceRules_results_equipmentCategory {
   __typename: "EquipmentCategory";
   id: number;
   name: string;
@@ -33,9 +39,10 @@ export interface PriceRulesQuery_priceRules_results {
   amount: number;
   description: string;
   type: PriceRuleType;
-  customer: PriceRulesQuery_priceRules_results_customer;
+  customer: PriceRulesQuery_priceRules_results_customer | null;
   benefit: PriceRulesQuery_priceRules_results_benefit | null;
-  category: PriceRulesQuery_priceRules_results_category | null;
+  customerCategory: PriceRulesQuery_priceRules_results_customerCategory | null;
+  equipmentCategory: PriceRulesQuery_priceRules_results_equipmentCategory | null;
 }
 
 export interface PriceRulesQuery_priceRules {

@@ -32,33 +32,43 @@ export interface WorkOrderQuery_workOrder_result_customer {
   __typename: "Customer";
   id: number;
   name: string;
+  phone: string;
+  email: string | null;
 }
 
-export interface WorkOrderQuery_workOrder_result_emplacements_emplacement_category {
+export interface WorkOrderQuery_workOrder_result_rows_emplacement_category {
   __typename: "EquipmentCategory";
   id: number;
   name: string;
 }
 
-export interface WorkOrderQuery_workOrder_result_emplacements_emplacement {
+export interface WorkOrderQuery_workOrder_result_rows_emplacement {
   __typename: "Emplacement";
   id: number;
-  category: WorkOrderQuery_workOrder_result_emplacements_emplacement_category | null;
+  category: WorkOrderQuery_workOrder_result_rows_emplacement_category | null;
   building: string;
   entrance: string | null;
   floor: number;
 }
 
-export interface WorkOrderQuery_workOrder_result_emplacements {
-  __typename: "WorkOrderEmplacement";
+export interface WorkOrderQuery_workOrder_result_rows_benefit {
+  __typename: "Benefit";
   id: number;
-  emplacement: WorkOrderQuery_workOrder_result_emplacements_emplacement;
+  name: string;
+}
+
+export interface WorkOrderQuery_workOrder_result_rows {
+  __typename: "WorkOrderRow";
+  id: number;
+  done: boolean;
+  emplacement: WorkOrderQuery_workOrder_result_rows_emplacement;
+  benefit: WorkOrderQuery_workOrder_result_rows_benefit;
 }
 
 export interface WorkOrderQuery_workOrder_result {
   __typename: "WorkOrder";
   id: number;
-  name: string;
+  object: string;
   description: string | null;
   type: WorkOrderType;
   date: string | null;
@@ -79,7 +89,7 @@ export interface WorkOrderQuery_workOrder_result {
   site: WorkOrderQuery_workOrder_result_site | null;
   customerId: number | null;
   customer: WorkOrderQuery_workOrder_result_customer | null;
-  emplacements: WorkOrderQuery_workOrder_result_emplacements[] | null;
+  rows: WorkOrderQuery_workOrder_result_rows[] | null;
 }
 
 export interface WorkOrderQuery_workOrder {

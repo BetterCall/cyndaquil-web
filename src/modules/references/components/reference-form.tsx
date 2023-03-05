@@ -18,7 +18,7 @@ export const ReferenceForm: React.FC<IReferenceForm> = ({
   form,
 }) => {
   return (
-    <div className="card">
+    <div className="">
       <div className="w-full p-3">
         <p className="label">Nom</p>
         <input

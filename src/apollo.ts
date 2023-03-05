@@ -55,7 +55,7 @@ export const client = new ApolloClient({
                     bugs: {
                         // Don't cache separate results based on
                         // any of this field's arguments.
-                        keyArgs: ["where", ["status", "userId"]],
+                        keyArgs: ["where", ["status", "userId", "search", "critical", "url"]],
 
                         // Concatenate the incoming list items with
                         // the existing list items.
@@ -87,6 +87,20 @@ export const client = new ApolloClient({
                                 results
                             }
                             // return [...existing, ...incoming];
+                        },
+                    },
+
+                    changelogs: {
+                        // Don't cache separate results based on
+                        // any of this field's arguments.
+                        keyArgs: ["where", ["userId", "database", "event"]],
+                        // Concatenate the incoming list items with
+                        // the existing list items.
+                        merge(existing = {}, incoming, { args }): any {
+                            return {
+                                ...incoming,
+                                results: [...(existing.results || []), ...incoming.results]
+                            }
                         },
                     },
 
@@ -160,7 +174,7 @@ export const client = new ApolloClient({
                     workOrders: {
                         // Don't cache separate results based on
                         // any of this field's arguments.
-                        keyArgs: ["where", ["search", "userId", "status", "postal", "date", "customerId", "siteId"]],
+                        keyArgs: ["where", ["search", "userId", "status", "postal", "date", "customerId", "siteId", 'billed']],
 
                         // Concatenate the incoming list items with
                         // the existing list items.
@@ -178,7 +192,7 @@ export const client = new ApolloClient({
                     references: {
                         // Don't cache separate results based on
                         // any of this field's arguments.
-                        keyArgs: ["where", ["search", "brandId"]],
+                        keyArgs: ["where", ["search", "brandId", 'categoryId']],
 
                         // Concatenate the incoming list items with
                         // the existing list items.

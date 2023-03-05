@@ -7,12 +7,16 @@ interface IUserInput {
   form: UseFormReturn<any, any>;
   inputName?: string;
   disabled?: boolean;
+  label?: string;
+  required?: boolean;
 }
 
 export const UserInput: React.FC<IUserInput> = ({
   form: { setValue, getValues },
   inputName = "userId",
   disabled = false,
+  label = "Utilisateur",
+  required = false,
 }) => {
   const [isOpened, setIsOpened] = useState(false);
   const [searchFn, { data, loading, called, fetchMore }] = useLazyUsers();
@@ -70,7 +74,7 @@ export const UserInput: React.FC<IUserInput> = ({
 
   return (
     <div className="flex flex-col">
-      <label className="label">Utilisateur</label>
+      <label className="label">{label}</label>
       <input
         disabled={disabled}
         className="input mb-3"

@@ -7,6 +7,7 @@ import { ContactInput } from "../../contacts/components";
 import { UserSelect } from "../../users/components";
 import { CustomerInput } from "../../customer/components";
 import { DemandTypeSelect } from "./demand-type-select";
+import { ErrorMessage } from "@hookform/error-message";
 
 interface IDemandForm {
   loading: boolean;
@@ -22,27 +23,33 @@ export const DemandForm: React.FC<IDemandForm> = ({
   disabledFields = [],
 }) => {
   return (
-    <div className="card">
-      <div className="w-full">
-        <div className="mb-3">
-          <DemandTypeSelect form={form} />
-        </div>
+    <div className="w-full">
+      <div className="mb-3">
+        <DemandTypeSelect form={form} />
+      </div>
 
-        <div className="w-full pb-3">
-          <p className="mb-1.5 font-medium text-base text-coolGray-800">
-            Objet de la demande
-          </p>
-          <input
-            className="w-full input"
-            type="text"
-            {...form.register("object", { required: "name required" })}
-          />
-        </div>
-
+      <div className="w-full pb-3">
+        <p className="label">Objet de la demande</p>
+        <input
+          className="w-full input"
+          type="text"
+          {...form.register("object", {
+            required: "L'objet de la demande est requis",
+          })}
+        />
+        <ErrorMessage
+          errors={form.formState?.errors}
+          name="object"
+          render={({ message }) => <p className="error-message">{message}</p>}
+        />
+      </div>
+      <div className="w-full pb-3">
         <ContactInput
           disabled={disabledFields.includes("contactId")}
           form={form}
         />
+      </div>
+      <div className="w-full pb-3">
         <CustomerInput
           disabled={disabledFields.includes("customerId")}
           form={form}
@@ -53,31 +60,29 @@ export const DemandForm: React.FC<IDemandForm> = ({
           form={form}
           canSelectAddress={false}
         />
-
+      </div>
+      <div className="w-full pb-3">
         <UserSelect
           form={form}
           name="targetUserId"
           label="Demande addressée à"
         />
-
-        <div className="w-full ">
-          <p className="label">Nom</p>
-          <textarea
-            {...form.register("additionalInformations", {
-              required: "name required",
-            })}
-            placeholder="Informations"
-            className="input w-full"
-          />
-        </div>
-        <div className="w-full ">
-          <Button
-            canClick={form.formState.isValid}
-            loading={loading}
-            actionText="Valider"
-            onClick={submit}
-          />
-        </div>
+      </div>
+      <div className="w-full ">
+        <p className="label">Nom</p>
+        <textarea
+          {...form.register("message")}
+          placeholder="Informations"
+          className="input w-full"
+        />
+      </div>
+      <div className="w-full pt-3">
+        <Button
+          canClick={form.formState.isValid}
+          loading={loading}
+          actionText="Valider"
+          onClick={submit}
+        />
       </div>
     </div>
   );

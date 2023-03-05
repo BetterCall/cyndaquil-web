@@ -4,15 +4,17 @@ import { useEquipmentCategories } from "../hooks";
 
 interface ICustomerCategoriesInput {
   form: UseFormReturn<any, any>;
+  name?: string;
   disabled?: boolean;
 }
 
 export const EquipmentCategoriesInput: React.FC<ICustomerCategoriesInput> = ({
   form,
+  name = "categoryId",
   disabled = false,
 }) => {
   const { data } = useEquipmentCategories();
-  const value = form.watch("categoryId");
+  const value = form.watch(name);
   return (
     <div className="w-full">
       <p className="label">Catégory d'équipement</p>
@@ -34,7 +36,7 @@ export const EquipmentCategoriesInput: React.FC<ICustomerCategoriesInput> = ({
         <select
           disabled={disabled}
           className="input appearance-none w-full"
-          {...form.register("categoryId")}
+          {...form.register(name)}
         >
           <option value={undefined}>-</option>
           {data?.equipmentCategories?.results?.map((category) => {

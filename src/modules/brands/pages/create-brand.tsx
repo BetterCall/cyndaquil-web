@@ -5,6 +5,7 @@ import { useCreateBrand } from "../hooks";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { toast } from "react-toastify";
+import { CardHeader } from "../../../components/cards";
 
 export const CreateBrand: React.FC = () => {
   const { form, submit, loading } = useCreateBrand({
@@ -32,7 +33,10 @@ export const CreateBrand: React.FC = () => {
         ]}
       />
       <div className="main-container">
-        <BrandForm loading={loading} submit={submit} form={form} />
+        <div className="card">
+          <CardHeader title="Nouvelle Marque" />
+          <BrandForm loading={loading} submit={submit} form={form} />
+        </div>
       </div>
     </>
   );

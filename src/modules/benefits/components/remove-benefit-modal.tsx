@@ -43,7 +43,7 @@ export const RemoveBenefitModal: React.FC<IRemoveOfferModal> = ({
 
       <Modal
         title="Suppression"
-        visible={isOpened}
+        open={isOpened}
         onCancel={() => setIsOpened(false)}
         onOk={() => setIsOpened(false)}
         style={{

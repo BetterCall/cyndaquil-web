@@ -26,6 +26,10 @@ export const UpdateContactCategory = () => {
     onCompleted: async () => {
       await refetch();
       toast.success("La catégorie a été modifié avec succès");
+      navigate(`/contacts/category/${id}`);
+    },
+    onError: (msg) => {
+      toast.error(msg);
     },
   });
 
@@ -55,7 +59,9 @@ export const UpdateContactCategory = () => {
         ]}
       />
       <div className="main-container">
-        <ContactCategoryForm loading={loading} submit={submit} form={form} />
+        <div className="card">
+          <ContactCategoryForm loading={loading} submit={submit} form={form} />
+        </div>
       </div>
     </>
   );

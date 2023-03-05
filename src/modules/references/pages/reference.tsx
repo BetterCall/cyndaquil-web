@@ -31,7 +31,7 @@ export const Reference: React.FC = () => {
             actionText: "Nouvelle Référence",
             bgColor: "indigo",
             textColor: "white",
-            link: `/references/create`,
+            link: `/reference/create`,
             icon: <SendIcon />,
           },
         ]}

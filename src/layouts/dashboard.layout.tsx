@@ -10,6 +10,8 @@ import {
 import { DashboardIcon, FileIcon, SendIcon } from "../components/icons";
 import { SelectUserConnected } from "../components/select-user-connected";
 import { LOCALSTORAGE_TOKEN } from "../contants";
+import { CreateBugModal } from "../modules/bugs/modals";
+import { CreateDemandModal } from "../modules/demands/modals";
 import { useMe } from "../modules/users/hooks/useMe";
 import { UserRole } from "../__generated__/globalTypes";
 import { Link } from "./link";
@@ -224,6 +226,20 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
                   title="Sites"
                   url="/sites"
                 />
+
+                <ExpendableLink
+                  icon={<SendIcon />}
+                  title="Factures"
+                  url="/invoices"
+                  submenus={[
+                    {
+                      icon: <SendIcon />,
+                      title: "Nouvelle Facture",
+                      url: "/invoice/create",
+                    },
+                  ]}
+                />
+
                 <ExpendableLink
                   icon={<FileIcon />}
                   title="Contrats"
@@ -274,7 +290,7 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
                     {
                       icon: <SendIcon />,
                       title: "Nouvelle Référence",
-                      url: "/references/create",
+                      url: "/reference/create",
                     },
                   ]}
                 />
@@ -424,6 +440,13 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
 
         <div className=" min-h-screen bg-body ">
           <Outlet />
+
+          <div className="fixed bottom-1 right-1">
+            <div className="mb-2">
+              <CreateBugModal />
+            </div>
+            <CreateDemandModal />
+          </div>
         </div>
       </div>
     </div>

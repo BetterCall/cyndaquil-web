@@ -115,8 +115,21 @@ export const EmplacementForm: React.FC<IEmplacementForm> = ({
       </div>
 
       <div className="w-full p-3">
-        <p className="label">Informations Complémentaires</p>
+        <p className="label">Code</p>
+        <p className="text-sm font-medium  text-gray-500 -mt-3 ">
+          Code présent sur l'étiquette, si le site est en contrat
+        </p>
         <input
+          className="w-full input"
+          // @ts-ignore
+          {...form.register("code")}
+          placeholder="Code de l'étiquette"
+        />
+      </div>
+
+      <div className="w-full p-3">
+        <p className="label">Informations Complémentaires</p>
+        <textarea
           className="w-full input"
           // @ts-ignore
           {...form.register("informations")}

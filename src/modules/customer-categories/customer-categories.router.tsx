@@ -6,6 +6,7 @@ import {
   CustomerCategories,
   UpdateCustomerCategory,
 } from "./pages";
+import { CustomerCategory } from "./pages/customer-category";
 
 export const CustomerCategoriesRouter = [
   <Route
@@ -22,7 +23,7 @@ export const CustomerCategoriesRouter = [
       path=":id"
       element={
         <ProtectedRoute roles={["Any"]}>
-          <Todo />
+          <CustomerCategory />
         </ProtectedRoute>
       }
     />

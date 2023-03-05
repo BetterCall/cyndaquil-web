@@ -29,6 +29,8 @@ import { VisitsRouter } from "../modules/visits/visits.router";
 import { InvoicesRouter } from "../modules/invoices/invoices.router";
 import { PaymentsRouter } from "../modules/payments/payments.router";
 import { TransfersRouter } from "../modules/transfers/transfers.router";
+import { ChangelogsRouter } from "../modules/changelogs/changelogs.router";
+import { ControlsRouter } from "../modules/controls/controls.router";
 
 export const LoggedInRouter = () => {
   const { data, loading, error } = useMe();
@@ -54,6 +56,7 @@ export const LoggedInRouter = () => {
           {ContactsRouter}
           {ContactCategoriesRouter}
           {ContractsRouter}
+          {ControlsRouter}
           {CustomersRouter}
           {CustomerCategoriesRouter}
           {EmplacementsRouter}
@@ -70,6 +73,7 @@ export const LoggedInRouter = () => {
           {InvoicesRouter}
           {PaymentsRouter}
           {TransfersRouter}
+          {ChangelogsRouter}
         </Route>
 
         <Route path="*" element={<NotFound />} />

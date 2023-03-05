@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
 import { Todo } from "../todo";
-import { Emplacements, CreateEmplacement } from "./pages";
+import { Emplacements, CreateEmplacement, Emplacement } from "./pages";
 
 export const EmplacementsRouter = [
   <Route
@@ -18,7 +18,7 @@ export const EmplacementsRouter = [
       path=":id"
       element={
         <ProtectedRoute roles={["Any"]}>
-          <Todo />
+          <Emplacement />
         </ProtectedRoute>
       }
     />

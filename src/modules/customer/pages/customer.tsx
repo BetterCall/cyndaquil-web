@@ -53,7 +53,7 @@ export const Customer: React.FC = () => {
                 <div className="w-full md:w-1/2 px-2">
                   <div
                     className="btn"
-                    onClick={() => navigate(`/sites/create?customerId=${id}`)}
+                    onClick={() => navigate(`/site/create?customerId=${id}`)}
                   >
                     Nouveau Site
                   </div>

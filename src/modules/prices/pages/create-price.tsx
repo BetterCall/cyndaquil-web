@@ -17,8 +17,15 @@ export const CreatePrice: React.FC = () => {
     defaultValues: {
       ...parseSearchParams(params),
     },
-    onCompleted: () => {
+    onCompleted: (id: number) => {
       toast.success("Le prix spécial a été créé avec succès");
+      // wait for 2 seconds
+      setTimeout(() => {
+        window.location.href = `/prices`;
+      }, 1500);
+    },
+    onError: (msg) => {
+      toast.error(msg);
     },
   });
 

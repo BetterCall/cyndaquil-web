@@ -19,12 +19,52 @@ export enum ContractStatus {
   Pending = "Pending",
 }
 
+export enum Database {
+  Benefits = "Benefits",
+  Brands = "Brands",
+  Bugs = "Bugs",
+  Buildings = "Buildings",
+  ContactCategories = "ContactCategories",
+  Contacts = "Contacts",
+  ContractRows = "ContractRows",
+  Contracts = "Contracts",
+  Controls = "Controls",
+  CustomerCategories = "CustomerCategories",
+  Customers = "Customers",
+  Demands = "Demands",
+  Emplacements = "Emplacements",
+  Entrances = "Entrances",
+  EquipmentCategories = "EquipmentCategories",
+  Equipments = "Equipments",
+  Floors = "Floors",
+  Invoices = "Invoices",
+  Payments = "Payments",
+  PriceRules = "PriceRules",
+  References = "References",
+  Reports = "Reports",
+  Samples = "Samples",
+  Sites = "Sites",
+  SupplierReferences = "SupplierReferences",
+  Suppliers = "Suppliers",
+  Transfers = "Transfers",
+  Users = "Users",
+  Visits = "Visits",
+  WorkOrders = "WorkOrders",
+}
+
 export enum DemandType {
   Call = "Call",
   Email = "Email",
   Letter = "Letter",
   RegistredLetter = "RegistredLetter",
   SMS = "SMS",
+}
+
+export enum Event {
+  Create = "Create",
+  Delete = "Delete",
+  Read = "Read",
+  Update = "Update",
 }
 
 export enum InvoiceRowType {
@@ -90,8 +130,18 @@ export interface BrandsFiltersInput {
 }
 
 export interface BugFiltersInput {
+  search?: string | null;
   userId?: number | null;
-  state?: string | null;
+  critical?: boolean | null;
+  url?: string | null;
+  status?: BugStatus | null;
+}
+
+export interface ChangelogFiltersInput {
+  userId?: number | null;
+  database?: Database | null;
+  important?: boolean | null;
+  event?: Event | null;
 }
 
 export interface ContactFiltersInput {
@@ -112,6 +162,16 @@ export interface ContractFiltersInput {
   status?: ContractStatus | null;
 }
 
+export interface ContractRowEmplacementFiltersInput {
+  contractRowId?: number | null;
+  emplacementId?: number | null;
+}
+
+export interface ControlFiltersInput {
+  userId?: number | null;
+  equipmentId?: number | null;
+}
+
 export interface CreateBenefitInput {
   name: string;
   price: number;
@@ -124,7 +184,9 @@ export interface CreateBrandInput {
 }
 
 export interface CreateBugInput {
+  critical: boolean;
   url: string;
+  object: string;
   description?: string | null;
 }
 
@@ -146,6 +208,12 @@ export interface CreateContractInput {
   name: string;
   rows: RowsInput[];
   siteId: number;
+}
+
+export interface CreateControlInput {
+  comment: string;
+  userId?: number | null;
+  equipmentId?: number | null;
 }
 
 export interface CreateCustomerCategoryInput {
@@ -182,6 +250,7 @@ export interface CreateEmplacementInput {
   floor: number;
   categoryId: number;
   siteId: number;
+  code?: number | null;
 }
 
 export interface CreateEquipmentCategoryInput {
@@ -189,8 +258,10 @@ export interface CreateEquipmentCategoryInput {
 }
 
 export interface CreateEquipmentInput {
-  informations: string;
+  code: number;
+  informations?: string | null;
   categoryId: number;
+  referenceId: number;
 }
 
 export interface CreateInvoiceInput {
@@ -207,9 +278,10 @@ export interface CreatePriceRuleInput {
   amount: number;
   type: PriceRuleType;
   description: string;
-  customerId: number;
+  customerId?: number | null;
   benefitId?: number | null;
-  categoryId?: number | null;
+  equipmentCategoryId?: number | null;
+  customerCategoryId?: number | null;
 }
 
 export interface CreateReferenceInput {
@@ -280,17 +352,18 @@ export interface CreateWorkOrderInput {
   street: string;
   postal: string;
   city: string;
-  name: string;
+  object: string;
   description?: string | null;
   type: WorkOrderType;
   date?: string | null;
   start?: string | null;
   end?: string | null;
   customerId?: number | null;
+  fromWorkOrderId?: number | null;
   siteId?: number | null;
   userId?: number | null;
   status?: WorkOrderStatus | null;
-  rows?: number[] | null;
+  rows?: WorkOrderRowInput[] | null;
 }
 
 export interface CustomerFiltersInput {
@@ -320,8 +393,17 @@ export interface EquipmentFiltersInput {
   categoryId?: number | null;
 }
 
+export interface EquipmentInput {
+  id?: number | null;
+  code?: number | null;
+}
+
 export interface GenerateFromContractInput {
   contractId: number;
+}
+
+export interface GenerateFromUnfinishedWorkOrderInput {
+  workOrderId: number;
 }
 
 export interface InvoiceFiltersInput {
@@ -353,7 +435,8 @@ export interface PaymentFiltersInput {
 export interface PriceRulesFiltersInput {
   benefitId?: number | null;
   customerId?: number | null;
-  categoryId?: number | null;
+  equipmentCategoryId?: number | null;
+  customerCategoryId?: number | null;
 }
 
 export interface ReferencesFiltersInput {
@@ -408,6 +491,7 @@ export interface UpdateBugInput {
   description?: string | null;
   url?: string | null;
   status?: BugStatus | null;
+  report?: string | null;
 }
 
 export interface UpdateContactCategoryInput {
@@ -426,6 +510,12 @@ export interface UpdateContactInput {
 
 export interface UpdateContractInput {
   hidden?: boolean | null;
+}
+
+export interface UpdateControlInput {
+  comment: string;
+  userId?: number | null;
+  equipmentId?: number | null;
 }
 
 export interface UpdateCustomerCategoryInput {
@@ -462,6 +552,7 @@ export interface UpdateEmplacementInput {
   floor?: number | null;
   categoryId?: number | null;
   siteId?: number | null;
+  code?: number | null;
   contractId?: number | null;
 }
 
@@ -470,8 +561,10 @@ export interface UpdateEquipmentCategoryInput {
 }
 
 export interface UpdateEquipmentInput {
+  code?: number | null;
   informations?: string | null;
   categoryId?: number | null;
+  referenceId?: number | null;
 }
 
 export interface UpdateInvoiceInput {
@@ -490,7 +583,8 @@ export interface UpdatePriceRuleInput {
   description?: string | null;
   customerId?: number | null;
   benefitId?: number | null;
-  categoryId?: number | null;
+  equipmentCategoryId?: number | null;
+  customerCategoryId?: number | null;
 }
 
 export interface UpdateReferenceInput {
@@ -543,6 +637,7 @@ export interface UpdateUserInput {
   lastname?: string | null;
   email?: string | null;
   password?: string | null;
+  role?: UserRole | null;
 }
 
 export interface UpdateVisitInput {
@@ -561,17 +656,18 @@ export interface UpdateWorkOrderInput {
   street?: string | null;
   postal?: string | null;
   city?: string | null;
-  name?: string | null;
+  object?: string | null;
   description?: string | null;
   type?: WorkOrderType | null;
   date?: string | null;
   start?: string | null;
   end?: string | null;
   customerId?: number | null;
+  fromWorkOrderId?: number | null;
   siteId?: number | null;
   userId?: number | null;
   status?: WorkOrderStatus | null;
-  rows?: number[] | null;
+  rows?: WorkOrderRowInput[] | null;
 }
 
 export interface UsersFiltersInput {
@@ -588,6 +684,7 @@ export interface VisitFiltersInput {
 }
 
 export interface WorkOrderFiltersInput {
+  billed?: boolean | null;
   search?: string | null;
   postal?: string | null;
   city?: string | null;
@@ -597,6 +694,19 @@ export interface WorkOrderFiltersInput {
   date?: any | null;
   userId?: number | null;
   contractId?: number | null;
+}
+
+export interface WorkOrderRowFiltersInput {
+  workOrderId?: number | null;
+  emplacementId?: number | null;
+  benefitId?: number | null;
+  done?: boolean | null;
+}
+
+export interface WorkOrderRowInput {
+  rowId?: number | null;
+  benefitId: number;
+  emplacementId: number;
 }
 
 //==============================================================

@@ -31,55 +31,27 @@ export const UpdateWorkOrder: React.FC = () => {
   });
 
   useEffect(() => {
-    form.setValue("name", data?.workOrder?.result?.name);
+    form.setValue("object", data?.workOrder?.result?.object);
     form.setValue("type", data?.workOrder?.result?.type);
-    form.setValue("siteId", data?.workOrder?.result?.site?.id);
 
     form.setValue("description", data?.workOrder?.result?.description);
     form.setValue("date", data?.workOrder?.result?.date);
     form.setValue("start", data?.workOrder?.result?.start);
     form.setValue("end", data?.workOrder?.result?.end);
 
-    form.setValue("name", data?.workOrder?.result?.name);
-    form.setValue("description", data?.workOrder?.result?.description);
-    form.setValue("type", data?.workOrder?.result?.type);
     form.setValue("status", data?.workOrder?.result?.status);
 
-    form.setValue("date", data?.workOrder?.result?.date);
-    form.setValue("start", data?.workOrder?.result?.start);
-    form.setValue("end", data?.workOrder?.result?.end);
-    // form.setValue("status", data?.workOrder?.result?.status)
     form.setValue("lat", data?.workOrder?.result?.lat);
     form.setValue("lng", data?.workOrder?.result?.lng);
     form.setValue("streetNumber", data?.workOrder?.result?.streetNumber);
     form.setValue("street", data?.workOrder?.result?.street);
     form.setValue("postal", data?.workOrder?.result?.postal);
     form.setValue("city", data?.workOrder?.result?.city);
+
     form.setValue("userId", data?.workOrder?.result?.userId);
     form.setValue("siteId", data?.workOrder?.result?.siteId);
     form.setValue("customerId", data?.workOrder?.result?.customerId);
   }, [data, form]);
-
-  // useEffect(() => {
-  // console.log("useEffectr");
-  // if (!loaded && data?.workOrder?.ok && data?.workOrder?.result) {
-  // form.setValue("name", data?.workOrder?.result?.name);
-  // form.setValue("type", data?.workOrder?.result?.type);
-  // form.setValue("siteId", data?.workOrder?.result?.site?.id);
-  // form.setValue("customerId", data?.workOrder?.result?.customer?.id);
-  // form.setValue("description", data?.workOrder?.result?.description);
-  // form.setValue("date", data?.workOrder?.result?.date);
-  // form.setValue("start", data?.workOrder?.result?.start);
-  // form.setValue("end", data?.workOrder?.result?.end);
-
-  // form.setValue(
-  //   "emplacementIds",
-  //   data?.workOrder?.result?.emplacements?.map((e) => e.emplacement.id)
-  // );
-
-  // setLoaded(true);
-  // }
-  // }, [data]);
 
   return (
     <>

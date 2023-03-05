@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { BugFiltersInput } from "./globalTypes";
+import { BugFiltersInput, BugStatus } from "./globalTypes";
 
 // ====================================================
 // GraphQL query operation: BugsQuery
@@ -20,7 +20,9 @@ export interface BugsQuery_bugs_results {
   __typename: "Bug";
   id: number;
   url: string;
-  description: string | null;
+  status: BugStatus;
+  object: string;
+  critical: boolean;
   user: BugsQuery_bugs_results_user | null;
 }
 

@@ -402,7 +402,7 @@ export const CreateContract = () => {
 
       <Modal
         title="Basic Modal"
-        visible={isModalOpen}
+        open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         cancelText="Reinitialiser"

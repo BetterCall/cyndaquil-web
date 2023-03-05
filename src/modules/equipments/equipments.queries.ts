@@ -50,16 +50,56 @@ export const EQUIPMENTS = gql`
 
 export const EQUIPMENT = gql`
 
-query EquipmentQuery ( $ id : Int! ) {
-    equipment(  id : $ id ) {
+query EquipmentQuery ( $where  : EquipmentInput! ) {
+    equipment(  where : $where ) {
         ok 
         error 
         result {
             id
+            code
+            informations
+            categoryId
             category {
                 id 
                 name
             }
+
+            referenceId
+            reference {
+                id 
+                name
+                brand {
+                    id 
+                    name
+                }
+            }
+
+            emplacement {
+                id
+                informations
+
+                siteId 
+                site {
+                    id 
+                    name
+                    city
+                }
+                building
+                entrance
+                floor
+            }
+            
+            controls {
+                id 
+                comment 
+                user {
+                    id 
+                    firstname
+                    lastname
+                }
+                createdAt
+            }
+        
         }
     }
 }

@@ -8,9 +8,10 @@ import { UpdateBugMutation, UpdateBugMutationVariables } from "../../../__genera
 interface IProps {
     id: number,
     onCompleted: () => any
+    onError: (message: string) => any
 }
 
-export const useUpdateBug = ({ id, onCompleted }: IProps) => {
+export const useUpdateBug = ({ id, onCompleted, onError }: IProps) => {
 
     const form = useForm<UpdateBugInput>({
         mode: "all",
@@ -37,6 +38,7 @@ export const useUpdateBug = ({ id, onCompleted }: IProps) => {
 
         } catch (error) {
             console.log(error)
+            onError(error.message)
         }
     }
 

@@ -12,10 +12,11 @@ import { parseParams } from "../../../helpers/clean-object";
 
 interface IProps {
     defaultValues: CreateContactCategoryInput
-    onCompleted: () => any
+    onCompleted: () => any,
+    onError: (msg: string) => any
 }
 
-export const useCreateContactCategory = ({ defaultValues, onCompleted }: IProps) => {
+export const useCreateContactCategory = ({ defaultValues, onCompleted, onError }: IProps) => {
 
     const form = useForm<CreateContactCategoryInput>({
         mode: "all",
@@ -43,8 +44,9 @@ export const useCreateContactCategory = ({ defaultValues, onCompleted }: IProps)
                 throw Error(data?.createContactCategory?.error ?? "Error")
             }
 
-        } catch (error) {
-            console.log(error)
+        } catch ({ message }) {
+            console.log(message)
+            onError(message)
         }
     }
     return {

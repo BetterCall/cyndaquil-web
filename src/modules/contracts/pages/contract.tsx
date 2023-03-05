@@ -7,7 +7,7 @@ import { SendIcon } from "../../../components/icons";
 import { ContactDetails } from "../../contacts/components";
 import { InvoicesPreview } from "../../invoices/components";
 import {
-  GenerateWorkOrderBtn,
+  GenerateFromContractBtn,
   WorkOrdersPreview,
 } from "../../work-orders/components";
 
@@ -76,7 +76,7 @@ export const Contract: React.FC = () => {
             <div className="card">
               <CardHeader title="Bon d'intervention" />
               <WorkOrdersPreview contractId={+id!} />
-              <GenerateWorkOrderBtn contractId={+id!} />
+              <GenerateFromContractBtn contractId={+id!} />
             </div>
           </div>
           <div className="right">

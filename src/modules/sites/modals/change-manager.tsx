@@ -69,7 +69,7 @@ export const ChangeManager: React.FC<IChangeManagerProps> = ({
       </div>
 
       <Modal
-        visible={isModalOpen}
+        open={isModalOpen}
         footer={null}
         onOk={handleOk}
         onCancel={handleCancel}

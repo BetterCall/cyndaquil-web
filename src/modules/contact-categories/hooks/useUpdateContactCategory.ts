@@ -7,10 +7,12 @@ import { UpdateContactCategoryMutation, UpdateContactCategoryMutationVariables }
 
 interface IProps {
     id: number,
-    onCompleted: () => any
+    onCompleted: () => any,
+    onError: (msg: string) => any
+
 }
 
-export const useUpdateContactCategory = ({ id, onCompleted }: IProps) => {
+export const useUpdateContactCategory = ({ id, onCompleted, onError }: IProps) => {
 
     const form = useForm<UpdateContactCategoryInput>({
         mode: "all",
@@ -38,8 +40,8 @@ export const useUpdateContactCategory = ({ id, onCompleted }: IProps) => {
                 throw Error(data?.updateContactCategory?.error ?? "Error")
             }
 
-        } catch (error) {
-            console.log(error)
+        } catch ({ message }) {
+            onError(message)
         }
     }
 

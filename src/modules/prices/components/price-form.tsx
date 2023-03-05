@@ -5,6 +5,7 @@ import { Button } from "../../../components/button";
 import { CustomerInput } from "../../customer/components";
 import { BenefitsInput } from "../../benefits/components";
 import { EquipmentCategoriesInput } from "../../equipment-categories/components";
+import { CustomerCategoriesInput } from "../../customer-categories/components";
 
 interface IPriceForm {
   loading: boolean;
@@ -20,14 +21,14 @@ export const PriceForm: React.FC<IPriceForm> = ({
   disabledFields = [],
 }) => {
   // @ts-ignore
-  const { categoryId } = form.watch();
+  const { equipmentCategoryId } = form.watch();
   useEffect(() => {
-    console.log({ categoryId });
-    if (categoryId !== "-") {
+    console.log({ equipmentCategoryId });
+    if (equipmentCategoryId !== "-") {
       form.setValue("benefitId", "-");
     } else {
     }
-  }, [categoryId]);
+  }, [equipmentCategoryId]);
   return (
     <div className="w-full">
       <div className="w-full p-3">
@@ -86,20 +87,37 @@ export const PriceForm: React.FC<IPriceForm> = ({
       <div className="w-full p-3">
         <CustomerInput
           form={form}
-          disabled={disabledFields.includes("customerId")}
+          disabled={disabledFields.some((ai) =>
+            ["customerCategoryId", "customerId"].includes(ai)
+          )}
           canSelectAddress={false}
         />
       </div>
       <div className="w-full p-3">
         <EquipmentCategoriesInput
-          disabled={disabledFields.includes("categoryId")}
+          name="equipmentCategoryId"
+          disabled={disabledFields.some((ai) =>
+            ["benefitId", "equipmentCategoryId"].includes(ai)
+          )}
+          form={form}
+        />
+      </div>
+
+      <div className="w-full p-3">
+        <CustomerCategoriesInput
+          name="customerCategoryId"
+          disabled={disabledFields.some((ai) =>
+            ["customerCategoryId", "equipmentCategoryId"].includes(ai)
+          )}
           form={form}
         />
       </div>
 
       <div className="w-full p-3">
         <BenefitsInput
-          disabled={disabledFields.includes("benefitId") || categoryId !== "-"}
+          disabled={disabledFields.some((ai) =>
+            ["benefitId", "equipmentCategoryId"].includes(ai)
+          )}
           form={form}
         />
       </div>

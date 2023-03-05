@@ -1,7 +1,11 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
-import { Todo } from "../todo";
-import { Equipment, Equipments } from "./pages";
+import {
+  Equipment,
+  Equipments,
+  CreateEquipment,
+  UpdateEquipment,
+} from "./pages";
 
 export const EquipmentsRouter = [
   <Route
@@ -27,7 +31,7 @@ export const EquipmentsRouter = [
       path="create"
       element={
         <ProtectedRoute roles={["Any"]}>
-          <Todo />
+          <CreateEquipment />
         </ProtectedRoute>
       }
     />
@@ -36,7 +40,7 @@ export const EquipmentsRouter = [
       path=":id/update"
       element={
         <ProtectedRoute roles={["Any"]}>
-          <Todo />
+          <UpdateEquipment />
         </ProtectedRoute>
       }
     />

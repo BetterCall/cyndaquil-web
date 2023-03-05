@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { CardHeader } from "../../../components/cards";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { Loading } from "../../../components/loading";
@@ -37,6 +37,7 @@ export const UpdateUser: React.FC = () => {
       form.setValue("email", result.email);
       form.setValue("firstname", result.firstname);
       form.setValue("lastname", result.lastname);
+      form.setValue("role", result.role);
     }
   }, [data]);
 
@@ -59,7 +60,10 @@ export const UpdateUser: React.FC = () => {
         ]}
       />
       <div className="main-container">
-        <UserForm loading={loading} form={form} submit={submit} />
+        <div className="card">
+          <CardHeader title="Modifier un Utilisateur" />
+          <UserForm loading={loading} form={form} submit={submit} />
+        </div>
       </div>
     </>
   );

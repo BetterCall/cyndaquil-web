@@ -1,5 +1,5 @@
 
-const numbers = ["managerId", "invoiceId", "recordedById", 'paymentId', "contractId", "visitId", "commercialId", "categoryId", "benefitId", "customerId", "siteId", "id", "userId", "targetUserId", "openedById"]
+const numbers = ["equipmentId", "code", "workOrderId", "managerId", "invoiceId", "recordedById", 'paymentId', "contractId", "visitId", "commercialId", "customerCategoryId", "equipmentCategoryId", "categoryId", "benefitId", "customerId", "siteId", "id", "userId", "targetUserId", "openedById"]
 const decimals = ["amount", "price", "taxPrice"]
 
 export const cleanObject = (object: any): { [k: string]: any; } => {
@@ -14,12 +14,8 @@ export const cleanObject = (object: any): { [k: string]: any; } => {
 }
 
 export const parseParams = (object: any) => {
-
-    console.log('OBJECT', object)
-
     const parsed: any = {}
     const cleaned = cleanObject(object)
-    console.log('cleaned', cleaned)
     Object.keys(cleaned).forEach((key: any) => {
 
         if (numbers.includes(key) && object[key] !== null) {
@@ -50,9 +46,6 @@ export const parseParams = (object: any) => {
         }
 
     });
-    console.log(object)
-    console.log(cleaned)
-    console.log(parsed)
     return parsed
 }
 
@@ -73,7 +66,7 @@ export const parseSearchParams = (object: any) => {
             parsed[key] = value == "true" ? true : false
         }
 
-        else if (key === "search" && value.length < 3) {
+        else if (key === "search" && value.length < 1) {
 
         }
         else {
@@ -81,8 +74,6 @@ export const parseSearchParams = (object: any) => {
         }
 
     });
-
-    console.log(parsed)
 
     return parsed
 } 

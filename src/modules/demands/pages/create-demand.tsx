@@ -8,6 +8,7 @@ import { parseSearchParams } from "../../../helpers/clean-object";
 import { Header } from "../../../components/header";
 import { DashboardIcon } from "../../../components/icons";
 import { toast } from "react-toastify";
+import { CardHeader } from "../../../components/cards";
 
 export const CreateDemand: React.FC = () => {
   const [params] = useSearchParams();
@@ -17,6 +18,7 @@ export const CreateDemand: React.FC = () => {
       ...parseSearchParams(params),
     },
     onCompleted: () => toast.success("Le demande a été créé avec succès"),
+    onError: (msg) => toast.error(msg),
   });
 
   return (
@@ -35,12 +37,15 @@ export const CreateDemand: React.FC = () => {
         ]}
       />
       <div className="main-container">
-        <DemandForm
-          loading={loading}
-          submit={submit}
-          form={form}
-          disabledFields={Object.keys(parseSearchParams(params))}
-        />
+        <div className="card">
+          <CardHeader title="Nouvelle Demande" />
+          <DemandForm
+            loading={loading}
+            submit={submit}
+            form={form}
+            disabledFields={Object.keys(parseSearchParams(params))}
+          />
+        </div>
       </div>
     </>
   );

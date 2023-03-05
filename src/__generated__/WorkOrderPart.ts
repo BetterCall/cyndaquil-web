@@ -12,7 +12,7 @@ import { WorkOrderType, WorkOrderStatus } from "./globalTypes";
 export interface WorkOrderPart {
   __typename: "WorkOrder";
   id: number;
-  name: string;
+  object: string;
   description: string | null;
   type: WorkOrderType;
   date: string | null;

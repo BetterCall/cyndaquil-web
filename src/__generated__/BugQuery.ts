@@ -20,8 +20,12 @@ export interface BugQuery_bug_result {
   __typename: "Bug";
   id: number;
   url: string;
+  object: string;
+  critical: boolean;
   description: string | null;
   status: BugStatus;
+  report: string | null;
+  createdAt: any;
   user: BugQuery_bug_result_user | null;
 }
 

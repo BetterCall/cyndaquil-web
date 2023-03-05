@@ -1,3 +1,4 @@
+import { gql, useApolloClient } from "@apollo/client";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -11,20 +12,33 @@ export const CreateInvoiceBtn: React.FC<ICreateInvoiceBtn> = ({
   workOrderId,
 }) => {
   const navigate = useNavigate();
+  const client = useApolloClient();
   const { loading, submit } = useCreateInvoice({
     defaultValues: { workOrderId },
     onCompleted: async (id) => {
       toast.success("Facture créée avec succès");
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      navigate(`/invoice/${id}`);
+      // navigate(`/invoice/${id}`);
+      client.writeFragment({
+        id: `WorkOrder:${workOrderId}`,
+        fragment: gql`
+          fragment WorkOrderInvoice on WorkOrder {
+            invoiceId
+          }
+        `,
+        data: {
+          invoiceId: id,
+        },
+      });
+    },
+    onError: (message) => {
+      toast.error(message);
     },
   });
 
   return (
-    <div className="flex justify-end">
-      <button className="btn" onClick={submit} disabled={loading}>
-        {loading ? "Chargement..." : "Créer une facture"}
-      </button>
-    </div>
+    <button className="btn w-full" onClick={submit} disabled={loading}>
+      {loading ? "Chargement..." : "Créer une facture"}
+    </button>
   );
 };

@@ -28,7 +28,6 @@ export const InvoicesRouter = [
       element={
         <ProtectedRoute roles={["Any"]}>
           <CreateInvoice />
-          <Todo />
         </ProtectedRoute>
       }
     />
@@ -37,7 +36,6 @@ export const InvoicesRouter = [
       path=":id/update"
       element={
         <ProtectedRoute roles={["Any"]}>
-          <Todo />
           <UpdateInvoice />
         </ProtectedRoute>
       }

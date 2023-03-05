@@ -22,32 +22,26 @@ export const SiteForm: React.FC<ISiteForm> = ({
   form,
 }) => {
   return (
-    <>
-      <div className="card">
-        <FormHeader
-          title="Informations Générales"
-          subtitle="Update your billing details and address."
-        />
+    <section className="section">
+      <div className="left">
+        <div className="card">
+          <FormHeader
+            title="Informations Générales"
+            subtitle="Update your billing details and address."
+          />
 
-        <div className="w-full">
-          <div className="flex flex-wrap  -m-3">
-            <div className="w-full  p-3">
-              <p className="mb-1.5 font-medium text-base text-coolGray-800">
-                Nom de la Copropriété
-              </p>
-              <input
-                className="w-full input"
-                type="text"
-                {...form.register("name", { required: "name required" })}
-                placeholder="Nom de la Copropriété"
-              />
-            </div>
+          <div className="w-full p-3">
+            <p className="label">Nom de la Copropriété</p>
+            <input
+              className="w-full input"
+              type="text"
+              {...form.register("name", { required: "name required" })}
+              placeholder="Nom de la Copropriété"
+            />
           </div>
 
-          <div className="w-full">
-            <p className="mb-1.5 font-medium text-base text-coolGray-800">
-              Nombre de batiments
-            </p>
+          <div className="w-full p-3">
+            <p className="label">Nombre de batiments</p>
             <input
               className="w-full input"
               type="number"
@@ -58,10 +52,8 @@ export const SiteForm: React.FC<ISiteForm> = ({
             />
           </div>
 
-          <div className="w-full">
-            <p className="mb-1.5 font-medium text-base text-coolGray-800">
-              Nombre d'entrée
-            </p>
+          <div className="w-full p-3">
+            <p className="label">Nombre d'entrée</p>
             <input
               className="w-full input"
               type="number"
@@ -71,37 +63,41 @@ export const SiteForm: React.FC<ISiteForm> = ({
               placeholder="Nom de la Copropriété"
             />
           </div>
+          <div className="w-full p-3">
+            <CustomerInput
+              form={form}
+              disabled={disabledFields.includes("customerId")}
+            />
+          </div>
+        </div>
+      </div>
 
-          <CustomerInput
-            form={form}
-            disabled={disabledFields.includes("customerId")}
+      <div className="right">
+        <div className="card">
+          <FormHeader
+            title="Adresse"
+            subtitle="Update your billing details and address."
           />
-          <div className="mb-5"></div>
+
+          <div className="w-full">
+            <AddressInputs form={form} />
+          </div>
         </div>
       </div>
 
-      <div className="card">
-        <FormHeader
-          title="Adresse"
-          subtitle="Update your billing details and address."
-        />
-
-        <div className="w-full">
-          <AddressInputs form={form} />
+      <div className="left">
+        <div className="flex justify-between">
+          <div />
+          <div>
+            <Button
+              canClick={form.formState.isValid}
+              loading={loading}
+              actionText="Valider"
+              onClick={submit}
+            />
+          </div>
         </div>
       </div>
-
-      <div className="flex justify-between">
-        <div />
-        <div>
-          <Button
-            canClick={form.formState.isValid}
-            loading={loading}
-            actionText="Valider"
-            onClick={submit}
-          />
-        </div>
-      </div>
-    </>
+    </section>
   );
 };

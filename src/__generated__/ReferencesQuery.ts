@@ -9,10 +9,18 @@ import { ReferencesFiltersInput } from "./globalTypes";
 // GraphQL query operation: ReferencesQuery
 // ====================================================
 
+export interface ReferencesQuery_references_results_brand {
+  __typename: "Brand";
+  id: number;
+  name: string;
+}
+
 export interface ReferencesQuery_references_results {
   __typename: "Reference";
   id: number;
   name: string;
+  brandId: number | null;
+  brand: ReferencesQuery_references_results_brand | null;
 }
 
 export interface ReferencesQuery_references {

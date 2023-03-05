@@ -38,7 +38,10 @@ export const EmplacementsPreview: React.FC<IEmplacementsPreviewProps> = ({
             key={`emplacement-${emplacement.id}`}
             className={`text-xs   ${index % 2 ? "" : "bg-gray-50"} `}
           >
-            <td className="padding-table font-medium">
+            <td
+              className="padding-table font-medium"
+              onClick={() => navigate(`/emplacement/${emplacement.id}`)}
+            >
               {emplacement.category?.name}
             </td>
 

@@ -1,28 +1,18 @@
 import { useMutation } from "@apollo/client";
-import { DeepPartial, useForm } from "react-hook-form";
-
 import { GENERATE_FROM_CONTRACT } from "../work-orders.queries";
-import { parseParams } from "../../../helpers/clean-object";
-
-import { GenerateFromContractInput } from "../../../__generated__/globalTypes";
 import {
     GenerateFromContractMutation,
     GenerateFromContractMutationVariables
 } from "../../../__generated__/GenerateFromContractMutation";
-import { toast } from "react-toastify";
 
 
 interface IProps {
-    defaultValues: GenerateFromContractInput
+    contractId: number
     onCompleted: (id: number) => any
+    onError: (error: string) => any
 }
 
-export const useGenerateFromContract = ({ defaultValues, onCompleted }: IProps) => {
-
-    const form = useForm<GenerateFromContractInput>({
-        mode: "all",
-        defaultValues
-    })
+export const useGenerateFromContract = ({ contractId, onCompleted, onError }: IProps) => {
     const [mutate, { loading }] = useMutation<
         GenerateFromContractMutation,
         GenerateFromContractMutationVariables
@@ -32,10 +22,11 @@ export const useGenerateFromContract = ({ defaultValues, onCompleted }: IProps) 
         if (loading) return
         try {
 
-            const input = form.getValues()
             const { data } = await mutate({
                 variables: {
-                    input: parseParams(input)
+                    input: {
+                        contractId
+                    }
                 }
             })
 
@@ -46,13 +37,12 @@ export const useGenerateFromContract = ({ defaultValues, onCompleted }: IProps) 
                 throw Error(data?.generateFromContract?.error ?? "Error")
             }
 
-        } catch (error) {
-            toast.error("Impossible de générer le bon d'intervention")
-            console.log(error)
+        } catch ({ message }) {
+            console.log({ message })
+            onError(message)
         }
     }
     return {
-        form,
         mutate,
         loading,
         submit

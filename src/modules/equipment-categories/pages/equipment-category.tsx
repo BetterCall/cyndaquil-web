@@ -41,7 +41,7 @@ export const EquipmentCategory: React.FC = () => {
                 button={{
                   title: "Nouveau Service",
                   icon: <SendIcon />,
-                  url: `/benefits/create?categoryId=${id}`,
+                  url: `/benefit/create?categoryId=${id}`,
                 }}
               />
               <table className="table-auto w-full">
@@ -128,7 +128,7 @@ export const EquipmentCategory: React.FC = () => {
                 button={{
                   title: "Nouveau Service d",
                   icon: <SendIcon />,
-                  url: `/benefits/create?categoryId=${id}`,
+                  url: `/benefit/create?categoryId=${id}`,
                 }}
               />
               <table className="table-auto w-full">

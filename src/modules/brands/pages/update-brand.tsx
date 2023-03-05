@@ -29,9 +29,11 @@ export const UpdateBrand = () => {
       toast.success("La marque a été modifié avec succès");
       refetch();
     },
+    onError: (msg) => toast.error(msg),
   });
 
   useEffect(() => {
+    console.log(data);
     if (data?.brand?.ok && data?.brand?.result) {
       const input = form.getValues();
       const { result } = data?.brand;
@@ -48,8 +50,8 @@ export const UpdateBrand = () => {
   return (
     <>
       <Header
-        title="Nouvelle Marque"
-        subtitle="Creer une nouvelle copropriété"
+        title={`Modifier : ${data?.brand?.result?.name || "Marque"} `}
+        subtitle="Modifier une marque"
         buttons={[
           {
             actionText: "Annuler",
@@ -66,18 +68,3 @@ export const UpdateBrand = () => {
     </>
   );
 };
-
-// if (data?.updateBrand.ok) {
-//   client.writeFragment({
-//     id: `Brand:${id}`,
-//     fragment: gql`
-//       fragment UpdateedBrand on Brand {
-//         name
-//       }
-//     `,
-//     data: {
-//       name: input.name,
-//     },
-//   });
-//   navigate(`/brands`);
-// }

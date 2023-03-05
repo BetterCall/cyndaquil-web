@@ -38,7 +38,7 @@ export interface WorkOrdersQuery_workOrders_results_site {
 export interface WorkOrdersQuery_workOrders_results {
   __typename: "WorkOrder";
   id: number;
-  name: string;
+  object: string;
   description: string | null;
   type: WorkOrderType;
   date: string | null;

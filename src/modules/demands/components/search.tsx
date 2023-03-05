@@ -23,7 +23,6 @@ export const DemandSearchInput: React.FC = (defaultValues) => {
     defaultValues,
     mode: "all",
   });
-  console.log(defaultValues);
 
   const onSearchSubmit = () => {
     const input = form.getValues();

@@ -9,7 +9,7 @@ export const FormHeader: React.FC<IFormHeaderProps> = ({
   title,
   subtitle = "",
 }) => (
-  <div className="w-full mb-8 pb-6 border-b border-coolGray-100">
+  <div className="w-full mb-2 pb-6 border-b border-coolGray-100">
     <div className="flex flex-wrap items-center justify-between -m-2">
       <div className="w-full p-2">
         <h2 className="text-coolGray-900 text-lg font-semibold">{title}</h2>

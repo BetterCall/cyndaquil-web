@@ -8,9 +8,10 @@ import { UpdateEquipmentMutation, UpdateEquipmentMutationVariables } from "../..
 interface IProps {
     id: number,
     onCompleted: () => any
+    onError: (message: string) => any
 }
 
-export const useUpdateEquipment = ({ id, onCompleted }: IProps) => {
+export const useUpdateEquipment = ({ id, onCompleted, onError }: IProps) => {
 
     const form = useForm<UpdateEquipmentInput>({
         mode: "all",
@@ -40,6 +41,7 @@ export const useUpdateEquipment = ({ id, onCompleted }: IProps) => {
 
         } catch (error) {
             console.log(error)
+            onError(error.message)
         }
     }
 

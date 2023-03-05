@@ -11,10 +11,11 @@ import {
 
 interface IProps {
     defaultValues: DeepPartial<CreatePriceRuleInput>
-    onCompleted: () => any
+    onCompleted: (id: number) => any
+    onError: (error: string) => any
 }
 
-export const useCreatePrice = ({ defaultValues, onCompleted }: IProps) => {
+export const useCreatePrice = ({ defaultValues, onCompleted, onError }: IProps) => {
 
     const form = useForm<CreatePriceRuleInput>({
         mode: "all",
@@ -30,20 +31,23 @@ export const useCreatePrice = ({ defaultValues, onCompleted }: IProps) => {
         try {
 
             const input = form.getValues()
-            const { data } = await mutate({
+            console.log({ input: parseParams(input) })
+            const { data, errors } = await mutate({
                 variables: {
                     input: parseParams(input)
                 }
             })
+            console.log(data)
+            console.log(errors)
 
-            if (data?.createPriceRule?.ok) {
-                onCompleted()
+            if (data?.createPriceRule?.ok && data?.createPriceRule?.id) {
+                onCompleted(data?.createPriceRule?.id)
             } else {
                 throw Error(data?.createPriceRule?.error ?? "Error")
             }
 
-        } catch (error) {
-            console.log(error)
+        } catch ({ message }) {
+            onError(message)
         }
     }
     return {

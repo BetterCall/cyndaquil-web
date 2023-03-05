@@ -1,28 +1,32 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useBenefits } from "../hooks";
 
 interface ISelectBenefitInput {
   setValue: any;
-  categoryId: number;
+  categoryId?: number;
   error?: boolean;
   value?: any;
+  disabled?: boolean;
 }
 
 export const SelectBenefit: React.FC<ISelectBenefitInput> = ({
   setValue,
-  categoryId,
+  categoryId = null,
   error,
   value,
+  disabled = false,
 }) => {
   const { data } = useBenefits({
     where: {
-      categoryId,
+      ...(categoryId && { categoryId }),
     },
   });
 
+  const ref = useRef<HTMLSelectElement>();
+  console.log(ref?.current?.value);
   return (
     <div className="w-full">
-      <div className="relative">
+      <div className="relative ">
         <svg
           className="absolute right-4 top-1/2 transform -translate-y-1/2"
           width="16"
@@ -38,8 +42,14 @@ export const SelectBenefit: React.FC<ISelectBenefitInput> = ({
         </svg>
 
         <select
+          // @ts-ignore
+          ref={ref}
+          disabled={disabled}
           className={`input appearance-none w-full  ${
-            error && " border-red-500"
+            // @ts-ignore
+            !ref?.current?.value || ref.current?.value == -1
+              ? " border-red-500"
+              : "border-blue-500"
           } `}
           onChange={(e) => setValue(e)}
         >

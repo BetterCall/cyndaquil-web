@@ -31,10 +31,33 @@ export const EMPLACEMENT = gql`
             error
             result {
                 id
+                code
+                informations
                 building 
                 entrance 
                 floor
 
+                categoryId
+                category {
+                    id
+                    name
+                }
+                
+                siteId 
+                site{
+                    id 
+                    name 
+                    city
+                    postal
+                    streetNumber
+                    street
+
+                    customerId 
+                    customer {
+                        id
+                        name
+                    }
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { CardHeader } from "../../../components/cards";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 
@@ -14,6 +14,9 @@ export const CreateContactCategory: React.FC = () => {
     },
     onCompleted: () => {
       toast.success("La catégorie a été créée avec succès");
+    },
+    onError: (msg) => {
+      toast.error(msg);
     },
   });
 
@@ -33,7 +36,9 @@ export const CreateContactCategory: React.FC = () => {
         ]}
       />
       <div className="main-container">
-        <ContactCategoryForm loading={loading} submit={submit} form={form} />
+        <div className="card">
+          <ContactCategoryForm loading={loading} submit={submit} form={form} />
+        </div>
       </div>
     </>
   );

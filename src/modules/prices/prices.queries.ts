@@ -27,7 +27,12 @@ export const PRICE_RULE = gql`
                     id 
                     name
                 }
-                category {
+                customerCategory {
+                    id 
+                    name 
+                }
+
+                equipmentCategory {
                     id 
                     name 
                 }
@@ -81,9 +86,14 @@ export const PRICE_RULES = gql`
                     name
                 }
 
-                category {
+                customerCategory {
                     id 
-                    name
+                    name 
+                }
+
+                equipmentCategory {
+                    id 
+                    name 
                 }
 
             }

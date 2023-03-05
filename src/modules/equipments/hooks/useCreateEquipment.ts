@@ -12,10 +12,11 @@ import { parseParams } from "../../../helpers/clean-object";
 
 interface IProps {
     defaultValues: CreateEquipmentInput
-    onCompleted: () => any
+    onCompleted: (id: number) => any
+    onError: (message: string) => any
 }
 
-export const useCreateEquipment = ({ defaultValues, onCompleted }: IProps) => {
+export const useCreateEquipment = ({ defaultValues, onCompleted, onError }: IProps) => {
 
     const form = useForm<CreateEquipmentInput>({
         mode: "all",
@@ -29,22 +30,23 @@ export const useCreateEquipment = ({ defaultValues, onCompleted }: IProps) => {
     const submit = async () => {
         if (loading) return
         try {
-
             const input = form.getValues()
+            console.log('input', input)
+            console.log('input', parseParams(input))
             const { data } = await mutate({
                 variables: {
                     input: parseParams(input)
                 }
             })
-
-            if (data?.createEquipment?.ok) {
-                onCompleted()
+            if (data?.createEquipment?.ok && data?.createEquipment.id) {
+                onCompleted(data?.createEquipment.id)
             } else {
                 throw Error(data?.createEquipment?.error ?? "Error")
             }
 
         } catch (error) {
             console.log(error)
+            onError(error.message)
         }
     }
     return {

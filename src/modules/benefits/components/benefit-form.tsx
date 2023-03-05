@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { Button } from "../../../components/button";
@@ -25,8 +26,15 @@ export const BenefitForm: React.FC<IBenefitForm> = ({
         <input
           className="w-full input"
           // @ts-ignore
-          {...form.register("name", { required: "name required" })}
+          {...form.register("name", {
+            required: "Le nom du service est requis",
+          })}
           placeholder="Nom du service"
+        />
+        <ErrorMessage
+          errors={form.formState?.errors}
+          name="name"
+          render={({ message }) => <p className="error-message">{message}</p>}
         />
       </div>
 
@@ -34,8 +42,15 @@ export const BenefitForm: React.FC<IBenefitForm> = ({
         <p className="label">Prix</p>
         <input
           className="w-full input"
-          {...form.register("price", { required: "price required" })}
+          {...form.register("price", {
+            required: "Le Prix du service est requis",
+          })}
           placeholder="Prix HT "
+        />
+        <ErrorMessage
+          errors={form.formState?.errors}
+          name="price"
+          render={({ message }) => <p className="error-message">{message}</p>}
         />
       </div>
 
@@ -66,17 +81,23 @@ export const BenefitForm: React.FC<IBenefitForm> = ({
           <select
             disabled={disabledFields.includes("taxeId")}
             {...form.register("taxeId", {
-              required: "Category required",
+              required:
+                "Definissez la taxe, celle-ci pourra etre adaptée par la suite",
             })}
             className="input appearance-none w-full"
           >
-            {data?.taxes?.results?.map((category) => (
-              <option value={category.id} key={`category-${category.id}`}>
-                {category.name}
+            {data?.taxes?.results?.map((taxe) => (
+              <option value={taxe.id} key={`taxe-${taxe.id}`}>
+                {taxe.name}
               </option>
             ))}
           </select>
         </div>
+        <ErrorMessage
+          errors={form.formState?.errors}
+          name="taxeId"
+          render={({ message }) => <p className="error-message">{message}</p>}
+        />
       </div>
 
       <div className="w-full p-3">

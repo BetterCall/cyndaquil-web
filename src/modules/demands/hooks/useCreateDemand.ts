@@ -1,17 +1,23 @@
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { CreateDemandInput } from "../../../__generated__/globalTypes";
+import { CreateDemandInput, DemandType } from "../../../__generated__/globalTypes";
 import { CreateDemandMutation, CreateDemandMutationVariables } from "../../../__generated__/CreateDemandMutation";
 import { CREATE_DEMAND } from "../demands.queries";
 import { parseParams } from "../../../helpers/clean-object";
 
 
 interface IProps {
-    defaultValues: CreateDemandInput
+    defaultValues?: CreateDemandInput
     onCompleted: () => any
+    onError: (msg: string) => any
 }
 
-export const useCreateDemand = ({ defaultValues, onCompleted }: IProps) => {
+export const useCreateDemand = ({ defaultValues = {
+    type: DemandType.Call,
+    object: "",
+    message: " "
+
+}, onCompleted, onError }: IProps) => {
 
     const form = useForm<CreateDemandInput>({
         mode: "all",
@@ -24,7 +30,8 @@ export const useCreateDemand = ({ defaultValues, onCompleted }: IProps) => {
         try {
 
             const input = form.getValues()
-            const { data } = await mutate({
+            console.log({ input: parseParams(input) })
+            const { data, errors } = await mutate({
                 variables: {
                     input: parseParams(input)
                 }
@@ -36,8 +43,8 @@ export const useCreateDemand = ({ defaultValues, onCompleted }: IProps) => {
                 throw Error(data?.createDemand?.error ?? "Error")
             }
 
-        } catch (error) {
-            console.log(error)
+        } catch ({ message }) {
+            onError(message)
         }
     }
 

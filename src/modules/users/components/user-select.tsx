@@ -6,12 +6,14 @@ interface IUserRoleSelect {
   form: UseFormReturn<any, any>;
   name?: string;
   label?: string;
+  opt?: any;
 }
 
 export const UserSelect: React.FC<IUserRoleSelect> = ({
   form,
   name = "userId",
   label = "Utilisateur",
+  opt = {},
 }) => {
   const id = form.watch(name);
 
@@ -37,7 +39,7 @@ export const UserSelect: React.FC<IUserRoleSelect> = ({
 
         <select
           className="input appearance-none w-full"
-          {...form.register(name)}
+          {...form.register(name, opt)}
         >
           <option value={undefined}>-</option>
 

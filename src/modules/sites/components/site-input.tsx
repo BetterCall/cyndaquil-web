@@ -27,8 +27,6 @@ export const SiteInput: React.FC<ISiteInput> = ({
   const [selectedSite, setSelectedSite] = useState<any>(null);
   const debouncedSearchTerm = useDebounce(search, 500);
 
-  console.log("data ", { data, loading, called, fetchMore, error });
-  console.log(debouncedSearchTerm);
   useEffect(
     () => {
       if (debouncedSearchTerm) {

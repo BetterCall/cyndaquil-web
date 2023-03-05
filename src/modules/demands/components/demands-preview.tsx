@@ -48,17 +48,3 @@ export const DemandsPreview: React.FC<DemandsFiltersInput> = (where) => {
     </table>
   );
 };
-
-// <div className="card">
-// <CardHeader
-//   title="List des Appels"
-//   button={{
-//     title: "Nouvel Appel",
-//     icon: <SendIcon />,
-//     //@ts-ignore
-//     url:
-//       Object.keys(where).length > 0
-//         ? `/demand/create?${createSearchParams(cleanObject(where))}`
-//         : `/demand/create`,
-//   }}
-// />

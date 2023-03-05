@@ -13,10 +13,11 @@ import { CreateWorkOrderInput } from "../../../__generated__/globalTypes";
 
 interface IProps {
     defaultValues: DeepPartial<CreateWorkOrderInput>
-    onCompleted: () => any
+    onCompleted: (id: number) => any
+    onError: (msg: string) => any
 }
 
-export const useCreateWorkOrder = ({ defaultValues, onCompleted }: IProps) => {
+export const useCreateWorkOrder = ({ defaultValues, onCompleted, onError }: IProps) => {
 
     const form = useForm<CreateWorkOrderInput>({
         mode: "all",
@@ -32,21 +33,21 @@ export const useCreateWorkOrder = ({ defaultValues, onCompleted }: IProps) => {
         try {
 
             const input = form.getValues()
+            console.log({ input: parseParams(input) })
             const { data } = await mutate({
                 variables: {
                     input: parseParams(input)
                 }
             })
 
-            if (data?.createWorkOrder?.ok) {
-                console.log('ok done')
-                onCompleted()
+            if (data?.createWorkOrder?.ok && data?.createWorkOrder.id) {
+                onCompleted(data?.createWorkOrder.id)
             } else {
                 throw Error(data?.createWorkOrder?.error ?? "Error")
             }
 
-        } catch (error) {
-            console.log(error)
+        } catch ({ message }) {
+            onError(message)
         }
     }
     return {

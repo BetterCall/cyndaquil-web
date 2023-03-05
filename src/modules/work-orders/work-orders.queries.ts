@@ -3,7 +3,7 @@ import { gql } from '@apollo/client'
 export const WORK_ORDER_FRAGMENT = gql`
     fragment WorkOrderPart on WorkOrder {
         id 
-        name
+        object
         description
         type
         date
@@ -109,10 +109,13 @@ query WorkOrderQuery ( $id : Int! ) {
             customer  {
                 id 
                 name
+                phone
+                email
             }
             
-            emplacements {
+            rows {
                 id
+                done
                 emplacement {
                     id
 
@@ -124,7 +127,11 @@ query WorkOrderQuery ( $id : Int! ) {
                     building
                     entrance
                     floor
-                 
+                }
+
+                benefit {
+                    id
+                    name
                 }
             }
         }
@@ -143,6 +150,17 @@ export const GENERATE_FROM_CONTRACT = gql`
             error
         }
     }
+`
 
+
+export const GENERATE_FROM_UNFINISHED_WORK_ORDER = gql`
+
+    mutation GenerateFromUnfinishedWorkOrderMutation ( $input : GenerateFromUnfinishedWorkOrderInput! ) {
+        generateFromUnfinishedWorkOrder( input : $input ) {
+            id
+            ok
+            error
+        }
+    }
 
 `

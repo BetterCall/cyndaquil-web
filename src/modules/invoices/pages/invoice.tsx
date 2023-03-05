@@ -95,8 +95,9 @@ export const Invoice: React.FC = () => {
                       <span>Taux TVA </span>
                       <span className=" font-medium">{row.taxe} %</span>
                     </div>
-
-                    <div className=" flex justify-between font-medium  mt-2">
+                  </div>
+                  <div className="w-full px-2 py-1 bg-slate-100 rounded">
+                    <div className=" flex justify-between font-medium mt-2">
                       <span className=" font-medium">Montant TVA</span>
                       <span className=" font-medium">{row.taxPrice} € HT</span>
                     </div>
@@ -107,7 +108,7 @@ export const Invoice: React.FC = () => {
                         {row.totalPrice} € HT
                       </span>
                     </div>
-                    <div className=" flex justify-between font-medium mt-2 border-b pb-2">
+                    <div className=" flex justify-between font-medium mt-2 pb-2">
                       <span className=" font-medium">Montant TTC</span>
                       <span className=" font-medium">
                         {row.totalPrice + row.taxPrice} € TTC

@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import { Controller, UseFormReturn } from "react-hook-form";
 import { DatePicker, TimePicker } from "antd";
+import { toast } from "react-toastify";
 
-import { AddressInputs } from "../../../components/address-inputs";
-import { Button } from "../../../components/button";
+import { EmplacementsSelect } from "./emplacements-select";
+import { WorkOrderRowsSelect } from "./work-order-rows-select";
 
-import { SiteInput } from "../../sites/components/site-input";
-import { FormHeader } from "../../../components/form";
-import { CardHeader } from "../../../components/cards";
+import { AddressInputs } from "../../../../components/address-inputs";
+import { Button } from "../../../../components/button";
+
+import { SiteInput } from "../../../sites/components/site-input";
+import { FormHeader } from "../../../../components/form";
+import { CardHeader } from "../../../../components/cards";
 import {
   WorkOrdersPreview,
   WorkOrderTypeSelect,
   WorkOrderStatusSelect,
-} from "../components";
-import { useUsers } from "../../users/hooks";
-import { CustomerInput } from "../../customer/components";
-import { useLazyEmplacements } from "../../emplacements/hooks";
-import { EmptyList } from "../../../components";
-import { SelectBenefit } from "../../benefits/components";
-import { toast } from "react-toastify";
+} from "..";
+import { useUsers } from "../../../users/hooks";
+import { CustomerInput } from "../../../customer/components";
+import { EmptyList } from "../../../../components";
 
 interface IWorkOrderFormProps {
   loading: boolean;
@@ -34,6 +35,7 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
   form,
   disabledFields = [],
 }) => {
+  const { fromWorkOrderId } = form.watch();
   const additionalInformations: string = form.watch("additionalInformations");
   const inputRows =
     additionalInformations?.split("\n").length > 4
@@ -44,28 +46,39 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
   const { date, userId, siteId, rows = [] } = form.watch();
   const { data: usersData } = useUsers({ where: {} });
 
-  const [getEmplacements, { data: eData, called }] = useLazyEmplacements();
-  useEffect(() => {
-    if (!disabledFields.includes("siteId")) {
-      form.setValue("emplacementIds", []);
-    }
-    getEmplacements({ variables: { where: { siteId } } });
-  }, [siteId]);
+  // const toggleRow = (emplacementId: number) => {
+  //   const index = rows.findIndex((row) => row.emplacementId === emplacementId);
+  //   let newRows = rows;
+  //   if (index === -1) {
+  //     newRows.push({ emplacementId, benefitId: null });
+  //   } else {
+  //     newRows.splice(index, 1);
+  //   }
+  //   form.setValue("rows", newRows);
+  // };
 
-  const toggleRow = (emplacementId: number) => {
-    const index = rows.findIndex((row) => row.emplacementId === emplacementId);
+  const toggleRow = (nRow) => {
+    console.log(nRow);
+    console.log(rows);
+    const index = rows.findIndex(
+      (row) => row.emplacementId === nRow.emplacementId
+    );
     let newRows = rows;
+    console.log(index);
     if (index === -1) {
-      newRows.push({ emplacementId, benefitId: null });
+      newRows.push({
+        ...(nRow.rowId && { rowId: nRow.rowId }),
+        emplacementId: nRow.emplacementId,
+        benefitId: nRow.benefitId,
+      });
     } else {
       newRows.splice(index, 1);
     }
+    console.log("rows", newRows);
     form.setValue("rows", newRows);
   };
 
-  const setRowBanefit = (emplacementId: number, benefitId: number) => {
-    console.log("emplacementId ", emplacementId);
-    console.log("benefitId ", benefitId);
+  const setRowBenefit = (emplacementId: number, benefitId: number) => {
     const index = rows.findIndex((row) => row.emplacementId === emplacementId);
     console.log(index);
     let newRows = rows;
@@ -73,7 +86,6 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
       newRows[index].benefitId = benefitId;
     }
     form.setValue("rows", newRows);
-    console.log("ROWS ", rows);
   };
 
   const onSubmit = () => {
@@ -94,12 +106,12 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
             <CardHeader title="Informations Générales" />
             <div className="w-full  mb-3">
               <p className="mb-1.5 font-medium text-base text-coolGray-800">
-                Nom
+                Objet
               </p>
               <input
                 className="w-full input"
-                {...form.register("name", { required: "name required" })}
-                placeholder="name"
+                {...form.register("object", { required: "name required" })}
+                placeholder="Objet de l'intervention"
               />
             </div>
 
@@ -156,7 +168,12 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
                   <DatePicker
                     value={moment(value ?? "2023-01-01", "YYYY-MM-DD")}
                     onChange={(e) => {
-                      onChange(moment(e).format("YYYY-MM-DD") ?? null);
+                      console.log("e ", e);
+                      if (e) {
+                        onChange(moment(e).format("YYYY-MM-DD"));
+                      } else {
+                        onChange(moment(undefined).format("YYYY-MM-DD"));
+                      }
                     }}
                     format="DD/MM/YYYY"
                     className="input w-full p-3 mb-3"
@@ -236,12 +253,16 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
           <div className="card mb-2">
             {date ? (
               usersData?.users?.results?.map((user) => (
-                <div className="w-full ">
+                <div className="w-full mb-2" key={`user-user.${user.id}`}>
+                  <label className="label">
+                    {user.firstname} {user.lastname}
+                    {" :"}
+                  </label>
                   <WorkOrdersPreview userId={user.id} date={date} />
                 </div>
               ))
             ) : (
-              <EmptyList text="Selectionnez uen date>" />
+              <EmptyList text="Selectionnez une date" />
             )}
           </div>
         </div>
@@ -249,81 +270,21 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
         <div className="right">
           <div className="card mb-2">
             <CardHeader title="Emplacements" />
-            {!siteId ? (
+            {fromWorkOrderId ? (
+              <WorkOrderRowsSelect
+                workOrderId={fromWorkOrderId}
+                emplacementsSelected={rows}
+                toggleRow={toggleRow}
+              />
+            ) : !siteId ? (
               <EmptyList text="Selectionnez un site" />
             ) : (
-              <table className="table-auto w-full">
-                <thead>
-                  <tr className="text-xs text-gray-500 text-left">
-                    <th className="padding-table font-medium "></th>
-                    <th className="padding-table font-medium ">Catégorie</th>
-                    <th className="padding-table font-medium text-center">
-                      Batiment
-                    </th>
-                    <th className="padding-table font-medium text-center">
-                      Entrée
-                    </th>
-                    <th className="padding-table font-medium text-center">
-                      Etage
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {eData?.emplacements.results?.map((emplacement, index) => {
-                    const isSelected =
-                      rows.findIndex(
-                        (row) => row.emplacementId === emplacement.id
-                      ) ?? -1;
-
-                    return (
-                      <>
-                        <tr
-                          key={`emplacement-${emplacement.id}`}
-                          className={`text-xs   ${
-                            index % 2 ? "" : "bg-gray-50"
-                          } `}
-                        >
-                          <td className="padding-table ">
-                            <input
-                              checked={isSelected !== -1}
-                              type="checkbox"
-                              className="mr-2 cursor-pointer "
-                              onClick={() => toggleRow(emplacement.id)}
-                              id={`emplacement-${emplacement.id}`}
-                            />
-                          </td>
-                          <td className="padding-table font-medium">
-                            {emplacement.category?.name} {emplacement.id}
-                          </td>
-
-                          <td className="padding-table font-medium text-center">
-                            {emplacement.building}
-                          </td>
-                          <td className="padding-table font-medium text-center ">
-                            {emplacement.entrance}
-                          </td>
-                          <td className="padding-table  font-medium text-center ">
-                            {emplacement.floor}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td colSpan={5} className={`padding-table `}>
-                            {isSelected !== -1 && emplacement.categoryId ? (
-                              <SelectBenefit
-                                setValue={(e) => {
-                                  const benefitId = parseInt(e.target.value);
-                                  setRowBanefit(emplacement.id, benefitId);
-                                }}
-                                categoryId={emplacement.categoryId!}
-                              />
-                            ) : null}
-                          </td>
-                        </tr>
-                      </>
-                    );
-                  })}
-                </tbody>
-              </table>
+              <EmplacementsSelect
+                setRowBenefit={setRowBenefit}
+                siteId={siteId}
+                emplacementsSelected={rows}
+                toggleRow={toggleRow}
+              />
             )}
           </div>
         </div>

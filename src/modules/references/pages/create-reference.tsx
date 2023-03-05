@@ -9,6 +9,7 @@ import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { useCreateReference } from "../hooks";
 import { toast } from "react-toastify";
+import { CardHeader } from "../../../components/cards";
 
 export const CreateReference: React.FC = ({}) => {
   const { form, submit, loading } = useCreateReference({
@@ -36,7 +37,13 @@ export const CreateReference: React.FC = ({}) => {
         ]}
       />
       <div className="main-container">
-        <ReferenceForm loading={loading} submit={submit} form={form} />
+        <div className="card">
+          <CardHeader
+            title="Nouvelle Référence"
+            subtitle="Créer une nouvelle référence produit"
+          />
+          <ReferenceForm loading={loading} submit={submit} form={form} />
+        </div>
       </div>
     </>
   );

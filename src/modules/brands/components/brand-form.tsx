@@ -4,6 +4,7 @@ import { FormError } from "../../../components/form-error";
 
 import { Button } from "../../../components/button";
 import {} from "../../../components/cards";
+import { ErrorMessage } from "@hookform/error-message";
 
 interface IBrandForm {
   loading: boolean;
@@ -11,29 +12,27 @@ interface IBrandForm {
   form: UseFormReturn<any, any>;
 }
 
-export const BrandForm: React.FC<IBrandForm> = ({
-  loading,
-  submit,
-
-  form: {
-    register,
-    formState: { isValid, errors },
-  },
-}) => {
+export const BrandForm: React.FC<IBrandForm> = ({ loading, submit, form }) => {
   return (
-    <div className="card">
+    <div className="w-full">
       <div className="w-full p-3">
         <p className="label">Nom</p>
         <input
           className="w-full input"
-          {...register("name", { required: "name required" })}
+          {...form.register("name", {
+            required: "Le nom de la marque est requis",
+          })}
           placeholder="Nom de la Marque"
         />
-        {errors.name?.message && <FormError />}
+        <ErrorMessage
+          errors={form.formState?.errors}
+          name="name"
+          render={({ message }) => <p className="error-message">{message}</p>}
+        />
       </div>
       <div className="w-full p-3">
         <Button
-          canClick={isValid}
+          canClick={form.formState.isValid}
           loading={loading}
           actionText="Valider"
           onClick={submit}

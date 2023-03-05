@@ -24,14 +24,16 @@ export const Brand = () => {
   return (
     <>
       <Header
-        title="Brand"
-        subtitle=" c"
+        title={data?.brand?.result?.name || "Chargement..."}
+        subtitle={`${data?.brand?.result?.referencesCount} référence${
+          (data?.brand?.result?.referencesCount ?? 0) > 1 ? "s" : ""
+        }`}
         buttons={[
           {
-            actionText: "Nouvelle Marque",
+            actionText: "Mettre à jour",
             bgColor: "indigo",
             textColor: "white",
-            link: `/brand/create`,
+            link: `/brand/${id}/update`,
             icon: <SendIcon />,
           },
         ]}

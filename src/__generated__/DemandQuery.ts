@@ -51,7 +51,7 @@ export interface DemandQuery_demand_result {
   customerId: number | null;
   customer: DemandQuery_demand_result_customer | null;
   siteId: number | null;
-  site: DemandQuery_demand_result_site;
+  site: DemandQuery_demand_result_site | null;
 }
 
 export interface DemandQuery_demand {

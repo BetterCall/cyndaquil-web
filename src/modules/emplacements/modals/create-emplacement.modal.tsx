@@ -54,7 +54,7 @@ export const CreateEmplacement: React.FC<IChangeManagerProps> = ({
 
       <Modal
         title="Changer de Gestionnaire "
-        visible={isModalOpen}
+        open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
         cancelText="annuler"

@@ -74,7 +74,7 @@ export const SitesPreview: React.FC<SiteFiltersInput> = (where) => {
 //     //@ts-ignore
 //     url:
 //       Object.keys(where).length > 0
-//         ? `/sites/create?${createSearchParams(cleanObject(where))}`
+//         ? `/site/create?${createSearchParams(cleanObject(where))}`
 //         : `/sites/create`,
 //   }}
 // /> */

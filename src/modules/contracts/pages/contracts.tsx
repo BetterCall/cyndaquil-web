@@ -63,7 +63,6 @@ export const Contracts: React.FC = () => {
                 {contract?.site?.name ?? "-"}
               </td>
               <td className="   padding-table  text-center ">
-                {" "}
                 {contract.customer.name}{" "}
               </td>
               <td className="  padding-table  text-center ">

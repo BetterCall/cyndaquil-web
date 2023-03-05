@@ -37,7 +37,8 @@ export const UpdatePrice: React.FC = () => {
       form.setValue("type", result?.type);
       form.setValue("description", result?.description);
       form.setValue("benefitId", result?.benefit?.id);
-      form.setValue("categoryId", result?.category?.id);
+      form.setValue("customerCategoryId", result?.customerCategory?.id);
+      form.setValue("equipmentCategoryId", result?.equipmentCategory?.id);
       form.setValue("customerId", result?.customer?.id);
     }
   }, [data]);
