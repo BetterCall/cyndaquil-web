@@ -28,6 +28,7 @@ export const UpdateWorkOrder: React.FC = () => {
       refetch();
       toast.success("Le BI a été modifié avec succès");
     },
+    onError: (msg) => toast.error(msg),
   });
 
   useEffect(() => {

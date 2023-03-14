@@ -1,11 +1,11 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
-import { Todo } from "../todo";
 import {
   CreateWorkOrder,
   MyTour,
   UpdateWorkOrder,
   WorkOrder,
+  WorkOrderProcessing,
   WorkOrders,
 } from "./pages";
 
@@ -52,6 +52,14 @@ export const WorkOrdersRouter = [
       element={
         <ProtectedRoute roles={["Any"]}>
           <UpdateWorkOrder />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path=":id/processing"
+      element={
+        <ProtectedRoute roles={["Any"]}>
+          <WorkOrderProcessing />
         </ProtectedRoute>
       }
     />

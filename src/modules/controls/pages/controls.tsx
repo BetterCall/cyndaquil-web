@@ -69,7 +69,7 @@ export const Controls = () => {
   return (
     <>
       <Header
-        title={"Liste des Marques"}
+        title={"Liste des verifications"}
         subtitle={""}
         buttons={[
           {

@@ -8,6 +8,15 @@ export const VISIT_FRAGMENT = gql`
         date
         start
         status
+
+        report
+        
+        lat
+        lng
+        streetNumber
+        street
+        postal 
+        city
     }
 `
 
@@ -24,8 +33,8 @@ export const CREATE_VISIT = gql`
 `
 export const UPDATE_VISIT = gql`
 
-        mutation UpdateVisitMutation ( $ id : Int! , $input : UpdateVisitInput! ) {
-            updateVisit(  id : $ id , input : $input ) {
+        mutation UpdateVisitMutation ( $id : Int! , $input : UpdateVisitInput! ) {
+            updateVisit(  id : $id , input : $input ) {
                 ok 
                 error
             }
@@ -78,13 +87,22 @@ query VisitQuery ( $id : Int! ) {
             customer  {
                 id 
                 name
-                streetNumber
-                street
-                postal
-                city
+               
             }
         }
     }
 }
 ${VISIT_FRAGMENT}
+`
+
+
+export const UPDATE_VISIT_REPORT = gql`
+
+    mutation UpdateVisitReportMutation( $id : Int! , $input : UpdateVisitReportInput! ) {
+        updateVisitReport ( id : $id , input: $input ) {
+            ok 
+            error
+        }
+    }
+
 `

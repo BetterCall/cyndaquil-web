@@ -35,7 +35,12 @@ export const CreateVisit: React.FC = () => {
         ]}
       />
       <div className="main-container">
-        <VisitForm loading={loading} submit={submit} form={form} />
+        <VisitForm
+          loading={loading}
+          submit={submit}
+          form={form}
+          disabledFields={Object.keys(parseSearchParams(params))}
+        />
       </div>
     </>
   );

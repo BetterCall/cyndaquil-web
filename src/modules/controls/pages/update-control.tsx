@@ -52,7 +52,7 @@ export const UpdateControl = () => {
     <>
       <Header
         title={`Modifier :  `}
-        subtitle="Modifier une marque"
+        subtitle="Modifier une vérification"
         buttons={[
           {
             actionText: "Annuler",
@@ -65,7 +65,6 @@ export const UpdateControl = () => {
       />
       <div className="main-container">
         <div className="card">
-          <CardHeader title="Modifier le control d'un appareil" />
           <ControlForm loading={loading} submit={submit} form={form} />
         </div>
       </div>

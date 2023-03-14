@@ -36,7 +36,7 @@ export const Equipments: React.FC = () => {
         <table className="table-auto w-full">
           <thead>
             <tr className="text-xs text-gray-500 text-left">
-              <th className=" font-medium">Nom</th>
+              <th className="padding-table font-medium">Nom</th>
             </tr>
           </thead>
           <tbody>
@@ -45,7 +45,7 @@ export const Equipments: React.FC = () => {
                 key={`reference-${reference.id}`}
                 className={`text-xs   ${index % 2 ? "" : "bg-gray-50"} `}
               >
-                <td className="flex py-3">
+                <td className="flex padding-table ">
                   <div>
                     <p
                       className="font-medium  cursor-pointer"

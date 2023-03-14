@@ -41,16 +41,16 @@ export const Benefits = () => {
           <table className="table-auto w-full">
             <thead>
               <tr className="text-xs text-gray-500 text-left">
-                <th className="padding-table   font-medium">Nom</th>
+                <th className="padding-table font-medium">Nom</th>
               </tr>
             </thead>
             <tbody>
               {data?.benefits?.results?.map((benefit, index) => (
                 <tr
                   key={`benefit-${benefit.id}`}
-                  className={`text-xs   ${index % 2 ? "" : "bg-gray-50"} `}
+                  className={`text-xs ${index % 2 ? "" : "bg-gray-50"} `}
                 >
-                  <td className="flex py-3 padding-table  ">
+                  <td className="flex py-3 padding-table">
                     <div>
                       <p
                         className="font-medium  cursor-pointer"

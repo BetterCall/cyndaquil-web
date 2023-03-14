@@ -66,7 +66,7 @@ export const CreateWorkOrder: React.FC = () => {
             form.setValue(key, data?.workOrder?.result[key]);
           }
         });
-        form.setValue("fromWorkOrderId", workOrderId);
+        form.setValue("workOrderId", workOrderId);
         console.log(data);
       }
       if (siteId) {

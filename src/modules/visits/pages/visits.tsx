@@ -50,13 +50,14 @@ export const Visits: React.FC = () => {
           </thead>
           <tbody>
             {data?.visits?.results?.map((visit, index) => (
-              <Row index={index} key={`visit-${visit.id}`}>
+              <Row
+                index={index}
+                key={`visit-${visit.id}`}
+                onClick={() => navigate(`/visit/${visit.id}`)}
+              >
                 <td className="padding-table flex">
                   <div>
-                    <p
-                      className="font-medium cursor-pointer"
-                      onClick={() => navigate(`/visit/${visit.id}`)}
-                    >
+                    <p className="font-medium cursor-pointer">
                       {visit.user?.firstname}
                     </p>
                   </div>

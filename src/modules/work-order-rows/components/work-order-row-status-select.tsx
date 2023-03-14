@@ -1,21 +1,16 @@
-import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
-import { WorkOrderType } from "../../../__generated__/globalTypes";
+import { WorkOrderRowStatus } from "../../../__generated__/globalTypes";
 
-interface IWorkOrderTypeSelect {
+interface IProps {
   form: UseFormReturn<any, any>;
-  error?: string;
 }
 
-export const WorkOrderTypeSelect: React.FC<IWorkOrderTypeSelect> = ({
-  form,
-  error = null,
-}) => {
-  const type = form.watch("type");
+export const WorkOrderRowStatusSelect: React.FC<IProps> = ({ form }) => {
+  const status = form.watch("status");
   return (
     <div className="w-full">
-      <p className="label">Type d'intervention</p>
+      <p className="label">Status</p>
       <div className="relative">
         <svg
           className="absolute right-4 top-1/2 transform -translate-y-1/2"
@@ -33,26 +28,21 @@ export const WorkOrderTypeSelect: React.FC<IWorkOrderTypeSelect> = ({
 
         <select
           className="input appearance-none w-full"
-          {...form.register("type", { ...(error && { required: error }) })}
+          {...form.register("status")}
         >
           <option value={undefined}>-</option>
 
-          {Object.keys(WorkOrderType).map((value) => (
+          {Object.keys(WorkOrderRowStatus).map((value) => (
             <option
               value={value}
-              key={`type-${value}`}
-              selected={value === type}
+              key={`status-${value}`}
+              selected={value === status}
             >
               {value}
             </option>
           ))}
         </select>
       </div>
-      <ErrorMessage
-        errors={form.formState?.errors}
-        name="type"
-        render={({ message }) => <p className="error-message">{message}</p>}
-      />
     </div>
   );
 };

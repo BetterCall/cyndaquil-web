@@ -14,6 +14,7 @@ export interface WorkOrderPart {
   id: number;
   object: string;
   description: string | null;
+  billable: boolean;
   type: WorkOrderType;
   date: string | null;
   start: string | null;

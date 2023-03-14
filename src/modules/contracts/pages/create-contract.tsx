@@ -17,12 +17,6 @@ import { SiteInput } from "../../sites/components/site-input";
 import { SelectTaxe } from "../../taxes/components";
 import { useCreateContract } from "../hooks";
 
-interface ICreateForm {
-  name: string;
-  siteId: number;
-  customerId: number;
-}
-
 type RowType = {
   name: string;
   emplacementIds: number[];
@@ -289,11 +283,13 @@ export const CreateContract = () => {
         <div className="w-full mb-4 md:mb-0">
           <div className="card mb-2">
             <CardHeader title="Information Générales" />
+            <p className="label">Objet du contrat</p>
             <input
               {...form.register("name", { required: "name required" })}
-              placeholder="Nom du contrat"
+              placeholder="Objet du contrat"
               className="input w-full mb-5"
             />
+            <p className="label">Note Interne</p>
             <textarea className="input w-full" rows={4} />
 
             <div className="w-full ">

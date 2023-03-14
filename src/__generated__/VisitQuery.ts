@@ -20,10 +20,6 @@ export interface VisitQuery_visit_result_customer {
   __typename: "Customer";
   id: number;
   name: string;
-  streetNumber: string;
-  street: string;
-  postal: string;
-  city: string;
 }
 
 export interface VisitQuery_visit_result {
@@ -34,6 +30,13 @@ export interface VisitQuery_visit_result {
   date: string | null;
   start: string | null;
   status: VisitStatus;
+  report: string | null;
+  lat: number;
+  lng: number;
+  streetNumber: string;
+  street: string;
+  postal: string;
+  city: string;
   userId: number | null;
   user: VisitQuery_visit_result_user | null;
   customerId: number | null;

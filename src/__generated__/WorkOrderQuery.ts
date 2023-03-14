@@ -61,7 +61,10 @@ export interface WorkOrderQuery_workOrder_result_rows {
   __typename: "WorkOrderRow";
   id: number;
   done: boolean;
+  comment: string | null;
+  emplacementId: number;
   emplacement: WorkOrderQuery_workOrder_result_rows_emplacement;
+  benefitId: number;
   benefit: WorkOrderQuery_workOrder_result_rows_benefit;
 }
 
@@ -70,6 +73,7 @@ export interface WorkOrderQuery_workOrder_result {
   id: number;
   object: string;
   description: string | null;
+  billable: boolean;
   type: WorkOrderType;
   date: string | null;
   start: string | null;

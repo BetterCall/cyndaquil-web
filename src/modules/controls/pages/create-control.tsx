@@ -34,21 +34,20 @@ export const CreateControl: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouvelle Marque"
-        subtitle="Creer une nouvelle copropriété"
+        title="Nouvelle Vérification"
+        subtitle="Saisir une nouvelle vérification"
         buttons={[
           {
             actionText: "Annuler",
             bgColor: "indigo",
             textColor: "white",
-            link: `/brands`,
+            link: `/controls`,
             icon: <SendIcon />,
           },
         ]}
       />
       <div className="main-container">
         <div className="card">
-          <CardHeader title="Nouveau Control" />
           <ControlForm
             loading={loading}
             submit={submit}

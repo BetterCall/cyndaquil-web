@@ -8,17 +8,20 @@ import {
   CustomersQueryVariables,
 } from "../../../__generated__/CustomersQuery";
 import { useLazyCustomer } from "../hooks/useCustomer";
+import { ErrorMessage } from "@hookform/error-message";
 
 interface ICustomerInput {
   form: UseFormReturn<any, any>;
   canSelectAddress?: boolean;
   disabled?: boolean;
+  error?: string;
 }
 
 export const CustomerInput: React.FC<ICustomerInput> = ({
-  form: { getValues, setValue },
+  form,
   canSelectAddress = false,
   disabled = false,
+  error = null,
 }) => {
   const [isOpened, setIsOpened] = useState(false);
   const [searchFn, { data, loading, called, fetchMore }] = useLazyQuery<
@@ -29,7 +32,7 @@ export const CustomerInput: React.FC<ICustomerInput> = ({
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
   const [hasBeenSelected, setSelected] = useState(false);
 
-  const customerId = getValues("customerId");
+  const customerId = form.getValues("customerId");
 
   useEffect(() => {
     const fetchData = async (id) => {
@@ -41,7 +44,7 @@ export const CustomerInput: React.FC<ICustomerInput> = ({
         setSelected(true);
         setSearch(customerData?.customer?.result?.name);
         setSelectedCustomer(customerData?.customer?.result);
-        setValue("customerId", id);
+        form.setValue("customerId", id);
       }
     };
 
@@ -72,7 +75,7 @@ export const CustomerInput: React.FC<ICustomerInput> = ({
   );
 
   useEffect(() => {
-    if (!hasBeenSelected) setValue("customerId", null);
+    if (!hasBeenSelected) form.setValue("customerId", null);
   }, [hasBeenSelected]);
 
   return (
@@ -84,11 +87,13 @@ export const CustomerInput: React.FC<ICustomerInput> = ({
         onChange={(e) => {
           setSearch(e.target.value);
           setSelected(false);
-          setValue("customerId", null);
+          form.setValue("customerId", null);
         }}
         value={displayedSearch}
       />
-
+      {!customerId && error ? (
+        <p className="error-message mb-2">{error}</p>
+      ) : null}
       {isOpened && displayedSearch !== "" && !hasBeenSelected && (
         <>
           <label className="text-sm font-bold">Résultats</label>
@@ -110,7 +115,7 @@ export const CustomerInput: React.FC<ICustomerInput> = ({
                   setSearch(customer.name);
                   setSelected(true);
                   setSelectedCustomer(customer);
-                  setValue("customerId", customer.id);
+                  form.setValue("customerId", customer.id);
                 }}
               >
                 <h2>{customer.name}</h2>
@@ -145,18 +150,19 @@ export const CustomerInput: React.FC<ICustomerInput> = ({
         </>
       )}
 
-      {selectedCustomer && canSelectAddress && (
+      {selectedCustomer && hasBeenSelected && canSelectAddress && (
         <div
+          className="btn mt-2"
           onClick={() => {
-            setValue("street", selectedCustomer.street);
-            setValue("city", selectedCustomer.city);
-            setValue("postal", selectedCustomer.postal);
-            setValue("streetNumber", selectedCustomer.streetNumber);
-            setValue("lat", selectedCustomer.lat);
-            setValue("lng", selectedCustomer.lng);
+            form.setValue("street", selectedCustomer.street);
+            form.setValue("city", selectedCustomer.city);
+            form.setValue("postal", selectedCustomer.postal);
+            form.setValue("streetNumber", selectedCustomer.streetNumber);
+            form.setValue("lat", selectedCustomer.lat);
+            form.setValue("lng", selectedCustomer.lng);
           }}
         >
-          set address
+          Utiliser comme adresse
         </div>
       )}
     </div>

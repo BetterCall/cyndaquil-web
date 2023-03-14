@@ -35,7 +35,7 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
   form,
   disabledFields = [],
 }) => {
-  const { fromWorkOrderId } = form.watch();
+  const { workOrderId } = form.watch();
   const additionalInformations: string = form.watch("additionalInformations");
   const inputRows =
     additionalInformations?.split("\n").length > 4
@@ -45,17 +45,6 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
   // @ts-ignore
   const { date, userId, siteId, rows = [] } = form.watch();
   const { data: usersData } = useUsers({ where: {} });
-
-  // const toggleRow = (emplacementId: number) => {
-  //   const index = rows.findIndex((row) => row.emplacementId === emplacementId);
-  //   let newRows = rows;
-  //   if (index === -1) {
-  //     newRows.push({ emplacementId, benefitId: null });
-  //   } else {
-  //     newRows.splice(index, 1);
-  //   }
-  //   form.setValue("rows", newRows);
-  // };
 
   const toggleRow = (nRow) => {
     console.log(nRow);
@@ -89,6 +78,11 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
   };
 
   const onSubmit = () => {
+    if (rows.length === 0) {
+      toast.error("Veuillez sélectionner au moins un emplacement");
+      return;
+    }
+
     for (let i = 0; i < rows.length; i++) {
       if (rows[i].benefitId === null) {
         toast.error("Veuillez sélectionner un service pour chaque emplacement");
@@ -193,9 +187,13 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
               render={({ field: { onChange, value } }) => {
                 return (
                   <TimePicker
-                    onChange={(e) =>
-                      form.setValue("start", moment(e).format("LT") ?? null)
-                    }
+                    onChange={(e) => {
+                      if (e) {
+                        form.setValue("start", moment(e).format("LT"));
+                      } else {
+                        form.setValue("start", moment(undefined).format("LT"));
+                      }
+                    }}
                     value={moment(value ?? "08:00:00", "LT")}
                     format={"HH:mm"}
                     className="input w-full p-3 mb-3"
@@ -215,9 +213,13 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
               render={({ field: { onChange, value } }) => {
                 return (
                   <TimePicker
-                    onChange={(e) =>
-                      form.setValue("end", moment(e).format("LT") ?? null)
-                    }
+                    onChange={(e) => {
+                      if (e) {
+                        form.setValue("end", moment(e).format("LT"));
+                      } else {
+                        form.setValue("end", moment(undefined).format("LT"));
+                      }
+                    }}
                     value={moment(value ?? "08:00:00", "LT")}
                     format={"HH:mm"}
                     className="input w-full p-3 mb-3"
@@ -270,9 +272,9 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
         <div className="right">
           <div className="card mb-2">
             <CardHeader title="Emplacements" />
-            {fromWorkOrderId ? (
+            {workOrderId ? (
               <WorkOrderRowsSelect
-                workOrderId={fromWorkOrderId}
+                workOrderId={workOrderId}
                 emplacementsSelected={rows}
                 toggleRow={toggleRow}
               />

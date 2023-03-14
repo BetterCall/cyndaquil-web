@@ -87,6 +87,8 @@ query EquipmentQuery ( $where  : EquipmentInput! ) {
                 building
                 entrance
                 floor
+
+                code
             }
             
             controls {

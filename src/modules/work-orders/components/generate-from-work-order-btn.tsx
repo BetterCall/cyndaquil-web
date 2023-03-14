@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button } from "../../../components/button";
-import { useGenerateFromUnfinishedWorkOrder } from "../hooks/useGenerateFromUnfinishedWorkOrder";
+import { useGenerateFromWorkOrder } from "../hooks/useGenerateFromWorkOrder";
 
 interface IProps {
   workOrderId: number;
@@ -10,7 +10,7 @@ interface IProps {
 
 export const GenerateFromWorkOrderBtn: React.FC<IProps> = ({ workOrderId }) => {
   const navigate = useNavigate();
-  const { submit, loading } = useGenerateFromUnfinishedWorkOrder({
+  const { submit, loading } = useGenerateFromWorkOrder({
     workOrderId,
     onCompleted: async (id) => {
       toast.success("Le nouveau Bon d'intervention a été généré avec succès");

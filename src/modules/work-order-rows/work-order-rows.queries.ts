@@ -6,9 +6,13 @@ export const WORK_ORDER_ROWS = gql`
         workOrderRows( limit : $limit , offset : $offset, where : $where  ) {
             ok 
             error 
+
             results{
                 id
                 done
+                comment
+
+                status
 
                 workOrderId 
                 workOrder {
@@ -21,9 +25,17 @@ export const WORK_ORDER_ROWS = gql`
                 emplacement {
                     id
 
+                    code
+                    
                     building
                     entrance
                     floor
+
+                    equipmentId
+                    equipment {
+                        id 
+                        code
+                    }
 
                     siteId 
                     site {
@@ -39,12 +51,24 @@ export const WORK_ORDER_ROWS = gql`
                     }
                 }
 
+              
+
                 benefitId
                 benefit {
                     id
                     name
                 }
             }
+        }
+    }
+`
+
+export const UPDATE_WORK_ORDER_ROW = gql`
+
+    mutation UpdateWorkOrderRowMutation( $id : Int! , $input : UpdateWorkOrderRowInput! ) {
+        updateWorkOrderRow( id : $id , input : $input ) {
+            ok 
+            error 
         }
     }
 `

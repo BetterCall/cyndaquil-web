@@ -4,7 +4,8 @@ import { SearchWorkOrdersInput } from './search'
 import { WorkOrderStatusSelect } from './work-order-status-select'
 import { WorkOrderTypeSelect } from './work-order-type-select'
 import { GenerateFromContractBtn } from './generate-from-contract-btn'
-import { GenerateFromWorkOrderBtn } from "./genereate-from-work-order-btn"
+import { GenerateFromWorkOrderBtn } from "./generate-from-work-order-btn"
+import { WorkOrderProcessingBtn } from './work-order-processing-btn'
 
 export {
     WorkOrderForm,
@@ -13,5 +14,6 @@ export {
     WorkOrderStatusSelect,
     WorkOrderTypeSelect,
     GenerateFromContractBtn,
-    GenerateFromWorkOrderBtn
+    GenerateFromWorkOrderBtn,
+    WorkOrderProcessingBtn
 }

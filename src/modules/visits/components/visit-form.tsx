@@ -14,6 +14,7 @@ import { useUsers } from "../../users/hooks";
 import { CustomerInput } from "../../customer/components";
 import { useLazyEmplacements } from "../../emplacements/hooks";
 import { EmptyList } from "../../../components";
+import { ErrorMessage } from "@hookform/error-message";
 
 interface IVisitFormProps {
   loading: boolean;
@@ -41,49 +42,50 @@ export const VisitForm: React.FC<IVisitFormProps> = ({
           <div className="card mb-2">
             <CardHeader title="Informations Générales" />
             <div className="w-full  mb-3">
-              <p className="mb-1.5 font-medium text-base text-coolGray-800">
-                Objet de la visite
-              </p>
+              <p className="label">Objet de la visite</p>
               <input
                 className="w-full input"
                 {...form.register("object", {
-                  required: "Le Motif est necessaire",
+                  required: "L'objet de la visite est requis",
                 })}
                 placeholder="Objet de la visite"
+              />
+
+              <ErrorMessage
+                errors={form.formState?.errors}
+                name="object"
+                render={({ message }) => (
+                  <p className="error-message">{message}</p>
+                )}
               />
             </div>
 
             <div className="w-full ">
-              <p className="mb-1.5 font-medium text-base text-coolGray-800">
-                Informations
-              </p>
+              <p className="label">Informations</p>
               <textarea
                 style={{ height: "auto" }}
                 rows={rows}
-                {...form.register("description", {
-                  required: "name required",
-                })}
+                {...form.register("description")}
                 placeholder="Informations"
                 className="input w-full "
               />
             </div>
 
             <VisitStatusSelect form={form} />
-            <CustomerInput
-              form={form}
-              disabled={disabledFields.includes("customerId")}
-            />
+            <div className="w-full mt-3">
+              <CustomerInput
+                error="Le Choix du client est requis"
+                form={form}
+                canSelectAddress={true}
+                disabled={disabledFields.includes("customerId")}
+              />
+            </div>
           </div>
-        </div>
-        <div className="right">
+
           <div className="card mb-2">
-            <FormHeader
-              title="Date"
-              subtitle="Update your billing details and address."
-            />
-            <p className="mb-1.5 font-medium text-base text-coolGray-800">
-              Jour
-            </p>
+            <CardHeader title="Date" />
+
+            <p className="label">Jour</p>
             <Controller
               // @ts-ignore
               control={form.control}
@@ -93,7 +95,11 @@ export const VisitForm: React.FC<IVisitFormProps> = ({
                   <DatePicker
                     value={moment(value ?? "2023-01-01", "YYYY-MM-DD")}
                     onChange={(e) => {
-                      onChange(moment(e).format("YYYY-MM-DD") ?? null);
+                      if (e) {
+                        onChange(moment(e).format("YYYY-MM-DD"));
+                      } else {
+                        onChange(moment(undefined).format("YYYY-MM-DD"));
+                      }
                     }}
                     format="DD/MM/YYYY"
                     className="input w-full p-3 mb-3"
@@ -102,9 +108,7 @@ export const VisitForm: React.FC<IVisitFormProps> = ({
               }}
             />
 
-            <p className="mb-1.5 font-medium text-base text-coolGray-800">
-              Heure Début
-            </p>
+            <p className="label">Heure Début</p>
 
             <Controller
               // @ts-ignore
@@ -113,9 +117,13 @@ export const VisitForm: React.FC<IVisitFormProps> = ({
               render={({ field: { onChange, value } }) => {
                 return (
                   <TimePicker
-                    onChange={(e) =>
-                      form.setValue("start", moment(e).format("LT") ?? null)
-                    }
+                    onChange={(e) => {
+                      if (e) {
+                        form.setValue("start", moment(e).format("LT"));
+                      } else {
+                        form.setValue("start", moment(undefined).format("LT"));
+                      }
+                    }}
                     value={moment(value ?? "08:00:00", "LT")}
                     format={"HH:mm"}
                     className="input w-full p-3 mb-3"
@@ -125,12 +133,13 @@ export const VisitForm: React.FC<IVisitFormProps> = ({
             />
           </div>
         </div>
+        <div className="right">
+          <div className="card mb-2">
+            <CardHeader title="Adresse" />
+            <AddressInputs form={form} />
+          </div>
+        </div>
       </div>
-      <section className="section">
-        <div className="left"></div>
-
-        <div className="right"></div>
-      </section>
 
       <Button
         canClick={form.formState.isValid}

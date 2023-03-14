@@ -8,12 +8,15 @@ import { UpdateEmplacementMutation, UpdateEmplacementMutationVariables } from ".
 
 interface IProps {
     id: number,
+    defaultValues?: any,
     onCompleted: () => any
+    onError: (message: string) => any
 }
 
-export const useUpdateEmplacement = ({ id, onCompleted }: IProps) => {
+export const useUpdateEmplacement = ({ id, defaultValues, onCompleted, onError }: IProps) => {
 
     const form = useForm<UpdateEmplacementInput>({
+        defaultValues,
         mode: "all",
     })
     const [mutate, { loading }] = useMutation<UpdateEmplacementMutation, UpdateEmplacementMutationVariables>(UPDATE_EMPLACEMENT)
@@ -23,6 +26,8 @@ export const useUpdateEmplacement = ({ id, onCompleted }: IProps) => {
         try {
 
             const input = form.getValues()
+            console.log('input', input)
+            console.log('input', parseParams(input))
             const { data } = await mutate({
                 variables: {
                     id,
@@ -38,6 +43,7 @@ export const useUpdateEmplacement = ({ id, onCompleted }: IProps) => {
 
         } catch (error) {
             console.log(error)
+            onError(error.message)
         }
     }
 

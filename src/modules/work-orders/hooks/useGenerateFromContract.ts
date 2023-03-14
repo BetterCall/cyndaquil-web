@@ -4,6 +4,9 @@ import {
     GenerateFromContractMutation,
     GenerateFromContractMutationVariables
 } from "../../../__generated__/GenerateFromContractMutation";
+import { GenerateFromContractInput, WorkOrderType } from "../../../__generated__/globalTypes";
+import { useForm } from "react-hook-form";
+import { parseParams } from "../../../helpers/clean-object";
 
 
 interface IProps {
@@ -18,15 +21,22 @@ export const useGenerateFromContract = ({ contractId, onCompleted, onError }: IP
         GenerateFromContractMutationVariables
     >(GENERATE_FROM_CONTRACT)
 
+    const form = useForm<GenerateFromContractInput>({
+        mode: "all",
+        defaultValues: {
+            contractId,
+            type: WorkOrderType.Contract
+        }
+    })
+
     const submit = async () => {
         if (loading) return
         try {
 
+            const input = form.getValues()
             const { data } = await mutate({
                 variables: {
-                    input: {
-                        contractId
-                    }
+                    input: parseParams(input)
                 }
             })
 
@@ -45,7 +55,8 @@ export const useGenerateFromContract = ({ contractId, onCompleted, onError }: IP
     return {
         mutate,
         loading,
-        submit
+        submit,
+        form
     }
 }
 

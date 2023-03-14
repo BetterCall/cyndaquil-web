@@ -1,33 +1,37 @@
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
-import { UPDATE_WORK_ORDER } from "../work-orders.queries";
+import { UPDATE_WORK_ORDER_ROW } from "../work-order-rows.queries";
 import { parseParams } from "../../../helpers/clean-object";
 
-import { UpdateWorkOrderInput } from "../../../__generated__/globalTypes";
+import { UpdateWorkOrderRowInput } from "../../../__generated__/globalTypes";
 import {
-    UpdateWorkOrderMutation,
-    UpdateWorkOrderMutationVariables
-} from "../../../__generated__/UpdateWorkOrderMutation";
+    UpdateWorkOrderRowMutation,
+    UpdateWorkOrderRowMutationVariables
+} from "../../../__generated__/UpdateWorkOrderRowMutation";
 
 interface IProps {
     id: number,
-    onCompleted: () => any
+    defaultValues: any,
+    onCompleted: () => any,
     onError: (message: string) => any
 }
 
-export const useUpdateWorkOrder = ({ id, onCompleted, onError }: IProps) => {
+export const useUpdateWorkOrderRow = ({ id, defaultValues, onCompleted, onError }: IProps) => {
 
-    const form = useForm<UpdateWorkOrderInput>({
+    const form = useForm<UpdateWorkOrderRowInput>({
         mode: "all",
+        defaultValues
     })
-    const [mutate, { loading }] = useMutation<UpdateWorkOrderMutation, UpdateWorkOrderMutationVariables>(UPDATE_WORK_ORDER)
+    const [mutate, { loading }] = useMutation<UpdateWorkOrderRowMutation, UpdateWorkOrderRowMutationVariables>(UPDATE_WORK_ORDER_ROW)
 
     const submit = async () => {
         if (loading) return
         try {
 
             const input = form.getValues()
+            console.log('input', parseParams(input))
+
             const { data } = await mutate({
                 variables: {
                     id,
@@ -35,10 +39,12 @@ export const useUpdateWorkOrder = ({ id, onCompleted, onError }: IProps) => {
                 },
             });
 
-            if (data?.updateWorkOrder?.ok) {
+
+
+            if (data?.updateWorkOrderRow?.ok) {
                 onCompleted()
             } else {
-                throw Error(data?.updateWorkOrder?.error ?? "Error")
+                throw Error(data?.updateWorkOrderRow?.error ?? "Error")
             }
 
         } catch (error) {

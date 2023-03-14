@@ -1,5 +1,5 @@
 
-const numbers = ["equipmentId", "code", "workOrderId", "managerId", "invoiceId", "recordedById", 'paymentId', "contractId", "visitId", "commercialId", "customerCategoryId", "equipmentCategoryId", "categoryId", "benefitId", "customerId", "siteId", "id", "userId", "targetUserId", "openedById"]
+const numbers = ["emplacementCode", "equipmentId", "code", "workOrderId", "managerId", "invoiceId", "recordedById", 'paymentId', "contractId", "visitId", "commercialId", "customerCategoryId", "equipmentCategoryId", "categoryId", "benefitId", "customerId", "siteId", "id", "userId", "targetUserId", "openedById"]
 const decimals = ["amount", "price", "taxPrice"]
 
 export const cleanObject = (object: any): { [k: string]: any; } => {
@@ -17,6 +17,10 @@ export const parseParams = (object: any) => {
     const parsed: any = {}
     const cleaned = cleanObject(object)
     Object.keys(cleaned).forEach((key: any) => {
+
+        if (object[key] == undefined) {
+            return
+        }
 
         if (numbers.includes(key) && object[key] !== null) {
             try {

@@ -10,7 +10,6 @@ interface IRemoveOfferModal {
 
 export const RemoveBenefitModal: React.FC<IRemoveOfferModal> = ({
   benefitId,
-  categoryId,
 }) => {
   const [isOpened, setIsOpened] = useState(false);
   const { submit, loading } = useRemoveBenefit({

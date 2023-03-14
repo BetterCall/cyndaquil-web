@@ -5,6 +5,7 @@ export const WORK_ORDER_FRAGMENT = gql`
         id 
         object
         description
+        billable
         type
         date
         start
@@ -69,7 +70,6 @@ export const WORK_ORDERS = gql`
                 site {
                     id 
                     name 
-                    
                 }
             }
         }
@@ -116,6 +116,8 @@ query WorkOrderQuery ( $id : Int! ) {
             rows {
                 id
                 done
+                comment
+                emplacementId 
                 emplacement {
                     id
 
@@ -129,6 +131,7 @@ query WorkOrderQuery ( $id : Int! ) {
                     floor
                 }
 
+                benefitId
                 benefit {
                     id
                     name
@@ -153,10 +156,10 @@ export const GENERATE_FROM_CONTRACT = gql`
 `
 
 
-export const GENERATE_FROM_UNFINISHED_WORK_ORDER = gql`
+export const GENERATE_FROM_WORK_ORDER = gql`
 
-    mutation GenerateFromUnfinishedWorkOrderMutation ( $input : GenerateFromUnfinishedWorkOrderInput! ) {
-        generateFromUnfinishedWorkOrder( input : $input ) {
+    mutation GenerateFromWorkOrderMutation ( $input : GenerateFromWorkOrderInput! ) {
+        generateFromWorkOrder( input : $input ) {
             id
             ok
             error

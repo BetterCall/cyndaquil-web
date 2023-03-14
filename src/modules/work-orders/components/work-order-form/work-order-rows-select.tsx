@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { EmptyList, Loading } from "../../../../components";
 import { SelectBenefit } from "../../../benefits/components";
 import { useLazyWorkOrderRows } from "../../../work-order-rows/hooks";
 
@@ -13,10 +14,16 @@ export const WorkOrderRowsSelect: React.FC<IProps> = ({
   emplacementsSelected,
   toggleRow,
 }) => {
-  const [getEmplacements, { data: eData, called }] = useLazyWorkOrderRows();
+  const [getEmplacements, { data: eData, called, loading }] =
+    useLazyWorkOrderRows();
   useEffect(() => {
     getEmplacements({ variables: { where: { workOrderId, done: false } } });
   }, [workOrderId]);
+
+  if (loading) return <Loading />;
+  if (eData?.workOrderRows?.results?.length === 0) {
+    return <EmptyList text="Aucun Emplacement" />;
+  }
 
   return (
     <table className="table-auto w-full">
@@ -71,11 +78,29 @@ export const WorkOrderRowsSelect: React.FC<IProps> = ({
               </tr>
               <tr>
                 <td colSpan={5} className={`padding-table`}>
-                  <SelectBenefit
-                    disabled
-                    setValue={(e) => {}}
-                    value={row.benefitId!}
-                  />
+                  <div className="flex ">
+                    <div className="w-1/2 mr-1 ">
+                      <div className="w-full  ">
+                        <p className="label">Service</p>
+                        <SelectBenefit
+                          disabled
+                          setValue={(e) => {}}
+                          value={row.benefitId!}
+                        />
+                      </div>
+                    </div>
+                    <div className="w-1/2 ml-1">
+                      <div className="w-full ">
+                        <p className="label">Entrée</p>
+                        <input
+                          className="input w-full"
+                          type="text"
+                          disabled
+                          value={row.status}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </td>
               </tr>
             </>

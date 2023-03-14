@@ -63,9 +63,9 @@ export const EquipmentInput: React.FC<IProps> = ({
 
   return (
     <div className="flex flex-col">
-      <label className="text-sm font-bold">N° Equipement</label>
+      <p className="label">N° Equipement</p>
       <input
-        className="input mb-3"
+        className="input w-full "
         onChange={(e) => {
           setSearch(e.target.value);
           setSelected(false);

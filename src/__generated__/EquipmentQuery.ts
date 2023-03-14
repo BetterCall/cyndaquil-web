@@ -44,6 +44,7 @@ export interface EquipmentQuery_equipment_result_emplacement {
   building: string;
   entrance: string | null;
   floor: number;
+  code: number | null;
 }
 
 export interface EquipmentQuery_equipment_result_controls_user {

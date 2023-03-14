@@ -24,6 +24,7 @@ export enum Database {
   Brands = "Brands",
   Bugs = "Bugs",
   Buildings = "Buildings",
+  Codes = "Codes",
   ContactCategories = "ContactCategories",
   Contacts = "Contacts",
   ContractRows = "ContractRows",
@@ -104,11 +105,19 @@ export enum VisitStatus {
   Programmed = "Programmed",
 }
 
+export enum WorkOrderRowStatus {
+  Ok = "Ok",
+  Replaced = "Replaced",
+  ToBeReplaced = "ToBeReplaced",
+  ToDo = "ToDo",
+}
+
 export enum WorkOrderStatus {
   Done = "Done",
   InProgress = "InProgress",
   Pending = "Pending",
   Programmed = "Programmed",
+  Reviewed = "Reviewed",
   Unfinished = "Unfinished",
 }
 
@@ -251,6 +260,7 @@ export interface CreateEmplacementInput {
   categoryId: number;
   siteId: number;
   code?: number | null;
+  equipmentId?: number | null;
 }
 
 export interface CreateEquipmentCategoryInput {
@@ -337,6 +347,12 @@ export interface CreateUserInput {
 }
 
 export interface CreateVisitInput {
+  lat: number;
+  lng: number;
+  streetNumber: string;
+  street: string;
+  postal: string;
+  city: string;
   object: string;
   description?: string | null;
   status: VisitStatus;
@@ -358,8 +374,9 @@ export interface CreateWorkOrderInput {
   date?: string | null;
   start?: string | null;
   end?: string | null;
+  billable?: boolean | null;
   customerId?: number | null;
-  fromWorkOrderId?: number | null;
+  workOrderId?: number | null;
   siteId?: number | null;
   userId?: number | null;
   status?: WorkOrderStatus | null;
@@ -399,10 +416,15 @@ export interface EquipmentInput {
 }
 
 export interface GenerateFromContractInput {
+  description?: string | null;
+  type: WorkOrderType;
+  date?: string | null;
+  start?: string | null;
+  end?: string | null;
   contractId: number;
 }
 
-export interface GenerateFromUnfinishedWorkOrderInput {
+export interface GenerateFromWorkOrderInput {
   workOrderId: number;
 }
 
@@ -553,6 +575,7 @@ export interface UpdateEmplacementInput {
   categoryId?: number | null;
   siteId?: number | null;
   code?: number | null;
+  equipmentId?: number | null;
   contractId?: number | null;
 }
 
@@ -641,12 +664,23 @@ export interface UpdateUserInput {
 }
 
 export interface UpdateVisitInput {
+  lat?: number | null;
+  lng?: number | null;
+  streetNumber?: string | null;
+  street?: string | null;
+  postal?: string | null;
+  city?: string | null;
   object?: string | null;
   description?: string | null;
   status?: VisitStatus | null;
   date?: string | null;
   start?: string | null;
   customerId?: number | null;
+}
+
+export interface UpdateVisitReportInput {
+  report: string;
+  status: VisitStatus;
 }
 
 export interface UpdateWorkOrderInput {
@@ -662,12 +696,21 @@ export interface UpdateWorkOrderInput {
   date?: string | null;
   start?: string | null;
   end?: string | null;
+  billable?: boolean | null;
   customerId?: number | null;
-  fromWorkOrderId?: number | null;
+  workOrderId?: number | null;
   siteId?: number | null;
   userId?: number | null;
   status?: WorkOrderStatus | null;
   rows?: WorkOrderRowInput[] | null;
+}
+
+export interface UpdateWorkOrderRowInput {
+  done?: boolean | null;
+  comment?: string | null;
+  status?: WorkOrderRowStatus | null;
+  equipmentId?: number | null;
+  emplacementCode?: number | null;
 }
 
 export interface UsersFiltersInput {

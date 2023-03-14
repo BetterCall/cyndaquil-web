@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WorkOrderRowFiltersInput } from "./globalTypes";
+import { WorkOrderRowFiltersInput, WorkOrderRowStatus } from "./globalTypes";
 
 // ====================================================
 // GraphQL query operation: WorkOrderRowsQuery
@@ -14,6 +14,12 @@ export interface WorkOrderRowsQuery_workOrderRows_results_workOrder {
   id: number;
   date: string | null;
   start: string | null;
+}
+
+export interface WorkOrderRowsQuery_workOrderRows_results_emplacement_equipment {
+  __typename: "Equipment";
+  id: number;
+  code: number;
 }
 
 export interface WorkOrderRowsQuery_workOrderRows_results_emplacement_site {
@@ -32,9 +38,12 @@ export interface WorkOrderRowsQuery_workOrderRows_results_emplacement_category {
 export interface WorkOrderRowsQuery_workOrderRows_results_emplacement {
   __typename: "Emplacement";
   id: number;
+  code: number | null;
   building: string;
   entrance: string | null;
   floor: number;
+  equipmentId: number | null;
+  equipment: WorkOrderRowsQuery_workOrderRows_results_emplacement_equipment | null;
   siteId: number | null;
   site: WorkOrderRowsQuery_workOrderRows_results_emplacement_site | null;
   categoryId: number | null;
@@ -51,6 +60,8 @@ export interface WorkOrderRowsQuery_workOrderRows_results {
   __typename: "WorkOrderRow";
   id: number;
   done: boolean;
+  comment: string | null;
+  status: WorkOrderRowStatus;
   workOrderId: number;
   workOrder: WorkOrderRowsQuery_workOrderRows_results_workOrder;
   emplacementId: number;

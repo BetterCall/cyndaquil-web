@@ -171,6 +171,15 @@ export const client = new ApolloClient({
                         }
                     },
 
+                    workOrderRow: {
+                        read(_, { args, toReference }) {
+                            return toReference({
+                                __typename: 'WorkOrderRow',
+                                id: args?.id,
+                            });
+                        }
+                    },
+
                     workOrders: {
                         // Don't cache separate results based on
                         // any of this field's arguments.

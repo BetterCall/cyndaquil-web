@@ -43,10 +43,12 @@ export const WorkOrders: React.FC = () => {
           <thead>
             <tr className="text-xs text-gray-500 text-left">
               <th className="padding-table font-medium">Utilisateur</th>
-              <th className="padding-table font-medium text-center">C</th>
+              <th className="padding-table font-medium text-center">Etat</th>
+              <th className="padding-table font-medium text-center">
+                Code Postal
+              </th>
               <th className="padding-table font-medium text-center">Client</th>
               <th className="padding-table font-medium text-center">Site</th>
-              <th className="padding-table font-medium text-center">Etat</th>
             </tr>
           </thead>
           <tbody>

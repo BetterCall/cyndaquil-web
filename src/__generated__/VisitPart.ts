@@ -17,4 +17,11 @@ export interface VisitPart {
   date: string | null;
   start: string | null;
   status: VisitStatus;
+  report: string | null;
+  lat: number;
+  lng: number;
+  streetNumber: string;
+  street: string;
+  postal: string;
+  city: string;
 }

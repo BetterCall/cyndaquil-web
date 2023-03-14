@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { EmptyList } from "../../../components";
 import { CardHeader } from "../../../components/cards";
 
 import { Header } from "../../../components/header";
@@ -47,32 +48,142 @@ export const Equipment: React.FC = () => {
                 title="Equipement"
                 subtitle="Informations Générales"
               />
-              code : {data?.equipment?.result?.code}
-              <br />
-              informations : {data?.equipment?.result?.informations}
-              <br />
-              marque : {data?.equipment?.result?.reference?.brand?.name}
-              <br />
-              reference : {data?.equipment?.result?.reference?.name}
-              <br />
-              site : {data?.equipment?.result?.emplacement?.site?.name}
-              <br />
-              {data?.equipment?.result?.emplacement?.building}
-              <br />
-              {data?.equipment?.result?.emplacement?.floor}
-              <br />
-              {data?.equipment?.result?.emplacement?.site?.name}
-              <br />
-              {data?.equipment?.result?.emplacement?.site?.name}
-              <br />
-              {data?.equipment?.result?.category?.name}
+
+              <div className="flex ">
+                <div className="w-1/2 mr-1 ">
+                  <div className="w-full mt-3">
+                    <p className="label">Code</p>
+                    <input
+                      className="input w-full"
+                      value={data?.equipment?.result?.code}
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="w-1/2 ml-1">
+                  <div className="w-full mt-3">
+                    <p className="label">Type d'équipement</p>
+                    <input
+                      className="input w-full"
+                      value={data?.equipment?.result?.category?.name}
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full mt-3">
+                <p className="label">Informations</p>
+                <input
+                  className="input w-full"
+                  value={
+                    data?.equipment?.result?.informations ??
+                    "Aucune information supplémentaire"
+                  }
+                  disabled
+                />
+              </div>
+              <div className="flex ">
+                <div className="w-1/2 mr-1 ">
+                  <div className="w-full mt-3">
+                    <p className="label">Marque</p>
+                    <input
+                      className="input w-full"
+                      value={
+                        data?.equipment?.result?.reference?.brand?.name ?? ""
+                      }
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="w-1/2 ml-1">
+                  <div className="w-full mt-3">
+                    <p className="label">Référence</p>
+                    <input
+                      className="input w-full"
+                      value={data?.equipment?.result?.reference?.name ?? ""}
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              {data?.equipment?.result?.emplacement?.siteId ? (
+                <>
+                  <div className="w-full mt-3">
+                    <p className="label">Site</p>
+                    <input
+                      className="input w-full"
+                      value={
+                        data?.equipment?.result?.emplacement?.site?.name ?? ""
+                      }
+                      disabled
+                    />
+                  </div>
+
+                  <div className="flex ">
+                    <div className="w-1/2 mr-1 ">
+                      <div className="w-full mt-3">
+                        <p className="label">Batiment</p>
+                        <input
+                          className="input w-full"
+                          value={
+                            data?.equipment?.result?.emplacement?.building ?? ""
+                          }
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div className="w-1/2 ml-1">
+                      <div className="w-full mt-3">
+                        <p className="label">Entrée</p>
+                        <input
+                          className="input w-full"
+                          value={
+                            data?.equipment?.result?.emplacement?.entrance ?? ""
+                          }
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex ">
+                    <div className="w-1/2 mr-1 ">
+                      <div className="w-full mt-3">
+                        <p className="label">Etage</p>
+                        <input
+                          className="input w-full"
+                          value={
+                            data?.equipment?.result?.emplacement?.floor ?? ""
+                          }
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div className="w-1/2 ml-1">
+                      <div className="w-full mt-3">
+                        <p className="label">N° Emplacement</p>
+                        <input
+                          className="input w-full"
+                          value={
+                            data?.equipment?.result?.emplacement?.code ?? ""
+                          }
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <EmptyList text="" />
+              )}
             </div>
           </div>
           <div className="right">
             <div className="card">
               <CardHeader
                 title="Controles"
-                subtitle="Liste des 5 dernieres Verfications"
+                subtitle="Liste des 5 dernières vérifications"
               />
 
               <ControlsPreview where={{ equipmentId: +id! }} limit={5} />

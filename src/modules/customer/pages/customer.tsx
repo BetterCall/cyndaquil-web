@@ -11,6 +11,7 @@ import { PricesPreview } from "../../prices/components";
 import { SitesPreview } from "../../sites/components";
 import { WorkOrdersPreview } from "../../work-orders/components";
 import { useCustomer } from "../hooks";
+import { VisitsPreview } from "../../visits/components";
 
 type ICustomerParams = {
   id: string;
@@ -126,6 +127,24 @@ export const Customer: React.FC = () => {
                   <div
                     className="btn"
                     onClick={() => navigate(`/call/create?customerId=${id}`)}
+                  >
+                    Nouvel Appel
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="right">
+            <div className="card">
+              <CardHeader title="Rendez-vous " />
+              <VisitsPreview customerId={+id!} />
+
+              <div className="cardFooter">
+                <div className="w-full md:w-1/2 px-2">
+                  <div
+                    className="btn"
+                    onClick={() => navigate(`/visit/create?customerId=${id}`)}
                   >
                     Nouvel Appel
                   </div>

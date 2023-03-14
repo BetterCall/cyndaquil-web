@@ -1,5 +1,5 @@
 import { VisitForm } from './visit-form'
-import { VisitsPreview } from './work-orders-preview'
+import { VisitsPreview } from './visits-preview'
 import { SearchVisitsInput } from './search'
 import { VisitStatusSelect } from './visit-status-select'
 
