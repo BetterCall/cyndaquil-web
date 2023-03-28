@@ -1,5 +1,6 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import {} from "../../../components/cards";
 import { Header } from "../../../components/header";
 
@@ -13,13 +14,14 @@ export const CreateEmplacement: React.FC = () => {
 
   const { form, submit, loading } = useCreateEmplacement({
     defaultValues: parseSearchParams(params),
-    onCompleted: () => alert("ok"),
+    onCompleted: () => toast.success("ok"),
+    onError: (message) => toast.error(message),
   });
 
   return (
     <>
       <Header
-        title="Nouvel Emplacement"
+        title="Emplacement"
         subtitle="Un sous titre un peu long"
         buttons={[
           {

@@ -23,8 +23,8 @@ export const Supplier: React.FC = () => {
   return (
     <>
       <Header
-        title={data?.supplier?.result?.name ?? ""}
-        subtitle="Un sous titre un peu long"
+        title={"Fournisseur"}
+        subtitle={data?.supplier?.result?.name ?? ""}
         buttons={[
           {
             actionText: "Modifier",

@@ -13,17 +13,30 @@ query ContactQuery( $id : Int! ) {
             lastname
             phone
             email
+            additionalInformations 
 
             customerId
             customer {
                 id
-                name 
+                name
+                streetNumber
+                street
+                city
+                postal 
+                lat
+                lng
             }
             
             siteId
             site {
                 id
                 name
+                streetNumber
+                street
+                city
+                postal 
+                lat
+                lng
             }
         }
        
@@ -57,16 +70,20 @@ export const CONTACTS = gql`
                 email
                 birthday
 
+
+                categoryId
                 category {
                     id
                     name
                 }
 
+                siteId
                 site {
                     id 
                     name 
                 }
 
+                customerId
                 customer {
                     id 
                     name

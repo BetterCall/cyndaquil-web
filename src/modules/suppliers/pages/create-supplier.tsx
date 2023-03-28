@@ -17,7 +17,7 @@ export const CreateSupplier: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouveau Fournisseur"
+        title="Fournisseur"
         subtitle="Ajouter un nouveau fournisseur"
         buttons={[
           {

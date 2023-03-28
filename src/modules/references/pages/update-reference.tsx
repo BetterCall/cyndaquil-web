@@ -44,7 +44,7 @@ export const UpdateReference: React.FC = () => {
   return (
     <>
       <Header
-        title="Modifier la Référence"
+        title="Référence"
         subtitle="Modifier les informations de cette référance produit"
         buttons={[
           {

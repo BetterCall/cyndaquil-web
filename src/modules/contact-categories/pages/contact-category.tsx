@@ -27,8 +27,8 @@ export const ContactCategory: React.FC = () => {
   return (
     <>
       <Header
-        title={data?.contactCategory?.result?.name ?? ""}
-        subtitle={"Liste des contacts du parc"}
+        subtitle={data?.contactCategory?.result?.name ?? ""}
+        title={"Types de contact"}
         buttons={[]}
       />
 

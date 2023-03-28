@@ -12,3 +12,5 @@ export const useLazyContacts = () => {
         ContactsQueryVariables
     >(CONTACTS);
 }
+
+

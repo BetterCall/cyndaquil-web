@@ -5,6 +5,7 @@ import { cleanObject } from "../../../helpers/clean-object";
 import { CustomerFiltersInput } from "../../../__generated__/globalTypes";
 import { Button } from "../../../components/button";
 import { CustomerCategoriesInput } from "../../customer-categories/components/customer-categories-input";
+import { toast } from "react-toastify";
 
 export const SearchCustomerInput = (defaultValues) => {
   const navigate = useNavigate();
@@ -24,6 +25,8 @@ export const SearchCustomerInput = (defaultValues) => {
   const [isFormOpened, setIsFormOpened] = useState(
     Object.values(defaultValues).some((v) => v)
   );
+
+  const search = form.watch("search");
 
   return (
     <div className="search card">
@@ -48,6 +51,18 @@ export const SearchCustomerInput = (defaultValues) => {
               </svg>
             </label>
             <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  if (!search || search.length < 3) {
+                    toast.error(
+                      "La recherche doit contenir au minimum 3 lettres"
+                    );
+
+                    return;
+                  }
+                  onSearchSubmit();
+                }
+              }}
               placeholder="Rechercher un client"
               autoComplete="off"
               {...form.register("search", {
@@ -104,7 +119,7 @@ export const SearchCustomerInput = (defaultValues) => {
                 />
               </div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-4">
               <div></div>
               <Button
                 canClick={true}

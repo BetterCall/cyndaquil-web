@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
-import { Todo } from "../todo";
 import { CreateSite, UpdateSite, Site, Sites } from "./pages";
+import { SiteEmplacements } from "./pages/site-emplacements";
 
 export const SitesRouter = [
   <Route
@@ -37,6 +37,15 @@ export const SitesRouter = [
       element={
         <ProtectedRoute roles={["Any"]}>
           <UpdateSite />
+        </ProtectedRoute>
+      }
+    />
+    ,
+    <Route
+      path=":id/emplacements"
+      element={
+        <ProtectedRoute roles={["Any"]}>
+          <SiteEmplacements />
         </ProtectedRoute>
       }
     />

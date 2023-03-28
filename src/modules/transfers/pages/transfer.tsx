@@ -26,7 +26,7 @@ export const Transfer: React.FC = () => {
   return (
     <>
       <Header
-        title={`${data?.transfer?.result?.id}`}
+        title={`Remboursement`}
         subtitle={`${data?.transfer?.result?.customer?.name}`}
         buttons={[
           {
@@ -71,7 +71,7 @@ export const Transfer: React.FC = () => {
         </section>
 
         <section className="section">
-          <div className="left">
+          <div className="element">
             <div className="card mb-2">
               <CardHeader title="Informations Générales" />
 
@@ -84,7 +84,7 @@ export const Transfer: React.FC = () => {
               />
             </div>
           </div>
-          <div className="right"></div>
+          <div className="element"></div>
         </section>
       </div>
     </>

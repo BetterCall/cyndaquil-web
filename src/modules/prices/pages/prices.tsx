@@ -28,8 +28,8 @@ export const Prices: React.FC = () => {
   return (
     <>
       <Header
-        title="Liste des Tarifications"
-        subtitle="Liste des avantages par categorie, service et métier"
+        title="Règles de Tarifications"
+        subtitle="Liste des règles Tarifications"
         buttons={[
           {
             actionText: "Nouveau Tarif",

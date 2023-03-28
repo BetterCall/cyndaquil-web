@@ -46,7 +46,9 @@ export const VISITS = gql`
 
     query VisitsQuery( $limit : Int , $offset : Int , $where : VisitFiltersInput! ) {
         visits( limit : $limit , offset : $offset, where : $where  ) {
-            hasMore , 
+            hasMore ,
+            ok, 
+            error, 
             results {
                 ...VisitPart
 

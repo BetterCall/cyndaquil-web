@@ -41,8 +41,8 @@ export const UpdateBenefit = () => {
   return (
     <>
       <Header
-        title="Modifier Offre"
-        subtitle="Creer une nouvelle Offre"
+        title="Service"
+        subtitle="Modifier un service"
         buttons={[
           {
             actionText: "Annuler",

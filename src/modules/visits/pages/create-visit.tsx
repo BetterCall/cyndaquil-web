@@ -17,13 +17,16 @@ export const CreateVisit: React.FC = () => {
     onCompleted: () => {
       toast.success("Le Rendez-vous a été enregistré avec succès");
     },
+    onError: (message) => {
+      toast.error(message);
+    },
   });
 
   return (
     <>
       <Header
-        title={"Nouveau Rendez-vous"}
-        subtitle="Rensisgner les informations du rendez-vous"
+        title={"Rendez-vous"}
+        subtitle="Saisissez les informations du rendez-vous"
         buttons={[
           {
             actionText: "Annuler",

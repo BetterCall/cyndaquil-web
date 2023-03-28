@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { Loading } from "../../../components";
 import { CardHeader } from "../../../components/cards";
 
 import { Header } from "../../../components/header";
@@ -24,12 +25,15 @@ export const Emplacement: React.FC = () => {
   }, []);
 
   const { data, loading, refetch } = useEmplacement(+id!);
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
       <Header
-        title={data?.emplacement?.result?.id + "" || "Chargement..."}
-        subtitle="Un sous titre un peu long"
+        title={"Emplacement"}
+        subtitle={data?.emplacement?.result?.id + "" || "Chargement..."}
         buttons={[
           {
             actionText: "Modifier",
@@ -43,7 +47,7 @@ export const Emplacement: React.FC = () => {
 
       <div className="main-container">
         <section className="section">
-          <div className="left">
+          <div className="element">
             <div className="card">
               <CardHeader
                 title="Emplacement"
@@ -67,7 +71,7 @@ export const Emplacement: React.FC = () => {
               Category : {data?.emplacement?.result?.category?.name}
             </div>
           </div>
-          <div className="right">
+          <div className="element">
             <div className="card">
               <CardHeader title="Equipement" subtitle="Equipement sur place" />
 
@@ -87,7 +91,7 @@ export const Emplacement: React.FC = () => {
           </div>
         </section>
         <section className="section">
-          <div className="left">
+          <div className="element">
             <div className="card">
               <CardHeader
                 title="Bons d'intervention"
@@ -96,7 +100,7 @@ export const Emplacement: React.FC = () => {
               <WorkOrderRowsPreview where={{ emplacementId: +id! }} />
             </div>
           </div>
-          <div className="right">
+          <div className="element">
             <div className="card">
               <CardHeader
                 title="Bon d'intervention"

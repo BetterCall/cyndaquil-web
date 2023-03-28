@@ -59,7 +59,7 @@ export const Bug = () => {
       ) : null}
       <div className="w-full px-3">
         <div className="section">
-          <div className="left">
+          <div className="element">
             <div className="card">
               <CardHeader title="Information" />
               <div className="w-full">
@@ -112,7 +112,7 @@ export const Bug = () => {
             </div>
           </div>
 
-          <div className="right">
+          <div className="element">
             <div className="card">
               <CardHeader title="Rapport" />
               <p>

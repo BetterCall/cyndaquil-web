@@ -23,8 +23,8 @@ export const CreateContactCategory: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouvelle Catégorie"
-        subtitle="Creer une nouvelle catégorie de contact"
+        title="Type de contact"
+        subtitle="Creer un Nouveau Type de Contact"
         buttons={[
           {
             actionText: "Annuler",

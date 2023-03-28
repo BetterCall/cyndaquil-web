@@ -17,8 +17,8 @@ export const Taxes: React.FC = () => {
   return (
     <>
       <Header
-        title={"Liste des Taxes"}
-        subtitle={""}
+        title={"Taxes"}
+        subtitle={"Liste des Taxes"}
         buttons={[
           {
             actionText: "Nouvelle Taxe",

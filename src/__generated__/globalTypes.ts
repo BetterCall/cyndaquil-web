@@ -40,6 +40,7 @@ export enum Database {
   Floors = "Floors",
   Invoices = "Invoices",
   Payments = "Payments",
+  Permissions = "Permissions",
   PriceRules = "PriceRules",
   References = "References",
   Reports = "Reports",
@@ -240,6 +241,7 @@ export interface CreateCustomerInput {
   email?: string | null;
   phone: string;
   categoryId: number;
+  commercialId?: number | null;
 }
 
 export interface CreateDemandInput {
@@ -253,7 +255,6 @@ export interface CreateDemandInput {
 }
 
 export interface CreateEmplacementInput {
-  informations: string;
   building: string;
   entrance?: string | null;
   floor: number;
@@ -261,6 +262,7 @@ export interface CreateEmplacementInput {
   siteId: number;
   code?: number | null;
   equipmentId?: number | null;
+  informations?: string | null;
 }
 
 export interface CreateEquipmentCategoryInput {
@@ -399,6 +401,12 @@ export interface DemandsFiltersInput {
   contactId?: number | null;
   targetUserId?: number | null;
   type?: DemandType | null;
+}
+
+export interface DuplicateBuildingEmplacementsInput {
+  siteId: number;
+  building: string;
+  entrance?: string | null;
 }
 
 export interface EmplacementsFiltersInput {
@@ -555,6 +563,7 @@ export interface UpdateCustomerInput {
   email?: string | null;
   phone?: string | null;
   categoryId?: number | null;
+  commercialId?: number | null;
 }
 
 export interface UpdateDemandInput {
@@ -568,7 +577,6 @@ export interface UpdateDemandInput {
 }
 
 export interface UpdateEmplacementInput {
-  informations?: string | null;
   building?: string | null;
   entrance?: string | null;
   floor?: number | null;
@@ -576,6 +584,7 @@ export interface UpdateEmplacementInput {
   siteId?: number | null;
   code?: number | null;
   equipmentId?: number | null;
+  informations?: string | null;
   contractId?: number | null;
 }
 
@@ -598,6 +607,10 @@ export interface UpdatePaymentInput {
   amount?: number | null;
   type?: PaymentType | null;
   invoiceId?: number | null;
+}
+
+export interface UpdatePermissionInput {
+  label?: string | null;
 }
 
 export interface UpdatePriceRuleInput {
@@ -716,6 +729,7 @@ export interface UpdateWorkOrderRowInput {
 export interface UsersFiltersInput {
   search?: string | null;
   role?: UserRole | null;
+  roles?: UserRole[] | null;
 }
 
 export interface VisitFiltersInput {

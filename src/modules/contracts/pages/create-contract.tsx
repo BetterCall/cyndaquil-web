@@ -266,8 +266,8 @@ export const CreateContract = () => {
   return (
     <>
       <Header
-        title="Nouveau Contrat"
-        subtitle="Un sous titre un peu long"
+        title="Contrat"
+        subtitle="Nouvelle Proposition"
         buttons={[
           {
             actionText: "Annuler",
@@ -312,7 +312,7 @@ export const CreateContract = () => {
           </div>
         </div>
         <section className="section ">
-          <div className="left">{renderRows()}</div>
+          <div className="element">{renderRows()}</div>
           <div className="right sticky top-0 z-50 ">
             <div className="card mb-2">
               <CardHeader title="Emplacements" />

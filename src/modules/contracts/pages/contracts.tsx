@@ -82,8 +82,8 @@ export const Contracts: React.FC = () => {
   return (
     <>
       <Header
-        title="Liste des Contrats"
-        subtitle="Un sous titre un peu long"
+        title="Contrats"
+        subtitle="Liste des contrats"
         buttons={[
           {
             actionText: "Nouveau Contrat",

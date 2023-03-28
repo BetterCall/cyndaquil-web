@@ -23,18 +23,18 @@ export const EmplacementForm: React.FC<IEmplacementForm> = ({
   };
   return (
     <div className="w-full">
-      <div className="w-full p-3">
+      <div className="w-full mt-3">
         <SiteInput form={form} disabled={disabledFields.includes("siteId")} />
       </div>
 
-      <div className="w-full p-3">
+      <div className="w-full mt-3">
         <EquipmentCategoriesInput
           form={form}
           disabled={disabledFields.includes("categoryId")}
         />
       </div>
 
-      <div className="w-full p-3">
+      <div className="w-full mt-3">
         <p className="label">Batiment</p>
         <input
           className="w-full input"
@@ -44,7 +44,7 @@ export const EmplacementForm: React.FC<IEmplacementForm> = ({
         />
       </div>
 
-      <div className="w-full p-3">
+      <div className="w-full mt-3">
         <p className="label">Entrée</p>
         <input
           className="w-full input"
@@ -53,7 +53,7 @@ export const EmplacementForm: React.FC<IEmplacementForm> = ({
           placeholder="Entrée"
         />
       </div>
-      <div className="w-full p-3">
+      <div className="w-full mt-3">
         <p className="label">Etage</p>
         <input
           className="w-full input"
@@ -114,7 +114,7 @@ export const EmplacementForm: React.FC<IEmplacementForm> = ({
         </div>
       </div>
 
-      <div className="w-full p-3">
+      <div className="w-full mt-3">
         <p className="label">Code</p>
         <p className="text-sm font-medium  text-gray-500 -mt-3 ">
           Code présent sur l'étiquette, si le site est en contrat
@@ -127,7 +127,7 @@ export const EmplacementForm: React.FC<IEmplacementForm> = ({
         />
       </div>
 
-      <div className="w-full p-3">
+      <div className="w-full mt-3">
         <p className="label">Informations Complémentaires</p>
         <textarea
           className="w-full input"
@@ -137,7 +137,7 @@ export const EmplacementForm: React.FC<IEmplacementForm> = ({
         />
       </div>
 
-      <div className="w-full p-3">
+      <div className="w-full mt-3">
         <Button
           actionText="Valider"
           canClick={form.formState.isValid}

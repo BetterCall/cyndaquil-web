@@ -83,8 +83,8 @@ export const CreateWorkOrder: React.FC = () => {
   return (
     <>
       <Header
-        title={"Nouveau Bon d'intervention"}
-        subtitle="Creer un nouveau bi"
+        title={"Bon d'intervention"}
+        subtitle="Creer un nouveau bon d'intervention"
         buttons={[
           {
             actionText: "Annuler",

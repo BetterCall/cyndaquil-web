@@ -27,8 +27,8 @@ export const CustomerCategory: React.FC = () => {
   return (
     <>
       <Header
-        title={data?.customerCategory?.result?.name ?? ""}
-        subtitle=""
+        title={"Catégorie de client"}
+        subtitle={data?.customerCategory?.result?.name ?? ""}
         buttons={[
           {
             actionText: "Modifier",
@@ -42,7 +42,7 @@ export const CustomerCategory: React.FC = () => {
 
       <div className="main-container">
         <section className="section">
-          <div className="left">
+          <div className="element">
             <div className="card">
               <CardHeader title="Tarifs" />
               <PricesPreview customerCategoryId={+id!} />
@@ -61,7 +61,7 @@ export const CustomerCategory: React.FC = () => {
             </div>
           </div>
 
-          <div className="right">
+          <div className="element">
             <div className="card">
               <CardHeader title="Client" />
               <CustomersPreview where={{ categoryId: +id! }} />

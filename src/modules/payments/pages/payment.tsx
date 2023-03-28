@@ -26,8 +26,8 @@ export const Payment: React.FC = () => {
   return (
     <>
       <Header
+        title={`Paiement`}
         subtitle={`${data?.payment?.result?.invoice?.site?.name}`}
-        title={``}
         buttons={[
           {
             actionText: "Modifier",
@@ -41,21 +41,21 @@ export const Payment: React.FC = () => {
 
       <div className="main-container">
         <section className="section ">
-          <div className=" left ">
+          <div className=" element">
             <div className="card">
               <CardHeader title={data?.payment?.result?.customer?.name ?? ""} />
             </div>
           </div>
 
-          <div className="right">
+          <div className="element">
             <div className="card"></div>
           </div>
         </section>
         <section className="section">
-          <div className=" left ">
+          <div className=" element">
             <div className="card"></div>
           </div>
-          <div className="right">
+          <div className="element">
             <div className="card"></div>
           </div>
         </section>

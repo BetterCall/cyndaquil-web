@@ -100,7 +100,7 @@ export const WorkOrderProcessingRow: React.FC<IProps> = ({
       }`}
     >
       <section className="section">
-        <div className="left">
+        <div className="element">
           <div className="w-full mt-3">
             <p className="label">N° Emplacement</p>
             <input
@@ -158,17 +158,11 @@ export const WorkOrderProcessingRow: React.FC<IProps> = ({
             </div>
           </div>
         </div>
-        <div className="right">
+        <div className="element">
           <div className="flex ">
             <div className="w-1/2 mr-1 ">
               <div className="w-full mt-3">
-                <p className="label">N° Equipement</p>
-                <input
-                  className="input w-full"
-                  type="text"
-                  value={informations.equipmentCode}
-                  disabled
-                />
+                <EquipmentInput form={form} />
               </div>
             </div>
             <div className="w-1/2 ml-1">

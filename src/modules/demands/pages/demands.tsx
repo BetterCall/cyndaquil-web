@@ -84,8 +84,8 @@ export const Demands = () => {
   return (
     <>
       <Header
-        title="Liste des Demandes"
-        subtitle="Un sous titre un peu long"
+        title="Demandes"
+        subtitle="Liste des demandes"
         buttons={[
           {
             actionText: "Nouvelle Demande",

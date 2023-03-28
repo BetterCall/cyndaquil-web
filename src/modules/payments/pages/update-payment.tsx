@@ -47,7 +47,7 @@ export const UpdatePayment: React.FC = () => {
   return (
     <>
       <Header
-        title="Mis à jour Paiement"
+        title="Paiement"
         subtitle="Mise à jour d'un paiement"
         buttons={[
           {

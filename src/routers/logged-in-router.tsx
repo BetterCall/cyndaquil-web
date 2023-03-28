@@ -31,16 +31,27 @@ import { PaymentsRouter } from "../modules/payments/payments.router";
 import { TransfersRouter } from "../modules/transfers/transfers.router";
 import { ChangelogsRouter } from "../modules/changelogs/changelogs.router";
 import { ControlsRouter } from "../modules/controls/controls.router";
+import { Test } from "../modules/maps/test";
+import { useLoadScript } from "@react-google-maps/api";
+import { Loading } from "../components";
+import { PermissionsRouter } from "../modules/permissions/permissions.router";
 
 export const LoggedInRouter = () => {
   const { data, loading, error } = useMe();
+
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyBlZonzuifrfkR0g_e6PsuMxcTZ4IIigXQ",
+    libraries: ["places"],
+  });
+
   if (!data || loading || error) {
-    return (
-      <div className="h-screen flex justify-center items-center">
-        <span className="font-medium text-xl tracking-wide">Loading...</span>
-      </div>
-    );
+    return <Loading />;
   }
+
+  if (!isLoaded) {
+    return <Loading />;
+  }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -48,7 +59,6 @@ export const LoggedInRouter = () => {
           <Route element={<ProtectedRoute roles={["Any"]} />}>
             <Route path="/" element={<Dashboard />} />
           </Route>
-
           {BenefitsRouter}
           {BrandsRouter}
           {BugsRouter}
@@ -74,6 +84,16 @@ export const LoggedInRouter = () => {
           {PaymentsRouter}
           {TransfersRouter}
           {ChangelogsRouter}
+          {PermissionsRouter}
+          <Route
+            path="/test"
+            element={
+              <ProtectedRoute roles={["Admin"]}>
+                <Test />
+              </ProtectedRoute>
+            }
+          />
+          ,
         </Route>
 
         <Route path="*" element={<NotFound />} />

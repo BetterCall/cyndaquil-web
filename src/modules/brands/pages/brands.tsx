@@ -72,8 +72,8 @@ export const Brands = () => {
   return (
     <>
       <Header
-        title={"Liste des Marques"}
-        subtitle={""}
+        title={"Marques"}
+        subtitle={"Liste des marques"}
         buttons={[
           {
             actionText: "Nouvelle Marque",

@@ -17,11 +17,11 @@ export const Users: React.FC = () => {
   return (
     <>
       <Header
-        title="Liste des Utilisateurs"
-        subtitle="Un sous titre un peu long"
+        title="Utilisateurs"
+        subtitle="Liste des utilisateurs"
         buttons={[
           {
-            actionText: "Nouveau Utilisateur",
+            actionText: "Nouvel Utilisateur",
             bgColor: "indigo",
             textColor: "white",
             link: "/user/create",

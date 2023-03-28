@@ -43,7 +43,7 @@ export const VisitsPreview: React.FC<VisitProps> = ({
   }
 
   if (data?.visits?.results?.length === 0) {
-    return <EmptyList text="Aucun BI" />;
+    return <EmptyList text="Aucun Rendez-Vous" />;
   }
 
   return (

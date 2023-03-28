@@ -83,8 +83,8 @@ export const Transfers: React.FC = () => {
   return (
     <>
       <Header
-        title={" Liste des transferts"}
-        subtitle="Gestion des virements et remboursements"
+        title={"Remboursements"}
+        subtitle="Liste de Remboursements"
         buttons={[
           {
             actionText: "Nouveau remboursement",

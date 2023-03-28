@@ -13,7 +13,7 @@ interface IBugForm {
 export const BugForm: React.FC<IBugForm> = ({ loading, submit, form }) => {
   return (
     <div className="w-full">
-      <div className="w-full p-3">
+      <div className="w-full mb-3">
         <label className="label">
           <input {...form.register("critical")} type="checkbox" />
           <span className="ml-2">Bug Critique</span>
@@ -26,7 +26,7 @@ export const BugForm: React.FC<IBugForm> = ({ loading, submit, form }) => {
         </div>
       </div>
 
-      <div className="w-full p-3">
+      <div className="w-full mb-3">
         <p className="label">url</p>
         <input
           className="w-full input"
@@ -45,7 +45,7 @@ export const BugForm: React.FC<IBugForm> = ({ loading, submit, form }) => {
         />
       </div>
 
-      <div className="w-full p-3">
+      <div className="w-full mb-3">
         <p className="label">object</p>
         <input
           className="w-full input"
@@ -62,7 +62,7 @@ export const BugForm: React.FC<IBugForm> = ({ loading, submit, form }) => {
         />
       </div>
 
-      <div className="w-full p-3">
+      <div className="w-full mb-3">
         <p className="label">description</p>
         <textarea
           className="w-full input"

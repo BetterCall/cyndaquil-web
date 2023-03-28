@@ -7,6 +7,13 @@
 // GraphQL query operation: SiteQuery
 // ====================================================
 
+export interface SiteQuery_site_result_customer_commercial {
+  __typename: "User";
+  id: number;
+  firstname: string;
+  lastname: string;
+}
+
 export interface SiteQuery_site_result_customer_category {
   __typename: "CustomerCategory";
   id: number;
@@ -17,6 +24,11 @@ export interface SiteQuery_site_result_customer {
   __typename: "Customer";
   id: number;
   name: string;
+  email: string | null;
+  phone: string;
+  commercialId: number | null;
+  commercial: SiteQuery_site_result_customer_commercial | null;
+  sitesCount: number;
   category: SiteQuery_site_result_customer_category | null;
 }
 
@@ -27,6 +39,7 @@ export interface SiteQuery_site_result_manager {
   lastname: string;
   email: string | null;
   phone: string | null;
+  sitesCount: number;
 }
 
 export interface SiteQuery_site_result_contacts {

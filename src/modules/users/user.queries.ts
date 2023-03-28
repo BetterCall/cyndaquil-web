@@ -84,6 +84,7 @@ query UserQuery($ id : Int!) {
             firstname
             lastname
             email
+            phone
             role
         }
     }

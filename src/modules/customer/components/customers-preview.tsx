@@ -8,15 +8,17 @@ import { CustomerFiltersInput } from "../../../__generated__/globalTypes";
 interface ICustomersPreviewProps {
   where: CustomerFiltersInput;
   message?: string;
+  limit?: number;
 }
 
 export const CustomersPreview: React.FC<ICustomersPreviewProps> = ({
   where,
   message = "Aucun utilisateur",
+  limit = 5,
 }) => {
   const navigate = useNavigate();
   const { data, loading, error } = useCustomers({
-    limit: 5,
+    limit,
     offset: 0,
     where,
   });

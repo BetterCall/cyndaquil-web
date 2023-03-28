@@ -75,7 +75,12 @@ export const EMPLACEMENTS = gql`
                 building
                 entrance
                 floor
+
+                code
+
+                informations
                 
+                siteId
                 site {
                     id
                     name
@@ -95,6 +100,16 @@ export const UPDATE_EMPLACEMENT = gql`
 
     mutation UpdateEmplacementMutation( $id : Int! , $input : UpdateEmplacementInput! ) {
         updateEmplacement( id : $id ,  input : $input ) {
+            ok 
+            error
+        }
+    }
+
+`
+
+export const DUPLICATE_BUILDING_EMPLACEMENTS = gql`
+    mutation DuplicateBuildingEmplacementsMutation( $input : DuplicateBuildingEmplacementsInput! ) {
+        duplicateBuildingEmplacements( input : $input ) {
             ok 
             error
         }

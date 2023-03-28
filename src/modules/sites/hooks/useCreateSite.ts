@@ -9,9 +9,10 @@ import { parseParams } from "../../../helpers/clean-object";
 interface IProps {
     defaultValues: CreateSiteInput
     onCompleted: (id: number) => any
+    onError?: (msg: string) => any
 }
 
-export const useCreateSite = ({ defaultValues, onCompleted }: IProps) => {
+export const useCreateSite = ({ defaultValues, onCompleted, onError }: IProps) => {
 
     const form = useForm<CreateSiteInput>({
         mode: "all",
@@ -24,6 +25,7 @@ export const useCreateSite = ({ defaultValues, onCompleted }: IProps) => {
         try {
 
             const input = form.getValues()
+            console.log('input', parseParams(input))
             const { data } = await mutate({
                 variables: {
                     input: parseParams(input)
@@ -38,6 +40,7 @@ export const useCreateSite = ({ defaultValues, onCompleted }: IProps) => {
 
         } catch (error) {
             console.log(error)
+            onError?.(error.message)
         }
     }
     return {

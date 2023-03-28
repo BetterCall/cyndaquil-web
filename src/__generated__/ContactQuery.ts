@@ -11,12 +11,24 @@ export interface ContactQuery_contact_result_customer {
   __typename: "Customer";
   id: number;
   name: string;
+  streetNumber: string;
+  street: string;
+  city: string;
+  postal: string;
+  lat: number;
+  lng: number;
 }
 
 export interface ContactQuery_contact_result_site {
   __typename: "Site";
   id: number;
   name: string;
+  streetNumber: string;
+  street: string;
+  city: string;
+  postal: string;
+  lat: number;
+  lng: number;
 }
 
 export interface ContactQuery_contact_result {
@@ -26,6 +38,7 @@ export interface ContactQuery_contact_result {
   lastname: string;
   phone: string | null;
   email: string | null;
+  additionalInformations: string | null;
   customerId: number | null;
   customer: ContactQuery_contact_result_customer | null;
   siteId: number | null;

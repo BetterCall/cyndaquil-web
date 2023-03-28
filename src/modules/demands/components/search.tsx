@@ -139,7 +139,7 @@ export const DemandSearchInput: React.FC = (defaultValues) => {
                 <SiteInput form={form} canSelectAddress={false} />
               </div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-4">
               <div></div>
               <Button
                 canClick={true}

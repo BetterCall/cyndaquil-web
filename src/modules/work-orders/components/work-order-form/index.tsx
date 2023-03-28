@@ -92,13 +92,15 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
     submit();
   };
 
+  console.log("date", date);
+
   return (
     <div className="w-full">
       <div className="section">
-        <div className="left">
+        <div className="element">
           <div className="card mb-2">
             <CardHeader title="Informations Générales" />
-            <div className="w-full  mb-3">
+            <div className="w-full mb-3">
               <p className="mb-1.5 font-medium text-base text-coolGray-800">
                 Objet
               </p>
@@ -109,7 +111,7 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
               />
             </div>
 
-            <div className="w-full ">
+            <div className="w-full mb-3 ">
               <p className="mb-1.5 font-medium text-base text-coolGray-800">
                 Informations
               </p>
@@ -123,29 +125,58 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
                 className="input w-full "
               />
             </div>
+            <div className="w-full mb-3">
+              <WorkOrderStatusSelect form={form} />
+            </div>
 
-            <WorkOrderStatusSelect form={form} />
-            <WorkOrderTypeSelect form={form} />
+            <div className="w-full mb-3">
+              <WorkOrderTypeSelect form={form} />
+            </div>
 
-            <SiteInput
-              form={form}
-              canSelectAddress={true}
-              setCustomer={!disabledFields.includes("siteId")}
-              disabled={disabledFields.includes("siteId")}
-            />
-            <CustomerInput form={form} disabled />
+            <div className="w-full mb-3">
+              <SiteInput
+                form={form}
+                canSelectAddress={true}
+                setCustomer={!disabledFields.includes("siteId")}
+                disabled={disabledFields.includes("siteId")}
+              />
+            </div>
+            <div className="w-full mb-3">
+              <CustomerInput form={form} disabled />
+            </div>
           </div>
-        </div>
-        <div className="right">
+
           <div className="card mb-2">
             <CardHeader title="Adresse" />
             <AddressInputs form={form} />
           </div>
         </div>
-      </div>
-      <section className="section">
-        <div className="left">
-          <div className="card mb-2">
+
+        <div className="element">
+          <div className="card mb-4">
+            <CardHeader title="Emplacements" />
+            {workOrderId ? (
+              <WorkOrderRowsSelect
+                workOrderId={workOrderId}
+                emplacementsSelected={rows}
+                toggleRow={toggleRow}
+              />
+            ) : !siteId ? (
+              <EmptyList text="Selectionnez un site" />
+            ) : (
+              <EmplacementsSelect
+                value={rows}
+                setRowBenefit={setRowBenefit}
+                siteId={siteId}
+                emplacementsSelected={rows}
+                toggleRow={toggleRow}
+              />
+            )}
+          </div>
+        </div>
+
+        <div className="element">
+          <div className="card mb-4">
             <FormHeader
               title="Date"
               subtitle="Update your billing details and address."
@@ -160,13 +191,13 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
               render={({ field: { onChange, value } }) => {
                 return (
                   <DatePicker
-                    value={moment(value ?? "2023-01-01", "YYYY-MM-DD")}
+                    value={value ? moment(value, "YYYY-MM-DD") : null}
                     onChange={(e) => {
                       console.log("e ", e);
                       if (e) {
                         onChange(moment(e).format("YYYY-MM-DD"));
                       } else {
-                        onChange(moment(undefined).format("YYYY-MM-DD"));
+                        onChange(null);
                       }
                     }}
                     format="DD/MM/YYYY"
@@ -189,12 +220,12 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
                   <TimePicker
                     onChange={(e) => {
                       if (e) {
-                        form.setValue("start", moment(e).format("LT"));
+                        onChange(moment(e).format("LT"));
                       } else {
-                        form.setValue("start", moment(undefined).format("LT"));
+                        onChange(null);
                       }
                     }}
-                    value={moment(value ?? "08:00:00", "LT")}
+                    value={value ? moment(value, "LT") : null}
                     format={"HH:mm"}
                     className="input w-full p-3 mb-3"
                   />
@@ -215,12 +246,12 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
                   <TimePicker
                     onChange={(e) => {
                       if (e) {
-                        form.setValue("end", moment(e).format("LT"));
+                        onChange(moment(e).format("LT"));
                       } else {
-                        form.setValue("end", moment(undefined).format("LT"));
+                        onChange(null);
                       }
                     }}
-                    value={moment(value ?? "08:00:00", "LT")}
+                    value={value ? moment(value, "LT") : null}
                     format={"HH:mm"}
                     className="input w-full p-3 mb-3"
                   />
@@ -228,8 +259,10 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
               }}
             />
           </div>
+        </div>
 
-          <div className="card mb-2">
+        <div className="element">
+          <div className="card mb-4">
             <CardHeader title="Tech." />
             {usersData?.users?.results?.map((user) => {
               const isChecked = userId === user.id;
@@ -246,58 +279,43 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
                       }
                     }}
                   />
-                  <span className="ml-2 font-medium">{user.firstname}</span>
+                  <span className="ml-2 font-medium text-lg ">
+                    {user.firstname}
+                  </span>
                 </div>
               );
             })}
           </div>
+        </div>
 
-          <div className="card mb-2">
-            {date ? (
-              usersData?.users?.results?.map((user) => (
-                <div className="w-full mb-2" key={`user-user.${user.id}`}>
-                  <label className="label">
-                    {user.firstname} {user.lastname}
-                    {" :"}
-                  </label>
+        {date ? (
+          usersData?.users?.results?.map((user) => (
+            <div className="element" key={`user-user.${user.id}`}>
+              <div className="card">
+                <CardHeader title={`${user.firstname} ${user.lastname}`} />
+                <div className="w-full mb-3">
                   <WorkOrdersPreview userId={user.id} date={date} />
                 </div>
-              ))
-            ) : (
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="w-full px-2">
+            <div className=" card mb-4">
               <EmptyList text="Selectionnez une date" />
-            )}
+            </div>
           </div>
-        </div>
+        )}
+      </div>
 
-        <div className="right">
-          <div className="card mb-2">
-            <CardHeader title="Emplacements" />
-            {workOrderId ? (
-              <WorkOrderRowsSelect
-                workOrderId={workOrderId}
-                emplacementsSelected={rows}
-                toggleRow={toggleRow}
-              />
-            ) : !siteId ? (
-              <EmptyList text="Selectionnez un site" />
-            ) : (
-              <EmplacementsSelect
-                setRowBenefit={setRowBenefit}
-                siteId={siteId}
-                emplacementsSelected={rows}
-                toggleRow={toggleRow}
-              />
-            )}
-          </div>
-        </div>
-      </section>
-
-      <Button
-        canClick={form.formState.isValid}
-        loading={loading}
-        actionText="Valider"
-        onClick={onSubmit}
-      />
+      <div className="w-full ">
+        <Button
+          canClick={true}
+          loading={loading}
+          actionText="Valider"
+          onClick={onSubmit}
+        />
+      </div>
     </div>
   );
 };

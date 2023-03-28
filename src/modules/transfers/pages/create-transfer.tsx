@@ -22,8 +22,8 @@ export const CreateTransfer: React.FC = () => {
   return (
     <>
       <Header
-        title={"Nouveau Rendez-vous"}
-        subtitle="Rensisgner les informations du rendez-vous"
+        title={"Rembousement"}
+        subtitle="Saisissez les informations du remboursement"
         buttons={[
           {
             actionText: "Annuler",

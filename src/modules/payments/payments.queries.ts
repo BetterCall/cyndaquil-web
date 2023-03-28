@@ -20,6 +20,8 @@ query PaymentsQuery( $limit : Int  , $offset : Int  , $where : PaymentFiltersInp
         results {
             id
             type
+
+            amount
             
             customerId 
             customer {

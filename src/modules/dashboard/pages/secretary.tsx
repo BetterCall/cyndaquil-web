@@ -63,7 +63,7 @@ export const Secretary = () => {
     <>
       <div className="main-container">
         <section className="section">
-          <div className="left">
+          <div className="element">
             <div className="card">
               <CardHeader title="En Attente de Facturation" />
               <WorkOrdersPreview status={WorkOrderStatus.Done} />
@@ -80,7 +80,7 @@ export const Secretary = () => {
               </div>
             </div>
           </div>
-          <div className="right"></div>
+          <div className="element"></div>
         </section>
       </div>
     </>

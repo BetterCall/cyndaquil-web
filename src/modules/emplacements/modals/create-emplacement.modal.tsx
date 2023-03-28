@@ -3,6 +3,8 @@ import { Modal } from "antd";
 import { Button } from "../../../components/button";
 import { useCreateEmplacement } from "../hooks";
 import { EmplacementForm } from "../components";
+import { CardHeader } from "../../../components/cards";
+import { toast } from "react-toastify";
 
 interface IChangeManagerProps {
   defaultValues: any;
@@ -16,7 +18,10 @@ export const CreateEmplacement: React.FC<IChangeManagerProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { form, submit, loading } = useCreateEmplacement({
     defaultValues,
-    onCompleted: () => alert("ok"),
+    onCompleted: (id) => {
+      toast.success("L'emplacement a bien été créé");
+    },
+    onError: (message) => toast.error(message),
   });
 
   const handleOk = async () => {
@@ -52,14 +57,8 @@ export const CreateEmplacement: React.FC<IChangeManagerProps> = ({
         <span>Nouvel emplacement</span>
       </div>
 
-      <Modal
-        title="Changer de Gestionnaire "
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        cancelText="annuler"
-        okText="Valider"
-      >
+      <Modal open={isModalOpen} onCancel={handleCancel} footer={null}>
+        <CardHeader title="Nouvel Emplacement" />
         <EmplacementForm
           form={form}
           loading={loading}

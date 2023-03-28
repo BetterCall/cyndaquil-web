@@ -20,3 +20,42 @@
   color : blue ;
   background-color: red;
 }
+
+.map-main-container {
+  display: flex;
+  height: 100vh;
+
+}
+
+.controls {
+}
+
+.controls input {
+  border: none;
+}
+
+.map-container {
+  width: 100%;
+  height: 95vh;
+}
+
+.map {
+  width: 80%;
+  height: 90vh;
+  background: red;
+}
+
+.simple-map-container {
+  width: 100%;
+  min-height: 300px;
+  height : auto ;
+  aspect-ratio:  1 ;
+}
+
+
+input[disabled] {
+  color: blue;
+}
+textarea[disabled] {
+  color: blue;
+}

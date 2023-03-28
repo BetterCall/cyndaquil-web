@@ -26,8 +26,8 @@ export const UpdateInvoice: React.FC = () => {
   return (
     <>
       <Header
-        subtitle={" "}
-        title={` `}
+        title={`Facture`}
+        subtitle={"Mettre a jour la facture"}
         buttons={[
           {
             actionText: "Modifier",

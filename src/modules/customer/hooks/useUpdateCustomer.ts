@@ -8,13 +8,15 @@ import { UpdateCustomerMutation, UpdateCustomerMutationVariables } from "../../.
 interface IProps {
     id: number,
     onCompleted: () => any
+    onError: (msg: string) => any
 }
 
-export const useUpdateCustomer = ({ id, onCompleted }: IProps) => {
+export const useUpdateCustomer = ({ id, onCompleted, onError }: IProps) => {
 
     const form = useForm<UpdateCustomerInput>({
         mode: "all",
     })
+
     const [mutate, { loading }] = useMutation<
         UpdateCustomerMutation,
         UpdateCustomerMutationVariables
@@ -23,8 +25,8 @@ export const useUpdateCustomer = ({ id, onCompleted }: IProps) => {
     const submit = async () => {
         if (loading) return
         try {
-
             const input = form.getValues()
+            console.log('input update', parseParams(input))
             const { data } = await mutate({
                 variables: {
                     id,
@@ -40,6 +42,7 @@ export const useUpdateCustomer = ({ id, onCompleted }: IProps) => {
 
         } catch (error) {
             console.log(error)
+            onError(error.message)
         }
     }
 

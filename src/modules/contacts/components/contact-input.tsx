@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { useDebounce } from "../../../hooks/useDebounce";
-import { useLazyContacts } from "../hooks";
+import { useLazyContacts, useLazyContact } from "../hooks";
 
 interface IContactInput {
   form: UseFormReturn<any, any>;
@@ -9,6 +9,7 @@ interface IContactInput {
   siteId?: number;
   customerId?: number;
   name?: string;
+  label?: string;
 }
 
 export const ContactInput: React.FC<IContactInput> = ({
@@ -17,12 +18,36 @@ export const ContactInput: React.FC<IContactInput> = ({
   siteId,
   customerId,
   name = "contactId",
+  label = "Contact",
 }) => {
   const [isOpened, setIsOpened] = useState(false);
   const [searchFn, { data, loading, called, fetchMore }] = useLazyContacts();
+  const [lazyContact] = useLazyContact();
 
   const [search, setSearch] = useState("");
   const [hasBeenSelected, setSelected] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async (id) => {
+      const { data: contactData } = await lazyContact({
+        variables: { id: +id },
+      });
+      if (contactData?.contact?.result) {
+        setIsOpened(false);
+        setSelected(true);
+        setSearch(
+          `${contactData?.contact?.result?.firstname} ${contactData?.contact?.result?.lastname}`
+        );
+        // setSelectedCustomer(userData?.user?.result);
+        form.setValue(name, id);
+      }
+    };
+
+    const contactId = form.getValues(name);
+    if (contactId) {
+      fetchData(contactId);
+    }
+  }, []);
 
   const debouncedSearchTerm = useDebounce(search, 500);
   useEffect(
@@ -51,7 +76,7 @@ export const ContactInput: React.FC<IContactInput> = ({
 
   return (
     <div className="flex flex-col">
-      <label className="text-sm font-bold">Contact</label>
+      <p className="label">{label} </p>
       <input
         className="input mb-3"
         onChange={(e) => {

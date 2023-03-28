@@ -64,9 +64,19 @@ query CustomerQuery ( $id : Int! ) {
         error 
         result {
             ...CustomerPart
+
+            sitesCount
+            categoryId
             category {
                 id 
                 name
+            }
+
+            commercialId
+            commercial {
+                id
+                firstname
+                lastname
             }
 
             contacts {

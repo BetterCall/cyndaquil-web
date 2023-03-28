@@ -4,9 +4,9 @@ import { UseFormReturn } from "react-hook-form";
 import { AddressInputs } from "../../../components/address-inputs";
 import { Button } from "../../../components/button";
 
-import {} from "../../../components/cards";
-import { FormHeader } from "../../../components/form";
+import { CardHeader } from "../../../components/cards";
 import { CustomerInput } from "../../customer/components";
+import { UserInput } from "../../users/components";
 
 interface ISiteForm {
   loading: boolean;
@@ -16,21 +16,18 @@ interface ISiteForm {
 }
 
 export const SiteForm: React.FC<ISiteForm> = ({
-  disabledFields = [],
   loading,
   submit,
   form,
+  disabledFields = [],
 }) => {
   return (
     <section className="section">
-      <div className="left">
+      <div className="element">
         <div className="card">
-          <FormHeader
-            title="Informations Générales"
-            subtitle="Update your billing details and address."
-          />
+          <CardHeader title="Informations Générales" />
 
-          <div className="w-full p-3">
+          <div className="w-full mb-3">
             <p className="label">Nom de la Copropriété</p>
             <input
               className="w-full input"
@@ -40,7 +37,7 @@ export const SiteForm: React.FC<ISiteForm> = ({
             />
           </div>
 
-          <div className="w-full p-3">
+          <div className="w-full mb-3">
             <p className="label">Nombre de batiments</p>
             <input
               className="w-full input"
@@ -52,7 +49,7 @@ export const SiteForm: React.FC<ISiteForm> = ({
             />
           </div>
 
-          <div className="w-full p-3">
+          <div className="w-full mb-3">
             <p className="label">Nombre d'entrée</p>
             <input
               className="w-full input"
@@ -63,7 +60,7 @@ export const SiteForm: React.FC<ISiteForm> = ({
               placeholder="Nom de la Copropriété"
             />
           </div>
-          <div className="w-full p-3">
+          <div className="w-full mb-3">
             <CustomerInput
               form={form}
               disabled={disabledFields.includes("customerId")}
@@ -72,12 +69,9 @@ export const SiteForm: React.FC<ISiteForm> = ({
         </div>
       </div>
 
-      <div className="right">
+      <div className="element">
         <div className="card">
-          <FormHeader
-            title="Adresse"
-            subtitle="Update your billing details and address."
-          />
+          <CardHeader title="Adresse" />
 
           <div className="w-full">
             <AddressInputs form={form} />
@@ -85,7 +79,7 @@ export const SiteForm: React.FC<ISiteForm> = ({
         </div>
       </div>
 
-      <div className="left">
+      <div className="element">
         <div className="flex justify-between">
           <div />
           <div>

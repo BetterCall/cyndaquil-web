@@ -28,8 +28,8 @@ export const Suppliers: React.FC = () => {
   return (
     <>
       <Header
-        title={"Liste des fournisseurs"}
-        subtitle={""}
+        title={"Fournisseurs"}
+        subtitle={"Liste des fournisseurs"}
         buttons={[
           {
             actionText: "Nouveau fournisseur",

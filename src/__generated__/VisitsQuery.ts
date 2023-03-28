@@ -44,6 +44,8 @@ export interface VisitsQuery_visits_results {
 export interface VisitsQuery_visits {
   __typename: "VisitsOutput";
   hasMore: boolean | null;
+  ok: boolean | null;
+  error: string | null;
   results: VisitsQuery_visits_results[] | null;
 }
 

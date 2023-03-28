@@ -28,6 +28,8 @@ export const useUpdateWorkOrder = ({ id, onCompleted, onError }: IProps) => {
         try {
 
             const input = form.getValues()
+
+            console.log({ input: parseParams(input) })
             const { data } = await mutate({
                 variables: {
                     id,

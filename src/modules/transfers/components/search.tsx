@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, createSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { cleanObject } from "../../../helpers/clean-object";
 import { Button } from "../../../components/button";
@@ -22,6 +23,8 @@ export const SearchTransfersInput = (defaultValues) => {
   const [isFormOpened, setIsFormOpened] = useState(
     Object.values(defaultValues).some((v) => v)
   );
+
+  const search = form.watch("search");
 
   return (
     <div className="search card">
@@ -46,6 +49,18 @@ export const SearchTransfersInput = (defaultValues) => {
               </svg>
             </label>
             <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  if (!search || search.length < 3) {
+                    toast.error(
+                      "La recherche doit contenir au minimum 3 lettres"
+                    );
+
+                    return;
+                  }
+                  onSearchSubmit();
+                }
+              }}
               placeholder="Rechercher un transfere"
               autoComplete="off"
               {...form.register("search", {
@@ -89,7 +104,7 @@ export const SearchTransfersInput = (defaultValues) => {
                 <UserInput form={form} inputName="recordedById" />
               </div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between  mt-4">
               <div></div>
               <Button
                 canClick={true}

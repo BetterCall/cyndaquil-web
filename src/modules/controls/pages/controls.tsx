@@ -69,8 +69,8 @@ export const Controls = () => {
   return (
     <>
       <Header
-        title={"Liste des verifications"}
-        subtitle={""}
+        title={"Vérifications"}
+        subtitle={"Liste des vérifications"}
         buttons={[
           {
             actionText: "Nouvelle Marque",

@@ -75,8 +75,8 @@ export const Bugs = () => {
   return (
     <>
       <Header
-        title={"Liste des Bugs"}
-        subtitle={""}
+        title={"Bugs"}
+        subtitle={"Liste des bugs"}
         buttons={[
           {
             actionText: "Nouveau Bug",

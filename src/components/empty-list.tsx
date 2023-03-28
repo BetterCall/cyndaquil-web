@@ -1,11 +1,18 @@
 import React from "react";
 interface IProps {
   text: string;
+  error?: boolean;
 }
 
-export const EmptyList: React.FC<IProps> = ({ text }) => {
+export const EmptyList: React.FC<IProps> = ({ text, error = false }) => {
   return (
-    <div className="flex justify-center align-middle py-8 bg-slate-100 rounded border-solid border-slate-200 ">
+    <div
+      className={`flex justify-center align-middle py-8  ${
+        error
+          ? " bg-red-100  border-red-200"
+          : " bg-slate-100  border-slate-200"
+      }  rounded border-solid`}
+    >
       <div className="flex flex-row  justify-center  w-1/2 md:w-full">
         <div>
           <svg

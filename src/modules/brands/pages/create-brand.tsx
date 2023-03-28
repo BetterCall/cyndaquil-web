@@ -20,8 +20,8 @@ export const CreateBrand: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouvelle Marque"
-        subtitle="Creer une nouvelle copropriété"
+        title="Marque"
+        subtitle="Creer une nouvelle marque"
         buttons={[
           {
             actionText: "Annuler",

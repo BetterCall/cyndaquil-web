@@ -47,8 +47,8 @@ export const UpdateUser: React.FC = () => {
   return (
     <>
       <Header
-        title={`${data?.user?.result?.firstname} ${data?.user?.result?.lastname}`}
-        subtitle={data?.user?.result?.email}
+        title={`Utilisateur`}
+        subtitle={`${data?.user?.result?.firstname} ${data?.user?.result?.lastname}`}
         buttons={[
           {
             actionText: "Modifier",

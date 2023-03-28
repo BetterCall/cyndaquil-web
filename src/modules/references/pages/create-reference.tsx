@@ -24,7 +24,7 @@ export const CreateReference: React.FC = ({}) => {
   return (
     <>
       <Header
-        title="Nouvelle Référence"
+        title="Référence"
         subtitle="Ajouter une nouvelle référence produit"
         buttons={[
           {

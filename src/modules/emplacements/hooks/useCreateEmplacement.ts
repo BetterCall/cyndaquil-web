@@ -9,11 +9,12 @@ import { parseParams } from "../../../helpers/clean-object";
 
 interface IProps {
     defaultValues: DeepPartial<CreateEmplacementInput>
-    onCompleted: () => any
+    onCompleted: (id: number) => any
+    onError: (message: string) => any
 }
 
 
-export const useCreateEmplacement = ({ defaultValues, onCompleted }: IProps) => {
+export const useCreateEmplacement = ({ defaultValues, onCompleted, onError }: IProps) => {
 
     const form = useForm<CreateEmplacementInput>({
         mode: "all",
@@ -25,20 +26,24 @@ export const useCreateEmplacement = ({ defaultValues, onCompleted }: IProps) => 
         if (loading) return
         try {
             const input = form.getValues()
+
+            console.log(' ionput', parseParams(input))
             const { data } = await mutate({
                 variables: {
                     input: parseParams(input)
                 }
             })
 
-            if (data?.createEmplacement?.ok) {
-                alert('ok')
+            if (data?.createEmplacement?.ok && data?.createEmplacement?.id) {
+                onCompleted(data?.createEmplacement?.id)
+
             } else {
                 throw Error(data?.createEmplacement?.error ?? "Error")
             }
 
         } catch (error) {
             console.log(error)
+            onError(error.message)
         }
     }
 

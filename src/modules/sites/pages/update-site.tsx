@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Loading } from "../../../components";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 
@@ -11,7 +12,7 @@ type IUpdateSite = {
   id: string;
 };
 
-export const UpdateSite = () => {
+export const UpdateSite: React.FC = () => {
   const { id } = useParams<IUpdateSite>();
   const navigate = useNavigate();
 
@@ -21,6 +22,7 @@ export const UpdateSite = () => {
     }
   }, []);
 
+  const [loaded, setLoaded] = useState(false);
   const { data, refetch } = useSite(+id!);
   const { form, submit, loading } = useUpdateSite({
     id: +id!,
@@ -31,13 +33,14 @@ export const UpdateSite = () => {
   });
 
   useEffect(() => {
-    if (data?.site?.ok && data?.site?.result) {
+    if (data?.site?.ok && data?.site?.result && !loaded) {
       const { result } = data?.site;
       form.setValue("name", result.name);
       form.setValue("buildingsCount", result.buildingsCount);
       form.setValue("entrancesCount", result.entrancesCount);
       form.setValue("name", result.name);
       form.setValue("customerId", result.customer?.id);
+      form.setValue("managerId", result.managerId);
       form.setValue("streetNumber", result.streetNumber);
       form.setValue("street", result.street);
 
@@ -46,32 +49,38 @@ export const UpdateSite = () => {
 
       form.setValue("lat", result.lat);
       form.setValue("lng", result.lng);
+
+      setLoaded(true);
     }
   }, [data]);
 
-  if (data?.site.ok && data?.site?.result) {
+  if (!loaded) {
     return (
-      <>
-        <Header
-          title="Modifier le site"
-          subtitle="Un sous titre un peu long"
-          buttons={[
-            {
-              actionText: "annuler",
-              bgColor: "indigo",
-              textColor: "white",
-              link: `/site/${id}`,
-              icon: <SendIcon />,
-            },
-          ]}
-        />
-
-        <div className="main-container">
-          <SiteForm loading={loading} submit={submit} form={form} />
-        </div>
-      </>
+      <div className="main-container">
+        <Loading />
+      </div>
     );
   }
 
-  return <div>loaidn</div>;
+  return (
+    <>
+      <Header
+        title="Immeuble"
+        subtitle="Modifier l'immeuble"
+        buttons={[
+          {
+            actionText: "annuler",
+            bgColor: "indigo",
+            textColor: "white",
+            link: `/site/${id}`,
+            icon: <SendIcon />,
+          },
+        ]}
+      />
+
+      <div className="main-container">
+        <SiteForm loading={loading} submit={submit} form={form} />
+      </div>
+    </>
+  );
 };

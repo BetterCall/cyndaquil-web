@@ -8,9 +8,10 @@ import { CREATE_CUSTOMER } from "../customers.queries";
 interface IProps {
     defaultValues: DeepPartial<CreateCustomerInput>
     onCompleted: (id: number) => any
+    onError: (msg: string) => any
 }
 
-export const useCreateCustomer = ({ defaultValues, onCompleted }: IProps) => {
+export const useCreateCustomer = ({ defaultValues, onCompleted, onError }: IProps) => {
 
     const form = useForm<CreateCustomerInput>({
         mode: "all",
@@ -26,6 +27,7 @@ export const useCreateCustomer = ({ defaultValues, onCompleted }: IProps) => {
         try {
 
             const input = form.getValues()
+            console.log({ input })
             const { data } = await mutate({
                 variables: {
                     input: parseParams(input)
@@ -38,8 +40,8 @@ export const useCreateCustomer = ({ defaultValues, onCompleted }: IProps) => {
                 throw Error(data?.createCustomer?.error ?? "Error")
             }
 
-        } catch (error) {
-            console.log(error)
+        } catch ({ message = "" }) {
+            onError(message)
         }
     }
     return {

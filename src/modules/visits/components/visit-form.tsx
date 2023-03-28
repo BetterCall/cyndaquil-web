@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import moment from "moment";
 import { Controller, UseFormReturn } from "react-hook-form";
 import { DatePicker, TimePicker } from "antd";
@@ -6,14 +6,9 @@ import { DatePicker, TimePicker } from "antd";
 import { AddressInputs } from "../../../components/address-inputs";
 import { Button } from "../../../components/button";
 
-import { SiteInput } from "../../sites/components/site-input";
-import { FormHeader } from "../../../components/form";
 import { CardHeader } from "../../../components/cards";
-import { VisitsPreview, VisitStatusSelect } from ".";
-import { useUsers } from "../../users/hooks";
+import { VisitStatusSelect } from ".";
 import { CustomerInput } from "../../customer/components";
-import { useLazyEmplacements } from "../../emplacements/hooks";
-import { EmptyList } from "../../../components";
 import { ErrorMessage } from "@hookform/error-message";
 
 interface IVisitFormProps {
@@ -38,7 +33,7 @@ export const VisitForm: React.FC<IVisitFormProps> = ({
   return (
     <div className="w-full">
       <div className="section">
-        <div className="left">
+        <div className="element">
           <div className="card mb-2">
             <CardHeader title="Informations Générales" />
             <div className="w-full  mb-3">
@@ -107,6 +102,13 @@ export const VisitForm: React.FC<IVisitFormProps> = ({
                 );
               }}
             />
+            <ErrorMessage
+              errors={form.formState?.errors}
+              name="date"
+              render={({ message }) => (
+                <p className="error-message">{message}</p>
+              )}
+            />
 
             <p className="label">Heure Début</p>
 
@@ -133,7 +135,7 @@ export const VisitForm: React.FC<IVisitFormProps> = ({
             />
           </div>
         </div>
-        <div className="right">
+        <div className="element">
           <div className="card mb-2">
             <CardHeader title="Adresse" />
             <AddressInputs form={form} />

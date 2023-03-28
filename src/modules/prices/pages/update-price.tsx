@@ -46,8 +46,8 @@ export const UpdatePrice: React.FC = () => {
   return (
     <>
       <Header
-        title="Modification Règle de tarification"
-        subtitle="Un sous titre un peu long"
+        title="Règle de tarification"
+        subtitle="Modification Règle de tarification"
         buttons={[
           {
             actionText: "Annuler",

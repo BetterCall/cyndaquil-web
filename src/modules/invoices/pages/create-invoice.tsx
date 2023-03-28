@@ -25,8 +25,8 @@ export const CreateInvoice: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouvelle Facture"
-        subtitle="Un sous titre un peu long"
+        title="Facture"
+        subtitle="Nouvelle Facture"
         buttons={[
           {
             actionText: "Annuler",
@@ -40,7 +40,7 @@ export const CreateInvoice: React.FC = () => {
 
       <div className="main-container ">
         <section className="section">
-          <div className="left">
+          <div className="element">
             <div className="card mb-2">
               <CardHeader title="Rechercher les Bons d'intervention" />
               <div className="w-full p-3">
@@ -64,7 +64,7 @@ export const CreateInvoice: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className="right">
+          <div className="element">
             <div className="card">
               <CardHeader title="Détails" />
               {fake?.invoice?.result?.rows?.map((row) => (

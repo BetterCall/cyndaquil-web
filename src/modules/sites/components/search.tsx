@@ -4,9 +4,13 @@ import { useNavigate, createSearchParams } from "react-router-dom";
 import { cleanObject } from "../../../helpers/clean-object";
 import { SiteFiltersInput } from "../../../__generated__/globalTypes";
 import { Button } from "../../../components/button";
+import { toast } from "react-toastify";
+import { SiteInput } from "./site-input";
+import { CustomerInput } from "../../customer/components";
+import { UserInput } from "../../users/components";
+import { ContactInput } from "../../contacts/components";
 
-export const SearchSiteInput = (defaultValues) => {
-  console.log("searchParams", defaultValues);
+export const SearchSiteInput: React.FC<SiteFiltersInput> = (defaultValues) => {
   const navigate = useNavigate();
   const form = useForm<SiteFiltersInput>({
     defaultValues,
@@ -21,7 +25,11 @@ export const SearchSiteInput = (defaultValues) => {
     });
   };
 
-  const [isFormOpened, setIsFormOpened] = useState(!defaultValues);
+  const [isFormOpened, setIsFormOpened] = useState(
+    Object.values(defaultValues).some((v) => v)
+  );
+
+  const search = form.watch("search");
 
   return (
     <>
@@ -47,7 +55,19 @@ export const SearchSiteInput = (defaultValues) => {
                 </svg>
               </label>
               <input
-                placeholder="Rechercher un client"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    if (!search || search.length < 3) {
+                      toast.error(
+                        "La recherche doit contenir au minimum 3 lettres"
+                      );
+
+                      return;
+                    }
+                    onSearchSubmit();
+                  }
+                }}
+                placeholder="Rechercher un site"
                 autoComplete="off"
                 {...form.register("search", {
                   minLength: 3,
@@ -77,6 +97,18 @@ export const SearchSiteInput = (defaultValues) => {
             <div className="px-4 ">
               <div className="flex flex-wrap -mx-4 -mb-4 md:mb-0">
                 <div className="w-full md:w-1/3 p-3">
+                  <CustomerInput form={form} />
+                </div>
+
+                <div className="w-full md:w-1/3 p-3">
+                  <ContactInput
+                    form={form}
+                    name="managerId"
+                    label="Gestionnaire"
+                  />
+                </div>
+
+                <div className="w-full md:w-1/3 p-3">
                   <p className="label">Complets</p>
                   <div className="relative">
                     <svg
@@ -100,6 +132,7 @@ export const SearchSiteInput = (defaultValues) => {
                     </select>
                   </div>
                 </div>
+
                 <div className="w-full md:w-1/3 p-3">
                   <p className="label">Ville</p>
                   <input
@@ -109,7 +142,6 @@ export const SearchSiteInput = (defaultValues) => {
                     {...form.register("city", {})}
                   />
                 </div>
-
                 <div className="w-full md:w-1/3 p-3">
                   <p className="label">Code Postal</p>
                   <input
@@ -120,7 +152,7 @@ export const SearchSiteInput = (defaultValues) => {
                   />
                 </div>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between  mt-4">
                 <div></div>
                 <Button
                   canClick={true}

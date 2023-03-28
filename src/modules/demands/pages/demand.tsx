@@ -49,8 +49,8 @@ export const Demand: React.FC = () => {
   return (
     <>
       <Header
-        title={data?.demand?.result?.object || ""}
-        subtitle={data?.demand?.result?.openedBy?.firstname}
+        title={"Demande"}
+        subtitle={data?.demand?.result?.object || ""}
         buttons={[
           {
             actionText: "Modifier",
@@ -64,7 +64,7 @@ export const Demand: React.FC = () => {
 
       <div className="main-container">
         <div className="section">
-          <div className="left">
+          <div className="element">
             <div className="card mb-2">
               <CardHeader title="Demande" />
               <p className="mb-2">
@@ -156,7 +156,7 @@ export const Demand: React.FC = () => {
             </div>
           </div>
 
-          <div className="right">
+          <div className="element">
             <div className="card mb-2">
               <CardHeader title="Rapport" />
               {renderRepport()}

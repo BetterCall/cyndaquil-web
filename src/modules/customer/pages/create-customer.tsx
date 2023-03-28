@@ -19,13 +19,16 @@ export const CreateCustomer: React.FC = () => {
         replace: true,
       });
     },
+    onError: (message) => {
+      toast.error(message);
+    },
   });
 
   return (
     <>
       <Header
-        title="Nouveau Client"
-        subtitle="Un sous titre un peu long"
+        title="Client"
+        subtitle="Creer un nouveau client"
         buttons={[
           {
             actionText: "Annuler",

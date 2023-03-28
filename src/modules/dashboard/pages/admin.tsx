@@ -7,7 +7,7 @@ import { capitalizeFirstLetter } from "../../../helpers/string";
 import { CalendarIcon } from "../../../components/icons";
 import { CardHeader } from "../../../components/cards";
 import { WorkOrdersPreview } from "../../work-orders/components";
-import { WorkOrderStatus } from "../../../__generated__/globalTypes";
+import { UserRole, WorkOrderStatus } from "../../../__generated__/globalTypes";
 import { DemandsPreview } from "../../demands/components";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +18,9 @@ export const Admin = () => {
   const forceUpdate = React.useCallback(() => updateState({}), []);
 
   const { data } = useMe();
-  const { data: usersData } = useUsers({ where: {} });
+  const { data: usersData } = useUsers({
+    where: { roles: [UserRole.Employee, UserRole.Tech] },
+  });
   const [date, setDate] = useState(moment());
   const [dateStr, setDateStr] = useState("");
   const [nextDayStr, setNextDayStr] = useState(" ds ");
@@ -61,7 +63,7 @@ export const Admin = () => {
 
   return (
     <>
-      <section className="py-8 px-6 bg-white">
+      <section className="py-8 px-6 bg-white mb-5">
         <div className="flex flex-wrap -mx-3 items-center">
           <div className="w-full lg:w-1/2 flex items-center mb-5 lg:mb-0 px-3">
             <span className="inline-flex justify-center items-center w-16 h-16 mr-4 bg-indigo-500 rounded">
@@ -104,11 +106,10 @@ export const Admin = () => {
           </div>
         </div>
       </section>
-      <div className="main-container"></div>
 
       <div className="main-container">
         <div className="section mb-4">
-          <div className="left">
+          <div className="element">
             <div className="card">
               <CardHeader title="Demandes en attente" />
               {data?.me?.id ? (
@@ -134,7 +135,7 @@ export const Admin = () => {
         </div>
 
         <section className="section">
-          <div className="left">
+          <div className="element">
             <div className="card mb-2">
               <div className="flex align-middle	justify-center">
                 <div className="flex items-center justify-center p-5 ">
@@ -148,13 +149,24 @@ export const Admin = () => {
               </div>
             </div>
           </div>
-          <div className="right">
+          <div className="element">
             <div className="card">
               <CardHeader
                 title="Bon en Attente"
                 button={{ title: "Nouveau", url: "/work-order/create" }}
               />
               <WorkOrdersPreview status={WorkOrderStatus.Pending} />
+
+              <div className="grid -mx-2 mt-2   justify-items-center ">
+                <div className="w-full md:w-1/2 px-2">
+                  <div
+                    className="btn"
+                    onClick={() => navigate(`/work-orders?status=Pending`)}
+                  >
+                    Mes demandes en attente
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

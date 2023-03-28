@@ -29,7 +29,7 @@ export const CreateSite: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouvel Immeuble"
+        title="Immeuble"
         subtitle="Creer une nouvelle copropriété"
         buttons={[
           {

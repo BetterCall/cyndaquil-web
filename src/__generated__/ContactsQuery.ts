@@ -35,8 +35,11 @@ export interface ContactsQuery_contacts_results {
   phone: string | null;
   email: string | null;
   birthday: any | null;
+  categoryId: number | null;
   category: ContactsQuery_contacts_results_category | null;
+  siteId: number | null;
   site: ContactsQuery_contacts_results_site | null;
+  customerId: number | null;
   customer: ContactsQuery_contacts_results_customer | null;
 }
 

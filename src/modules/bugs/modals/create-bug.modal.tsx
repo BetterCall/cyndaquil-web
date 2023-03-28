@@ -11,6 +11,8 @@ export const CreateBugModal: React.FC = () => {
     onCompleted: () => {
       toast.success("Un Ticket a été crée avec succès");
       setIsModalOpen(false);
+      form.setValue("object", "");
+      form.setValue("description", "");
     },
     onError: (msg) => {
       toast.error(msg);

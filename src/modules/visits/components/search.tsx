@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+
 import { cleanObject } from "../../../helpers/clean-object";
 import { VisitStatus } from "../../../__generated__/globalTypes";
 import { Button } from "../../../components/button";
-import { useForm } from "react-hook-form";
 import { CustomerInput } from "../../customer/components";
 import { UserInput } from "../../users/components";
 
@@ -22,6 +24,8 @@ export const SearchVisitsInput = (defaultValues) => {
   const [isFormOpened, setIsFormOpened] = useState(
     Object.values(defaultValues).some((v) => v)
   );
+
+  const search = form.watch("search");
 
   return (
     <div className="search card">
@@ -46,6 +50,17 @@ export const SearchVisitsInput = (defaultValues) => {
               </svg>
             </label>
             <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  if (!search || search.length < 3) {
+                    toast.error(
+                      "La recherche doit contenir au minimum 3 lettres"
+                    );
+                    return;
+                  }
+                  onSearchSubmit();
+                }
+              }}
               placeholder="Rechercher un visite"
               autoComplete="off"
               {...form.register("search", {
@@ -117,7 +132,7 @@ export const SearchVisitsInput = (defaultValues) => {
                 <UserInput form={form} />
               </div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between  mt-4">
               <div></div>
               <Button
                 canClick={true}

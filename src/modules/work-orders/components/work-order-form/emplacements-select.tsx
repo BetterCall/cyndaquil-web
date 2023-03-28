@@ -7,6 +7,7 @@ interface IProps {
   emplacementsSelected: any;
   toggleRow: any;
   setRowBenefit: any;
+  value?: any;
 }
 
 export const EmplacementsSelect: React.FC<IProps> = ({
@@ -14,6 +15,7 @@ export const EmplacementsSelect: React.FC<IProps> = ({
   emplacementsSelected,
   toggleRow,
   setRowBenefit,
+  value,
 }) => {
   const [getEmplacements, { data: eData, called }] = useLazyEmplacements();
   useEffect(() => {
@@ -75,6 +77,7 @@ export const EmplacementsSelect: React.FC<IProps> = ({
                 >
                   {isSelected !== -1 && emplacement.categoryId ? (
                     <SelectBenefit
+                      value={emplacementsSelected[isSelected].benefitId ?? -1}
                       setValue={(e) => {
                         const benefitId = parseInt(e.target.value);
                         setRowBenefit(emplacement.id, benefitId);

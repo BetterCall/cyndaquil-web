@@ -27,10 +27,10 @@ export const Taxe: React.FC = () => {
         subtitle=""
         buttons={[
           {
-            actionText: "Nouvelle Taxe",
+            actionText: "Modifier la Taxe",
             bgColor: "indigo",
             textColor: "white",
-            link: `/taxe/create`,
+            link: `/taxe/update/${id}`,
             icon: <SendIcon />,
           },
         ]}

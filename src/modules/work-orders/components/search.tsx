@@ -7,6 +7,7 @@ import { SiteInput } from "../../sites/components/site-input";
 import { useForm } from "react-hook-form";
 import { CustomerInput } from "../../customer/components";
 import { UserInput } from "../../users/components";
+import { toast } from "react-toastify";
 
 export const SearchWorkOrdersInput = (defaultValues) => {
   const navigate = useNavigate();
@@ -23,6 +24,8 @@ export const SearchWorkOrdersInput = (defaultValues) => {
   const [isFormOpened, setIsFormOpened] = useState(
     Object.values(defaultValues).some((v) => v)
   );
+
+  const search = form.watch("search");
 
   return (
     <div className="search card">
@@ -47,6 +50,18 @@ export const SearchWorkOrdersInput = (defaultValues) => {
               </svg>
             </label>
             <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  // if (!search || search.length < 3) {
+                  //   toast.error(
+                  //     "La recherche doit contenir au minimum 3 lettres"
+                  //   );
+
+                  //   return;
+                  // }
+                  onSearchSubmit();
+                }
+              }}
               placeholder="Rechercher un client"
               autoComplete="off"
               {...form.register("search", {
@@ -145,7 +160,7 @@ export const SearchWorkOrdersInput = (defaultValues) => {
                 <UserInput form={form} />
               </div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between  mt-4">
               <div></div>
               <Button
                 canClick={true}

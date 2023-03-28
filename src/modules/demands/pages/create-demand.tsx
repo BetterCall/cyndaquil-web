@@ -24,8 +24,8 @@ export const CreateDemand: React.FC = () => {
   return (
     <>
       <Header
-        title="Créer un Nouvelle Demande"
-        subtitle="Elle sera transmise à la personne concernée"
+        title="Demande / Chronos"
+        subtitle="Nouvelle demande"
         buttons={[
           {
             actionText: "Annuler",

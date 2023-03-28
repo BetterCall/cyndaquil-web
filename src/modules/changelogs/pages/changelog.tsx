@@ -32,13 +32,13 @@ export const Changelog = () => {
       />
       <div className="main-container">
         <section className="section">
-          <div className="left">
+          <div className="element">
             <div className="card">
               <CardHeader title="Informations Générales" />
             </div>
           </div>
 
-          <div className="right">
+          <div className="element">
             <div className="card mb-2">
               <CardHeader title="Client" />
             </div>

@@ -68,11 +68,11 @@ export const InvoiceInput: React.FC<IInvoiceInput> = ({
 
   return (
     <section className="section">
-      <div className="left">
+      <div className="element">
         <div className="card">
           <CardHeader title="Facture " />
           <div className="flex flex-col">
-            <label className="text-sm font-bold">Facture</label>
+            <label className="label">Facture</label>
             <input
               className="input mb-3"
               onChange={(e) => {
@@ -85,7 +85,7 @@ export const InvoiceInput: React.FC<IInvoiceInput> = ({
 
             {isOpened && search !== "" && !hasBeenSelected && (
               <>
-                <label className="text-sm font-bold">Résultats</label>
+                <label className="label">Résultats</label>
                 <div className="input mb-3 ">
                   {loading && <h2>Chargement ...</h2>}
 
@@ -115,32 +115,149 @@ export const InvoiceInput: React.FC<IInvoiceInput> = ({
           </div>
           {invoice ? (
             <div>
-              n° de facture : {invoice?.id}
-              <br /> immeuble : {invoice?.site?.name}
-              <br /> adresse :{" "}
-              {invoice?.site?.streetNumber + " " + invoice?.site?.street}
-              <br /> code postal : {invoice?.site?.postal}
-              <br /> ville : {invoice?.site?.city}
-              <br /> date de facturation :{" "}
-              {moment(invoice?.createdAt).format("dddd LL")}
+              <div className="w-full mb-3">
+                <p className="label">Immeuble</p>
+                <input
+                  type="text"
+                  className="input w-full"
+                  disabled
+                  value={invoice?.site?.name}
+                />
+              </div>
+              <div className="flex ">
+                <div className="w-1/2 mr-1 ">
+                  <div className="w-full mb-3">
+                    <p className="label">Numero de rue</p>
+
+                    <input
+                      className="w-full input"
+                      disabled
+                      value={invoice?.site?.streetNumber}
+                    />
+                  </div>
+                </div>
+                <div className="w-1/2 ml-1">
+                  <div className="w-full mb-3">
+                    <p className="label">Complément</p>
+                    <input
+                      className="w-full input"
+                      type="text"
+                      placeholder="Bis"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="w-full mb-3">
+                <p className="label">Adresse</p>
+                <input
+                  className="w-full input"
+                  disabled
+                  value={invoice?.site?.street}
+                />
+              </div>
+              <div className="flex ">
+                <div className="w-1/2 mr-1 ">
+                  <div className="w-full mb-3">
+                    <p className="label">Ville</p>
+                    <input
+                      className="w-full input"
+                      disabled
+                      value={invoice?.site?.city}
+                    />
+                  </div>
+                </div>
+                <div className="w-1/2 ml-1">
+                  <div className="w-full mb-3">
+                    <p className="label">Code Postal</p>
+                    <input
+                      className="w-full input"
+                      disabled
+                      value={invoice?.site?.postal}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="w-full mt-3">
+                <p className="label">Date de facturation</p>
+                <input
+                  className="w-full input"
+                  disabled
+                  value={moment(invoice?.createdAt).format("dddd LL")}
+                />
+              </div>
             </div>
           ) : (
             <EmptyList text="Selectionnez le numéro de facture" />
           )}
         </div>
       </div>
-      <div className="right">
+      <div className="element">
         <div className="card">
           <CardHeader title="Client" />
           {invoice ? (
             <div>
-              Nom : {invoice?.customer?.name}
-              <br /> adresse :
-              {invoice?.customer?.streetNumber +
-                " " +
-                invoice?.customer?.street}
-              <br /> code postal : {invoice?.customer?.postal}
-              <br /> ville : {invoice?.customer?.city}
+              <div className="w-full mb-3">
+                <p className="label">Nom</p>
+                <input
+                  type="text"
+                  className="input w-full"
+                  disabled
+                  value={invoice?.customer?.name}
+                />
+              </div>
+              <div className="flex ">
+                <div className="w-1/2 mr-1 ">
+                  <div className="w-full mb-3">
+                    <p className="label">Numero de rue</p>
+
+                    <input
+                      className="w-full input"
+                      disabled
+                      value={invoice?.customer?.streetNumber}
+                    />
+                  </div>
+                </div>
+                <div className="w-1/2 ml-1">
+                  <div className="w-full mb-3">
+                    <p className="label">Complément</p>
+                    <input
+                      className="w-full input"
+                      type="text"
+                      placeholder="Bis"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="w-full mb-3">
+                <p className="label">Adresse</p>
+                <input
+                  className="w-full input"
+                  disabled
+                  value={invoice?.customer?.street}
+                />
+              </div>
+              <div className="flex ">
+                <div className="w-1/2 mr-1 ">
+                  <div className="w-full mb-3">
+                    <p className="label">Ville</p>
+                    <input
+                      className="w-full input"
+                      disabled
+                      value={invoice?.customer?.city}
+                    />
+                  </div>
+                </div>
+                <div className="w-1/2 ml-1">
+                  <div className="w-full mb-3">
+                    <p className="label">Code Postal</p>
+                    <input
+                      className="w-full input"
+                      disabled
+                      value={invoice?.customer?.postal}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           ) : (
             <EmptyList text="Selectionnez le numéro de facture" />

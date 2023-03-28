@@ -32,8 +32,8 @@ export const Contract: React.FC = () => {
   return (
     <>
       <Header
+        title={`Contrat`}
         subtitle={`${data?.contract?.result?.customer.name}`}
-        title={`${data?.contract?.result?.site?.name}`}
         buttons={[
           {
             actionText: "Modifier",
@@ -47,7 +47,7 @@ export const Contract: React.FC = () => {
 
       <div className="main-container">
         <section className="section ">
-          <div className=" left ">
+          <div className=" element">
             <div className="card">
               <CardHeader
                 title={data?.contract?.result?.customer?.name ?? ""}
@@ -61,7 +61,7 @@ export const Contract: React.FC = () => {
             </div>
           </div>
 
-          <div className="right">
+          <div className="element">
             <div className="card">
               <CardHeader title={data?.contract?.result?.site?.name ?? ""} />
               <ContactDetails
@@ -72,14 +72,14 @@ export const Contract: React.FC = () => {
           </div>
         </section>
         <section className="section">
-          <div className=" left ">
+          <div className=" element">
             <div className="card">
               <CardHeader title="Bon d'intervention" />
               <WorkOrdersPreview contractId={+id!} />
               <GenerateFromContractBtn contractId={+id!} />
             </div>
           </div>
-          <div className="right">
+          <div className="element">
             <div className="card">
               <CardHeader title="Facture" />
               <InvoicesPreview where={{ contractId: +id! }} />

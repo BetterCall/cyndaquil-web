@@ -95,8 +95,8 @@ export const WorkOrders: React.FC = () => {
   return (
     <>
       <Header
-        title={" Liste des Bon d'intervention"}
-        subtitle="Modifier les informations du client"
+        title={"Bon d'intervention"}
+        subtitle="Liste des bons d'intervention"
         buttons={[
           {
             actionText: "Nouveau Bon",

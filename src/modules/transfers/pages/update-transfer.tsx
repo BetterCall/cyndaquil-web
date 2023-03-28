@@ -40,14 +40,14 @@ export const UpdateTransfer: React.FC = () => {
   return (
     <>
       <Header
-        title="Modifier le Rendez-vous"
-        subtitle="Rensisgner les nouvelles informations du rendez-vous"
+        title="Remboursement"
+        subtitle="Modifier les informations du remboursement"
         buttons={[
           {
             actionText: "Annuler",
             bgColor: "indigo",
             textColor: "white",
-            link: `/transfer/${id}`,
+            link: `/transfer/${id}/update`,
             icon: <SendIcon />,
           },
         ]}

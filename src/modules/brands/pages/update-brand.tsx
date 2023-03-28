@@ -50,8 +50,8 @@ export const UpdateBrand = () => {
   return (
     <>
       <Header
-        title={`Modifier : ${data?.brand?.result?.name || "Marque"} `}
-        subtitle="Modifier une marque"
+        title="Marque"
+        subtitle={`Modifier : ${data?.brand?.result?.name || "Marque"} `}
         buttons={[
           {
             actionText: "Annuler",

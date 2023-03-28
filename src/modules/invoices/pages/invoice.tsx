@@ -24,13 +24,11 @@ export const Invoice: React.FC = () => {
   }, []);
 
   const { data, error } = useInvoice(+id!);
-  console.log(data);
-  console.log(error);
   return (
     <>
       <Header
-        subtitle={`${data?.invoice?.result?.id}`}
-        title={` `}
+        title={`Facture`}
+        subtitle={`Facture N°${data?.invoice?.result?.id}`}
         buttons={[
           {
             actionText: "Modifier",
@@ -44,14 +42,151 @@ export const Invoice: React.FC = () => {
 
       <div className="main-container">
         <section className="section ">
-          <div className=" left ">
+          <div className=" element">
             <div className="card">
-              <CardHeader title={data?.invoice?.result?.id + "" ?? ""} />
-              <ContactDetails city={`  `} phone={`  `} email={`  `} />
+              <CardHeader title={"Lieu de l'intervention"} />
+
+              <div className="w-full mb-3">
+                <p className="label">Immeuble</p>
+                <input
+                  className="input w-full "
+                  disabled
+                  value={data?.invoice?.result?.site?.name ?? ""}
+                />
+              </div>
+
+              <div className="flex ">
+                <div className="w-1/2 mr-1 ">
+                  <div className="w-full mb-3">
+                    <p className="label">Numero de rue</p>
+
+                    <input
+                      className="w-full input"
+                      disabled
+                      value={data?.invoice?.result?.site?.streetNumber ?? ""}
+                    />
+                  </div>
+                </div>
+                <div className="w-1/2 ml-1">
+                  <div className="w-full mb-3">
+                    <p className="label">Complément</p>
+                    <input
+                      className="w-full input"
+                      type="text"
+                      placeholder="Bis"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full mb-3">
+                <p className="label">Adresse</p>
+                <input
+                  className="w-full input"
+                  disabled
+                  value={data?.invoice?.result?.site?.street ?? ""}
+                />
+              </div>
+
+              <div className="flex ">
+                <div className="w-1/2 mr-1 ">
+                  <div className="w-full mb-3">
+                    <p className="label">Ville</p>
+                    <input
+                      className="w-full input"
+                      disabled
+                      value={data?.invoice?.result?.site?.city ?? ""}
+                    />
+                  </div>
+                </div>
+                <div className="w-1/2 ml-1">
+                  <div className="w-full mb-3">
+                    <p className="label">Code Postal</p>
+                    <input
+                      className="w-full input"
+                      disabled
+                      value={data?.invoice?.result?.site?.postal ?? ""}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="right">
+          <div className=" element">
+            <div className="card">
+              <CardHeader title={"Client"} />
+
+              <div className="w-full mb-3">
+                <p className="label">Nom</p>
+                <input
+                  className="input w-full "
+                  disabled
+                  value={data?.invoice?.result?.customer?.name ?? ""}
+                />
+              </div>
+
+              <div className="flex ">
+                <div className="w-1/2 mr-1 ">
+                  <div className="w-full mb-3">
+                    <p className="label">Numero de rue</p>
+
+                    <input
+                      className="w-full input"
+                      disabled
+                      value={
+                        data?.invoice?.result?.customer?.streetNumber ?? ""
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="w-1/2 ml-1">
+                  <div className="w-full mb-3">
+                    <p className="label">Complément</p>
+                    <input
+                      className="w-full input"
+                      type="text"
+                      placeholder="Bis"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full mb-3">
+                <p className="label">Adresse</p>
+                <input
+                  className="w-full input"
+                  disabled
+                  value={data?.invoice?.result?.customer?.street ?? ""}
+                />
+              </div>
+
+              <div className="flex ">
+                <div className="w-1/2 mr-1 ">
+                  <div className="w-full mb-3">
+                    <p className="label">Ville</p>
+                    <input
+                      className="w-full input"
+                      disabled
+                      value={data?.invoice?.result?.customer?.city ?? ""}
+                    />
+                  </div>
+                </div>
+                <div className="w-1/2 ml-1">
+                  <div className="w-full mb-3">
+                    <p className="label">Code Postal</p>
+                    <input
+                      className="w-full input"
+                      disabled
+                      value={data?.invoice?.result?.customer?.postal ?? ""}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="element">
             <div className="card">
               <CardHeader title="Paiements" />
               <div className="text-sm text-gray-500 mb-2">
@@ -70,79 +205,75 @@ export const Invoice: React.FC = () => {
           </div>
         </section>
 
-        <section className="section">
-          <div className="full">
-            <div className="card">
-              <CardHeader title="Détails" />
-              {data?.invoice?.result?.rows?.map((row) => (
-                <div className="mt-4 px-4 mb-5">
-                  <div className="mb-2 flex justify-between font-medium ">
-                    <span>{row.line} </span>
-                    <span className=" font-medium"> </span>
+        <div className="w-full">
+          <div className="card">
+            <CardHeader title="Détails" />
+            {data?.invoice?.result?.rows?.map((row) => (
+              <div className="mt-4 px-4 mb-5">
+                <div className="mb-2 flex justify-between font-medium ">
+                  <span>{row.line} </span>
+                  <span className=" font-medium"> </span>
+                </div>
+
+                <div className="mx-2">
+                  <div className="mb-2 flex justify-between">
+                    <span>Quantité </span>
+                    <span className=" font-medium">{row.quantity}</span>
+                  </div>
+                  <div className="mb-2 flex justify-between">
+                    <span>Prix Unitaire </span>
+                    <span className=" font-medium">XX € HT</span>
                   </div>
 
-                  <div className="mx-2">
-                    <div className="mb-2 flex justify-between">
-                      <span>Quantité </span>
-                      <span className=" font-medium">{row.quantity}</span>
-                    </div>
-                    <div className="mb-2 flex justify-between">
-                      <span>Prix Unitaire </span>
-                      <span className=" font-medium">XX € HT</span>
-                    </div>
-
-                    <div className="mb-2 flex justify-between ">
-                      <span>Taux TVA </span>
-                      <span className=" font-medium">{row.taxe} %</span>
-                    </div>
-                  </div>
-                  <div className="w-full px-2 py-1 bg-slate-100 rounded">
-                    <div className=" flex justify-between font-medium mt-2">
-                      <span className=" font-medium">Montant TVA</span>
-                      <span className=" font-medium">{row.taxPrice} € HT</span>
-                    </div>
-
-                    <div className=" flex justify-between font-medium mt-2">
-                      <span className=" font-medium">Montant Estimatif</span>
-                      <span className=" font-medium">
-                        {row.totalPrice} € HT
-                      </span>
-                    </div>
-                    <div className=" flex justify-between font-medium mt-2 pb-2">
-                      <span className=" font-medium">Montant TTC</span>
-                      <span className=" font-medium">
-                        {row.totalPrice + row.taxPrice} € TTC
-                      </span>
-                    </div>
+                  <div className="mb-2 flex justify-between ">
+                    <span>Taux TVA </span>
+                    <span className=" font-medium">{row.taxe} %</span>
                   </div>
                 </div>
-              ))}
-              <div className="mt-4 px-5 mb-5 bg-slate-100  py-6 rounded">
-                <div className="mb-2 flex justify-between font-medium  text-lg ">
-                  <span>Prix HT</span>
-                  <span className=" font-medium">
-                    {data?.invoice?.result?.preTaxPrice}€
-                  </span>
-                </div>
+                <div className="w-full px-2 py-1 bg-slate-100 rounded">
+                  <div className=" flex justify-between font-medium mt-2">
+                    <span className=" font-medium">Montant TVA</span>
+                    <span className=" font-medium">{row.taxPrice} € HT</span>
+                  </div>
 
-                <div className=" flex justify-between font-medium text-lg  mt-2">
-                  <span className=" font-medium">Montant TVA</span>
-                  <span className=" font-medium">
-                    {" "}
-                    {data?.invoice?.result?.taxPrice} €
-                  </span>
+                  <div className=" flex justify-between font-medium mt-2">
+                    <span className=" font-medium">Montant Estimatif</span>
+                    <span className=" font-medium">{row.totalPrice} € HT</span>
+                  </div>
+                  <div className=" flex justify-between font-medium mt-2 pb-2">
+                    <span className=" font-medium">Montant TTC</span>
+                    <span className=" font-medium">
+                      {row.totalPrice + row.taxPrice} € TTC
+                    </span>
+                  </div>
                 </div>
+              </div>
+            ))}
+            <div className="mt-4 px-5 mb-5 bg-slate-100  py-6 rounded">
+              <div className="mb-2 flex justify-between font-medium  text-lg ">
+                <span>Prix HT</span>
+                <span className=" font-medium">
+                  {data?.invoice?.result?.preTaxPrice}€
+                </span>
+              </div>
 
-                <div className=" flex justify-between font-medium text-lg mt-2">
-                  <span className=" font-medium">Montant TTC</span>
-                  <span className=" font-medium">
-                    {data?.invoice?.result?.totalPrice} €
-                  </span>
-                </div>
+              <div className=" flex justify-between font-medium text-lg  mt-2">
+                <span className=" font-medium">Montant TVA</span>
+                <span className=" font-medium">
+                  {" "}
+                  {data?.invoice?.result?.taxPrice} €
+                </span>
+              </div>
+
+              <div className=" flex justify-between font-medium text-lg mt-2">
+                <span className=" font-medium">Montant TTC</span>
+                <span className=" font-medium">
+                  {data?.invoice?.result?.totalPrice} €
+                </span>
               </div>
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </>
   );

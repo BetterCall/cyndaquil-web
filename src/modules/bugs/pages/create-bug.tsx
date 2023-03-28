@@ -22,7 +22,7 @@ export const CreateBug: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouveau Ticket"
+        title="Bug"
         subtitle="Ouvrir un nouveau ticket, Rapporter un bug ou une amélioration"
         buttons={[
           {

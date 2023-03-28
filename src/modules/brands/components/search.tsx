@@ -2,35 +2,33 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { cleanObject } from "../../../helpers/clean-object";
-import { FormError } from "../../../components/form-error";
 import { BrandsFiltersInput } from "../../../__generated__/globalTypes";
+import { toast } from "react-toastify";
+import { ErrorMessage } from "@hookform/error-message";
 
 export const SearchBrands: React.FC = () => {
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-  } = useForm<BrandsFiltersInput>({
+  const form = useForm<BrandsFiltersInput>({
     defaultValues: { search: "" },
     mode: "onSubmit",
   });
 
   const onSearchSubmit = () => {
-    const input = getValues();
+    const input = form.getValues();
     navigate({
       pathname: "/brands",
       search: `?${createSearchParams(cleanObject(input))}`,
     });
   };
 
+  const search = form.watch("search");
+
   return (
     <div className="search card">
       <form
         className="grid gap-3 w-full items-center  px-2"
-        onSubmit={handleSubmit(onSearchSubmit)}
+        onSubmit={form.handleSubmit(onSearchSubmit)}
       >
         <div className="flex row items-center justify-between">
           <div className="flex row align-text-center items-center">
@@ -52,9 +50,21 @@ export const SearchBrands: React.FC = () => {
               </svg>
             </label>
             <input
-              placeholder="Rechercher un Fournisseur"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  if (!search || search.length < 3) {
+                    toast.error(
+                      "La recherche doit contenir au minimum 3 lettres"
+                    );
+
+                    return;
+                  }
+                  onSearchSubmit();
+                }
+              }}
+              placeholder="Rechercher une Marque"
               autoComplete="off"
-              {...register("search", {
+              {...form.register("search", {
                 minLength: 3,
                 required: false,
               })}
@@ -64,9 +74,11 @@ export const SearchBrands: React.FC = () => {
           <span></span>
         </div>
 
-        {errors.search && (
-          <FormError message={"Faites une recherche avec minimum 3 lettres"} />
-        )}
+        <ErrorMessage
+          errors={form.formState?.errors}
+          name="search"
+          render={({ message }) => <p className="error-message">{message}</p>}
+        />
       </form>
     </div>
   );

@@ -53,7 +53,7 @@ export const UpdateContact: React.FC = () => {
   return (
     <>
       <Header
-        title="Modifier la Catégorie de client"
+        title="Contact"
         subtitle="Modifier la Catégorie"
         buttons={[
           {

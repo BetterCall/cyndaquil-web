@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Loading } from "../../../components";
 
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
@@ -19,12 +20,17 @@ export const Control: React.FC = () => {
     }
   }, []);
 
-  const { data } = useControl(+id!);
+  const { data, loading } = useControl(+id!);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
       <Header
-        title={data?.control?.result?.id + "" || "Chargement..."}
+        title={"Vérification"}
+        subtitle={data?.control?.result?.id + ""}
         buttons={[
           {
             actionText: "Mettre à jour",

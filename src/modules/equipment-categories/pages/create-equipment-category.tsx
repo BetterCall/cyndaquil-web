@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Header } from "../../../components/header";
+import { DashboardIcon } from "../../../components/icons";
 
 import { EquipmentCategoryForm } from "../components";
 import { useCreateEquipmentCategory } from "../hooks";
@@ -18,11 +20,29 @@ export const CreateEquipmentCategory: React.FC = () => {
   });
 
   return (
-    <div className="mt-5 flex flex-col justify-center items-center px-5">
-      <h4 className="font-semibold text-2xl mb-3">
-        Nouvelle Category d'équipement
-      </h4>
-      <EquipmentCategoryForm loading={loading} submit={submit} form={form} />
-    </div>
+    <>
+      <Header
+        title="Type d'équipement"
+        subtitle="Nouveau type d'équipement"
+        buttons={[
+          {
+            actionText: "Annuler",
+            bgColor: "indigo",
+            textColor: "white",
+            link: "/emplacements",
+            icon: <DashboardIcon />,
+          },
+        ]}
+      />
+      <div className="main-container">
+        <div className="card">
+          <EquipmentCategoryForm
+            loading={loading}
+            submit={submit}
+            form={form}
+          />
+        </div>
+      </div>
+    </>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Loading } from "../../../components";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 
@@ -21,6 +22,7 @@ export const UpdateWorkOrder: React.FC = () => {
     }
   }, []);
 
+  const [loaded, setLoaded] = useState(false);
   const { data, refetch } = useWorkOrder(+id!);
   const { form, loading, submit } = useUpdateWorkOrder({
     id: +id!,
@@ -32,32 +34,46 @@ export const UpdateWorkOrder: React.FC = () => {
   });
 
   useEffect(() => {
-    form.setValue("object", data?.workOrder?.result?.object);
-    form.setValue("type", data?.workOrder?.result?.type);
+    if (data?.workOrder?.result && !loaded) {
+      console.log(data);
+      form.setValue("object", data?.workOrder?.result?.object);
+      form.setValue("type", data?.workOrder?.result?.type);
 
-    form.setValue("description", data?.workOrder?.result?.description);
-    form.setValue("date", data?.workOrder?.result?.date);
-    form.setValue("start", data?.workOrder?.result?.start);
-    form.setValue("end", data?.workOrder?.result?.end);
+      form.setValue("description", data?.workOrder?.result?.description);
+      form.setValue("date", data?.workOrder?.result?.date);
+      form.setValue("start", data?.workOrder?.result?.start);
+      form.setValue("end", data?.workOrder?.result?.end);
 
-    form.setValue("status", data?.workOrder?.result?.status);
+      form.setValue("status", data?.workOrder?.result?.status);
 
-    form.setValue("lat", data?.workOrder?.result?.lat);
-    form.setValue("lng", data?.workOrder?.result?.lng);
-    form.setValue("streetNumber", data?.workOrder?.result?.streetNumber);
-    form.setValue("street", data?.workOrder?.result?.street);
-    form.setValue("postal", data?.workOrder?.result?.postal);
-    form.setValue("city", data?.workOrder?.result?.city);
+      form.setValue("lat", data?.workOrder?.result?.lat);
+      form.setValue("lng", data?.workOrder?.result?.lng);
+      form.setValue("streetNumber", data?.workOrder?.result?.streetNumber);
+      form.setValue("street", data?.workOrder?.result?.street);
+      form.setValue("postal", data?.workOrder?.result?.postal);
+      form.setValue("city", data?.workOrder?.result?.city);
 
-    form.setValue("userId", data?.workOrder?.result?.userId);
-    form.setValue("siteId", data?.workOrder?.result?.siteId);
-    form.setValue("customerId", data?.workOrder?.result?.customerId);
+      form.setValue("userId", data?.workOrder?.result?.userId);
+      form.setValue("siteId", data?.workOrder?.result?.siteId);
+      form.setValue("customerId", data?.workOrder?.result?.customerId);
+
+      form.setValue(
+        "rows",
+        data?.workOrder?.result?.rows?.map((row) => ({
+          ...(row.id && { rowId: row.id }),
+          emplacementId: row.emplacementId,
+          benefitId: row.benefitId,
+        }))
+      );
+
+      setLoaded(true);
+    }
   }, [data, form]);
 
   return (
     <>
       <Header
-        title="Modifier le bon d'intervention"
+        title="Bon d'Intervention"
         subtitle="Modifier le bon d'intervention"
         buttons={[
           {
@@ -70,12 +86,16 @@ export const UpdateWorkOrder: React.FC = () => {
         ]}
       />
       <div className="main-container">
-        <WorkOrderForm
-          loading={loading}
-          submit={submit}
-          form={form}
-          disabledFields={["siteId"]}
-        />
+        {loaded ? (
+          <WorkOrderForm
+            loading={loading}
+            submit={submit}
+            form={form}
+            disabledFields={["siteId"]}
+          />
+        ) : (
+          <Loading />
+        )}
       </div>
     </>
   );

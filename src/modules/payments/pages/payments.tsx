@@ -74,8 +74,8 @@ export const Payments: React.FC = () => {
   return (
     <>
       <Header
-        title="Liste des Paiment"
-        subtitle="Un sous titre un peu long"
+        title="Paiment"
+        subtitle="Liste des paiements"
         buttons={[
           {
             actionText: "Nouveau Contrat",

@@ -1,6 +1,6 @@
 
-const numbers = ["emplacementCode", "equipmentId", "code", "workOrderId", "managerId", "invoiceId", "recordedById", 'paymentId', "contractId", "visitId", "commercialId", "customerCategoryId", "equipmentCategoryId", "categoryId", "benefitId", "customerId", "siteId", "id", "userId", "targetUserId", "openedById"]
-const decimals = ["amount", "price", "taxPrice"]
+const numbers = ["buildingsCount", "entrancesCount", "categoryId", "emplacementCode", "equipmentId", "code", "workOrderId", "managerId", "invoiceId", "recordedById", 'paymentId', "contractId", "visitId", "commercialId", "customerCategoryId", "equipmentCategoryId", "categoryId", "benefitId", "customerId", "siteId", "id", "userId", "targetUserId", "openedById"]
+const decimals = ["amount", "price", "taxPrice", "lat", "lng"]
 
 export const cleanObject = (object: any): { [k: string]: any; } => {
     const cleaned: any = {}

@@ -95,11 +95,21 @@ query SiteQuery ( $ id : Int! ) {
             customerId
             customer {
                 id 
-                name 
+                name
+                email
+                phone
+                commercialId
+                commercial {
+                    id
+                    firstname
+                    lastname
+                }
+                sitesCount
                 category {
                     id 
                     name
                 }
+
             }
 
             managerId
@@ -109,6 +119,8 @@ query SiteQuery ( $ id : Int! ) {
                 lastname
                 email
                 phone
+
+                sitesCount
             }
 
             contacts {

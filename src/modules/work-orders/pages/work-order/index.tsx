@@ -31,8 +31,8 @@ export const WorkOrder: React.FC = () => {
   return (
     <>
       <Header
-        title={`${data?.workOrder?.result?.object}`}
-        subtitle={`${data?.workOrder?.result?.customer?.name}`}
+        title={`Bon d'Intervention`}
+        subtitle={`${data?.workOrder?.result?.object} - ${data?.workOrder?.result?.customer?.name}`}
         buttons={[
           {
             actionText: "Modifier",
@@ -46,10 +46,10 @@ export const WorkOrder: React.FC = () => {
 
       <div className="main-container">
         <section className="section">
-          <div className="left">
+          <div className="element">
             <div className="card mb-2  ">
               <CardHeader title={data?.workOrder?.result?.site?.name ?? ""} />
-              <div className="w-full">
+              <div className="w-full mb-3">
                 <p className="label">Adresse</p>
                 <input
                   className="input w-full"
@@ -59,7 +59,7 @@ export const WorkOrder: React.FC = () => {
               </div>
               <div className="flex ">
                 <div className="w-1/2 mr-1">
-                  <div className="w-full mt-3">
+                  <div className="w-full mb-3">
                     <p className="label">Code Postal</p>
                     <input
                       className="input w-full"
@@ -71,7 +71,7 @@ export const WorkOrder: React.FC = () => {
                 </div>
 
                 <div className="w-1/2 ml-1 ">
-                  <div className="w-full mt-3">
+                  <div className="w-full mb-3">
                     <p className="label">Ville</p>
                     <input
                       className="input w-full"
@@ -92,11 +92,11 @@ export const WorkOrder: React.FC = () => {
                 />
               </div>
 
-              <div className="mt-3">{data?.workOrder?.result?.description}</div>
+              <div className="mb-3">{data?.workOrder?.result?.description}</div>
 
               <div className="flex ">
                 <div className="w-1/2 mr-1 ">
-                  <div className="w-full mt-3">
+                  <div className="w-full mb-3">
                     <button
                       className="btn w-full"
                       onClick={() =>
@@ -108,7 +108,7 @@ export const WorkOrder: React.FC = () => {
                   </div>
                 </div>
                 <div className="w-1/2 ml-1">
-                  <div className="w-full mt-3">
+                  <div className="w-full mb-3">
                     <button
                       className="btn w-full"
                       onClick={() =>
@@ -126,7 +126,7 @@ export const WorkOrder: React.FC = () => {
             <div className="card mb-2">
               <CardHeader title="Informations" />
 
-              <div className="w-full mt-3">
+              <div className="w-full mb-3">
                 <p className="label">Technicien</p>
                 <input
                   type="text"
@@ -136,7 +136,7 @@ export const WorkOrder: React.FC = () => {
                 />
               </div>
 
-              <div className="w-full mt-3">
+              <div className="w-full mb-3">
                 <p className="label">Client</p>
                 <input
                   type="text"
@@ -148,7 +148,7 @@ export const WorkOrder: React.FC = () => {
 
               <div className="flex ">
                 <div className="w-1/2 mr-1">
-                  <div className="w-full mt-3">
+                  <div className="w-full mb-3">
                     <p className="label">Email</p>
                     <input
                       className="input w-full"
@@ -160,7 +160,7 @@ export const WorkOrder: React.FC = () => {
                 </div>
 
                 <div className="w-1/2 ml-1 ">
-                  <div className="w-full mt-3">
+                  <div className="w-full mb-3">
                     <p className="label">Téléphone</p>
                     <input
                       className="input w-full"
@@ -182,7 +182,7 @@ export const WorkOrder: React.FC = () => {
                 />
               </div>
 
-              <div className="w-full mt-3">
+              <div className="w-full mb-3">
                 <p className="label">Date</p>
                 <input
                   type="text"
@@ -194,7 +194,7 @@ export const WorkOrder: React.FC = () => {
 
               <div className="flex ">
                 <div className="w-1/2 mr-1">
-                  <div className="w-full mt-3">
+                  <div className="w-full mb-3">
                     <p className="label">Heure d'arrivée</p>
                     <input
                       className="input w-full"
@@ -206,7 +206,7 @@ export const WorkOrder: React.FC = () => {
                 </div>
 
                 <div className="w-1/2 ml-1 ">
-                  <div className="w-full mt-3">
+                  <div className="w-full mb-3">
                     <p className="label">Fin Estimée</p>
                     <input
                       className="input w-full"
@@ -218,8 +218,24 @@ export const WorkOrder: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            <div className="card mb-2">
+              <CardHeader title="Facture" />
+              <div className="mb-7">
+                <p className="text-sm">{data?.workOrder?.result?.invoiceId}</p>
+                <p className="text-sm">
+                  {data?.workOrder?.result?.invoice?.totalPrice}
+                </p>
+              </div>
+
+              <div className="w-full">
+                {!data?.workOrder?.result?.invoiceId ? (
+                  <CreateInvoiceBtn workOrderId={+id!} />
+                ) : null}
+              </div>
+            </div>
           </div>
-          <div className="right">
+          <div className="element">
             <div className="card">
               <CardHeader title="Liste des Equipements" />
 
@@ -241,24 +257,8 @@ export const WorkOrder: React.FC = () => {
         </section>
 
         <section className="section">
-          <div className="left">
-            <div className="card mb-2">
-              <CardHeader title="Facture" />
-              <div className="mb-7">
-                <p className="text-sm">{data?.workOrder?.result?.invoiceId}</p>
-                <p className="text-sm">
-                  {data?.workOrder?.result?.invoice?.totalPrice}
-                </p>
-              </div>
-
-              <div className="w-full">
-                {!data?.workOrder?.result?.invoiceId ? (
-                  <CreateInvoiceBtn workOrderId={+id!} />
-                ) : null}
-              </div>
-            </div>
-          </div>
-          <div className="right"></div>
+          <div className="element"></div>
+          <div className="element"></div>
         </section>
       </div>
     </>

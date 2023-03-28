@@ -24,8 +24,8 @@ export const Reference: React.FC = () => {
   return (
     <>
       <Header
-        title={data?.reference?.result?.name ?? ""}
-        subtitle={""}
+        title={"Référence"}
+        subtitle={data?.reference?.result?.name ?? ""}
         buttons={[
           {
             actionText: "Nouvelle Référence",

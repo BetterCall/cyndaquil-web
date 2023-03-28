@@ -37,7 +37,7 @@ export const SearchEquipmentsInput = () => {
               />
             </div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between  mt-4">
             <div></div>
             <Button canClick={true} actionText="Rechercher" loading={false} />
           </div>

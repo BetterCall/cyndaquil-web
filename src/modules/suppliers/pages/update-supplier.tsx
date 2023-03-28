@@ -49,7 +49,7 @@ export const UpdateSupplier: React.FC = () => {
   return (
     <>
       <Header
-        title="Modifier le fournisseur"
+        title="Fournisseur"
         subtitle="Modifier les informations du fournisseur"
         buttons={[
           {

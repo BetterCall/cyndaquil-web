@@ -42,7 +42,7 @@ export const Equipment: React.FC = () => {
 
       <div className="main-container">
         <section className="section">
-          <div className="left">
+          <div className="element">
             <div className="card">
               <CardHeader
                 title="Equipement"
@@ -179,7 +179,7 @@ export const Equipment: React.FC = () => {
               )}
             </div>
           </div>
-          <div className="right">
+          <div className="element">
             <div className="card">
               <CardHeader
                 title="Controles"

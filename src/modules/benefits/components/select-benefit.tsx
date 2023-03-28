@@ -47,9 +47,7 @@ export const SelectBenefit: React.FC<ISelectBenefitInput> = ({
           disabled={disabled}
           className={`input appearance-none w-full  ${
             // @ts-ignore
-            !ref?.current?.value || ref.current?.value == -1
-              ? " border-red-500"
-              : "border-blue-500"
+            value == -1 ? " border-red-500" : "border-blue-500"
           } `}
           onChange={(e) => setValue(e)}
         >

@@ -5,7 +5,10 @@ import { useLazyWorkOrders } from "../hooks";
 import { EmptyList, Loading } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import { Row } from "../../../components/tables";
-import { WorkOrderFiltersInput } from "../../../__generated__/globalTypes";
+import {
+  WorkOrderFiltersInput,
+  WorkOrderStatus,
+} from "../../../__generated__/globalTypes";
 
 interface WordOrderProps extends WorkOrderFiltersInput {
   title?: string;
@@ -55,30 +58,33 @@ export const WorkOrdersPreview: React.FC<WordOrderProps> = ({
             </tr>
           </thead>
           <tbody>
-            {data?.workOrders?.results?.map((workOrder, index) => (
-              <Row index={index} key={`workOrder-${workOrder.id}`}>
-                <td className="padding-table flex">
-                  <div>
-                    <p
-                      className="font-medium  cursor-pointer"
-                      onClick={() => navigate(`/work-order/${workOrder.id}`)}
-                    >
-                      {workOrder.object}
-                    </p>
-                    <p className="text-gray-500">
-                      {workOrder.streetNumber} {workOrder.street}
-                    </p>
-                  </div>
-                </td>
-                <td className="padding-table text-center ">
-                  {workOrder.status}
-                </td>
-                <td className="padding-table text-center ">
-                  {workOrder?.date &&
-                    formatHour(workOrder.date + " " + workOrder.start)}
-                </td>
-              </Row>
-            ))}
+            {data?.workOrders?.results?.map((workOrder, index) =>
+              index < 5 ? (
+                <Row index={index} key={`workOrder-${workOrder.id}`}>
+                  <td className="padding-table flex">
+                    <div>
+                      <p
+                        className="font-medium  cursor-pointer"
+                        onClick={() => navigate(`/work-order/${workOrder.id}`)}
+                      >
+                        {workOrder.object}
+                      </p>
+                      <p className="text-gray-500">
+                        {workOrder.streetNumber} {workOrder.street}
+                      </p>
+                    </div>
+                  </td>
+                  <td className="padding-table text-center ">
+                    {workOrder.status}
+                  </td>
+                  <td className="padding-table text-center ">
+                    {workOrder?.status === WorkOrderStatus.Pending
+                      ? "-"
+                      : formatHour(workOrder.date + " " + workOrder.start)}
+                  </td>
+                </Row>
+              ) : null
+            )}
           </tbody>
         </table>
       );

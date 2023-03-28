@@ -36,7 +36,7 @@ export const WorkOrderProcessing: React.FC = () => {
   return (
     <>
       <Header
-        title={`${workOrder?.data?.workOrder?.result?.site?.name}`}
+        title={`BI : ${workOrder?.data?.workOrder?.result?.site?.name}`}
         subtitle={`Intervention du ${moment(
           workOrder?.data?.workOrder?.result?.date
         ).format("dddd LL")}`}
@@ -76,6 +76,7 @@ export const WorkOrderProcessing: React.FC = () => {
                     done: row.done,
                     comment: row.comment ?? "",
                     status: row.status,
+                    equipmentId: row.emplacement.equipmentId,
                   }}
                 />
               </div>

@@ -44,7 +44,7 @@ export const UpdateCustomerCategory: React.FC = () => {
   return (
     <>
       <Header
-        title="Modifier la Catégorie de client"
+        title="Catégorie de client"
         subtitle="Modifier la Catégorie"
         buttons={[
           {

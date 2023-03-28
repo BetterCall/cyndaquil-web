@@ -34,7 +34,7 @@ export const CreateControl: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouvelle Vérification"
+        title="Vérification"
         subtitle="Saisir une nouvelle vérification"
         buttons={[
           {

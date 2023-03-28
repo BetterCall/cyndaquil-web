@@ -22,6 +22,7 @@ export const useUpdateSite = ({ id, onCompleted }: IProps) => {
         try {
 
             const input = form.getValues()
+            console.log('INPUt ', parseParams(input))
             const { data } = await mutate({
                 variables: {
                     id,

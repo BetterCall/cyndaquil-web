@@ -41,7 +41,7 @@ export const client = new ApolloClient({
                     users: {
                         // Don't cache separate results based on
                         // any of this field's arguments.
-                        keyArgs: ["where", ["search", "role"]],
+                        keyArgs: ["where", ["search", "role", "roles"]],
                         // Concatenate the incoming list items with
                         // the existing list items.
                         merge(existing = {}, incoming, { args }): any {
@@ -147,7 +147,7 @@ export const client = new ApolloClient({
                     contacts: {
                         // Don't cache separate results based on
                         // any of this field's arguments.
-                        keyArgs: ["where", ["search", "siteId", "customerId"]],
+                        keyArgs: ["where", ["search", "siteId", "customerId", "categoryId"]],
 
                         // Concatenate the incoming list items with
                         // the existing list items.

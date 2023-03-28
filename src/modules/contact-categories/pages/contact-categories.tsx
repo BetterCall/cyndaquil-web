@@ -13,7 +13,8 @@ export const ContactCategories: React.FC = () => {
   return (
     <>
       <Header
-        title="Liste des Categories de Contacts"
+        title="Categories de Contacts"
+        subtitle={`Liste des categories de contacts`}
         buttons={[
           {
             actionText: "Nouvelle Catégorie",

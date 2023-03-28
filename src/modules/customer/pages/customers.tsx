@@ -28,10 +28,15 @@ export const Customers = () => {
     });
   }, [searchParams]);
 
+  console.log(" data", data);
+  console.log("  where: parseSearchParams(searchParams), ", {
+    where: parseSearchParams(searchParams),
+  });
+
   const renderList = () => {
     if (loading) return <Loading />;
     if (data?.customers?.results?.length === 0) {
-      return <EmptyList text="Aucun ClientM" />;
+      return <EmptyList text="Aucun Client" />;
     }
 
     return (
@@ -84,8 +89,8 @@ export const Customers = () => {
   return (
     <>
       <Header
-        title="Liste des Clients"
-        subtitle="Un sous titre un peu long"
+        title="Clients"
+        subtitle="Liste des Clients"
         buttons={[
           {
             actionText: "Nouveau Client",

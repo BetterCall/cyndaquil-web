@@ -66,6 +66,7 @@ export const EquipmentInput: React.FC<IProps> = ({
       <p className="label">N° Equipement</p>
       <input
         className="input w-full "
+        placeholder="Aucun Equipement en place"
         onChange={(e) => {
           setSearch(e.target.value);
           setSelected(false);

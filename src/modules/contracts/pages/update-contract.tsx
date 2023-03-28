@@ -6,7 +6,6 @@ import { CardHeader } from "../../../components/cards";
 import { FormHeader } from "../../../components/form";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
-import { useBenefits } from "../../benefits/hooks";
 
 type IContractParams = {
   id: string;
@@ -31,8 +30,8 @@ export const UpdateContract: React.FC = () => {
   return (
     <>
       <Header
-        subtitle={`${data?.contract?.result?.customer.name}`}
-        title={`${data?.contract?.result?.site?.name}`}
+        title={`Contrat`}
+        subtitle={`${data?.contract?.result?.customer.name} - ${data?.contract?.result?.site?.name} `}
         buttons={[
           {
             actionText: "Modifier",

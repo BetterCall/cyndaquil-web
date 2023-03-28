@@ -13,6 +13,13 @@ export interface CustomerQuery_customer_result_category {
   name: string;
 }
 
+export interface CustomerQuery_customer_result_commercial {
+  __typename: "User";
+  id: number;
+  firstname: string;
+  lastname: string;
+}
+
 export interface CustomerQuery_customer_result_contacts {
   __typename: "Contact";
   id: number;
@@ -32,7 +39,11 @@ export interface CustomerQuery_customer_result {
   city: string;
   lat: number;
   lng: number;
+  sitesCount: number;
+  categoryId: number | null;
   category: CustomerQuery_customer_result_category | null;
+  commercialId: number | null;
+  commercial: CustomerQuery_customer_result_commercial | null;
   contacts: CustomerQuery_customer_result_contacts[];
 }
 

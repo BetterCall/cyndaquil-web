@@ -15,6 +15,7 @@ export interface UserQuery_user_result {
   firstname: string;
   lastname: string;
   email: string;
+  phone: string;
   role: UserRole;
 }
 

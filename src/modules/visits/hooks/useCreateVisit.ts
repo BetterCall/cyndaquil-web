@@ -9,17 +9,22 @@ import {
     CreateVisitMutation,
     CreateVisitMutationVariables
 } from "../../../__generated__/CreateVisitMutation";
+import moment from "moment";
 
 interface IProps {
     defaultValues: DeepPartial<CreateVisitInput>
     onCompleted: () => any
+    onError: (message: string) => any
 }
 
-export const useCreateVisit = ({ defaultValues, onCompleted }: IProps) => {
+export const useCreateVisit = ({ defaultValues, onCompleted, onError }: IProps) => {
 
     const form = useForm<CreateVisitInput>({
         mode: "all",
-        defaultValues
+        defaultValues: {
+            date: moment(undefined).format("YYYY-MM-DD"),
+            ...defaultValues
+        }
     })
     const [mutate, { loading }] = useMutation<
         CreateVisitMutation,
@@ -46,6 +51,7 @@ export const useCreateVisit = ({ defaultValues, onCompleted }: IProps) => {
 
         } catch (error) {
             console.log(error)
+            onError(error.message)
         }
     }
     return {

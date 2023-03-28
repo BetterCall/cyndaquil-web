@@ -22,11 +22,10 @@ export const PaymentsPreview: React.FC<PaymentFiltersInput> = (where) => {
     <table className="table-auto w-full">
       <thead>
         <tr className="text-xs text-gray-500 text-left">
-          <th className="padding-table font-medium">Type</th>
-          <th className="padding-table font-medium text-center">N° Facture</th>
+          <th className="padding-table font-medium">N° Facture</th>
+          <th className="padding-table font-medium text-center">Type</th>
           <th className="padding-table font-medium text-center ">Saisie Par</th>
-          <th className="padding-table font-medium text-center ">Client</th>
-          <th className="padding-table font-medium text-right ">Site</th>
+          <th className="padding-table font-medium text-right ">Montant</th>
         </tr>
       </thead>
       <tbody>
@@ -35,16 +34,14 @@ export const PaymentsPreview: React.FC<PaymentFiltersInput> = (where) => {
             key={`payments-${payment.id}`}
             className={`text-xs  ${index % 2 ? "" : "bg-gray-50"} `}
           >
-            <td className="padding-table ">{payment.type}</td>
             <td className="padding-table ">{payment.invoiceId}</td>
+            <td className="padding-table text-center">{payment.type}</td>
             <td className="padding-table text-center">
               {`${payment.recordedBy?.firstname} ${payment.recordedBy?.lastname}`}
             </td>
-            <td className="padding-table text-center">
-              {payment.customer?.name || "-"}
-            </td>
+
             <td className="padding-table text-right ">
-              {payment.invoice?.site?.name || "-"}
+              {`${payment.amount} €`}
             </td>
           </tr>
         ))}

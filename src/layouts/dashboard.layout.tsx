@@ -115,7 +115,7 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
   };
 
   return (
-    <div className=" bg-body min-h-screen ">
+    <div className=" bg-body ">
       <nav className="sticky top-0 z-50 py-3 px-6 bg-white border-b">
         <div className="flex items-center justify-between">
           <Link to="/">
@@ -366,6 +366,13 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
               <ul className="text-sm font-medium">
                 <ExpendableLink
                   icon={<SendIcon />}
+                  title="Permissions"
+                  url="/permissions"
+                  submenus={[]}
+                />
+
+                <ExpendableLink
+                  icon={<SendIcon />}
                   title="Bugs"
                   url="/bugs"
                   submenus={[
@@ -401,7 +408,7 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
                         ></path>
                       </svg>
                     </span>
-                    <span>GodMode</span>
+                    <span>Mode Test</span>
                   </div>
                 )}
 
@@ -438,7 +445,7 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
           </nav>
         </div>
 
-        <div className=" min-h-screen bg-body ">
+        <div className="  bg-body ">
           <Outlet />
 
           <div className="fixed bottom-1 right-1">

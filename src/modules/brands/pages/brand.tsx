@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Loading } from "../../../components";
 
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
@@ -19,15 +20,21 @@ export const Brand = () => {
     }
   }, []);
 
-  const { data } = useBrand(+id!);
+  const { data, loading, error } = useBrand(+id!);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (data?.brand?.result === null || error || data?.brand?.ok === false) {
+    return <div>Erreur</div>;
+  }
 
   return (
     <>
       <Header
-        title={data?.brand?.result?.name || "Chargement..."}
-        subtitle={`${data?.brand?.result?.referencesCount} référence${
-          (data?.brand?.result?.referencesCount ?? 0) > 1 ? "s" : ""
-        }`}
+        title="Marque"
+        subtitle={`Marque : ${data?.brand?.result?.name}`}
         buttons={[
           {
             actionText: "Mettre à jour",

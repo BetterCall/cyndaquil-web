@@ -43,8 +43,8 @@ export const UpdateVisit: React.FC = () => {
   return (
     <>
       <Header
-        title="Modifier le Rendez-vous"
-        subtitle="Rensisgner les nouvelles informations du rendez-vous"
+        title="Rendez-vous"
+        subtitle="Modifier un rendez-vous"
         buttons={[
           {
             actionText: "Annuler",

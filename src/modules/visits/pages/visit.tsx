@@ -31,8 +31,8 @@ export const Visit: React.FC = () => {
   return (
     <>
       <Header
-        title={`${data?.visit?.result?.object}`}
-        subtitle={`${data?.visit?.result?.customer?.name}`}
+        title={`Rendez-vous`}
+        subtitle={`${data?.visit?.result?.object} - ${data?.visit?.result?.customer?.name}`}
         buttons={[
           {
             actionText: "Modifier",
@@ -46,7 +46,7 @@ export const Visit: React.FC = () => {
 
       <div className="main-container">
         <section className="section">
-          <div className="left">
+          <div className="element">
             <div className="card mb-2">
               <CardHeader title="Informations Générales" />
 
@@ -121,8 +121,8 @@ export const Visit: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="right">
-            <div className="card mb-2 font-bold">
+          <div className="element">
+            <div className="card mb-2">
               <CardHeader title="Adresse" />
               <div className="flex ">
                 <div className="w-1/2 mr-1 ">
@@ -178,12 +178,13 @@ export const Visit: React.FC = () => {
               </div>
             </div>
           </div>
+          <div className="element">
+            <div className="card">
+              <CardHeader title="Rapport" />
+              <VisitReportForm id={+id!} />
+            </div>
+          </div>
         </section>
-
-        <div className="card">
-          <CardHeader title="Rapport" />
-          <VisitReportForm id={+id!} />
-        </div>
       </div>
     </>
   );

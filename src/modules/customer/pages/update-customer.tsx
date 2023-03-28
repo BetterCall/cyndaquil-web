@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { Loading } from "../../../components/loading";
@@ -19,13 +20,18 @@ export const UpdateCustomer: React.FC = () => {
       navigate("/");
     }
   }, []);
+  const { data, refetch } = useCustomer(+id!);
 
   const { form, submit, loading } = useUpdateCustomer({
     id: +id!,
-    onCompleted: () => alert("ok"),
+    onCompleted: () => {
+      refetch();
+      toast.success("Le client a été modifié avec succès");
+    },
+    onError(message) {
+      toast.error(message);
+    },
   });
-
-  const { data, refetch } = useCustomer(+id!);
 
   useEffect(() => {
     if (data?.customer?.ok && data?.customer?.result) {
@@ -50,7 +56,7 @@ export const UpdateCustomer: React.FC = () => {
   return (
     <>
       <Header
-        title={data?.customer?.result?.name ?? ""}
+        title={"Client"}
         subtitle="Modifier les informations du client"
         buttons={[
           {

@@ -16,7 +16,7 @@ export const Visits: React.FC = () => {
   const navigate = useNavigate();
   const [limit] = useState(10);
 
-  const [search, { data, loading, fetchMore }] = useLazyVisits();
+  const [search, { data, loading, fetchMore, error }] = useLazyVisits();
 
   const [searchParams] = useSearchParams();
   useEffect(() => {
@@ -30,8 +30,17 @@ export const Visits: React.FC = () => {
     });
   }, [searchParams]);
 
+  console.log(data);
+  console.log(error);
+
   const renderList = () => {
     if (loading) return <Loading />;
+
+    if (data?.visits?.error || error) {
+      return (
+        <EmptyList error text={data?.visits?.error ?? error?.message ?? ""} />
+      );
+    }
 
     if (data?.visits?.results?.length === 0) {
       return <EmptyList text="Aucun Rendez-vous" />;
@@ -86,8 +95,8 @@ export const Visits: React.FC = () => {
   return (
     <>
       <Header
-        title={" Liste des Rendez-vous"}
-        subtitle="Gestion des rendez-vous"
+        title={"Rendez-vous"}
+        subtitle={"Liste des Rendez-vous"}
         buttons={[
           {
             actionText: "Nouveau Rendez-vous",

@@ -8,6 +8,7 @@ import { SiteInput } from "../../sites/components/site-input";
 import { UserInput } from "../../users/components";
 import { CustomerInput } from "../../customer/components";
 import { ContractStatusSelect } from "./contract-status-select";
+import { toast } from "react-toastify";
 
 export const SearchContractsInput: React.FC = (defaultValues) => {
   const navigate = useNavigate();
@@ -27,6 +28,8 @@ export const SearchContractsInput: React.FC = (defaultValues) => {
   const [isFormOpened, setIsFormOpened] = useState(
     Object.values(defaultValues).some((v) => v)
   );
+
+  const search = form.watch("search");
 
   return (
     <>
@@ -52,7 +55,18 @@ export const SearchContractsInput: React.FC = (defaultValues) => {
                 </svg>
               </label>
               <input
-                placeholder="Rechercher un client"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    if (!search || search.length < 3) {
+                      toast.error(
+                        "La recherche doit contenir au minimum 3 lettres"
+                      );
+                      return;
+                    }
+                    onSearchSubmit();
+                  }
+                }}
+                placeholder="Rechercher un contrat"
                 autoComplete="off"
                 {...form.register("search", {
                   minLength: 3,
@@ -96,7 +110,7 @@ export const SearchContractsInput: React.FC = (defaultValues) => {
                   <SiteInput form={form} canSelectAddress={false} />
                 </div>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between mt-4 ">
                 <div></div>
                 <Button
                   canClick={true}

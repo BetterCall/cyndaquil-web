@@ -17,7 +17,7 @@ export const CreateTaxe: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouvelle Taxe"
+        title="Taxe"
         subtitle="Creer une nouvelle Taxe"
         buttons={[
           {

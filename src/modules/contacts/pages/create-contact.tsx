@@ -1,6 +1,7 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { CardHeader } from "../../../components/cards";
 import { Header } from "../../../components/header";
 import { DashboardIcon } from "../../../components/icons";
 import { parseSearchParams } from "../../../helpers/clean-object";
@@ -23,11 +24,11 @@ export const CreateContact: React.FC = () => {
   return (
     <>
       <Header
-        title="Liste des Contrats"
-        subtitle="Un sous titre un peu long"
+        title="Contact"
+        subtitle="Saississez les informations d'un nouveau Contact"
         buttons={[
           {
-            actionText: "Nouveau Contrat",
+            actionText: "Annuler",
             bgColor: "indigo",
             textColor: "white",
             link: "/contacts",
@@ -37,6 +38,7 @@ export const CreateContact: React.FC = () => {
       />
       <div className="main-container">
         <div className="card">
+          <CardHeader title="Créer un contact" />
           <ContactForm
             loading={loading}
             submit={submit}

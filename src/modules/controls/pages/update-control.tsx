@@ -51,7 +51,7 @@ export const UpdateControl = () => {
   return (
     <>
       <Header
-        title={`Modifier :  `}
+        title={`Vérification`}
         subtitle="Modifier une vérification"
         buttons={[
           {

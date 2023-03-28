@@ -9,7 +9,7 @@ import { useLazyBenefit } from "../hooks";
 export const Benefits = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [search, { data, loading, fetchMore }] = useLazyBenefit();
+  const [search, { data, loading, fetchMore, error }] = useLazyBenefit();
 
   useEffect(() => {
     search({
@@ -20,11 +20,13 @@ export const Benefits = () => {
     });
   }, [searchParams]);
 
+  console.log(data, error);
+
   return (
     <>
       <Header
-        title={"Liste des Services"}
-        subtitle={""}
+        title={"Services"}
+        subtitle={"Afficher la liste des services"}
         buttons={[
           {
             actionText: "Nouveau Service",

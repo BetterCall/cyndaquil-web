@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, createSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import { cleanObject } from "../../../helpers/clean-object";
 import { BugFiltersInput } from "../../../__generated__/globalTypes";
 import { Button } from "../../../components/button";
@@ -29,6 +31,8 @@ export const SearchBugInput: React.FC<BugFiltersInput> = (defaultValues) => {
     Object.values(defaultValues).some((v) => v)
   );
 
+  const search = form.watch("search");
+
   return (
     <div className="search card">
       <div className="grid gap-3 w-full items-center  px-2">
@@ -52,6 +56,18 @@ export const SearchBugInput: React.FC<BugFiltersInput> = (defaultValues) => {
               </svg>
             </label>
             <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  if (!search || search.length < 3) {
+                    toast.error(
+                      "La recherche doit contenir au minimum 3 lettres"
+                    );
+
+                    return;
+                  }
+                  onSearchSubmit();
+                }
+              }}
               placeholder="Rechercher un bug"
               autoComplete="off"
               {...form.register("search", {
@@ -79,7 +95,7 @@ export const SearchBugInput: React.FC<BugFiltersInput> = (defaultValues) => {
           </span>
         </div>
         {isFormOpened && (
-          <div className="px-4 ">
+          <div className="px-4">
             <div className="flex flex-wrap -mx-4 -mb-4 md:mb-0">
               <div className="w-full md:w-1/3 p-3">
                 <UserInput form={form} inputName="userId" />
@@ -104,7 +120,7 @@ export const SearchBugInput: React.FC<BugFiltersInput> = (defaultValues) => {
                 <BugCriticalSelect form={form} />
               </div>
             </div>
-            <div className="flex justify-between mt-4">
+            <div className="flex justify-between mt-4 ">
               <div></div>
               <Button
                 canClick={true}

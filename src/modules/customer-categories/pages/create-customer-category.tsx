@@ -22,8 +22,8 @@ export const CreateCustomerCategory: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouvelle Catégorie de client"
-        subtitle="Un sous titre un peu long"
+        title="Catégorie de client"
+        subtitle="Nouvelle Catégorie de client"
         buttons={[
           {
             actionText: "Annuler",

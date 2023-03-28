@@ -54,7 +54,7 @@ export const UpdateTaxe: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouvelle Taxe"
+        title="Taxe"
         subtitle="Creer une nouvelle taxe"
         buttons={[
           {

@@ -22,8 +22,8 @@ export const CreatePayment: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouveau Paiement"
-        subtitle="Saisir un paiement"
+        title="Paiement"
+        subtitle="Nouveau Paiement"
         buttons={[
           {
             actionText: "Annuler",

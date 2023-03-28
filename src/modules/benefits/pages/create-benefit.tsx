@@ -20,7 +20,7 @@ export const CreateBenefit: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouveau Service"
+        title="Service"
         subtitle="Creer un nouveau service"
         buttons={[
           {

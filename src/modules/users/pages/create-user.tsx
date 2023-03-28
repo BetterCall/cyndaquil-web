@@ -18,7 +18,7 @@ export const CreateUser: React.FC = () => {
   return (
     <>
       <Header
-        title="Nouvel Utilisateur"
+        title="Utilisateur"
         subtitle="Creer un nouvel utilisateur"
         buttons={[
           {

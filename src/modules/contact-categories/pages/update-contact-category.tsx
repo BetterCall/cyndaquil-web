@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { CardHeader } from "../../../components/cards";
 import { Header } from "../../../components/header";
 import { DashboardIcon } from "../../../components/icons";
 import { Loading } from "../../../components/loading";
@@ -46,8 +47,8 @@ export const UpdateContactCategory = () => {
   return (
     <>
       <Header
-        title="Liste des Contrats"
-        subtitle="Un sous titre un peu long"
+        title="Type de Contats"
+        subtitle="Modifier un Type de Contact"
         buttons={[
           {
             actionText: "Nouveau Contrat",

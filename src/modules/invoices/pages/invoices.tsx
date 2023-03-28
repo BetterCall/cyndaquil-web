@@ -78,11 +78,11 @@ export const Invoices: React.FC = () => {
   return (
     <>
       <Header
-        title="Liste des Contrats"
-        subtitle="Un sous titre un peu long"
+        title="Factures"
+        subtitle="Liste des factures"
         buttons={[
           {
-            actionText: "Nouveau Contrat",
+            actionText: "Nouvelle Facture",
             bgColor: "indigo",
             textColor: "white",
             link: "/invoice/create",

@@ -38,6 +38,7 @@ export interface PaymentsQuery_payments_results {
   __typename: "Payment";
   id: number;
   type: PaymentType;
+  amount: number;
   customerId: number | null;
   customer: PaymentsQuery_payments_results_customer | null;
   invoiceId: number | null;

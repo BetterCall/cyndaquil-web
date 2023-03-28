@@ -16,7 +16,8 @@ export const CustomerCategories: React.FC = () => {
   return (
     <>
       <Header
-        title="Liste des Categories de Client"
+        title="Catégories de Client"
+        subtitle="Liste des Categories de Client"
         buttons={[
           {
             actionText: "Nouvelle category",

@@ -65,7 +65,7 @@ export const SearchPaymentsInput: React.FC = (defaultValues) => {
 
                 <div className="w-full md:w-1/3 p-3"></div>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between  mt-4">
                 <div></div>
                 <Button
                   canClick={true}
