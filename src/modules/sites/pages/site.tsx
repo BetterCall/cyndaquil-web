@@ -5,7 +5,7 @@ import { ChangeCustomer, ChangeManager } from "../modals";
 import { CardHeader } from "../../../components/cards";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
-import { ContractStatus } from "../../../__generated__/globalTypes";
+import { ContractStatus, Database } from "../../../__generated__/globalTypes";
 import { DemandsPreview } from "../../demands/components";
 import { ContactsPreview } from "../../contacts/components";
 import { ContractsPreview } from "../../contracts/components";
@@ -14,6 +14,8 @@ import { CreateEmplacement } from "../../emplacements/modals";
 import { WorkOrdersPreview } from "../../work-orders/components";
 import { useSite } from "../hooks";
 import { Button, EmptyList, Loading } from "../../../components";
+import { FilesPreview } from "../../../components/files-preview";
+import { CreateUploadModal } from "../../uploads/modals";
 
 type ISiteParams = {
   id: string;
@@ -187,7 +189,7 @@ export const Site: React.FC = () => {
                           )
                         }
                       >
-                        <p className="label">Nombre d'immeuble en gestion</p>
+                        <p className="label">Nb. d'immeuble en gestion</p>
                         <input
                           disabled
                           value={data?.site?.result?.customer?.sitesCount}
@@ -317,7 +319,7 @@ export const Site: React.FC = () => {
                           )
                         }
                       >
-                        <p className="label">Nombre d'immeuble en gestion</p>
+                        <p className="label">Nb. d'immeuble en gestion</p>
                         <input
                           disabled
                           value={data?.site?.result?.manager?.sitesCount}
@@ -486,6 +488,32 @@ export const Site: React.FC = () => {
                   status: ContractStatus.Declined,
                 }}
               />
+            </div>
+          </div>
+
+          <div className="w-full mx-2">
+            <div className="card">
+              <CardHeader title="Fichiers" />
+              <FilesPreview
+                where={{ database: Database.Sites, objectId: +id! }}
+              />
+              <div className="grid -mx-2 mt-2  justify-items-center ">
+                <div className="w-full md:w-1/4 px-2">
+                  {/* <div
+                    className="btn"
+                    onClick={() =>
+                      navigate(`/upload/create?database=Sites&objectId=${id}`)
+                    }
+                  >
+                    Nouveau Fichier
+                  </div> */}
+                  <CreateUploadModal
+                    defaultValues={{ database: Database.Sites, objectId: +id! }}
+                  >
+                    <div className="btn">Nouveau Fichier</div>
+                  </CreateUploadModal>
+                </div>
+              </div>
             </div>
           </div>
         </div>

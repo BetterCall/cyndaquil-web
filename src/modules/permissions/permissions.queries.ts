@@ -70,7 +70,31 @@ export const PERMISSION_USERS = gql`
 `
 
 export const TOGGLE_PERMISSION = gql`
-    mutation TogglePermissionMutation(  $permissionId: Int!  , $userId: Int! )  {
-        togglePermission(  permissionId: $permissionId  , userId: $userId )
+    mutation TogglePermissionMutation(  $permissionId: Int!  , $userId: Int , $userRole: UserRole  )  {
+        togglePermission(  permissionId: $permissionId  , userId: $userId , userRole: $userRole ) 
+    }
+`
+
+export const MY_USER_PERMISSIONS = gql`
+    query MyUserPermissionsQuery  {
+        myUserPermissions {
+            ok
+            results {
+                id
+                active
+                permission {
+                    id
+                    resource
+                    action
+                    label
+                }
+            } 
+        }
+    }
+`
+
+export const CAN_ACCESS = gql`
+    query CanAccessQuery(  $action: String! ) {
+        canAccess( action: $action )
     }
 `

@@ -18,7 +18,7 @@
   }
 
   .main-container {
-    @apply  py-2 px-6
+    @apply  py-2 px-2 md:px-6
   }
 
   .label { 

@@ -12,6 +12,7 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
+import { SimpleMap } from "./maps";
 
 interface IAddressInputsProps {
   form: UseFormReturn<any, any>;
@@ -54,6 +55,8 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({ form }) => {
         .long_name
     );
   };
+
+  const [lat, lng] = form.watch(["lat", "lng"]);
 
   return (
     <div className="">
@@ -135,6 +138,7 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({ form }) => {
           <div className="w-full mb-3">
             <p className="label">Latitude</p>
             <input
+              disabled
               className="w-full input"
               {...form.register("lat", { required: "name required" })}
               placeholder="lat"
@@ -145,6 +149,7 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({ form }) => {
           <div className="w-full mb-3">
             <p className="label">Longitude</p>
             <input
+              disabled
               className="w-full input"
               {...form.register("lng", { required: "name required" })}
               placeholder="lng"
@@ -152,6 +157,8 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({ form }) => {
           </div>
         </div>
       </div>
+
+      {lat && lng ? <SimpleMap lat={lat} lng={lng} zoom={13} /> : null}
     </div>
   );
 };

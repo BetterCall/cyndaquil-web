@@ -19,19 +19,7 @@ export const CreateBenefit: React.FC = () => {
 
   return (
     <>
-      <Header
-        title="Service"
-        subtitle="Creer un nouveau service"
-        buttons={[
-          {
-            actionText: "Annuler",
-            bgColor: "indigo",
-            textColor: "white",
-            link: `/benefices`,
-            icon: <SendIcon />,
-          },
-        ]}
-      />
+      <Header title="Service" subtitle="Creer un nouveau service" />
       <div className="main-container">
         <div className="card">
           <BenefitForm

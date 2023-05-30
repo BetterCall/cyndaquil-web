@@ -13,6 +13,26 @@ export interface EmplacementQuery_emplacement_result_category {
   name: string;
 }
 
+export interface EmplacementQuery_emplacement_result_equipment_reference_brand {
+  __typename: "Brand";
+  id: number;
+  name: string;
+}
+
+export interface EmplacementQuery_emplacement_result_equipment_reference {
+  __typename: "Reference";
+  id: number;
+  name: string;
+  brand: EmplacementQuery_emplacement_result_equipment_reference_brand | null;
+}
+
+export interface EmplacementQuery_emplacement_result_equipment {
+  __typename: "Equipment";
+  id: number;
+  code: number;
+  reference: EmplacementQuery_emplacement_result_equipment_reference | null;
+}
+
 export interface EmplacementQuery_emplacement_result_site_customer {
   __typename: "Customer";
   id: number;
@@ -41,6 +61,8 @@ export interface EmplacementQuery_emplacement_result {
   floor: number;
   categoryId: number | null;
   category: EmplacementQuery_emplacement_result_category | null;
+  equipmentId: number | null;
+  equipment: EmplacementQuery_emplacement_result_equipment | null;
   siteId: number | null;
   site: EmplacementQuery_emplacement_result_site | null;
 }

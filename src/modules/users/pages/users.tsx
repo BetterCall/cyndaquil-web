@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../../components/button";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
+import { CreateUserButton } from "../buttons";
 import { useUsers } from "../hooks";
 
 export const Users: React.FC = () => {
@@ -16,21 +17,12 @@ export const Users: React.FC = () => {
 
   return (
     <>
-      <Header
-        title="Utilisateurs"
-        subtitle="Liste des utilisateurs"
-        buttons={[
-          {
-            actionText: "Nouvel Utilisateur",
-            bgColor: "indigo",
-            textColor: "white",
-            link: "/user/create",
-            icon: <SendIcon />,
-          },
-        ]}
-      />
+      <Header title="Utilisateurs" subtitle="Liste des utilisateurs" />
 
       <div className="main-container">
+        <div className="flex">
+          <CreateUserButton />
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           <table className="table-auto w-full">
             <thead>

@@ -3,8 +3,8 @@ import ReactLoading from "react-loading";
 
 export const Loading: React.FC = () => {
   return (
-    <div className="flex align-middle	justify-center p-5 ">
-      <div className="flex items-center justify-center aspect-square w-1/2">
+    <div className="flex align-middle	justify-center p-5  ">
+      <div className="flex items-center justify-center aspect-square w-1/5">
         <ReactLoading
           type={"spinningBubbles"}
           color={"gray"}

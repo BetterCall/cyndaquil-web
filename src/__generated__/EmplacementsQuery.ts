@@ -21,6 +21,12 @@ export interface EmplacementsQuery_emplacements_results_category {
   name: string;
 }
 
+export interface EmplacementsQuery_emplacements_results_equipment {
+  __typename: "Equipment";
+  id: number;
+  code: number;
+}
+
 export interface EmplacementsQuery_emplacements_results {
   __typename: "Emplacement";
   id: number;
@@ -33,6 +39,8 @@ export interface EmplacementsQuery_emplacements_results {
   site: EmplacementsQuery_emplacements_results_site | null;
   categoryId: number | null;
   category: EmplacementsQuery_emplacements_results_category | null;
+  equipmentId: number | null;
+  equipment: EmplacementsQuery_emplacements_results_equipment | null;
 }
 
 export interface EmplacementsQuery_emplacements {

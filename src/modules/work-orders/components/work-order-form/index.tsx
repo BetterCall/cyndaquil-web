@@ -21,6 +21,10 @@ import {
 import { useUsers } from "../../../users/hooks";
 import { CustomerInput } from "../../../customer/components";
 import { EmptyList } from "../../../../components";
+import { CreateEmplacement } from "../../../emplacements/modals";
+import { useApolloClient } from "@apollo/client";
+import { EMPLACEMENTS } from "../../../emplacements/emplacements.queries";
+import { ErrorMessage } from "@hookform/error-message";
 
 interface IWorkOrderFormProps {
   loading: boolean;
@@ -35,6 +39,7 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
   form,
   disabledFields = [],
 }) => {
+  const client = useApolloClient();
   const { workOrderId } = form.watch();
   const additionalInformations: string = form.watch("additionalInformations");
   const inputRows =
@@ -92,37 +97,75 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
     submit();
   };
 
-  console.log("date", date);
-
   return (
     <div className="w-full">
       <div className="section">
         <div className="element">
           <div className="card mb-2">
             <CardHeader title="Informations Générales" />
+
+            <Controller
+              // @ts-ignore
+              control={form.control}
+              name="imperative"
+              render={({ field: { onChange, value } }) => {
+                return (
+                  <div className="flex items-center mt-3 mb-3 ">
+                    <input
+                      type={"checkbox"}
+                      checked={value}
+                      onChange={() => {
+                        onChange(!value);
+                      }}
+                    />
+                    <span className="ml-2 font-medium ">
+                      Intervention Impérative
+                    </span>
+                  </div>
+                );
+              }}
+            />
+
             <div className="w-full mb-3">
               <p className="mb-1.5 font-medium text-base text-coolGray-800">
-                Objet
+                *Objet
               </p>
               <input
                 className="w-full input"
-                {...form.register("object", { required: "name required" })}
+                {...form.register("object", {
+                  required: "L'objet du Bon est Requis",
+                })}
                 placeholder="Objet de l'intervention"
+              />
+              <ErrorMessage
+                errors={form.formState?.errors}
+                name="object"
+                render={({ message }) => (
+                  <p className="error-message">{message}</p>
+                )}
               />
             </div>
 
             <div className="w-full mb-3 ">
               <p className="mb-1.5 font-medium text-base text-coolGray-800">
-                Informations
+                *Informations
               </p>
               <textarea
                 style={{ height: "auto" }}
                 rows={inputRows}
                 {...form.register("description", {
-                  required: "name required",
+                  required: "La description est requise, Pensez au Tech ;)",
                 })}
                 placeholder="Informations"
                 className="input w-full "
+              />
+
+              <ErrorMessage
+                errors={form.formState?.errors}
+                name="description"
+                render={({ message }) => (
+                  <p className="error-message">{message}</p>
+                )}
               />
             </div>
             <div className="w-full mb-3">
@@ -154,6 +197,42 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
 
         <div className="element">
           <div className="card mb-4">
+            <CardHeader title="Nouvel Emplacement" />
+            {siteId ? (
+              <CreateEmplacement
+                defaultValues={{
+                  siteId: siteId,
+                }}
+                onCompleted={async (emplacement) => {
+                  await client.cache.updateQuery(
+                    { query: EMPLACEMENTS, variables: { where: { siteId } } },
+                    (data) => {
+                      console.log(data);
+                      console.log(emplacement);
+                      return {
+                        ...data,
+                        emplacements: {
+                          ...data.emplacements,
+
+                          results: [
+                            {
+                              ...emplacement,
+                              __typename: "Emplacement",
+                            },
+                            ...data.emplacements?.results,
+                          ],
+                        },
+                      };
+                    }
+                  );
+                  toggleRow({
+                    emplacementId: emplacement.id,
+                  });
+                }}
+              />
+            ) : null}
+          </div>
+          <div className="card mb-4">
             <CardHeader title="Emplacements" />
             {workOrderId ? (
               <WorkOrderRowsSelect
@@ -165,7 +244,6 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
               <EmptyList text="Selectionnez un site" />
             ) : (
               <EmplacementsSelect
-                value={rows}
                 setRowBenefit={setRowBenefit}
                 siteId={siteId}
                 emplacementsSelected={rows}
@@ -181,6 +259,27 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
               title="Date"
               subtitle="Update your billing details and address."
             />
+
+            <Controller
+              // @ts-ignore
+              control={form.control}
+              name="appointment"
+              render={({ field: { onChange, value } }) => {
+                return (
+                  <div className="flex items-center mt-3 mb-3 ">
+                    <input
+                      type={"checkbox"}
+                      checked={value}
+                      onChange={() => {
+                        onChange(!value);
+                      }}
+                    />
+                    <span className="ml-2 font-medium ">Rendez vous</span>
+                  </div>
+                );
+              }}
+            />
+
             <p className="mb-1.5 font-medium text-base text-coolGray-800">
               Jour
             </p>
@@ -289,16 +388,21 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
         </div>
 
         {date ? (
-          usersData?.users?.results?.map((user) => (
-            <div className="element" key={`user-user.${user.id}`}>
-              <div className="card">
-                <CardHeader title={`${user.firstname} ${user.lastname}`} />
-                <div className="w-full mb-3">
-                  <WorkOrdersPreview userId={user.id} date={date} />
+          usersData?.users?.results?.map((user) => {
+            if (userId) {
+              if (userId !== user.id) return null;
+            }
+            return (
+              <div className="element" key={`user-user.${user.id}`}>
+                <div className="card">
+                  <CardHeader title={`${user.firstname} ${user.lastname}`} />
+                  <div className="w-full mb-3">
+                    <WorkOrdersPreview userId={user.id} date={date} />
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <div className="w-full px-2">
             <div className=" card mb-4">

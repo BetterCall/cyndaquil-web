@@ -1,8 +1,7 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
+import { Benefit, Benefits, CreateBenefit, UpdateBenefit } from "./pages";
 import { UserRole } from "../../__generated__/globalTypes";
-import { Todo } from "../todo";
-import { Benefits, CreateBenefit, UpdateBenefit } from "./pages";
 
 export const BenefitsRouter = [
   <Route
@@ -19,7 +18,7 @@ export const BenefitsRouter = [
       path=":id"
       element={
         <ProtectedRoute roles={[UserRole.Client, "Any"]}>
-          <Todo />
+          <Benefit />
         </ProtectedRoute>
       }
     />

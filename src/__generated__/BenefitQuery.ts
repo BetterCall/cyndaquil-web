@@ -7,11 +7,19 @@
 // GraphQL query operation: BenefitQuery
 // ====================================================
 
+export interface BenefitQuery_benefit_result_category {
+  __typename: "EquipmentCategory";
+  id: number;
+  name: string;
+}
+
 export interface BenefitQuery_benefit_result {
   __typename: "Benefit";
   id: number;
   name: string;
   price: number;
+  categoryId: number;
+  category: BenefitQuery_benefit_result_category;
 }
 
 export interface BenefitQuery_benefit {

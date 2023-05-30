@@ -9,6 +9,9 @@ import { ContactDetails } from "../../contacts/components";
 import { Loading } from "../../../components";
 import { useMe } from "../../users/hooks/useMe";
 import { VisitReportForm } from "../components/visit-report-form";
+import { FilesPreview } from "../../../components/files-preview";
+import { Database } from "../../../__generated__/globalTypes";
+import { CreateUploadModal } from "../../uploads/modals";
 
 export const Visit: React.FC = () => {
   const { id } = useParams();
@@ -182,6 +185,27 @@ export const Visit: React.FC = () => {
             <div className="card">
               <CardHeader title="Rapport" />
               <VisitReportForm id={+id!} />
+            </div>
+          </div>
+
+          <div className="w-full mx-2">
+            <div className="card">
+              <CardHeader title="Fichiers" />
+              <FilesPreview
+                where={{ database: Database.Visits, objectId: +id! }}
+              />
+              <div className="grid -mx-2 mt-2  justify-items-center ">
+                <div className="w-full md:w-1/4 px-2">
+                  <CreateUploadModal
+                    defaultValues={{
+                      database: Database.Taxes,
+                      objectId: +id!,
+                    }}
+                  >
+                    <div className="btn">Nouveau Fichier</div>
+                  </CreateUploadModal>
+                </div>
+              </div>
             </div>
           </div>
         </section>

@@ -11,7 +11,7 @@ type IHeaderButton = {
 interface IHeaderProps {
   title: string;
   subtitle?: any;
-  buttons?: IHeaderButton[];
+  buttons?: any[];
 }
 
 export const Header: React.FC<IHeaderProps> = ({

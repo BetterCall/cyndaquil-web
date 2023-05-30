@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useApolloClient, gql } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { UpdateEmplacementInput } from "../../../__generated__/globalTypes";
 import { UPDATE_EMPLACEMENT } from "../emplacements.queries";
@@ -9,12 +9,12 @@ import { UpdateEmplacementMutation, UpdateEmplacementMutationVariables } from ".
 interface IProps {
     id: number,
     defaultValues?: any,
-    onCompleted: () => any
+    onCompleted: any
     onError: (message: string) => any
 }
 
 export const useUpdateEmplacement = ({ id, defaultValues, onCompleted, onError }: IProps) => {
-
+    const client = useApolloClient()
     const form = useForm<UpdateEmplacementInput>({
         defaultValues,
         mode: "all",
@@ -37,6 +37,7 @@ export const useUpdateEmplacement = ({ id, defaultValues, onCompleted, onError }
 
             if (data?.updateEmplacement?.ok) {
                 onCompleted()
+
             } else {
                 throw Error(data?.updateEmplacement?.error ?? "Error")
             }

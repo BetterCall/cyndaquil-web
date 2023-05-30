@@ -1,10 +1,10 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
-import { Todo } from "../todo";
 import {
   CreateContactCategory,
   ContactCategories,
   UpdateContactCategory,
+  ContactCategory,
 } from "./pages";
 
 export const ContactCategoriesRouter = [
@@ -22,7 +22,7 @@ export const ContactCategoriesRouter = [
       path=":id"
       element={
         <ProtectedRoute roles={["Any"]}>
-          <Todo />
+          <ContactCategory />
         </ProtectedRoute>
       }
     />

@@ -15,6 +15,8 @@ export interface WorkOrderPart {
   object: string;
   description: string | null;
   billable: boolean;
+  appointment: boolean;
+  imperative: boolean;
   type: WorkOrderType;
   date: string | null;
   start: string | null;

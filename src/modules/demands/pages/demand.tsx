@@ -8,6 +8,9 @@ import { useDemand } from "../hooks";
 import { EmptyList, Loading } from "../../../components";
 import { useMe } from "../../users/hooks/useMe";
 import { ResolveDemand } from "../components/resolve-demand";
+import { FilesPreview } from "../../../components/files-preview";
+import { Database } from "../../../__generated__/globalTypes";
+import { CreateUploadModal } from "../../uploads/modals";
 
 type IDemandParams = {
   id: string;
@@ -160,6 +163,27 @@ export const Demand: React.FC = () => {
             <div className="card mb-2">
               <CardHeader title="Rapport" />
               {renderRepport()}
+            </div>
+          </div>
+
+          <div className="w-full mx-2">
+            <div className="card">
+              <CardHeader title="Fichiers" />
+              <FilesPreview
+                where={{ database: Database.Demands, objectId: +id! }}
+              />
+              <div className="grid -mx-2 mt-2  justify-items-center ">
+                <div className="w-full md:w-1/4 px-2">
+                  <CreateUploadModal
+                    defaultValues={{
+                      database: Database.Benefits,
+                      objectId: +id!,
+                    }}
+                  >
+                    <div className="btn">Nouveau Fichier</div>
+                  </CreateUploadModal>
+                </div>
+              </div>
             </div>
           </div>
         </div>

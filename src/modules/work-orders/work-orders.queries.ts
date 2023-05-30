@@ -6,6 +6,8 @@ export const WORK_ORDER_FRAGMENT = gql`
         object
         description
         billable
+        appointment
+        imperative
         type
         date
         start

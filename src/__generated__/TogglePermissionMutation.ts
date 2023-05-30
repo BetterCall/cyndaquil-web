@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { UserRole } from "./globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: TogglePermissionMutation
 // ====================================================
@@ -13,5 +15,6 @@ export interface TogglePermissionMutation {
 
 export interface TogglePermissionMutationVariables {
   permissionId: number;
-  userId: number;
+  userId?: number | null;
+  userRole?: UserRole | null;
 }

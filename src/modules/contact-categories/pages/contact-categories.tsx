@@ -46,12 +46,17 @@ export const ContactCategories: React.FC = () => {
                         <p
                           className="font-medium cursor-pointer"
                           onClick={() =>
-                            navigate(`/contacts?categoryId=${category.id}`)
+                            navigate(`/contacts/category/${category.id}`)
                           }
                         >
                           {category.name}
                         </p>
-                        <p className="text-gray-500">
+                        <p
+                          className="text-gray-500"
+                          onClick={() =>
+                            navigate(`/contacts?categoryId=${category.id}`)
+                          }
+                        >
                           {category.contactsCount} client{" "}
                         </p>
                       </div>

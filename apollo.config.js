@@ -4,7 +4,7 @@ module.exports = {
         tagName:  "gql" ,
         service: {
             name: "cyndaquil",
-            url: "http://localhost:4000/graphql",
+            url: "http://localhost:5000/graphql",
         
         },
     }

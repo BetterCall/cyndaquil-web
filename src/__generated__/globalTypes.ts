@@ -48,7 +48,10 @@ export enum Database {
   Sites = "Sites",
   SupplierReferences = "SupplierReferences",
   Suppliers = "Suppliers",
+  Taxes = "Taxes",
   Transfers = "Transfers",
+  UploadCategories = "UploadCategories",
+  Uploads = "Uploads",
   Users = "Users",
   Visits = "Visits",
   WorkOrders = "WorkOrders",
@@ -313,6 +316,7 @@ export interface CreateSiteInput {
   name: string;
   buildingsCount: number;
   entrancesCount: number;
+  floorsCount: number;
   customerId?: number | null;
   managerId?: number | null;
 }
@@ -338,6 +342,10 @@ export interface CreateTransferInput {
   comment?: string | null;
   iban: string;
   customerId: number;
+}
+
+export interface CreateUploadCategoryInput {
+  name: string;
 }
 
 export interface CreateUserInput {
@@ -373,6 +381,8 @@ export interface CreateWorkOrderInput {
   object: string;
   description?: string | null;
   type: WorkOrderType;
+  imperative: boolean;
+  appointment: boolean;
   date?: string | null;
   start?: string | null;
   end?: string | null;
@@ -412,6 +422,7 @@ export interface DuplicateBuildingEmplacementsInput {
 export interface EmplacementsFiltersInput {
   categoryId?: number | null;
   siteId?: number | null;
+  siteIds?: number[] | null;
 }
 
 export interface EquipmentFiltersInput {
@@ -640,6 +651,7 @@ export interface UpdateSiteInput {
   name?: string | null;
   buildingsCount?: number | null;
   entrancesCount?: number | null;
+  floorsCount?: number | null;
   customerId?: number | null;
   managerId?: number | null;
   completed?: boolean | null;
@@ -666,6 +678,10 @@ export interface UpdateTransferInput {
   comment?: string | null;
   iban?: string | null;
   customerId?: number | null;
+}
+
+export interface UpdateUploadCategoryInput {
+  name?: string | null;
 }
 
 export interface UpdateUserInput {
@@ -706,6 +722,8 @@ export interface UpdateWorkOrderInput {
   object?: string | null;
   description?: string | null;
   type?: WorkOrderType | null;
+  imperative?: boolean | null;
+  appointment?: boolean | null;
   date?: string | null;
   start?: string | null;
   end?: string | null;
@@ -726,6 +744,11 @@ export interface UpdateWorkOrderRowInput {
   emplacementCode?: number | null;
 }
 
+export interface UploadFiltersInput {
+  database?: Database | null;
+  objectId?: number | null;
+}
+
 export interface UsersFiltersInput {
   search?: string | null;
   role?: UserRole | null;
@@ -741,6 +764,7 @@ export interface VisitFiltersInput {
 }
 
 export interface WorkOrderFiltersInput {
+  ids?: number[] | null;
   billed?: boolean | null;
   search?: string | null;
   postal?: string | null;
@@ -755,6 +779,7 @@ export interface WorkOrderFiltersInput {
 
 export interface WorkOrderRowFiltersInput {
   workOrderId?: number | null;
+  workOrderIds?: number[] | null;
   emplacementId?: number | null;
   benefitId?: number | null;
   done?: boolean | null;

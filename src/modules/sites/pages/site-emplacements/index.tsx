@@ -14,6 +14,7 @@ import {
   useEmplacements,
 } from "../../../emplacements/hooks";
 import { useSite } from "../../hooks";
+import { EmplacementPreview } from "../../../emplacements/modals";
 
 type ISiteParams = {
   id: string;
@@ -139,42 +140,82 @@ export const SiteEmplacements: React.FC = () => {
                         {emplacements.map((emplacement) => {
                           return (
                             <div className="">
-                              <div className="flex ">
-                                <div className="w-1/2 mr-1">
-                                  <div className="w-full mb-3">
-                                    <p className="label">Etage</p>
-                                    <input
-                                      className="input w-full"
-                                      type="text"
-                                      value={emplacement.floor ?? ""}
-                                      disabled
-                                    />
+                              <EmplacementPreview
+                                emplacementId={emplacement.id}
+                              >
+                                <div className="flex ">
+                                  <div className="w-1/2 mr-1">
+                                    <div className="w-full mb-1">
+                                      <p className="label">Etage</p>
+                                      <input
+                                        className="input w-full"
+                                        type="text"
+                                        value={emplacement.floor ?? ""}
+                                        disabled
+                                      />
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    className="w-1/2 ml-1 "
+                                    onClick={() => {}}
+                                  >
+                                    <div className="w-full mb-1">
+                                      <p className="label">Catégorie</p>
+                                      <input
+                                        className="input w-full"
+                                        type="text"
+                                        value={emplacement.category?.name ?? ""}
+                                        disabled
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="flex ">
+                                  <div className="w-1/2 mr-1">
+                                    <div className="w-full mb-3">
+                                      <p className="label">Code Emplacement</p>
+                                      <input
+                                        className="input w-full"
+                                        type="text"
+                                        value={emplacement.code ?? "-"}
+                                        disabled
+                                      />
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    className="w-1/2 ml-1 "
+                                    onClick={() => {}}
+                                  >
+                                    <div className="w-full mb-3">
+                                      <p className="label">Code Equipment</p>
+                                      <input
+                                        className="input w-full"
+                                        type="text"
+                                        value={
+                                          emplacement.equipment?.code ?? "-"
+                                        }
+                                        disabled
+                                      />
+                                    </div>
                                   </div>
                                 </div>
 
-                                <div className="w-1/2 ml-1 ">
+                                {emplacement.informations?.lenght > 0 ? (
                                   <div className="w-full mb-3">
-                                    <p className="label">Catégorie</p>
-                                    <input
+                                    <p className="label">Informations</p>
+                                    <textarea
                                       className="input w-full"
-                                      type="text"
-                                      value={emplacement.category?.name ?? ""}
+                                      value={emplacement.informations ?? ""}
                                       disabled
                                     />
                                   </div>
-                                </div>
+                                ) : null}
+                              </EmplacementPreview>
+                              <div className="w-full flex items-center justify-center mb-4">
+                                <div className="border-b-2 border-blue-500 w-1/2 "></div>
                               </div>
-
-                              {emplacement.informations?.lenght > 0 ? (
-                                <div className="w-full mb-3">
-                                  <p className="label">Informations</p>
-                                  <textarea
-                                    className="input w-full"
-                                    value={emplacement.informations ?? ""}
-                                    disabled
-                                  />
-                                </div>
-                              ) : null}
                             </div>
                           );
                         })}

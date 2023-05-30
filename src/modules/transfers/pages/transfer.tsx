@@ -7,6 +7,9 @@ import { SendIcon } from "../../../components/icons";
 import { CardHeader } from "../../../components/cards";
 import { ContactDetails } from "../../contacts/components";
 import { Loading } from "../../../components";
+import { FilesPreview } from "../../../components/files-preview";
+import { Database } from "../../../__generated__/globalTypes";
+import { CreateUploadModal } from "../../uploads/modals";
 
 export const Transfer: React.FC = () => {
   const { id } = useParams();
@@ -41,7 +44,7 @@ export const Transfer: React.FC = () => {
 
       <div className="main-container">
         <section className="section">
-          <div className="w-full md:w-1/2 lg:w-1/4 p-4">
+          <div className="element">
             <div className="card">
               <CardHeader title="Informations Générales" />
               {data?.transfer?.result?.amount} €
@@ -49,28 +52,26 @@ export const Transfer: React.FC = () => {
               IBAN : {data?.transfer?.result?.iban}
             </div>
           </div>
-          <div className="w-full md:w-1/2 lg:w-1/4 p-4">
+          <div className="element">
             <div className="card">
               <CardHeader title="Client" />
               {data?.transfer?.result?.createdAt}
             </div>
           </div>
-          <div className="w-full md:w-1/2 lg:w-1/4 p-4">
+          <div className="element">
             <div className="card">
               <CardHeader title="Heure" />
               {data?.transfer?.result?.customer?.name}
             </div>
           </div>
-          <div className="w-full md:w-1/2 lg:w-1/4 p-4">
+          <div className="element">
             <div className="card">
               <CardHeader title="Saisie Par " />
               {data?.transfer?.result?.recordedBy?.firstname}{" "}
               {data?.transfer?.result?.recordedBy?.lastname}
             </div>
           </div>
-        </section>
 
-        <section className="section">
           <div className="element">
             <div className="card mb-2">
               <CardHeader title="Informations Générales" />
@@ -84,7 +85,26 @@ export const Transfer: React.FC = () => {
               />
             </div>
           </div>
-          <div className="element"></div>
+          <div className="w-full mx-2">
+            <div className="card">
+              <CardHeader title="Fichiers" />
+              <FilesPreview
+                where={{ database: Database.Transfers, objectId: +id! }}
+              />
+              <div className="grid -mx-2 mt-2  justify-items-center ">
+                <div className="w-full md:w-1/4 px-2">
+                  <CreateUploadModal
+                    defaultValues={{
+                      database: Database.Transfers,
+                      objectId: +id!,
+                    }}
+                  >
+                    <div className="btn">Nouveau Fichier</div>
+                  </CreateUploadModal>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     </>

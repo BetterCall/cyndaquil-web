@@ -21,6 +21,12 @@ export const BENEFIT = gql`
                 id
                 name
                 price
+
+                categoryId
+                category  {
+                    id
+                    name
+                }
                 
             }
         }
@@ -55,6 +61,10 @@ export const BENEFITS = gql`
                 id
                 name 
                 price
+                category {
+                    id
+                    name
+                }
             }
         }
     }

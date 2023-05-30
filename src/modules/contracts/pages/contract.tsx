@@ -2,10 +2,13 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { CardHeader } from "../../../components/cards";
+import { FilesPreview } from "../../../components/files-preview";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
+import { Database } from "../../../__generated__/globalTypes";
 import { ContactDetails } from "../../contacts/components";
 import { InvoicesPreview } from "../../invoices/components";
+import { CreateUploadModal } from "../../uploads/modals";
 import {
   GenerateFromContractBtn,
   WorkOrdersPreview,
@@ -70,8 +73,28 @@ export const Contract: React.FC = () => {
               />
             </div>
           </div>
-        </section>
-        <section className="section">
+
+          <div className="w-full mx-2 mb-4">
+            <div className="card">
+              <CardHeader title="Fichiers" />
+              <FilesPreview
+                where={{ database: Database.Contracts, objectId: +id! }}
+              />
+              <div className="grid -mx-2 mt-2  justify-items-center ">
+                <div className="w-full md:w-1/4 px-2">
+                  <CreateUploadModal
+                    defaultValues={{
+                      database: Database.Contracts,
+                      objectId: +id!,
+                    }}
+                  >
+                    <div className="btn">Nouveau Fichier</div>
+                  </CreateUploadModal>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className=" element">
             <div className="card">
               <CardHeader title="Bon d'intervention" />
@@ -85,9 +108,8 @@ export const Contract: React.FC = () => {
               <InvoicesPreview where={{ contractId: +id! }} />
             </div>
           </div>
-        </section>
-        <section className="section">
-          <div className="full">
+
+          <div className="w-full mx-2 mb-4">
             <div className="card">
               <CardHeader title="Résumé" />
               <div className="mt-4 px-4">
@@ -125,8 +147,8 @@ export const Contract: React.FC = () => {
         </section>
 
         {data?.contract?.result?.rows?.map((row: any, index: number) => (
-          <section key={`row-${index}`} className="section">
-            <div className="w-full md:w-2/3 md:pl-4 md:pr-2 px-4 ">
+          <div key={`row-${index}`} className="w-full  md:flex ">
+            <div className="w-full  mb-4 md:w-2/3  md:pr-2">
               <div className="card">
                 <CardHeader title={row.benefit?.name} />
 
@@ -164,7 +186,7 @@ export const Contract: React.FC = () => {
               </div>
             </div>
 
-            <div className="w-full md:w-1/3 md:pr-4 md:pl-2 px-4">
+            <div className="w-full  mb-4 md:w-1/3 md:pl-2">
               <div className="card">
                 <CardHeader title="Détails" />
                 <table className="table-auto w-full ">
@@ -202,7 +224,7 @@ export const Contract: React.FC = () => {
                 </table>
               </div>
             </div>
-          </section>
+          </div>
         ))}
       </div>
     </>

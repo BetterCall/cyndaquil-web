@@ -42,6 +42,21 @@ export const EMPLACEMENT = gql`
                     id
                     name
                 }
+
+                equipmentId 
+                equipment {
+                    id
+                    code
+
+                    reference{
+                        id
+                        name
+                        brand {
+                            id
+                            name
+                        }
+                    }
+                }
                 
                 siteId 
                 site{
@@ -79,6 +94,7 @@ export const EMPLACEMENTS = gql`
                 code
 
                 informations
+
                 
                 siteId
                 site {
@@ -90,6 +106,13 @@ export const EMPLACEMENTS = gql`
                 category {
                     id 
                     name
+                }
+
+                equipmentId
+                equipment {
+                    id
+                    code 
+                    
                 }
             }
         }

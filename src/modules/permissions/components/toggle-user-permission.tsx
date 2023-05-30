@@ -1,23 +1,25 @@
 import React from "react";
 import { toast } from "react-toastify";
+import { UserRole } from "../../../__generated__/globalTypes";
 import { useTogglePermission } from "../hooks/useTogglePermission";
 
 interface IProps {
-  userId: number;
+  userRole?: UserRole;
+  userId?: number;
   permissionId: number;
   username: string;
   active?: boolean;
 }
 
 export const ToogleUserPermission: React.FC<IProps> = ({
-  userId,
   permissionId,
   username,
   active = false,
+  ...rest
 }) => {
   const [checked, setChecked] = React.useState(active);
   const { submit } = useTogglePermission({
-    userId,
+    ...rest,
     permissionId,
     onCompleted: () => {
       toast.success("Permission modifiée avec succès");

@@ -35,6 +35,9 @@ import { Test } from "../modules/maps/test";
 import { useLoadScript } from "@react-google-maps/api";
 import { Loading } from "../components";
 import { PermissionsRouter } from "../modules/permissions/permissions.router";
+import { UploadsRouter } from "../modules/uploads/uploads.router";
+import { UploadCategoriesRouter } from "../modules/upload-categories/upload-categories.router";
+import { useMyUserPermissions } from "../modules/permissions/hooks";
 
 export const LoggedInRouter = () => {
   const { data, loading, error } = useMe();
@@ -43,6 +46,10 @@ export const LoggedInRouter = () => {
     googleMapsApiKey: "AIzaSyBlZonzuifrfkR0g_e6PsuMxcTZ4IIigXQ",
     libraries: ["places"],
   });
+
+  const { data: myUserPermissionData, error: myError } = useMyUserPermissions();
+  console.log("myUserPermissionData", myUserPermissionData);
+  console.log("myError", myError);
 
   if (!data || loading || error) {
     return <Loading />;
@@ -85,6 +92,8 @@ export const LoggedInRouter = () => {
           {TransfersRouter}
           {ChangelogsRouter}
           {PermissionsRouter}
+          {UploadsRouter}
+          {UploadCategoriesRouter}
           <Route
             path="/test"
             element={
@@ -93,7 +102,6 @@ export const LoggedInRouter = () => {
               </ProtectedRoute>
             }
           />
-          ,
         </Route>
 
         <Route path="*" element={<NotFound />} />

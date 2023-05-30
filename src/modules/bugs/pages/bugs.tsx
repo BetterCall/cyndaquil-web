@@ -44,9 +44,8 @@ export const Bugs = () => {
             <th className="padding-table font-medium  text-center">
               Ouvert Par
             </th>
-            <th className="padding-table font-medium  text-right">
-              Ouvert Par
-            </th>
+            <th className="padding-table font-medium text-center">Objet</th>
+            <th className="padding-table font-medium text-right">URL</th>
           </tr>
         </thead>
         <tbody>
@@ -62,8 +61,12 @@ export const Bugs = () => {
               <td className="padding-table font-medium text-center ">
                 {bug.user?.firstname} {bug.user?.lastname}
               </td>
-              <td className="padding-table font-medium text-right ">
+              <td className="padding-table font-medium text-center">
                 {bug?.object}
+              </td>
+
+              <td className="padding-table font-medium text-right">
+                {bug?.url}
               </td>
             </tr>
           ))}
@@ -92,38 +95,7 @@ export const Bugs = () => {
         <SearchBugInput {...parseSearchParams(searchParams)} />
 
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
-          <table className="table-auto w-full">
-            <thead>
-              <tr className="text-xs text-gray-500 text-left">
-                <th className="padding-table font-medium">Ouvert Par</th>
-                <th className="padding-table font-medium  text-center">
-                  Ouvert Par
-                </th>
-                <th className="padding-table font-medium  text-right">
-                  Ouvert Par
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {data?.bugs?.results?.map((bug, index) => (
-                <tr
-                  onClick={() => navigate(`/bug/${bug.id}`)}
-                  key={`bug-${bug.id}`}
-                  className={`text-xs  ${index % 2 ? "" : "bg-gray-50"} ${
-                    bug.critical ? "bg-red-200" : ""
-                  } `}
-                >
-                  <td className="padding-table font-medium ">{bug.status}</td>
-                  <td className="padding-table font-medium text-center ">
-                    {bug.user?.firstname} {bug.user?.lastname}
-                  </td>
-                  <td className="padding-table font-medium text-right ">
-                    {bug?.object}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {renderList()}
         </div>
 
         {data?.bugs?.hasMore && (

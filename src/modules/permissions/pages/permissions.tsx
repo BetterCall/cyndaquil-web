@@ -9,6 +9,7 @@ import { EmptyList, Loading } from "../../../components";
 import { CardHeader } from "../../../components/cards";
 import { useUsers } from "../../users/hooks";
 import { ToogleUserPermission } from "../components/toggle-user-permission";
+import { UserRole } from "../../../__generated__/globalTypes";
 
 export const Permissions: React.FC = () => {
   const navigate = useNavigate();
@@ -93,7 +94,20 @@ export const Permissions: React.FC = () => {
                   return (
                     <div className="w-full mb-3">
                       <p className="label">{permission.label}</p>
+
                       <div className="px-3">
+                        <p className="label">Par Role</p>
+                        {Object.keys(UserRole).map((value) => (
+                          <ToogleUserPermission
+                            userRole={value as UserRole}
+                            permissionId={permission.id}
+                            username={value}
+                          />
+                        ))}
+                      </div>
+
+                      <div className="px-3">
+                        <p className="label">Par utilisateur</p>
                         {userData?.users?.results?.map((user) => {
                           const index = permission.users?.findIndex(
                             (p) => p.userId === user.id

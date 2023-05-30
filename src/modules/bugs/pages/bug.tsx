@@ -3,9 +3,15 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { EmptyList } from "../../../components";
 import { CardHeader } from "../../../components/cards";
+import { FilesPreview } from "../../../components/files-preview";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
-import { BugStatus, UserRole } from "../../../__generated__/globalTypes";
+import {
+  BugStatus,
+  Database,
+  UserRole,
+} from "../../../__generated__/globalTypes";
+import { CreateUploadModal } from "../../uploads/modals";
 import { useMe } from "../../users/hooks/useMe";
 import { ReportBugForm } from "../components";
 import { useBug } from "../hooks";
@@ -127,6 +133,35 @@ export const Bug = () => {
               {meData?.me?.role === UserRole.Admin ? (
                 <ReportBugForm bugId={+id!} />
               ) : null}
+            </div>
+          </div>
+
+          <div className="w-full mx-2">
+            <div className="card">
+              <CardHeader title="Fichiers" />
+              <FilesPreview
+                where={{ database: Database.Bugs, objectId: +id! }}
+              />
+              <div className="grid -mx-2 mt-2  justify-items-center ">
+                <div className="w-full md:w-1/4 px-2">
+                  {/* <div
+                    className="btn"
+                    onClick={() =>
+                      navigate(`/upload/create?database=Sites&objectId=${id}`)
+                    }
+                  >
+                    Nouveau Fichier
+                  </div> */}
+                  <CreateUploadModal
+                    defaultValues={{
+                      database: Database.Bugs,
+                      objectId: +id!,
+                    }}
+                  >
+                    <div className="btn">Nouveau Fichier</div>
+                  </CreateUploadModal>
+                </div>
+              </div>
             </div>
           </div>
         </div>

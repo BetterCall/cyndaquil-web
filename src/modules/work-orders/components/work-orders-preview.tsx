@@ -23,9 +23,10 @@ export const WorkOrdersPreview: React.FC<WordOrderProps> = ({
 }) => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState({});
-  const [search, { data, loading }] = useLazyWorkOrders();
+  const [search, { data, loading, error }] = useLazyWorkOrders();
 
-  console.log(data);
+  console.log(data, error);
+
   useEffect(() => {
     if (filters === where) {
       return;

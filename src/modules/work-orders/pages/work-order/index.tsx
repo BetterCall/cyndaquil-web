@@ -5,12 +5,15 @@ import { useWorkOrder } from "../../hooks";
 import { Header } from "../../../../components/header";
 import { SendIcon } from "../../../../components/icons";
 import { CardHeader } from "../../../../components/cards";
-import { ContactDetails } from "../../../contacts/components";
 import { Loading } from "../../../../components";
 import { CreateInvoiceBtn } from "../../../invoices/components/create-invoice-btn";
-import { GenerateFromWorkOrderBtn } from "../../components";
-import { WorkOrderStatus } from "../../../../__generated__/globalTypes";
+import {
+  Database,
+  WorkOrderStatus,
+} from "../../../../__generated__/globalTypes";
 import { WorkOrderRows } from "./work-order-rows";
+import { FilesPreview } from "../../../../components/files-preview";
+import { CreateUploadModal } from "../../../uploads/modals";
 
 export const WorkOrder: React.FC = () => {
   const { id } = useParams();
@@ -254,11 +257,27 @@ export const WorkOrder: React.FC = () => {
               ) : null}
             </div>
           </div>
-        </section>
 
-        <section className="section">
-          <div className="element"></div>
-          <div className="element"></div>
+          <div className="w-full mx-2">
+            <div className="card">
+              <CardHeader title="Fichiers" />
+              <FilesPreview
+                where={{ database: Database.WorkOrders, objectId: +id! }}
+              />
+              <div className="grid -mx-2 mt-2  justify-items-center ">
+                <div className="w-full md:w-1/4 px-2">
+                  <CreateUploadModal
+                    defaultValues={{
+                      database: Database.WorkOrders,
+                      objectId: +id!,
+                    }}
+                  >
+                    <div className="btn">Nouveau Fichier</div>
+                  </CreateUploadModal>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     </>

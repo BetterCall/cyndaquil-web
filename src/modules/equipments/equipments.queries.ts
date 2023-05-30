@@ -1,7 +1,5 @@
 import { gql } from '@apollo/client'
 
-
-
 export const CREATE_EQUIPMENT = gql`
 
         mutation CreateEquipmentMutation ( $input : CreateEquipmentInput! ) {
@@ -24,7 +22,6 @@ export const UPDATE_EQUIPMENT = gql`
         }
 
 `
-
 
 export const EQUIPMENTS = gql`
 

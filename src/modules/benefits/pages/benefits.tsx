@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { parseSearchParams } from "../../../helpers/clean-object";
+import { CreateBenefitButton } from "../buttons";
 import { useLazyBenefit } from "../hooks";
 
 export const Benefits = () => {
@@ -24,21 +25,12 @@ export const Benefits = () => {
 
   return (
     <>
-      <Header
-        title={"Services"}
-        subtitle={"Afficher la liste des services"}
-        buttons={[
-          {
-            actionText: "Nouveau Service",
-            bgColor: "indigo",
-            textColor: "white",
-            link: `/benefit/create`,
-            icon: <SendIcon />,
-          },
-        ]}
-      />
+      <Header title={"Services"} subtitle={"Afficher la liste des services"} />
 
       <div className="main-container">
+        <div className="flex mb-3">
+          <CreateBenefitButton />
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           <table className="table-auto w-full">
             <thead>
@@ -58,9 +50,9 @@ export const Benefits = () => {
                         className="font-medium  cursor-pointer"
                         onClick={() => navigate(`/benefit/${benefit.id}`)}
                       >
-                        {benefit?.name || "-"}
+                        {benefit?.category?.name} - {benefit?.name || "-"}
                       </p>
-                      <p className="text-gray-500">fd</p>
+                      <p className="text-gray-500">{benefit?.price}€</p>
                     </div>
                   </td>
                 </tr>

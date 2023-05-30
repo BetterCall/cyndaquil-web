@@ -132,6 +132,8 @@ export const Admin = () => {
               </div>
             </div>
           </div>
+
+          <div className="element"></div>
         </div>
 
         <section className="section">
@@ -172,7 +174,10 @@ export const Admin = () => {
         </section>
         <div className="flex flex-wrap  -m-3">
           {usersData?.users?.results?.map((user) => (
-            <div className="w-full md:w-1/3 2xl:w-1/3 p-3">
+            <div
+              className="w-full md:w-1/3 2xl:w-1/3 p-3"
+              key={`user_${user.id}`}
+            >
               <div className="card">
                 <CardHeader title={`${user.firstname} ${user.lastname} `} />
                 <WorkOrdersPreview

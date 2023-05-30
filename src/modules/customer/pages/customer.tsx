@@ -13,6 +13,9 @@ import { WorkOrdersPreview } from "../../work-orders/components";
 import { useCustomer } from "../hooks";
 import { VisitsPreview } from "../../visits/components";
 import { SimpleMap } from "../../../components/maps";
+import { FilesPreview } from "../../../components/files-preview";
+import { Database } from "../../../__generated__/globalTypes";
+import { CreateUploadModal } from "../../uploads/modals";
 
 type ICustomerParams = {
   id: string;
@@ -65,7 +68,7 @@ export const Customer: React.FC = () => {
                   navigate(`/sites?customerId=${data?.customer?.result?.id}`)
                 }
               >
-                <p className="label">Nombre d'immeuble en gestion</p>
+                <p className="label">Nb. d'immeuble en gestion</p>
                 <input
                   disabled
                   value={data?.customer?.result?.sitesCount}
@@ -157,7 +160,10 @@ export const Customer: React.FC = () => {
           <div className="element">
             <div className="card">
               <CardHeader title="Gestionnaires" />
-              <ContactsPreview where={{ customerId: +id! }} />
+              <ContactsPreview
+                where={{ customerId: +id! }}
+                message="Aucun Gestionnaire"
+              />
               <div className="cardFooter">
                 <div className="w-full md:w-1/2 px-2">
                   <div
@@ -241,6 +247,35 @@ export const Customer: React.FC = () => {
                   >
                     Nouveau rendez vous
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full mx-2">
+            <div className="card">
+              <CardHeader title="Fichiers" />
+              <FilesPreview
+                where={{ database: Database.Customers, objectId: +id! }}
+              />
+              <div className="grid -mx-2 mt-2  justify-items-center ">
+                <div className="w-full md:w-1/4 px-2">
+                  {/* <div
+                    className="btn"
+                    onClick={() =>
+                      navigate(`/upload/create?database=Sites&objectId=${id}`)
+                    }
+                  >
+                    Nouveau Fichier
+                  </div> */}
+                  <CreateUploadModal
+                    defaultValues={{
+                      database: Database.Customers,
+                      objectId: +id!,
+                    }}
+                  >
+                    <div className="btn">Nouveau Fichier</div>
+                  </CreateUploadModal>
                 </div>
               </div>
             </div>

@@ -7,7 +7,6 @@ interface IProps {
   emplacementsSelected: any;
   toggleRow: any;
   setRowBenefit: any;
-  value?: any;
 }
 
 export const EmplacementsSelect: React.FC<IProps> = ({
@@ -15,14 +14,12 @@ export const EmplacementsSelect: React.FC<IProps> = ({
   emplacementsSelected,
   toggleRow,
   setRowBenefit,
-  value,
 }) => {
   const [getEmplacements, { data: eData, called }] = useLazyEmplacements();
   useEffect(() => {
     getEmplacements({ variables: { where: { siteId } } });
   }, [siteId]);
 
-  console.log(siteId, eData);
   return (
     <table className="table-auto w-full">
       <thead>

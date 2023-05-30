@@ -10,6 +10,7 @@ import { SendIcon } from "../../../components/icons";
 import { useSearchParams } from "react-router-dom";
 import { parseSearchParams } from "../../../helpers/clean-object";
 import { useLazySite } from "../../sites/hooks";
+import { WorkOrderStatus } from "../../../__generated__/globalTypes";
 
 export const CreateWorkOrder: React.FC = () => {
   const navigate = useNavigate();
@@ -20,13 +21,16 @@ export const CreateWorkOrder: React.FC = () => {
   const { form, submit, loading } = useCreateWorkOrder({
     defaultValues: {
       ...parseSearchParams(searchParams),
+      status: WorkOrderStatus.Pending,
+      appointment: false,
+      imperative: false,
       rows: [],
     },
     onCompleted: (id) => {
       toast.success("Le BI a été créée avec succès");
-      setTimeout(() => {
-        navigate(`/work-order/${id}`);
-      }, 1000);
+      // setTimeout(() => {
+      //   navigate(`/work-order/${id}`);
+      // }, 1000);
     },
     onError: (msg) => toast.error(msg),
   });

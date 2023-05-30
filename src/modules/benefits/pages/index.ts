@@ -1,6 +1,7 @@
 import { CreateBenefit } from "./create-benefit";
 import { UpdateBenefit } from "./update-benefit";
 import { Benefits } from "./benefits";
+import { Benefit } from "./benefit";
 
 
-export { Benefits, CreateBenefit, UpdateBenefit }
+export { Benefit, Benefits, CreateBenefit, UpdateBenefit }

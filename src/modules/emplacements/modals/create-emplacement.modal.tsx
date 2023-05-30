@@ -20,17 +20,15 @@ export const CreateEmplacement: React.FC<IChangeManagerProps> = ({
     defaultValues,
     onCompleted: (id) => {
       toast.success("L'emplacement a bien été créé");
+      const input = form.getValues();
+      onCompleted({
+        id,
+        ...input,
+      });
     },
     onError: (message) => toast.error(message),
   });
 
-  const handleOk = async () => {
-    const input = form.getValues();
-    try {
-      await submit();
-      onCompleted();
-    } catch (error) {}
-  };
   const handleCancel = () => {
     setIsModalOpen(false);
   };

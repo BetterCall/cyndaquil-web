@@ -40,7 +40,7 @@ export const BrandInput: React.FC<IBrandInput> = ({ form }) => {
 
   return (
     <div className="flex flex-col">
-      <label className="text-sm font-bold">Marque</label>
+      <label className="label">Marque</label>
       <input
         className="input mb-3"
         onChange={(e) => {

@@ -9,11 +9,18 @@ import { BenefitFiltersInput } from "./globalTypes";
 // GraphQL query operation: BenefitsQuery
 // ====================================================
 
+export interface BenefitsQuery_benefits_results_category {
+  __typename: "EquipmentCategory";
+  id: number;
+  name: string;
+}
+
 export interface BenefitsQuery_benefits_results {
   __typename: "Benefit";
   id: number;
   name: string;
   price: number;
+  category: BenefitsQuery_benefits_results_category;
 }
 
 export interface BenefitsQuery_benefits {

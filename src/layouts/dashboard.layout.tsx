@@ -50,7 +50,7 @@ const ExpendableLink: React.FC<ILink> = ({
   }, [location]);
 
   return (
-    <li>
+    <div>
       <div
         className={`relative flex items-center cursor-pointer pl-3 py-1 h-full justify-between ${
           location.pathname === url
@@ -87,8 +87,9 @@ const ExpendableLink: React.FC<ILink> = ({
         )}
       </div>
       <div className={` ${isOpened ? "" : "hidden "} pl-3 my-2 `}>
-        {submenus?.map((menu) => (
+        {submenus?.map((menu, index) => (
           <ExpendableLink
+            key={`${menu.url}-${index}`}
             setOpened={setIsOpened}
             icon={menu.icon}
             title={menu.title}
@@ -98,7 +99,7 @@ const ExpendableLink: React.FC<ILink> = ({
           />
         ))}
       </div>
-    </li>
+    </div>
   );
 };
 
@@ -162,7 +163,7 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
           ></div>
           <nav className="fixed z-50 top-14 overflow-hidden overflow-y-auto  left-0 bottom-0 flex flex-col w-3/4 xl:w-64 sm:max-w-xs pt-4 pb-8 bg-white transition-all">
             <div className="px-4 pb-6">
-              <ul className="mb-8 text-sm font-medium">
+              <div className="mb-8 text-sm font-medium">
                 <ExpendableLink
                   icon={<DashboardIcon />}
                   title="Dashboard"
@@ -173,6 +174,19 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
                   icon={<SendIcon />}
                   title="Salariés"
                   url="/users"
+                />
+
+                <ExpendableLink
+                  icon={<SendIcon />}
+                  title="Services"
+                  url="/benefits"
+                  submenus={[
+                    {
+                      icon: <SendIcon />,
+                      title: "Nouveau Service",
+                      url: "/benefit/create",
+                    },
+                  ]}
                 />
 
                 <ExpendableLink
@@ -359,11 +373,30 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
                     },
                   ]}
                 />
-              </ul>
+
+                <ExpendableLink
+                  icon={<SendIcon />}
+                  title="Uploads"
+                  url="/uploads"
+                  submenus={[
+                    {
+                      icon: <SendIcon />,
+                      title: "Catégories",
+                      url: "/uploads/categories",
+                    },
+                    {
+                      icon: <SendIcon />,
+                      title: "Nouveau Contact",
+                      url: "/upload/create",
+                      newPage: true,
+                    },
+                  ]}
+                />
+              </div>
               <h3 className="mb-2 text-xs uppercase text-gray-500 font-medium">
                 Secondary
               </h3>
-              <ul className="text-sm font-medium">
+              <div className="text-sm font-medium">
                 <ExpendableLink
                   icon={<SendIcon />}
                   title="Permissions"
@@ -383,7 +416,7 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
                     },
                   ]}
                 />
-              </ul>
+              </div>
               <div className="pt-8">
                 {(data?.me?.role === UserRole.Admin || godMode) && (
                   <div
