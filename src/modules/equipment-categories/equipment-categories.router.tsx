@@ -4,6 +4,7 @@ import { Todo } from "../todo";
 import {
   CreateEquipmentCategory,
   EquipmentCategories,
+  EquipmentCategory,
   UpdateEquipmentCategory,
 } from "./pages";
 
@@ -22,7 +23,7 @@ export const EquipmentCategoriesRouter = [
       path=":id"
       element={
         <ProtectedRoute roles={["Any"]}>
-          <Todo />
+          <EquipmentCategory />
         </ProtectedRoute>
       }
     />

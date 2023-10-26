@@ -20,25 +20,28 @@ export const useCreateInvoice = ({ defaultValues, onCompleted, onError }: IProps
     })
     const [mutate, { loading }] = useMutation<CreateInvoiceMutation, CreateInvoiceMutationVariables>(CREATE_INVOICE)
 
-    const submit = async () => {
+    const submit = async (variables: CreateInvoiceMutationVariables) => {
         if (loading) return
         try {
+            console.log("variables", variables)
+            console.log("variables", variables)
+            console.log("variables", variables)
+            console.log("variables", variables)
+            console.log("variables", variables)
+            console.log("variables", variables)
+            console.log("variables", variables)
 
-            const input = form.getValues()
-            console.log({ input: parseParams(input) })
-            // const { data } = await mutate({
-            //     variables: {
-            //         input: parseParams(input)
-            //     }
-            // })
+            const { data } = await mutate({
+                variables
+            })
 
-            // console.log(data)
+            console.log(data)
 
-            // if (data?.createInvoice?.ok && data?.createInvoice.id) {
-            //     onCompleted(data?.createInvoice.id)
-            // } else {
-            //     throw Error(data?.createInvoice?.error ?? "Error")
-            // }
+            if (data?.createInvoice?.ok && data?.createInvoice.id) {
+                onCompleted(data?.createInvoice.id)
+            } else {
+                throw Error(data?.createInvoice?.error ?? "Error")
+            }
 
         } catch ({ message }) {
             onError(message)

@@ -11,7 +11,7 @@ import { Row } from "../../../components/tables";
 import { Button } from "../../../components/button";
 import { EmptyList, Loading } from "../../../components";
 
-export const WorkOrders: React.FC = () => {
+export const WorkOrders: React.FC = ({ searchParams }: any) => {
   const navigate = useNavigate();
   const [limit] = useState(10);
 
@@ -20,7 +20,6 @@ export const WorkOrders: React.FC = () => {
   console.log(data);
   console.log(error);
 
-  const [searchParams] = useSearchParams();
   useEffect(() => {
     search({
       fetchPolicy: "network-only",
@@ -109,7 +108,9 @@ export const WorkOrders: React.FC = () => {
       />
       <div className="main-container">
         <SearchWorkOrdersInput {...parseSearchParams(searchParams)} />
-
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {data?.workOrders?.total} resultats
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

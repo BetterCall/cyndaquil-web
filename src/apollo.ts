@@ -15,9 +15,10 @@ export const authTokenVar = makeVar(token);
 export const godModeVar = makeVar(false);
 export const adminTokenVar = makeVar("");
 
-export const url = "http://192.168.1.152:5000"
+// export const url = "http://192.168.1.56:5000"
+//export const url = "http://localhost:5000"
+export const url = "http://192.168.1.196:5000"
 export const uri = url + "/graphql"
-// const uri = "http://192.168.1.156:4000/graphql"
 
 const httpLink = createHttpLink({
     uri
@@ -206,7 +207,7 @@ export const client = new ApolloClient({
                     workOrders: {
                         // Don't cache separate results based on
                         // any of this field's arguments.
-                        keyArgs: ["where", ["search", "userId", "status", "postal", "date", "customerId", "siteId", 'billed']],
+                        keyArgs: ["where", ["search", "userId", "status", "postal", "date", "customerId", "siteId", "invoiceId", 'billed']],
 
                         // Concatenate the incoming list items with
                         // the existing list items.

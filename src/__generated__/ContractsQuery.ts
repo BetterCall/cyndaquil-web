@@ -41,6 +41,7 @@ export interface ContractsQuery_contracts_results {
 export interface ContractsQuery_contracts {
   __typename: "ContractsOutput";
   hasMore: boolean | null;
+  total: number | null;
   results: ContractsQuery_contracts_results[] | null;
 }
 

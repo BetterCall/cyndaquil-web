@@ -1,7 +1,9 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
+import { RequestWrapper } from "../../routers/request-wrapper";
 import {
   CreateWorkOrder,
+  GenerateTour,
   MyTour,
   UpdateWorkOrder,
   WorkOrder,
@@ -14,7 +16,7 @@ export const WorkOrdersRouter = [
     path="/work-orders"
     element={
       <ProtectedRoute roles={["Any"]}>
-        <WorkOrders />
+        <RequestWrapper component={WorkOrders} />
       </ProtectedRoute>
     }
   />,
@@ -29,6 +31,15 @@ export const WorkOrdersRouter = [
   />,
 
   <Route path="/work-order">
+    <Route
+      path="generate"
+      element={
+        <ProtectedRoute roles={["Any"]}>
+          <GenerateTour />
+        </ProtectedRoute>
+      }
+    />
+    ,
     <Route
       path=":id"
       element={

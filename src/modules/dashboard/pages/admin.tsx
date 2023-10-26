@@ -81,10 +81,7 @@ export const Admin = () => {
             </span>
             <div>
               <h2 className="mb-1 text-2xl font-bold">{dateStr}</h2>
-              <p className="text-sm text-gray-500 font-medium">
-                Take care of your business. Achieve your goals and increase
-                profits.
-              </p>
+              <p className="text-sm text-gray-500 font-medium"></p>
             </div>
           </div>
           <div className="w-full lg:w-auto ml-auto px-3">

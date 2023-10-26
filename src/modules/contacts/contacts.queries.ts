@@ -62,6 +62,7 @@ export const CONTACTS = gql`
     query ContactsQuery( $limit : Int , $offset : Int  , $where : ContactFiltersInput! ) {
         contacts ( limit : $limit , offset : $offset , where : $where ) {
             hasMore 
+            total
             results  {
                 id 
                 firstname

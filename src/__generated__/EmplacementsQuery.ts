@@ -46,6 +46,7 @@ export interface EmplacementsQuery_emplacements_results {
 export interface EmplacementsQuery_emplacements {
   __typename: "EmplacementsOutput";
   hasMore: boolean | null;
+  total: number | null;
   results: EmplacementsQuery_emplacements_results[] | null;
 }
 

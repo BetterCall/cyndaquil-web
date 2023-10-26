@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
-import { Todo } from "../todo";
+import { RequestWrapper } from "../../routers/request-wrapper";
 import { Control, Controls, UpdateControl, CreateControl } from "./pages";
 
 export const ControlsRouter = [
@@ -8,7 +8,7 @@ export const ControlsRouter = [
     path="/controls"
     element={
       <ProtectedRoute roles={["Any"]}>
-        <Controls />
+        <RequestWrapper component={Controls} />
       </ProtectedRoute>
     }
   />,

@@ -44,15 +44,22 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({ form }) => {
     });
     console.log(results[0]);
     const { lat, lng } = await getLatLng(results[0]);
-    form.setValue("lat", lat);
-    form.setValue("lng", lng);
-    form.setValue("streetNumber", results[0].address_components[0].long_name);
-    form.setValue("street", results[0].address_components[1].long_name);
-    form.setValue("city", results[0].address_components[2].long_name);
+    form.setValue("lat", lat, { shouldValidate: true });
+    form.setValue("lng", lng, { shouldValidate: true });
+    form.setValue("streetNumber", results[0].address_components[0].long_name, {
+      shouldValidate: true,
+    });
+    form.setValue("street", results[0].address_components[1].long_name, {
+      shouldValidate: true,
+    });
+    form.setValue("city", results[0].address_components[2].long_name, {
+      shouldValidate: true,
+    });
     form.setValue(
       "postal",
       results[0].address_components[results[0].address_components.length - 1]
-        .long_name
+        .long_name,
+      { shouldValidate: true }
     );
   };
 
@@ -87,7 +94,7 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({ form }) => {
             <input
               className="w-full input"
               {...form.register("streetNumber", {
-                required: "name required",
+                required: "Le numéro de la rue est requis",
               })}
               placeholder="streetNumber"
             />
@@ -105,8 +112,10 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({ form }) => {
         <p className="label">Adresse</p>
         <input
           className="w-full input"
-          {...form.register("street", { required: "name required" })}
-          placeholder="street"
+          {...form.register("street", {
+            required: "le nom de la rue est requis",
+          })}
+          placeholder="Rue"
         />
       </div>
 
@@ -116,8 +125,8 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({ form }) => {
             <p className="label">Ville</p>
             <input
               className="w-full input"
-              {...form.register("city", { required: "city required" })}
-              placeholder="city"
+              {...form.register("city", { required: "La ville est requise" })}
+              placeholder="Adresse"
             />
           </div>
         </div>
@@ -126,8 +135,10 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({ form }) => {
             <p className="label">Code Postal</p>
             <input
               className="w-full input"
-              {...form.register("postal", { required: "postal required" })}
-              placeholder="postal"
+              {...form.register("postal", {
+                required: "Le code postal est requis",
+              })}
+              placeholder="Code Postal"
             />
           </div>
         </div>
@@ -140,7 +151,7 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({ form }) => {
             <input
               disabled
               className="w-full input"
-              {...form.register("lat", { required: "name required" })}
+              {...form.register("lat", { required: "latitude requise" })}
               placeholder="lat"
             />
           </div>
@@ -151,7 +162,7 @@ export const AddressInputs: React.FC<IAddressInputsProps> = ({ form }) => {
             <input
               disabled
               className="w-full input"
-              {...form.register("lng", { required: "name required" })}
+              {...form.register("lng", { required: "longitude requise" })}
               placeholder="lng"
             />
           </div>

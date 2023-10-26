@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { cleanObject } from "../../../helpers/clean-object";
 import { WorkOrderStatus } from "../../../__generated__/globalTypes";
@@ -7,11 +7,16 @@ import { SiteInput } from "../../sites/components/site-input";
 import { useForm } from "react-hook-form";
 import { CustomerInput } from "../../customer/components";
 import { UserInput } from "../../users/components";
-import { toast } from "react-toastify";
+import { SelectOptionsWithTraductions } from "../../traductions/buttons";
 
 export const SearchWorkOrdersInput = (defaultValues) => {
   const navigate = useNavigate();
-  const form = useForm({ defaultValues });
+  const form = useForm({ defaultValues, mode: "all" });
+
+  // check if defaultValues change
+  useEffect(() => {
+    form.reset(defaultValues);
+  }, [defaultValues]);
 
   const onSearchSubmit = () => {
     const input = form.getValues();
@@ -26,12 +31,15 @@ export const SearchWorkOrdersInput = (defaultValues) => {
   );
 
   const search = form.watch("search");
+  const status = form.watch("status");
+
+  console.log("STATUS ", status);
 
   return (
     <div className="search card">
       <div className="grid gap-3 w-full items-center  px-2">
         <div className="flex row items-center justify-between">
-          <div className="flex row align-text-center items-center">
+          <div className="flex flex-1 row align-text-center items-center">
             <label
               htmlFor="search"
               className="mr-2 text-gray-200 hover:text-gray-300"
@@ -62,10 +70,10 @@ export const SearchWorkOrdersInput = (defaultValues) => {
                   onSearchSubmit();
                 }
               }}
-              placeholder="Rechercher un client"
+              placeholder="Rechercher un bon d'intervention"
               autoComplete="off"
               {...form.register("search", {
-                minLength: 3,
+                minLength: 1,
                 required: false,
               })}
               className="input rounded border-0 w-full "
@@ -115,11 +123,10 @@ export const SearchWorkOrdersInput = (defaultValues) => {
                     >
                       <option value={undefined}>-</option>
 
-                      {Object.keys(WorkOrderStatus).map((status) => (
-                        <option value={status} key={`category-${status}`}>
-                          {status}
-                        </option>
-                      ))}
+                      <SelectOptionsWithTraductions
+                        selected={status}
+                        keys={Object.keys(WorkOrderStatus)}
+                      />
                     </select>
                   </div>
                 </div>

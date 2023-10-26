@@ -2,6 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { WorkOrderType } from "../../../__generated__/globalTypes";
+import { SelectOptionsWithTraductions } from "../../traductions/buttons";
 
 interface IWorkOrderTypeSelect {
   form: UseFormReturn<any, any>;
@@ -37,15 +38,10 @@ export const WorkOrderTypeSelect: React.FC<IWorkOrderTypeSelect> = ({
         >
           <option value={undefined}>-</option>
 
-          {Object.keys(WorkOrderType).map((value) => (
-            <option
-              value={value}
-              key={`type-${value}`}
-              selected={value === type}
-            >
-              {value}
-            </option>
-          ))}
+          <SelectOptionsWithTraductions
+            selected={type}
+            keys={Object.keys(WorkOrderType)}
+          />
         </select>
       </div>
       <ErrorMessage

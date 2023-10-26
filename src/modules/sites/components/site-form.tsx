@@ -45,7 +45,7 @@ export const SiteForm: React.FC<ISiteForm> = ({
               {...form.register("buildingsCount", {
                 required: "name required",
               })}
-              placeholder="Nom de la Copropriété"
+              placeholder="Nombre de batiments"
             />
           </div>
 
@@ -57,9 +57,21 @@ export const SiteForm: React.FC<ISiteForm> = ({
               {...form.register("entrancesCount", {
                 required: "name required",
               })}
-              placeholder="Nom de la Copropriété"
+              placeholder="Nombre d'entrée par batiment"
             />
           </div>
+          <div className="w-full mb-3">
+            <p className="label">Nombre d'étage</p>
+            <input
+              className="w-full input"
+              type="number"
+              {...form.register("floorsCount", {
+                required: "Le Nombre d'étage est requis",
+              })}
+              placeholder="Nombre d'étage"
+            />
+          </div>
+
           <div className="w-full mb-3">
             <CustomerInput
               form={form}

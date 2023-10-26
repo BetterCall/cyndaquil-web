@@ -9,6 +9,7 @@ interface IProps {
 export const WorkOrderRows: React.FC<IProps> = ({ workOrderId }) => {
   const { data, loading } = useWorkOrderRows({ where: { workOrderId } });
 
+  console.log(data);
   if (loading) {
     return <Loading />;
   }

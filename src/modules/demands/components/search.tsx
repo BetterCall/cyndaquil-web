@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { cleanObject } from "../../../helpers/clean-object";
@@ -24,6 +24,10 @@ export const DemandSearchInput: React.FC = (defaultValues) => {
     mode: "all",
   });
 
+  useEffect(() => {
+    form.reset(defaultValues);
+  }, [defaultValues]);
+
   const onSearchSubmit = () => {
     const input = form.getValues();
     navigate({
@@ -38,9 +42,9 @@ export const DemandSearchInput: React.FC = (defaultValues) => {
 
   return (
     <div className="search card">
-      <div className="grid gap-3 w-full items-center max-w-screen-2xl">
+      <div className="grid gap-3 w-full items-center">
         <div className="flex row items-center justify-between">
-          <div className="flex row align-text-center items-center">
+          <div className="flex flex-1 row align-text-center items-center">
             <label
               htmlFor="search"
               className="mr-2 text-gray-200 hover:text-gray-300"

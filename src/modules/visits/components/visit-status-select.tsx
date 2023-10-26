@@ -1,6 +1,7 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { VisitStatus } from "../../../__generated__/globalTypes";
+import { SelectOptionsWithTraductions } from "../../traductions/buttons";
 
 interface IVisitTypeSelect {
   form: UseFormReturn<any, any>;
@@ -32,15 +33,10 @@ export const VisitStatusSelect: React.FC<IVisitTypeSelect> = ({ form }) => {
         >
           <option value={undefined}>-</option>
 
-          {Object.keys(VisitStatus).map((value) => (
-            <option
-              value={value}
-              key={`status-${value}`}
-              selected={value === status}
-            >
-              {value}
-            </option>
-          ))}
+          <SelectOptionsWithTraductions
+            selected={status}
+            keys={Object.keys(VisitStatus)}
+          />
         </select>
       </div>
     </div>

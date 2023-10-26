@@ -120,6 +120,9 @@ export const Contacts = () => {
       <div className="main-container">
         <SearchContactInput {...parseSearchParams(searchParams)} />
 
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {data?.contacts?.total} resultats
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

@@ -6,6 +6,7 @@ import { Button } from "../../../components/button";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { parseSearchParams } from "../../../helpers/clean-object";
+import { CreateSiteButton } from "../buttons";
 import { SearchSiteInput } from "../components";
 import { useLazySites } from "../hooks";
 
@@ -102,8 +103,14 @@ export const Sites: React.FC = () => {
       />
 
       <div className="main-container">
-        <SearchSiteInput {...parseSearchParams(searchParams)} />
+        <div className="flex">
+          <CreateSiteButton />
+        </div>
 
+        <SearchSiteInput {...parseSearchParams(searchParams)} />
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {data?.sites?.total} resultats
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

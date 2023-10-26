@@ -40,6 +40,7 @@ export interface DemandsQuery_demands_results {
   __typename: "Demand";
   id: number;
   type: DemandType;
+  treated: boolean;
   openedById: number | null;
   openedBy: DemandsQuery_demands_results_openedBy;
   targetUserId: number | null;
@@ -53,6 +54,7 @@ export interface DemandsQuery_demands_results {
 export interface DemandsQuery_demands {
   __typename: "DemandsOutput";
   hasMore: boolean | null;
+  total: number | null;
   results: DemandsQuery_demands_results[] | null;
 }
 

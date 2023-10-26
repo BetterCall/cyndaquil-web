@@ -7,7 +7,7 @@ export const Loading: React.FC = () => {
       <div className="flex items-center justify-center aspect-square w-1/5">
         <ReactLoading
           type={"spinningBubbles"}
-          color={"gray"}
+          color={"red"}
           height={"30%"}
           width={"30%"}
         />

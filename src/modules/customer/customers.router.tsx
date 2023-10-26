@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
-import { Todo } from "../todo";
+import { RequestWrapper } from "../../routers/request-wrapper";
 import { CreateCustomer, Customer, Customers, UpdateCustomer } from "./pages";
 
 export const CustomersRouter = [
@@ -8,7 +8,7 @@ export const CustomersRouter = [
     path="/customers"
     element={
       <ProtectedRoute roles={["Any"]}>
-        <Customers />
+        <RequestWrapper component={Customers} />
       </ProtectedRoute>
     }
   />,

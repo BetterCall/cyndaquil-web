@@ -42,6 +42,7 @@ export interface SitesQuery_sites_results {
 export interface SitesQuery_sites {
   __typename: "SitesOutput";
   hasMore: boolean | null;
+  total: number | null;
   results: SitesQuery_sites_results[] | null;
 }
 

@@ -3,15 +3,15 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useVisit } from "../hooks";
 import { Header } from "../../../components/header";
-import { SendIcon } from "../../../components/icons";
 import { CardHeader } from "../../../components/cards";
-import { ContactDetails } from "../../contacts/components";
 import { Loading } from "../../../components";
 import { useMe } from "../../users/hooks/useMe";
 import { VisitReportForm } from "../components/visit-report-form";
 import { FilesPreview } from "../../../components/files-preview";
 import { Database } from "../../../__generated__/globalTypes";
 import { CreateUploadModal } from "../../uploads/modals";
+import { EditVisitButton } from "../buttons";
+import { WithTraduction } from "../../traductions/components";
 
 export const Visit: React.FC = () => {
   const { id } = useParams();
@@ -36,18 +36,13 @@ export const Visit: React.FC = () => {
       <Header
         title={`Rendez-vous`}
         subtitle={`${data?.visit?.result?.object} - ${data?.visit?.result?.customer?.name}`}
-        buttons={[
-          {
-            actionText: "Modifier",
-            bgColor: "indigo",
-            textColor: "white",
-            link: `/visit/${id}/update`,
-            icon: <SendIcon />,
-          },
-        ]}
       />
 
       <div className="main-container">
+        <div className="flex mb-3">
+          <EditVisitButton id={+id!} />
+        </div>
+
         <section className="section">
           <div className="element">
             <div className="card mb-2">
@@ -115,12 +110,18 @@ export const Visit: React.FC = () => {
 
               <div className="w-full mt-3">
                 <p className="label">Etat</p>
-                <input
-                  type="text"
-                  className="input w-full "
-                  disabled
-                  value={data?.visit?.result?.status}
-                />
+                {data?.visit?.result?.status ? (
+                  <WithTraduction text={data?.visit?.result?.status}>
+                    {(traduction) => (
+                      <input
+                        type="text"
+                        className="input w-full "
+                        disabled
+                        value={traduction}
+                      />
+                    )}
+                  </WithTraduction>
+                ) : null}
               </div>
             </div>
           </div>

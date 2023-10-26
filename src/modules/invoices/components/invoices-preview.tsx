@@ -28,8 +28,8 @@ export const InvoicesPreview: React.FC<IInvoicesPreviewProps> = ({
 
   return (
     <ul>
-      {data?.invoices?.results?.map((r) => (
-        <li className="mb-5">{`${r.status} ${r.id}`}</li>
+      {data?.invoices?.results?.map((invoice) => (
+        <li className="mb-5">{-`${invoice.status} ${invoice.id}`}-</li>
       ))}
     </ul>
   );

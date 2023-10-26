@@ -1,6 +1,7 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { BugStatus, DemandType } from "../../../__generated__/globalTypes";
+import { SelectOptionsWithTraductions } from "../../traductions/buttons";
 
 interface IProps {
   form: UseFormReturn<any, any>;
@@ -32,11 +33,10 @@ export const BugStatusSelect: React.FC<IProps> = ({ form }) => {
           {...form.register("status")}
         >
           <option value={undefined}>-</option>
-          {Object.keys(BugStatus).map((type: any) => (
-            <option selected={value === type} value={type} key={`type-${type}`}>
-              {type}
-            </option>
-          ))}
+          <SelectOptionsWithTraductions
+            selected={value}
+            keys={Object.keys(BugStatus)}
+          />
         </select>
       </div>
     </div>

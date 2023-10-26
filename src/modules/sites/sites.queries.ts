@@ -64,7 +64,8 @@ export const SITES = gql`
 
     query SitesQuery( $limit : Int! , $offset : Int! , $where : SiteFiltersInput! ) {
         sites( limit : $limit , offset : $offset, where : $where  ) {
-            hasMore , 
+            hasMore ,
+            total, 
             results {
                 ...SitePart
 

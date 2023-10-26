@@ -7,8 +7,10 @@ import { FilesPreview } from "../../../components/files-preview";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { Database } from "../../../__generated__/globalTypes";
+import { CreateControlButton } from "../../controls/buttons";
 import { ControlsPreview } from "../../controls/components";
 import { CreateUploadModal } from "../../uploads/modals";
+import { EditEquipmentButton } from "../buttons";
 import { useEquipment } from "../hooks";
 
 type IEquipmentParams = {
@@ -32,18 +34,13 @@ export const Equipment: React.FC = () => {
       <Header
         title={"" + data?.equipment?.result?.id ?? ""}
         subtitle="Un sous titre un peu long"
-        buttons={[
-          {
-            actionText: "Modifier",
-            bgColor: "indigo",
-            textColor: "white",
-            link: `/equipment/${data?.equipment?.result?.id}/update`,
-            icon: <SendIcon />,
-          },
-        ]}
       />
 
       <div className="main-container">
+        <div className="flex mb-3">
+          <EditEquipmentButton id={+id!} />
+        </div>
+
         <section className="section">
           <div className="element">
             <div className="card">
@@ -193,6 +190,7 @@ export const Equipment: React.FC = () => {
 
               <div className="grid -mx-2 mt-2   justify-items-center ">
                 <div className="w-full md:w-1/2 px-2">
+                  <CreateControlButton equipmentId={+id!} />
                   <div
                     className="btn"
                     onClick={() =>

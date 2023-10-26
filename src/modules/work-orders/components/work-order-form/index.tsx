@@ -51,6 +51,19 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
   const { date, userId, siteId, rows = [] } = form.watch();
   const { data: usersData } = useUsers({ where: {} });
 
+  useEffect(() => {
+    if (!siteId) {
+      form.setValue("rows", []);
+      form.setValue("lat", null);
+      form.setValue("lng", null);
+      form.setValue("streetNumber", null);
+      form.setValue("street", null);
+      form.setValue("postal", null);
+      form.setValue("city", null);
+      form.setValue("customerId", null);
+    }
+  }, [siteId]);
+
   const toggleRow = (nRow) => {
     console.log(nRow);
     console.log(rows);
@@ -196,9 +209,10 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
         </div>
 
         <div className="element">
-          <div className="card mb-4">
-            <CardHeader title="Nouvel Emplacement" />
-            {siteId ? (
+          {siteId ? (
+            <div className="card mb-4">
+              <CardHeader title="Nouvel Emplacement" />
+
               <CreateEmplacement
                 defaultValues={{
                   siteId: siteId,
@@ -230,8 +244,9 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
                   });
                 }}
               />
-            ) : null}
-          </div>
+            </div>
+          ) : null}
+
           <div className="card mb-4">
             <CardHeader title="Emplacements" />
             {workOrderId ? (
@@ -414,7 +429,7 @@ export const WorkOrderForm: React.FC<IWorkOrderFormProps> = ({
 
       <div className="w-full ">
         <Button
-          canClick={true}
+          canClick={form.formState.isValid}
           loading={loading}
           actionText="Valider"
           onClick={onSubmit}

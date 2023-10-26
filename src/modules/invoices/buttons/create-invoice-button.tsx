@@ -1,13 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { stringifyObject } from "../../../helpers/clean-object";
 import { useCanAccess } from "../../permissions/hooks";
 
-export const CreateInvoiceButton = () => {
+interface ICreateInvoiceButtonProps {
+  workOrderId?: number;
+}
+
+export const CreateInvoiceButton: React.FC<ICreateInvoiceButtonProps> = (
+  args
+) => {
   const { data } = useCanAccess("invoice:create");
   if (data?.canAccess)
     return (
-      <Link to="/invoice/create">
-        <div className="btn btn-primary">Creer la Fcature</div>
+      <Link to={`/invoice/create?${stringifyObject(args)}`}>
+        <div className="btn btn-primary">Nouvelle Facture</div>
       </Link>
     );
 

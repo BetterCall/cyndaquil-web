@@ -60,8 +60,8 @@ const ExpendableLink: React.FC<ILink> = ({
         
         rounded`}
       >
-        <Link to={url} className=" flex flex-1 p-2 py-3 ">
-          <span className="inline-block font-extralight mr-3 ">{icon}</span>
+        <Link to={url} className=" flex flex-1  py-3 ">
+          {/* <span className="inline-block font-extralight mr-3 ">{icon}</span> */}
           <span className=" font-normal text-sm ">{title}</span>
         </Link>
 
@@ -242,19 +242,6 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
                 />
 
                 <ExpendableLink
-                  icon={<SendIcon />}
-                  title="Factures"
-                  url="/invoices"
-                  submenus={[
-                    {
-                      icon: <SendIcon />,
-                      title: "Nouvelle Facture",
-                      url: "/invoice/create",
-                    },
-                  ]}
-                />
-
-                <ExpendableLink
                   icon={<FileIcon />}
                   title="Contrats"
                   url="/contracts"
@@ -283,6 +270,23 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
                   icon={<SendIcon />}
                   title="Bons d'intervention"
                   url="/work-orders"
+                  submenus={[
+                    {
+                      icon: <SendIcon />,
+                      title: "Nouveau BI",
+                      url: "/work-order/create",
+                    },
+                    {
+                      icon: <SendIcon />,
+                      title: "A Facturer",
+                      url: "/work-orders?status=Reviewed",
+                    },
+                    {
+                      icon: <SendIcon />,
+                      title: "A Programmer",
+                      url: "/work-orders?status=Pending",
+                    },
+                  ]}
                 />
 
                 <ExpendableLink
@@ -350,6 +354,24 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
 
                 <ExpendableLink
                   icon={<SendIcon />}
+                  title="Factures"
+                  url="/invoices"
+                  submenus={[
+                    {
+                      icon: <SendIcon />,
+                      title: "Nouvelle Facture",
+                      url: "/invoice/create",
+                    },
+                    {
+                      icon: <SendIcon />,
+                      title: "Impayées",
+                      url: "/invoices?status=Unpaid",
+                    },
+                  ]}
+                />
+
+                <ExpendableLink
+                  icon={<SendIcon />}
                   title="Règlements"
                   url="/payments"
                   submenus={[
@@ -357,6 +379,19 @@ export const DashboardLayout: React.FC<any> = ({ children }) => {
                       icon: <SendIcon />,
                       title: "Nouveau Règlement",
                       url: "/payment/create",
+                    },
+                  ]}
+                />
+
+                <ExpendableLink
+                  icon={<SendIcon />}
+                  title="Relances"
+                  url="/billing-reminders"
+                  submenus={[
+                    {
+                      icon: <SendIcon />,
+                      title: "Nouvelle Relance",
+                      url: "/billing-reminder/create",
                     },
                   ]}
                 />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -10,7 +10,10 @@ import { UserInput } from "../../users/components";
 
 export const SearchTransfersInput = (defaultValues) => {
   const navigate = useNavigate();
-  const form = useForm({ defaultValues });
+  const form = useForm({ defaultValues, mode: "all" });
+  useEffect(() => {
+    form.reset(defaultValues);
+  }, [defaultValues]);
 
   const onSearchSubmit = () => {
     const input = form.getValues();
@@ -30,7 +33,7 @@ export const SearchTransfersInput = (defaultValues) => {
     <div className="search card">
       <div className="grid gap-3 w-full items-center  px-2">
         <div className="flex row items-center justify-between">
-          <div className="flex row align-text-center items-center">
+          <div className="flex flex-1 row align-text-center items-center">
             <label
               htmlFor="search"
               className="mr-2 text-gray-200 hover:text-gray-300"
@@ -61,10 +64,10 @@ export const SearchTransfersInput = (defaultValues) => {
                   onSearchSubmit();
                 }
               }}
-              placeholder="Rechercher un transfere"
+              placeholder="Rechercher un Remboursement"
               autoComplete="off"
               {...form.register("search", {
-                minLength: 3,
+                minLength: 2,
                 required: false,
               })}
               className="input rounded border-0 w-full "

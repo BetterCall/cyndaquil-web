@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
+import { toast } from "react-toastify";
 
 import { cleanObject } from "../../../helpers/clean-object";
 import { SuppliersFiltersInput } from "../../../__generated__/globalTypes";
-import { toast } from "react-toastify";
 
 export const SearchBrandsInput: React.FC = () => {
   const navigate = useNavigate();
   const form = useForm<SuppliersFiltersInput>({
     defaultValues: { search: "" },
-    mode: "onSubmit",
+    mode: "all",
   });
 
   const onSearchSubmit = () => {
@@ -31,7 +31,7 @@ export const SearchBrandsInput: React.FC = () => {
         onSubmit={form.handleSubmit(onSearchSubmit)}
       >
         <div className="flex row items-center justify-between">
-          <div className="flex row align-text-center items-center">
+          <div className="flex flex-1 row align-text-center items-center">
             <label
               htmlFor="search"
               className="mr-2 text-gray-200 hover:text-gray-300"

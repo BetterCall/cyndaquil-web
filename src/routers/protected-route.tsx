@@ -22,9 +22,10 @@ export const ProtectedRoute: React.FC<IProtectedRouteProps> = ({
   roles = [],
   children,
 }) => {
-  const { data, loading } = useMe();
+  const { data, loading, error } = useMe();
+  console.log({ data, loading, error });
   const location = useLocation();
-
+  console.log(location);
   const renderRoutes = () => {
     return children ? children : <Outlet />;
   };

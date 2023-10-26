@@ -8,7 +8,6 @@ import {
   CustomersQueryVariables,
 } from "../../../__generated__/CustomersQuery";
 import { useLazyCustomer } from "../hooks/useCustomer";
-import { ErrorMessage } from "@hookform/error-message";
 
 interface ICustomerInput {
   form: UseFormReturn<any, any>;
@@ -29,10 +28,11 @@ export const CustomerInput: React.FC<ICustomerInput> = ({
     CustomersQueryVariables
   >(CUSTOMERS);
   const [lazyCustomer] = useLazyCustomer();
+
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
   const [hasBeenSelected, setSelected] = useState(false);
 
-  const customerId = form.getValues("customerId");
+  const customerId = form.watch("customerId");
 
   useEffect(() => {
     const fetchData = async (id) => {
@@ -50,6 +50,9 @@ export const CustomerInput: React.FC<ICustomerInput> = ({
 
     if (customerId) {
       fetchData(customerId);
+    } else {
+      setSearch("");
+      setSelectedCustomer(null);
     }
   }, [customerId]);
 

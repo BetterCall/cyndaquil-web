@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
-import { Todo } from "../todo";
+import { RequestWrapper } from "../../routers/request-wrapper";
 import { Contract, Contracts, CreateContract, UpdateContract } from "./pages";
 
 export const ContractsRouter = [
@@ -8,7 +8,7 @@ export const ContractsRouter = [
     path="/contracts"
     element={
       <ProtectedRoute roles={["Any"]}>
-        <Contracts />
+        <RequestWrapper component={Contracts} />
       </ProtectedRoute>
     }
   />,

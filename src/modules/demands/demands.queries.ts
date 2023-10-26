@@ -43,9 +43,11 @@ export const DEMANDS = gql`
     query DemandsQuery( $limit : Int! , $offset : Int! , $where : DemandsFiltersInput! ) {
         demands( limit : $limit , offset : $offset ,  where: $where  ) {
             hasMore
+            total
             results {
                 id
                 type
+                treated
 
                 openedById
                 openedBy {

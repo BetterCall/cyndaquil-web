@@ -11,7 +11,7 @@ export const SearchUserInput: React.FC = () => {
   const navigate = useNavigate();
   const form = useForm<ISearchForm>({
     defaultValues: { search: "" },
-    mode: "onSubmit",
+    mode: "all",
   });
 
   const onSearchSubmit = () => {

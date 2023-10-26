@@ -45,6 +45,7 @@ export const Demands = () => {
             </th>
             <th className=" padding-table font-medium text-center">Client</th>
             <th className=" padding-table font-medium text-center">Site</th>
+            <th className=" padding-table font-medium text-center">Status</th>
           </tr>
         </thead>
         <tbody>
@@ -74,6 +75,9 @@ export const Demands = () => {
               <td className=" padding-table text-center ">
                 {demand?.site?.name}
               </td>
+              <td className=" padding-table text-center ">
+                {demand?.treated ? "Traitée" : "En Cours"}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -99,7 +103,9 @@ export const Demands = () => {
 
       <div className="main-container">
         <DemandSearchInput {...parseSearchParams(searchParams)} />
-
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {data?.demands?.total} resultats
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

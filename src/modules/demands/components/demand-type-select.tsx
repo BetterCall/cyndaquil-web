@@ -1,6 +1,7 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { DemandType } from "../../../__generated__/globalTypes";
+import { SelectOptionsWithTraductions } from "../../traductions/buttons";
 
 interface IDemandTypeSelect {
   form: UseFormReturn<any, any>;
@@ -32,11 +33,11 @@ export const DemandTypeSelect: React.FC<IDemandTypeSelect> = ({ form }) => {
           {...form.register("type")}
         >
           <option value={undefined}>-</option>
-          {Object.keys(DemandType).map((type: any) => (
-            <option selected={value === type} value={type} key={`type-${type}`}>
-              {type}
-            </option>
-          ))}
+
+          <SelectOptionsWithTraductions
+            selected={value}
+            keys={Object.keys(DemandType)}
+          />
         </select>
       </div>
     </div>

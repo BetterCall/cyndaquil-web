@@ -65,7 +65,7 @@ export const WorkOrdersPreview: React.FC<WordOrderProps> = ({
                   <td className="padding-table flex">
                     <div>
                       <p
-                        className="font-medium  cursor-pointer"
+                        className="font-medium cursor-pointer"
                         onClick={() => navigate(`/work-order/${workOrder.id}`)}
                       >
                         {workOrder.object}
@@ -81,7 +81,9 @@ export const WorkOrdersPreview: React.FC<WordOrderProps> = ({
                   <td className="padding-table text-center ">
                     {workOrder?.status === WorkOrderStatus.Pending
                       ? "-"
-                      : formatHour(workOrder.date + " " + workOrder.start)}
+                      : formatHour(
+                          workOrder.date + " " + workOrder.start ?? ""
+                        )}
                   </td>
                 </Row>
               ) : null

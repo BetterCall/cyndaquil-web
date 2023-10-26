@@ -42,8 +42,8 @@ export const USER_PERMISSIONS = gql`
             ok
             results {
                 id
-                
-                permissionId {
+                permissionId
+                permission {
                     id
                     label
                 }

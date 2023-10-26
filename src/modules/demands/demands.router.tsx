@@ -1,5 +1,6 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
+import { RequestWrapper } from "../../routers/request-wrapper";
 import { UserRole } from "../../__generated__/globalTypes";
 import { Todo } from "../todo";
 import { Demand, Demands, CreateDemand } from "./pages";
@@ -9,7 +10,7 @@ export const DemandsRouter = [
     path="/demands"
     element={
       <ProtectedRoute roles={["Any"]}>
-        <Demands />
+        <RequestWrapper component={Demands} />
       </ProtectedRoute>
     }
   />,

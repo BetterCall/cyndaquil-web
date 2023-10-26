@@ -31,23 +31,29 @@ export interface InvoiceQuery_invoice_result_site {
 
 export interface InvoiceQuery_invoice_result_rows {
   __typename: "InvoiceRow";
+  benefitId: number;
+  equipmentCategoryId: number;
   line: string;
   type: InvoiceRowType;
   unitPrice: number;
   quantity: number;
-  taxe: number;
-  taxPrice: number;
-  totalPrice: number;
+  taxPercentage: number;
+  taxAmount: number;
+  totalWithoutTax: number;
+  totalWithTax: number;
+  discount: number;
 }
 
 export interface InvoiceQuery_invoice_result {
   __typename: "Invoice";
   id: number;
   status: InvoiceStatus;
-  preTaxPrice: number;
-  taxPrice: number;
+  quantity: number;
+  taxAmount: number;
+  totalWithoutTax: number;
+  totalWithTax: number;
+  discount: number;
   amountRemaining: number;
-  totalPrice: number;
   createdAt: any;
   customerId: number | null;
   customer: InvoiceQuery_invoice_result_customer | null;

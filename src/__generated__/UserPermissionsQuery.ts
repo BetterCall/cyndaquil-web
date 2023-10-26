@@ -7,10 +7,17 @@
 // GraphQL query operation: UserPermissionsQuery
 // ====================================================
 
+export interface UserPermissionsQuery_userPermissions_results_permission {
+  __typename: "Permission";
+  id: number;
+  label: string;
+}
+
 export interface UserPermissionsQuery_userPermissions_results {
   __typename: "UserPermission";
   id: number;
   permissionId: number;
+  permission: UserPermissionsQuery_userPermissions_results_permission;
 }
 
 export interface UserPermissionsQuery_userPermissions {

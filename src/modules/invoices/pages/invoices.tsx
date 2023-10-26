@@ -6,6 +6,7 @@ import { Button } from "../../../components/button";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { parseSearchParams } from "../../../helpers/clean-object";
+import { CreateInvoiceButton } from "../buttons";
 import { SearchInvoicesInput } from "../components";
 import { useLazyInvoices } from "../hooks";
 
@@ -77,22 +78,15 @@ export const Invoices: React.FC = () => {
   };
   return (
     <>
-      <Header
-        title="Factures"
-        subtitle="Liste des factures"
-        buttons={[
-          {
-            actionText: "Nouvelle Facture",
-            bgColor: "indigo",
-            textColor: "white",
-            link: "/invoice/create",
-            icon: <SendIcon />,
-          },
-        ]}
-      />
+      <Header title="Factures" subtitle="Liste des factures" buttons={[]} />
       <div className="main-container">
+        <div className="flex">
+          <CreateInvoiceButton />
+        </div>
         <SearchInvoicesInput {...parseSearchParams(searchParams)} />
-
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {/* {data?.invoices?.total} resultats */}
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

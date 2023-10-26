@@ -1,5 +1,5 @@
 
-const numbers = ["buildingsCount", "entrancesCount", "categoryId", "emplacementCode", "equipmentId", "code", "workOrderId", "managerId", "invoiceId", "recordedById", 'paymentId', "contractId", "visitId", "commercialId", "customerCategoryId", "equipmentCategoryId", "categoryId", "benefitId", "customerId", "siteId", "id", "userId", "targetUserId", "openedById"]
+const numbers = ["takenById", "referenceId", "madeById", "buildingsCount", "floorsCount", "entrancesCount", "categoryId", "emplacementCode", "equipmentId", "code", "workOrderId", "managerId", "invoiceId", "recordedById", 'paymentId', "contractId", "visitId", "commercialId", "customerCategoryId", "equipmentCategoryId", "categoryId", "benefitId", "customerId", "siteId", "id", "userId", "targetUserId", "openedById", "contactId"]
 const decimals = ["amount", "price", "taxPrice", "lat", "lng"]
 
 export const cleanObject = (object: any): { [k: string]: any; } => {
@@ -80,4 +80,11 @@ export const parseSearchParams = (object: any) => {
     });
 
     return parsed
-} 
+}
+
+export const stringifyObject = (object: any) => {
+    return (Object.keys(object).map((key) => {
+        return `${key}=${object[key]}`
+    }
+    ).join("&"))
+}

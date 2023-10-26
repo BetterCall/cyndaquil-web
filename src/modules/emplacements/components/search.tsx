@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { cleanObject } from "../../../helpers/clean-object";
@@ -13,6 +13,10 @@ export const SearchEmplacementsInput = (defaultValues) => {
     defaultValues,
     mode: "all",
   });
+
+  useEffect(() => {
+    form.reset(defaultValues);
+  }, [defaultValues]);
 
   const onSearchSubmit = () => {
     const input = form.getValues();

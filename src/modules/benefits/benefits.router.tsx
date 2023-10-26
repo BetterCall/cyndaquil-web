@@ -2,13 +2,14 @@ import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
 import { Benefit, Benefits, CreateBenefit, UpdateBenefit } from "./pages";
 import { UserRole } from "../../__generated__/globalTypes";
+import { RequestWrapper } from "../../routers/request-wrapper";
 
 export const BenefitsRouter = [
   <Route
     path="/benefits"
     element={
       <ProtectedRoute roles={["Any"]}>
-        <Benefits />
+        <RequestWrapper component={Benefits} />
       </ProtectedRoute>
     }
   />,

@@ -22,15 +22,21 @@ export const Benefits = () => {
   }, [searchParams]);
 
   console.log(data, error);
+  console.log({ where: parseSearchParams(searchParams) });
 
   return (
     <>
       <Header title={"Services"} subtitle={"Afficher la liste des services"} />
 
       <div className="main-container">
-        <div className="flex mb-3">
+        <div className="flex">
           <CreateBenefitButton />
         </div>
+
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {/* {data?.benefits?.total} resultats */}
+        </div>
+
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           <table className="table-auto w-full">
             <thead>

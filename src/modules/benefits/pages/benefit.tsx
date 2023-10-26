@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loading } from "../../../components";
 import { CardHeader } from "../../../components/cards";
@@ -96,6 +97,18 @@ export const Benefit = () => {
                   where={{ categoryId: data?.benefit?.result?.categoryId }}
                 />
               ) : null}
+
+              <div className="cardFooter">
+                <div className="w-full md:w-1/2 px-2">
+                  <Link
+                    to={`/benefits?categoryId=${data?.benefit?.result?.categoryId}`}
+                  >
+                    <div className="btn btn-primary">
+                      Ajouter un nouveau service
+                    </div>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

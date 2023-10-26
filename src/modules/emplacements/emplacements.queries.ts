@@ -84,6 +84,7 @@ export const EMPLACEMENTS = gql`
     query EmplacementsQuery( $limit : Int , $offset : Int , $where : EmplacementsFiltersInput! ) {
         emplacements( limit : $limit , offset : $offset, where : $where  ) {
             hasMore , 
+            total,
             results {
                 id
 

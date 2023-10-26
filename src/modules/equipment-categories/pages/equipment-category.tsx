@@ -3,9 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CardHeader } from "../../../components/cards";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
+import { CreateBenefitButton } from "../../benefits/buttons";
 
 // TO DO CHANGE
 import { RemoveBenefitModal } from "../../benefits/components";
+import { CreatePriceRuleButton } from "../../prices/buttons";
+import { PricesPreview } from "../../prices/components";
+import { CreateReferenceButton } from "../../references/buttons";
 
 import { useEquipmentCategory } from "../hooks";
 
@@ -33,17 +37,10 @@ export const EquipmentCategory: React.FC = () => {
       />
 
       <div className="main-container">
-        <div className="flex flex-wrap -mx-4 -mb-4 md:mb-0">
-          <div className="w-full xl:w-1/2 xl:pr-4 mb-4 md:mb-0">
+        <div className="section">
+          <div className="element">
             <div className="card">
-              <CardHeader
-                title="Services "
-                button={{
-                  title: "Nouveau Service",
-                  icon: <SendIcon />,
-                  url: `/benefit/create?categoryId=${id}`,
-                }}
-              />
+              <CardHeader title="Services" />
               <table className="table-auto w-full">
                 <thead>
                   <tr className="text-xs text-gray-500 text-left">
@@ -119,18 +116,18 @@ export const EquipmentCategory: React.FC = () => {
                   )}
                 </tbody>
               </table>
+
+              <div className="cardFooter">
+                <div className="w-full md:w-1/2 px-2">
+                  <CreateBenefitButton categoryId={+id!} />
+                </div>
+              </div>
             </div>
           </div>
-          <div className="w-full xl:w-1/2 xl:pr-4 mb-4 md:mb-0">
+
+          <div className="element">
             <div className="card">
-              <CardHeader
-                title="Reference"
-                button={{
-                  title: "Nouveau Service d",
-                  icon: <SendIcon />,
-                  url: `/benefit/create?categoryId=${id}`,
-                }}
-              />
+              <CardHeader title="Reference" />
               <table className="table-auto w-full">
                 <thead>
                   <tr className="text-xs text-gray-500 text-left">
@@ -186,6 +183,24 @@ export const EquipmentCategory: React.FC = () => {
                   </tr>
                 </tbody>
               </table>
+
+              <div className="cardFooter">
+                <div className="w-full md:w-1/2 px-2">
+                  <CreateReferenceButton categoryId={+id!} />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="element">
+            <div className="card">
+              <CardHeader title="Tarifs" />
+              <PricesPreview equipmentCategoryId={+id!} />
+              <div className="cardFooter">
+                <div className="w-full md:w-1/2 px-2">
+                  <CreatePriceRuleButton equipmentCategoryId={+id!} />
+                </div>
+              </div>
             </div>
           </div>
         </div>

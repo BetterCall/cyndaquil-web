@@ -31,6 +31,7 @@ export interface EquipmentsQuery_equipments_results {
 export interface EquipmentsQuery_equipments {
   __typename: "EquipmentsOutput";
   hasMore: boolean | null;
+  total: number | null;
   results: EquipmentsQuery_equipments_results[] | null;
 }
 

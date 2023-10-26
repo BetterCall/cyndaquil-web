@@ -8,11 +8,12 @@ import { SearchEquipmentsInput } from "../components";
 import { Button } from "../../../components/button";
 import { Header } from "../../../components/header";
 import { EmptyList, Loading } from "../../../components";
-import { SendIcon } from "../../../components/icons";
+import { CreateEquipmentButton } from "../buttons";
 
 export const Equipments: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  console.log({ where: parseSearchParams(searchParams) });
   const [limit] = useState(10);
 
   const [search, { data, loading, fetchMore }] = useLazyEquipments();
@@ -68,19 +69,18 @@ export const Equipments: React.FC = () => {
       <Header
         title={"Liste des Equipements"}
         subtitle={"Liste des equipments du parc"}
-        buttons={[
-          {
-            actionText: "Nouvel Equipement",
-            bgColor: "indigo",
-            textColor: "white",
-            link: `/equipment/create`,
-            icon: <SendIcon />,
-          },
-        ]}
       />
 
       <div className="main-container">
-        <SearchEquipmentsInput />
+        <div className="flex">
+          <CreateEquipmentButton />
+        </div>
+
+        <SearchEquipmentsInput {...parseSearchParams(searchParams)} />
+
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {data?.equipments?.total} resultats
+        </div>
 
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderRows()}

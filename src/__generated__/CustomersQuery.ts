@@ -33,6 +33,7 @@ export interface CustomersQuery_customers_results {
 export interface CustomersQuery_customers {
   __typename: "CustomersOutput";
   hasMore: boolean | null;
+  total: number | null;
   results: CustomersQuery_customers_results[] | null;
 }
 

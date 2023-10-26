@@ -51,7 +51,7 @@ export const References = () => {
                 <div>
                   <p
                     className="font-medium  cursor-pointer"
-                    onClick={() => navigate(`/references/${reference.id}`)}
+                    onClick={() => navigate(`/reference/${reference.id}`)}
                   >
                     {reference?.name || "-"}
                   </p>
@@ -81,7 +81,9 @@ export const References = () => {
 
       <div className="main-container">
         <SearchReferencesInput {...parseSearchParams(searchParams)} />
-
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {/* {data?.references?.total} resultats */}
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

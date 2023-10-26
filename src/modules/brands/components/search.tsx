@@ -11,7 +11,7 @@ export const SearchBrands: React.FC = () => {
 
   const form = useForm<BrandsFiltersInput>({
     defaultValues: { search: "" },
-    mode: "onSubmit",
+    mode: "all",
   });
 
   const onSearchSubmit = () => {
@@ -31,7 +31,7 @@ export const SearchBrands: React.FC = () => {
         onSubmit={form.handleSubmit(onSearchSubmit)}
       >
         <div className="flex row items-center justify-between">
-          <div className="flex row align-text-center items-center">
+          <div className="flex flex-1 row align-text-center items-center">
             <label
               htmlFor="search"
               className="mr-2 text-gray-200 hover:text-gray-300"

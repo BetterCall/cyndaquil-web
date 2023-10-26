@@ -45,7 +45,7 @@ export const ResolveDemand: React.FC<IResolveDemand> = ({
 
   return (
     <div className="w-full">
-      <div className="w-full flex items-center">
+      <div className="w-full flex items-center mb-3">
         <input
           type={"checkbox"}
           {...form.register("treated", {
@@ -55,7 +55,7 @@ export const ResolveDemand: React.FC<IResolveDemand> = ({
         <p className="label mb-0 ml-2">Traitée</p>
       </div>
 
-      <div className="w-full ">
+      <div className="w-full mb-3">
         <p className="label">Rapport</p>
         <textarea
           {...form.register("report", {

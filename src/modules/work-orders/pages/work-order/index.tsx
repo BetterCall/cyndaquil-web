@@ -6,7 +6,6 @@ import { Header } from "../../../../components/header";
 import { SendIcon } from "../../../../components/icons";
 import { CardHeader } from "../../../../components/cards";
 import { Loading } from "../../../../components";
-import { CreateInvoiceBtn } from "../../../invoices/components/create-invoice-btn";
 import {
   Database,
   WorkOrderStatus,
@@ -14,6 +13,8 @@ import {
 import { WorkOrderRows } from "./work-order-rows";
 import { FilesPreview } from "../../../../components/files-preview";
 import { CreateUploadModal } from "../../../uploads/modals";
+import { CreateInvoiceButton } from "../../../invoices/buttons";
+import { Link } from "react-router-dom";
 
 export const WorkOrder: React.FC = () => {
   const { id } = useParams();
@@ -95,35 +96,22 @@ export const WorkOrder: React.FC = () => {
                 />
               </div>
 
-              <div className="mb-3">{data?.workOrder?.result?.description}</div>
-
-              <div className="flex ">
-                <div className="w-1/2 mr-1 ">
-                  <div className="w-full mb-3">
-                    <button
-                      className="btn w-full"
+              {data?.workOrder?.result?.status}
+              <div className="cardFooter">
+                {data?.workOrder?.result?.status === WorkOrderStatus.Reviewed ||
+                data?.workOrder?.result?.status ===
+                  WorkOrderStatus.Unfinished ? (
+                  <div className="w-full md:w-1/2 px-2">
+                    <div
+                      className="btn"
                       onClick={() =>
                         navigate(`/work-order/create?workOrderId=${id}`)
                       }
                     >
-                      Nouveau BI
-                    </button>
+                      Generer un bon avec les taches manquantes
+                    </div>
                   </div>
-                </div>
-                <div className="w-1/2 ml-1">
-                  <div className="w-full mb-3">
-                    <button
-                      className="btn w-full"
-                      onClick={() =>
-                        navigate(
-                          `/contract/create?siteId=${data?.workOrder?.result?.siteId}`
-                        )
-                      }
-                    >
-                      Nouveau Contrat
-                    </button>
-                  </div>
-                </div>
+                ) : null}
               </div>
             </div>
             <div className="card mb-2">
@@ -223,18 +211,52 @@ export const WorkOrder: React.FC = () => {
             </div>
 
             <div className="card mb-2">
-              <CardHeader title="Facture" />
+              <CardHeader
+                title={
+                  data?.workOrder?.result?.invoiceId
+                    ? `Facture n°${data?.workOrder?.result?.invoiceId}`
+                    : "Facture"
+                }
+              />
+              {data?.workOrder?.result?.invoice?.status}
               <div className="mb-7">
-                <p className="text-sm">{data?.workOrder?.result?.invoiceId}</p>
-                <p className="text-sm">
-                  {data?.workOrder?.result?.invoice?.totalPrice}
-                </p>
+                <div className="w-full mb-3">
+                  <p className="label">Montant HT</p>
+                  <input
+                    type="text"
+                    className="input w-full"
+                    disabled
+                    value={`${data?.workOrder?.result?.invoice?.totalWithoutTax} €`}
+                  />
+                </div>
+                <div className="w-full mb-3">
+                  <p className="label">Montant TTC</p>
+                  <input
+                    type="text"
+                    className="input w-full"
+                    disabled
+                    value={`${data?.workOrder?.result?.invoice?.totalWithTax} €`}
+                  />
+                </div>
+                <div className="w-full mb-3">
+                  <p className="label">Restant Du</p>
+                  <input
+                    type="text"
+                    className="input w-full"
+                    disabled
+                    value={`${data?.workOrder?.result?.invoice?.amountRemaining} €`}
+                  />
+                </div>
               </div>
 
               <div className="w-full">
                 {!data?.workOrder?.result?.invoiceId ? (
-                  <CreateInvoiceBtn workOrderId={+id!} />
-                ) : null}
+                  <CreateInvoiceButton workOrderId={+id!} />
+                ) : (
+                  <Link to={`/invoice/${data?.workOrder?.result?.invoiceId}`}>
+                    <div className="btn btn-primary">Detail Facture</div>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

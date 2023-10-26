@@ -20,6 +20,7 @@ export const CONTRACTS = gql`
 query ContractsQuery( $limit : Int  , $offset : Int  , $where : ContractFiltersInput! ) {
     contracts( limit : $limit , offset : $offset, where : $where  ) {
         hasMore , 
+        total, 
         results {
             id
             name

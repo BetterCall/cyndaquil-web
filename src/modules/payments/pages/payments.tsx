@@ -88,7 +88,9 @@ export const Payments: React.FC = () => {
       />
       <div className="main-container">
         <SearchPaymentsInput {...parseSearchParams(searchParams)} />
-
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {/* {data?.payments?.total} resultats */}
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

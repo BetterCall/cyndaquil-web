@@ -46,6 +46,7 @@ export interface ContactsQuery_contacts_results {
 export interface ContactsQuery_contacts {
   __typename: "ContactsOutput";
   hasMore: boolean | null;
+  total: number | null;
   results: ContactsQuery_contacts_results[] | null;
 }
 

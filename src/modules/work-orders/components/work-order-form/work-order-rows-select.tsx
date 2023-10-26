@@ -83,7 +83,6 @@ export const WorkOrderRowsSelect: React.FC<IProps> = ({
                       <div className="w-full  ">
                         <p className="label">Service</p>
                         <SelectBenefit
-                          disabled
                           setValue={(e) => {}}
                           value={row.benefitId!}
                         />

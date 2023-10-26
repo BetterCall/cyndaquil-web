@@ -27,7 +27,8 @@ export const EQUIPMENTS = gql`
 
     query EquipmentsQuery( $limit : Int! , $offset : Int! , $where : EquipmentFiltersInput! ) {
         equipments( limit : $limit , offset : $offset, where : $where  ) {
-            hasMore , 
+            hasMore ,
+            total, 
             results {
                 id
                 category {

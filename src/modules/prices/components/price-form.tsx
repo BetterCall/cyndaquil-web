@@ -6,6 +6,7 @@ import { CustomerInput } from "../../customer/components";
 import { BenefitsInput } from "../../benefits/components";
 import { EquipmentCategoriesInput } from "../../equipment-categories/components";
 import { CustomerCategoriesInput } from "../../customer-categories/components";
+import { SelectOptionsWithTraductions } from "../../traductions/buttons";
 
 interface IPriceForm {
   loading: boolean;
@@ -52,7 +53,7 @@ export const PriceForm: React.FC<IPriceForm> = ({
       </div>
 
       <div className="w-full p-3">
-        <p className="label">Type</p>
+        <p className="label">Prix</p>
         <div className="relative">
           <svg
             className="absolute right-4 top-1/2 transform -translate-y-1/2"
@@ -73,13 +74,11 @@ export const PriceForm: React.FC<IPriceForm> = ({
             {...form.register("type")}
           >
             <option value={undefined}>-</option>
-            {Object.keys(PriceRuleType).map((key) => {
-              return (
-                <option value={key} key={`key-${key}`}>
-                  {key}
-                </option>
-              );
-            })}
+
+            <SelectOptionsWithTraductions
+              selected={""}
+              keys={Object.keys(PriceRuleType)}
+            />
           </select>
         </div>
       </div>

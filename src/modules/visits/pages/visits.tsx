@@ -11,6 +11,7 @@ import { Row } from "../../../components/tables";
 import { Button } from "../../../components/button";
 import { EmptyList, Loading } from "../../../components";
 import moment from "moment";
+import { CreateVisitButton } from "../buttons";
 
 export const Visits: React.FC = () => {
   const navigate = useNavigate();
@@ -94,22 +95,15 @@ export const Visits: React.FC = () => {
 
   return (
     <>
-      <Header
-        title={"Rendez-vous"}
-        subtitle={"Liste des Rendez-vous"}
-        buttons={[
-          {
-            actionText: "Nouveau Rendez-vous",
-            bgColor: "indigo",
-            textColor: "white",
-            link: `/visit/create`,
-            icon: <SendIcon />,
-          },
-        ]}
-      />
+      <Header title={"Rendez-vous"} subtitle={"Liste des Rendez-vous"} />
       <div className="main-container">
+        <div className="flex">
+          <CreateVisitButton />
+        </div>
         <SearchVisitsInput {...parseSearchParams(searchParams)} />
-
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {/* {data?.visits?.total} resultats */}
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

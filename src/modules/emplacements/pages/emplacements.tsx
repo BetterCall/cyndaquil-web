@@ -148,7 +148,9 @@ export const Emplacements: React.FC = () => {
 
       <div className="main-container">
         <SearchEmplacementsInput {...parseSearchParams(searchParams)} />
-
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {data?.emplacements?.total} resultats
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

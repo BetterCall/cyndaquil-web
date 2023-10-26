@@ -88,6 +88,9 @@ export const Brands = () => {
       <div className="main-container">
         <SearchBrands />
 
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {/* {data?.brands?.total} resultats */}
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

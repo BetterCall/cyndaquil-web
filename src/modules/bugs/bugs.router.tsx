@@ -1,5 +1,6 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
+import { RequestWrapper } from "../../routers/request-wrapper";
 import { Todo } from "../todo";
 import { Bug, Bugs } from "./pages";
 import { CreateBug } from "./pages/create-bug";
@@ -9,7 +10,7 @@ export const BugsRouter = [
     path="/bugs"
     element={
       <ProtectedRoute roles={["Any"]}>
-        <Bugs />
+        <RequestWrapper component={Bugs} />
       </ProtectedRoute>
     }
   />,

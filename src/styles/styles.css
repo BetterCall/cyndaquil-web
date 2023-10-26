@@ -1701,6 +1701,10 @@ a:hover {
   color: rgb(238 242 255 / var(--tw-text-opacity));
 }
 
+.line-through {
+  text-decoration-line: line-through;
+}
+
 .opacity-10 {
   opacity: 0.1;
 }

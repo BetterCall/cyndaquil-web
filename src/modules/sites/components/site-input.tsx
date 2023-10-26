@@ -49,7 +49,7 @@ export const SiteInput: React.FC<ISiteInput> = ({
     if (!hasBeenSelected) form.setValue("siteId", null);
   }, [hasBeenSelected]);
 
-  const siteId = form.getValues("siteId");
+  const siteId = form.watch("siteId");
 
   useEffect(() => {
     const fetchData = async (id) => {
@@ -71,6 +71,11 @@ export const SiteInput: React.FC<ISiteInput> = ({
 
     if (siteId) {
       fetchData(siteId);
+    } else {
+      setIsOpened(false);
+      setSelected(false);
+      setSearch("");
+      setSelectedSite(null);
     }
   }, [siteId]);
 

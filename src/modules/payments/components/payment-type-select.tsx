@@ -1,6 +1,7 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { PaymentType } from "../../../__generated__/globalTypes";
+import { SelectOptionsWithTraductions } from "../../traductions/buttons";
 
 interface IPaymentTypeSelect {
   form: UseFormReturn<any, any>;
@@ -32,15 +33,10 @@ export const PaymentTypeSelect: React.FC<IPaymentTypeSelect> = ({ form }) => {
         >
           <option value={undefined}>-</option>
 
-          {Object.keys(PaymentType).map((value) => (
-            <option
-              value={value}
-              key={`status-${value}`}
-              selected={value === status}
-            >
-              {value}
-            </option>
-          ))}
+          <SelectOptionsWithTraductions
+            selected={status}
+            keys={Object.keys(PaymentType)}
+          />
         </select>
       </div>
     </div>

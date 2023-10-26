@@ -7,6 +7,14 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum BillingReminderType {
+  Call = "Call",
+  Email = "Email",
+  Letter = "Letter",
+  RegistredLetter = "RegistredLetter",
+  SMS = "SMS",
+}
+
 export enum BugStatus {
   Pending = "Pending",
   Resolved = "Resolved",
@@ -21,6 +29,7 @@ export enum ContractStatus {
 
 export enum Database {
   Benefits = "Benefits",
+  BillingReminders = "BillingReminders",
   Brands = "Brands",
   Bugs = "Bugs",
   Buildings = "Buildings",
@@ -38,6 +47,7 @@ export enum Database {
   EquipmentCategories = "EquipmentCategories",
   Equipments = "Equipments",
   Floors = "Floors",
+  InvoiceRows = "InvoiceRows",
   Invoices = "Invoices",
   Payments = "Payments",
   Permissions = "Permissions",
@@ -49,6 +59,7 @@ export enum Database {
   SupplierReferences = "SupplierReferences",
   Suppliers = "Suppliers",
   Taxes = "Taxes",
+  Traductions = "Traductions",
   Transfers = "Transfers",
   UploadCategories = "UploadCategories",
   Uploads = "Uploads",
@@ -138,6 +149,15 @@ export interface BenefitFiltersInput {
   categoryId?: number | null;
 }
 
+export interface BillingRemindersFiltersInput {
+  madeById?: number | null;
+  customerId?: number | null;
+  siteId?: number | null;
+  contactId?: number | null;
+  invoiceId?: number | null;
+  type?: BillingReminderType | null;
+}
+
 export interface BrandsFiltersInput {
   search?: string | null;
 }
@@ -190,6 +210,14 @@ export interface CreateBenefitInput {
   price: number;
   categoryId: number;
   taxeId: number;
+}
+
+export interface CreateBillingReminderInput {
+  type: BillingReminderType;
+  message?: string | null;
+  invoiceId?: number | null;
+  customerId?: number | null;
+  contactId?: number | null;
 }
 
 export interface CreateBrandInput {
@@ -280,7 +308,13 @@ export interface CreateEquipmentInput {
 }
 
 export interface CreateInvoiceInput {
-  workOrderId: number;
+  quantity: number;
+  taxAmount: number;
+  totalWithoutTax: number;
+  totalWithTax: number;
+  discount: number;
+  rows: InvoiceRowInput[];
+  workOrderIds: number[];
 }
 
 export interface CreatePaymentInput {
@@ -335,6 +369,11 @@ export interface CreateSupplierInput {
 export interface CreateTaxeInput {
   name: string;
   value: number;
+}
+
+export interface CreateTraductionInput {
+  key: string;
+  value: string;
 }
 
 export interface CreateTransferInput {
@@ -427,6 +466,10 @@ export interface EmplacementsFiltersInput {
 
 export interface EquipmentFiltersInput {
   categoryId?: number | null;
+  referenceId?: number | null;
+  code?: number | null;
+  emplacementId?: number | null;
+  takenById?: number | null;
 }
 
 export interface EquipmentInput {
@@ -456,6 +499,21 @@ export interface InvoiceFiltersInput {
   contractId?: number | null;
 }
 
+export interface InvoiceRowInput {
+  benefitId: number;
+  equipmentCategoryId: number;
+  line: string;
+  type: InvoiceRowType;
+  defaultPrice: number;
+  unitPrice: number;
+  quantity: number;
+  taxPercentage: number;
+  taxAmount: number;
+  totalWithoutTax: number;
+  totalWithTax: number;
+  discount: number;
+}
+
 export interface LoginAsInput {
   email: string;
 }
@@ -471,9 +529,11 @@ export interface PaymentFiltersInput {
   date?: any | null;
   recordedById?: number | null;
   invoiceId?: number | null;
+  madeById?: number | null;
 }
 
 export interface PriceRulesFiltersInput {
+  all?: boolean | null;
   benefitId?: number | null;
   customerId?: number | null;
   equipmentCategoryId?: number | null;
@@ -511,6 +571,11 @@ export interface SuppliersFiltersInput {
   search?: string | null;
 }
 
+export interface TraductionsFiltersInput {
+  search?: string | null;
+  keys?: string[] | null;
+}
+
 export interface TransferFiltersInput {
   customerId?: number | null;
   date?: any | null;
@@ -522,6 +587,14 @@ export interface UpdateBenefitInput {
   price?: number | null;
   categoryId?: number | null;
   taxeId?: number | null;
+}
+
+export interface UpdateBillingReminderInput {
+  type?: BillingReminderType | null;
+  message?: string | null;
+  invoiceId?: number | null;
+  customerId?: number | null;
+  contactId?: number | null;
 }
 
 export interface UpdateBrandInput {
@@ -673,6 +746,11 @@ export interface UpdateTaxeInput {
   value?: number | null;
 }
 
+export interface UpdateTraductionInput {
+  key?: string | null;
+  value?: string | null;
+}
+
 export interface UpdateTransferInput {
   amount?: number | null;
   comment?: string | null;
@@ -775,6 +853,7 @@ export interface WorkOrderFiltersInput {
   date?: any | null;
   userId?: number | null;
   contractId?: number | null;
+  invoiceId?: number | null;
 }
 
 export interface WorkOrderRowFiltersInput {

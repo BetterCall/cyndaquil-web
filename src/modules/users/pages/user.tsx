@@ -5,7 +5,7 @@ import { CardHeader } from "../../../components/cards";
 import { FilesPreview } from "../../../components/files-preview";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
-import { ContractStatus, Database } from "../../../__generated__/globalTypes";
+import { Database } from "../../../__generated__/globalTypes";
 import { BugsPreview } from "../../bugs/components";
 import { ContractsPreview } from "../../contracts/components";
 import { CustomersPreview } from "../../customer/components/customers-preview";

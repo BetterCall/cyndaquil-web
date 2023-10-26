@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WorkOrderType, WorkOrderStatus } from "./globalTypes";
+import { WorkOrderType, WorkOrderStatus, InvoiceStatus } from "./globalTypes";
 
 // ====================================================
 // GraphQL query operation: WorkOrderQuery
@@ -12,7 +12,10 @@ import { WorkOrderType, WorkOrderStatus } from "./globalTypes";
 export interface WorkOrderQuery_workOrder_result_invoice {
   __typename: "Invoice";
   id: number;
-  totalPrice: number;
+  status: InvoiceStatus;
+  totalWithoutTax: number;
+  totalWithTax: number;
+  amountRemaining: number;
 }
 
 export interface WorkOrderQuery_workOrder_result_user {

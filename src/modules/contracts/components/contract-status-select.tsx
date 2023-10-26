@@ -1,6 +1,7 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { ContractStatus } from "../../../__generated__/globalTypes";
+import { SelectOptionsWithTraductions } from "../../traductions/buttons";
 
 interface IContractTypeSelect {
   form: UseFormReturn<any, any>;
@@ -34,15 +35,10 @@ export const ContractStatusSelect: React.FC<IContractTypeSelect> = ({
         >
           <option value={undefined}>-</option>
 
-          {Object.keys(ContractStatus).map((value) => (
-            <option
-              value={value}
-              key={`status-${value}`}
-              selected={value === status}
-            >
-              {value}
-            </option>
-          ))}
+          <SelectOptionsWithTraductions
+            keys={Object.keys(ContractStatus)}
+            selected={status}
+          />
         </select>
       </div>
     </div>

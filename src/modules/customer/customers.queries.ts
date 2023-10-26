@@ -43,6 +43,7 @@ export const CUSTOMERS = gql`
     query CustomersQuery( $limit : Int! , $offset : Int! ,  $where : CustomerFiltersInput!   ) {
         customers( limit : $limit , offset : $offset , where : $where ) {
             hasMore , 
+            total, 
             results {
                 ...CustomerPart
                 category {

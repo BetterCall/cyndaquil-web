@@ -1,7 +1,6 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
-import { UserRole } from "../../__generated__/globalTypes";
-import { Todo } from "../todo";
+import { RequestWrapper } from "../../routers/request-wrapper";
 import { Contact, Contacts, CreateContact, UpdateContact } from "./pages";
 
 export const ContactsRouter = [
@@ -9,7 +8,7 @@ export const ContactsRouter = [
     path="/contacts"
     element={
       <ProtectedRoute roles={["Any"]}>
-        <Contacts />
+        <RequestWrapper component={Contacts} />
       </ProtectedRoute>
     }
   />,

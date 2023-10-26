@@ -1,6 +1,7 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { UserRole } from "../../../__generated__/globalTypes";
+import { SelectOptionsWithTraductions } from "../../traductions/buttons";
 
 interface IUserRoleSelect {
   form: UseFormReturn<any, any>;
@@ -32,15 +33,10 @@ export const UserRoleSelect: React.FC<IUserRoleSelect> = ({ form }) => {
         >
           <option value={undefined}>-</option>
 
-          {Object.keys(UserRole).map((value) => (
-            <option
-              value={value}
-              key={`role-${value}`}
-              selected={value === role}
-            >
-              {value}
-            </option>
-          ))}
+          <SelectOptionsWithTraductions
+            selected={role}
+            keys={Object.keys(UserRole)}
+          />
         </select>
       </div>
     </div>

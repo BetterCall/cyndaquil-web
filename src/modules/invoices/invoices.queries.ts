@@ -45,10 +45,13 @@ export const INVOICE = gql`
       result {
         id
         status
-        preTaxPrice
-        taxPrice  
+        quantity
+        taxAmount
+        totalWithoutTax
+        totalWithTax
+        discount
+
         amountRemaining
-        totalPrice
 
         createdAt
 
@@ -73,13 +76,22 @@ export const INVOICE = gql`
          }
 
          rows {
+
+            benefitId 
+            equipmentCategoryId 
+
             line
             type
             unitPrice
             quantity
-            taxe
-            taxPrice
-            totalPrice
+
+            taxPercentage
+            taxAmount
+
+            totalWithoutTax
+
+            totalWithTax
+            discount
          }
       }
     }

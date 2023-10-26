@@ -13,10 +13,11 @@ import { useLazySite } from "../../sites/hooks";
 import { WorkOrderStatus } from "../../../__generated__/globalTypes";
 
 export const CreateWorkOrder: React.FC = () => {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [fetchWorkOrder] = useLazyWorkOrder();
   const [fetchSite] = useLazySite();
+
+  const navigate = useNavigate();
 
   const { form, submit, loading } = useCreateWorkOrder({
     defaultValues: {
@@ -28,9 +29,10 @@ export const CreateWorkOrder: React.FC = () => {
     },
     onCompleted: (id) => {
       toast.success("Le BI a été créée avec succès");
-      // setTimeout(() => {
-      //   navigate(`/work-order/${id}`);
-      // }, 1000);
+
+      setTimeout(() => {
+        navigate(`/work-order/${id}`);
+      }, 1000);
     },
     onError: (msg) => toast.error(msg),
   });

@@ -97,7 +97,9 @@ export const Transfers: React.FC = () => {
       />
       <div className="main-container">
         <SearchTransfersInput {...parseSearchParams(searchParams)} />
-
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {/* {data?.transfers?.total} resultats */}
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

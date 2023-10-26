@@ -50,7 +50,8 @@ export const WORK_ORDERS = gql`
 
     query WorkOrdersQuery( $limit : Int , $offset : Int , $where : WorkOrderFiltersInput! ) {
         workOrders( limit : $limit , offset : $offset, where : $where  ) {
-            hasMore , 
+            hasMore 
+            total 
             results {
                 ...WorkOrderPart
 
@@ -91,7 +92,11 @@ query WorkOrderQuery ( $id : Int! ) {
             invoiceId 
             invoice {
                 id
-                totalPrice
+                status
+                totalWithoutTax
+                totalWithTax
+                amountRemaining
+                
             }
 
             userId
@@ -169,3 +174,39 @@ export const GENERATE_FROM_WORK_ORDER = gql`
     }
 
 `
+
+export const WORK_ORDERS_BY_IDS = gql`
+    query WorkOrdersByIdsQuery ( $ids : [Int!]! ) {
+            workOrdersByIds( ids : $ids ) {
+                ok 
+                error 
+                results {
+                    id
+                    object
+                    customerId 
+                    customer {
+                        id
+                        name
+                        categoryId
+                    }
+
+                    rows {
+                        id
+                        done
+                        benefit {
+                            id
+                            name 
+                            price
+                            categoryId
+                            category  {
+                                id
+                                name
+                            }
+                        }
+                    }
+                }
+               
+            }
+    }
+
+    `

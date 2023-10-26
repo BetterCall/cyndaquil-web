@@ -1,6 +1,7 @@
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 import { WorkOrderRowStatus } from "../../../__generated__/globalTypes";
+import { SelectOptionsWithTraductions } from "../../traductions/buttons";
 
 interface IProps {
   form: UseFormReturn<any, any>;
@@ -32,15 +33,10 @@ export const WorkOrderRowStatusSelect: React.FC<IProps> = ({ form }) => {
         >
           <option value={undefined}>-</option>
 
-          {Object.keys(WorkOrderRowStatus).map((value) => (
-            <option
-              value={value}
-              key={`status-${value}`}
-              selected={value === status}
-            >
-              {value}
-            </option>
-          ))}
+          <SelectOptionsWithTraductions
+            selected={status}
+            keys={Object.keys(WorkOrderRowStatus)}
+          />
         </select>
       </div>
     </div>

@@ -14,9 +14,10 @@ import {
 interface IProps {
     defaultValues: DeepPartial<CreateReferenceInput>
     onCompleted: () => any
+    onError: (msg: string) => any
 }
 
-export const useCreateReference = ({ defaultValues, onCompleted }: IProps) => {
+export const useCreateReference = ({ defaultValues, onCompleted, onError }: IProps) => {
 
     const form = useForm<CreateReferenceInput>({
         mode: "all",
@@ -46,6 +47,7 @@ export const useCreateReference = ({ defaultValues, onCompleted }: IProps) => {
 
         } catch (error) {
             console.log(error)
+            onError(error.message)
         }
     }
     return {

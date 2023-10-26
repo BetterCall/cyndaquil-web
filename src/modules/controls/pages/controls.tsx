@@ -84,7 +84,9 @@ export const Controls = () => {
 
       <div className="main-container">
         <SearchControls />
-
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {/* {data?.controls?.total} resultats */}
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

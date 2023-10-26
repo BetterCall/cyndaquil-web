@@ -96,7 +96,9 @@ export const Contracts: React.FC = () => {
       />
       <div className="main-container">
         <SearchContractsInput {...parseSearchParams(searchParams)} />
-
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {data?.contracts?.total} resultats
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>

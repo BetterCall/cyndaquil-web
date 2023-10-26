@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { CardHeader } from "../../../components/cards";
 
 import { Header } from "../../../components/header";
-import { SendIcon } from "../../../components/icons";
 import { DemandsPreview } from "../../demands/components";
 import { ContactsPreview } from "../../contacts/components";
 import { PricesPreview } from "../../prices/components";
@@ -16,6 +15,13 @@ import { SimpleMap } from "../../../components/maps";
 import { FilesPreview } from "../../../components/files-preview";
 import { Database } from "../../../__generated__/globalTypes";
 import { CreateUploadModal } from "../../uploads/modals";
+import { EditCustomerButton } from "../buttons";
+import { CreateContactButton } from "../../contacts/buttons";
+import { CreateWorkOrderButton } from "../../work-orders/buttons";
+import { CreatePriceRuleButton } from "../../prices/buttons";
+import { CreateDemand } from "../../demands/pages";
+import { CreateDemandButton } from "../../demands/buttons";
+import { CreateVisitButton } from "../../visits/buttons";
 
 type ICustomerParams = {
   id: string;
@@ -34,21 +40,13 @@ export const Customer: React.FC = () => {
 
   return (
     <>
-      <Header
-        title={`Client`}
-        subtitle={data?.customer?.result?.name ?? ""}
-        buttons={[
-          {
-            actionText: "Modifier",
-            bgColor: "indigo",
-            textColor: "white",
-            link: `/customer/${data?.customer?.result?.id}/update`,
-            icon: <SendIcon />,
-          },
-        ]}
-      />
+      <Header title={`Client`} subtitle={data?.customer?.result?.name ?? ""} />
 
       <div className="main-container">
+        <div className="flex mb-3">
+          <EditCustomerButton id={+id!} />
+        </div>
+
         <section className="section">
           <div className="element">
             <div className="card">
@@ -166,12 +164,7 @@ export const Customer: React.FC = () => {
               />
               <div className="cardFooter">
                 <div className="w-full md:w-1/2 px-2">
-                  <div
-                    className="btn"
-                    onClick={() => navigate(`/contact/create?customerId=${id}`)}
-                  >
-                    Nouveau Contact
-                  </div>
+                  <CreateContactButton customerId={+id!} />
                 </div>
               </div>
             </div>
@@ -186,14 +179,7 @@ export const Customer: React.FC = () => {
 
               <div className="cardFooter">
                 <div className="w-full md:w-1/2 px-2">
-                  <div
-                    className="btn"
-                    onClick={() =>
-                      navigate(`/work-order/create?customerId=${id}`)
-                    }
-                  >
-                    Nouveau BI
-                  </div>
+                  <CreateWorkOrderButton customerId={+id!} />
                 </div>
               </div>
             </div>
@@ -205,12 +191,7 @@ export const Customer: React.FC = () => {
               <PricesPreview customerId={+id!} />
               <div className="cardFooter">
                 <div className="w-full md:w-1/2 px-2">
-                  <div
-                    className="btn"
-                    onClick={() => navigate(`/price/create?customerId=${id}`)}
-                  >
-                    Nouveau Tarif
-                  </div>
+                  <CreatePriceRuleButton customerId={+id!} />
                 </div>
               </div>
             </div>
@@ -223,12 +204,7 @@ export const Customer: React.FC = () => {
               <DemandsPreview customerId={+id!} />
               <div className="cardFooter">
                 <div className="w-full md:w-1/2 px-2">
-                  <div
-                    className="btn"
-                    onClick={() => navigate(`/demand/create?customerId=${id}`)}
-                  >
-                    Nouvel Appel
-                  </div>
+                  <CreateDemandButton customerId={+id!} />
                 </div>
               </div>
             </div>
@@ -241,12 +217,7 @@ export const Customer: React.FC = () => {
 
               <div className="cardFooter">
                 <div className="w-full md:w-1/2 px-2">
-                  <div
-                    className="btn"
-                    onClick={() => navigate(`/visit/create?customerId=${id}`)}
-                  >
-                    Nouveau rendez vous
-                  </div>
+                  <CreateVisitButton customerId={+id!} />
                 </div>
               </div>
             </div>

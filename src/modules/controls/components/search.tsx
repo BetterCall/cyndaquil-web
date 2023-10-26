@@ -1,27 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, createSearchParams } from "react-router-dom";
 
 import { cleanObject } from "../../../helpers/clean-object";
-import { FormError } from "../../../components/form-error";
-
 import { ControlFiltersInput } from "../../../__generated__/globalTypes";
 
 export const SearchControls: React.FC = (defaultValues) => {
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-  } = useForm<ControlFiltersInput>({
+  const form = useForm<ControlFiltersInput>({
     defaultValues,
-    mode: "onSubmit",
+    mode: "all",
   });
 
+  useEffect(() => {
+    form.reset(defaultValues);
+  }, [defaultValues]);
+
   const onSearchSubmit = () => {
-    const input = getValues();
+    const input = form.getValues();
     navigate({
       pathname: "/controls",
       search: `?${createSearchParams(cleanObject(input))}`,
@@ -32,10 +29,10 @@ export const SearchControls: React.FC = (defaultValues) => {
     <div className="search card">
       <form
         className="grid gap-3 w-full items-center  px-2"
-        onSubmit={handleSubmit(onSearchSubmit)}
+        onSubmit={form.handleSubmit(onSearchSubmit)}
       >
         <div className="flex row items-center justify-between">
-          <div className="flex row align-text-center items-center">
+          <div className="flex flex-1 row align-text-center items-center">
             <label
               htmlFor="search"
               className="mr-2 text-gray-200 hover:text-gray-300"

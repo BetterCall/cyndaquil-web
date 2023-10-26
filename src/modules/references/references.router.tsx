@@ -1,6 +1,5 @@
 import { Route } from "react-router-dom";
 import { ProtectedRoute } from "../../routers/protected-route";
-import { Todo } from "../todo";
 import {
   CreateReference,
   UpdateReference,

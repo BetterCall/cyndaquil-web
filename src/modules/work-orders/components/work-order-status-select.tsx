@@ -4,6 +4,7 @@ import {
   WorkOrderStatus,
   WorkOrderType,
 } from "../../../__generated__/globalTypes";
+import { SelectOptionsWithTraductions } from "../../traductions/buttons";
 
 interface IWorkOrderTypeSelect {
   form: UseFormReturn<any, any>;
@@ -37,15 +38,10 @@ export const WorkOrderStatusSelect: React.FC<IWorkOrderTypeSelect> = ({
         >
           <option value={undefined}>-</option>
 
-          {Object.keys(WorkOrderStatus).map((value) => (
-            <option
-              value={value}
-              key={`status-${value}`}
-              selected={value === status}
-            >
-              {value}
-            </option>
-          ))}
+          <SelectOptionsWithTraductions
+            selected={status}
+            keys={Object.keys(WorkOrderStatus)}
+          />
         </select>
       </div>
     </div>

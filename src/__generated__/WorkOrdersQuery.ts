@@ -62,6 +62,7 @@ export interface WorkOrdersQuery_workOrders_results {
 export interface WorkOrdersQuery_workOrders {
   __typename: "WorkOrdersOutput";
   hasMore: boolean | null;
+  total: number | null;
   results: WorkOrdersQuery_workOrders_results[] | null;
 }
 

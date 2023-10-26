@@ -15,8 +15,7 @@ export const ReferenceInput: React.FC<IProps> = ({
 }) => {
   const limit = 10;
   const [isOpened, setIsOpened] = useState(false);
-  const [searchFn, { data, loading, called, fetchMore, error }] =
-    useLazyReferences();
+  const [searchFn, { data, loading, called, fetchMore }] = useLazyReferences();
   const [fetchReference] = useLazyReference();
 
   const [search, setSearch] = useState("");
@@ -90,6 +89,7 @@ export const ReferenceInput: React.FC<IProps> = ({
     };
 
     if (referenceId) {
+      console.log(referenceId);
       fetchData(referenceId);
     }
   }, [referenceId]);
@@ -107,7 +107,8 @@ export const ReferenceInput: React.FC<IProps> = ({
         value={search}
       />
 
-      {((isOpened && search !== "") || (isOpened && categoryId)) &&
+      {((isOpened && search !== "") ||
+        (isOpened && categoryId && search !== "")) &&
         !hasBeenSelected && (
           <>
             <label className="text-sm font-bold">Résultats</label>

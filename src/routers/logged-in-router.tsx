@@ -38,6 +38,8 @@ import { PermissionsRouter } from "../modules/permissions/permissions.router";
 import { UploadsRouter } from "../modules/uploads/uploads.router";
 import { UploadCategoriesRouter } from "../modules/upload-categories/upload-categories.router";
 import { useMyUserPermissions } from "../modules/permissions/hooks";
+import { TraductionsRouter } from "../modules/traductions/traductions.router";
+import { BillingRemindersRouter } from "../modules/billing-reminders/billing-reminders.router";
 
 export const LoggedInRouter = () => {
   const { data, loading, error } = useMe();
@@ -94,6 +96,8 @@ export const LoggedInRouter = () => {
           {PermissionsRouter}
           {UploadsRouter}
           {UploadCategoriesRouter}
+          {TraductionsRouter}
+          {BillingRemindersRouter}
           <Route
             path="/test"
             element={

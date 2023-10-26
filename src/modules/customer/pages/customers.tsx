@@ -5,6 +5,8 @@ import { EmptyList, Loading } from "../../../components";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { parseSearchParams } from "../../../helpers/clean-object";
+import { CreateBenefitButton } from "../../benefits/buttons";
+import { CreateCustomerButton } from "../buttons";
 
 import { SearchCustomerInput } from "../components";
 import { useLazyCustomers } from "../hooks";
@@ -88,23 +90,18 @@ export const Customers = () => {
 
   return (
     <>
-      <Header
-        title="Clients"
-        subtitle="Liste des Clients"
-        buttons={[
-          {
-            actionText: "Nouveau Client",
-            bgColor: "",
-            textColor: "white",
-            link: "/customer/create",
-            icon: <SendIcon />,
-          },
-        ]}
-      />
+      <Header title="Clients" subtitle="Liste des Clients" />
 
       <div className="main-container">
+        <div className="flex">
+          <CreateCustomerButton />
+        </div>
+
         <SearchCustomerInput {...parseSearchParams(searchParams)} />
 
+        <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
+          {data?.customers?.total} resultats
+        </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}
         </div>
