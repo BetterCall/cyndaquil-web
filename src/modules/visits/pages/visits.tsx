@@ -102,7 +102,7 @@ export const Visits: React.FC = () => {
         </div>
         <SearchVisitsInput {...parseSearchParams(searchParams)} />
         <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
-          {/* {data?.visits?.total} resultats */}
+          {data?.visits?.total} resultats
         </div>
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">
           {renderList()}

@@ -25,6 +25,7 @@ export interface BenefitsQuery_benefits_results {
 
 export interface BenefitsQuery_benefits {
   __typename: "BenefitsOutput";
+  total: number | null;
   results: BenefitsQuery_benefits_results[] | null;
 }
 

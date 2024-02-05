@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useBenefits } from "../hooks";
 
 interface ISelectBenefitInput {
+  onSelect?: any;
   setValue: any;
   categoryId?: number;
   error?: boolean;
@@ -10,6 +11,7 @@ interface ISelectBenefitInput {
 }
 
 export const SelectBenefit: React.FC<ISelectBenefitInput> = ({
+  onSelect = null,
   setValue,
   categoryId = null,
   error,
@@ -49,7 +51,22 @@ export const SelectBenefit: React.FC<ISelectBenefitInput> = ({
             // @ts-ignore
             value == -1 ? " border-red-500" : "border-blue-500"
           } `}
-          onChange={(e) => setValue(e)}
+          onChange={(e) => {
+            setValue(e);
+
+            // find in data?.priceRules?.results the rule with id e.target.value
+            // and set it in the state
+            let index = data?.benefits?.results?.findIndex(
+              (rule: any) => rule.id == e.target.value
+            );
+            if (index !== undefined && index !== -1) {
+              onSelect(
+                data?.benefits?.results ? data?.benefits?.results[index] : null
+              );
+            } else {
+              onSelect(null);
+            }
+          }}
         >
           <option value={-1}>Type de Prestation</option>
           {data?.benefits?.results?.map((benefit: any) => (

@@ -57,6 +57,7 @@ export const BENEFITS = gql`
 
     query BenefitsQuery( $where  : BenefitFiltersInput! ) {
         benefits ( where: $where ) {
+            total
             results {
                 id
                 name 

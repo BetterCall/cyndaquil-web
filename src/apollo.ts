@@ -17,7 +17,7 @@ export const adminTokenVar = makeVar("");
 
 // export const url = "http://192.168.1.56:5000"
 //export const url = "http://localhost:5000"
-export const url = "http://192.168.1.196:5000"
+export const url = "http://192.168.1.120:5000"
 export const uri = url + "/graphql"
 
 const httpLink = createHttpLink({

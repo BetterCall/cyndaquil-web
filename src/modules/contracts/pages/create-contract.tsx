@@ -8,6 +8,7 @@ import { CardHeader } from "../../../components/cards";
 import { Header } from "../../../components/header";
 import { SendIcon } from "../../../components/icons";
 import { parseSearchParams } from "../../../helpers/clean-object";
+import { PriceRuleType } from "../../../__generated__/globalTypes";
 import { SelectBenefit } from "../../benefits/components";
 import { CustomerInput } from "../../customer/components";
 import { useLazyEmplacements } from "../../emplacements/hooks";
@@ -151,12 +152,7 @@ export const CreateContract = () => {
 
   const renderRows = () => {
     if (!siteId) {
-      return (
-        <div className="card mb-2">
-          <CardHeader title="Categorie" />
-          <EmptyList text="Selectionnez un site" />
-        </div>
-      );
+      return null;
     }
     return Object.keys(rows).map((key) => {
       if (
@@ -202,8 +198,21 @@ export const CreateContract = () => {
                     <SelectBenefit
                       error={false}
                       categoryId={rows[key].categoryId || -1}
+                      onSelect={(benefit) => {
+                        if (!benefit) {
+                          rows[key].price = 0;
+                        } else {
+                          rows[key].price = benefit?.price;
+                          forceUpdate();
+                        }
+                      }}
                       setValue={(e) => {
                         rows[key].benefitId = parseInt(e.target.value);
+                        if (rows[key].benefitId === -1) {
+                          rows[key].price = 0;
+                          forceUpdate();
+                          return;
+                        }
                         forceUpdate();
                       }}
                     />
@@ -227,10 +236,21 @@ export const CreateContract = () => {
                   <div style={{ width: "50%" }} className="w-1/2">
                     <SelectPrice
                       error={false}
-                      categoryId={parseInt(rows[key].categoryId + "")}
+                      // equipmentCategoryId={parseInt(rows[key].categoryId + "")}
                       benefitId={rows[key].benefitId}
                       setValue={(e) => {
                         const newRows = rows;
+
+                        // setRows([...newRows]);
+                      }}
+                      onSelect={(rule) => {
+                        // rows[key].price = price;
+                        console.log(rule);
+                        if (rule?.type == PriceRuleType.Fixed) {
+                          rows[key].price = rule?.amount;
+                        }
+                        forceUpdate();
+
                         // setRows([...newRows]);
                       }}
                     />
@@ -242,7 +262,7 @@ export const CreateContract = () => {
                     type={"number"}
                     style={{ width: "50%" }}
                     className="input w-1/2 text-right"
-                    defaultValue={rows[key].price}
+                    value={rows[key].price}
                     onChange={(e) => {
                       rows[key].price = parseFloat(e.target.value);
                       forceUpdate();
@@ -311,14 +331,13 @@ export const CreateContract = () => {
             </div>
           </div>
         </div>
-        <section className="section ">
+        <section className="section mt-2 ">
           <div className="element">{renderRows()}</div>
-          <div className="right sticky top-0 z-50 ">
-            <div className="card mb-2">
-              <CardHeader title="Emplacements" />
-              {!siteId ? (
-                <EmptyList text="Selectionnez un site" />
-              ) : (
+          {siteId ? (
+            <div className="right sticky top-0 z-50 ">
+              <div className="card mb-2">
+                <CardHeader title="Emplacements" />
+
                 <table className="table-auto w-full">
                   <thead>
                     <tr className="text-xs text-gray-500 text-left">
@@ -383,16 +402,16 @@ export const CreateContract = () => {
                     })}
                   </tbody>
                 </table>
-              )}
+              </div>
             </div>
-          </div>
+          ) : null}
         </section>
 
         <Button
           onClick={generate}
           canClick={true}
           loading={loading}
-          actionText={"Générer le contrat"}
+          actionText={"Générer la proposition"}
         />
       </div>
 

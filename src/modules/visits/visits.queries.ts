@@ -48,7 +48,8 @@ export const VISITS = gql`
         visits( limit : $limit , offset : $offset, where : $where  ) {
             hasMore ,
             ok, 
-            error, 
+            error,
+            total, 
             results {
                 ...VisitPart
 

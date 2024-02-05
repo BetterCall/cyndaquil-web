@@ -101,6 +101,7 @@ export enum PaymentType {
 }
 
 export enum PriceRuleType {
+  Fixed = "Fixed",
   Percent = "Percent",
 }
 

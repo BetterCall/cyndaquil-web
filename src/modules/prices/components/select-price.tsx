@@ -2,23 +2,42 @@ import React, { useEffect } from "react";
 import { useLazyPrices } from "../hooks";
 
 interface ISelectPriceInput {
+  onSelect?: any;
   setValue: any;
   error?: boolean;
   value?: any;
   customerId?: number;
   benefitId?: number;
-  categoryId?: number;
+  equipmentCategoryId?: number;
+  customerCategoryId?: number;
 }
 
 export const SelectPrice: React.FC<ISelectPriceInput> = ({
+  onSelect,
   setValue,
   error,
   value,
   customerId,
   benefitId,
-  categoryId,
+  equipmentCategoryId,
+  customerCategoryId,
 }) => {
-  const [searchFn, { data }] = useLazyPrices();
+  const [searchFn, { data, error: ee }] = useLazyPrices();
+  console.log({
+    customerId,
+    benefitId,
+    equipmentCategoryId,
+    customerCategoryId,
+  });
+  console.log({
+    data,
+    where: {
+      ...(customerId && { customerId }),
+      ...(benefitId && benefitId !== -1 && { benefitId }),
+      ...(equipmentCategoryId && { equipmentCategoryId }),
+      ...(customerCategoryId && { customerCategoryId }),
+    },
+  });
 
   useEffect(() => {
     searchFn({
@@ -26,11 +45,12 @@ export const SelectPrice: React.FC<ISelectPriceInput> = ({
         where: {
           ...(customerId && { customerId }),
           ...(benefitId && benefitId !== -1 && { benefitId }),
-          ...(categoryId && { categoryId }),
+          ...(equipmentCategoryId && { equipmentCategoryId }),
+          ...(customerCategoryId && { customerCategoryId }),
         },
       },
     });
-  }, [customerId, benefitId, categoryId]);
+  }, [customerId, benefitId, equipmentCategoryId, customerCategoryId]);
 
   return (
     <div className="w-full">
@@ -53,7 +73,23 @@ export const SelectPrice: React.FC<ISelectPriceInput> = ({
           className={`input appearance-none w-full  ${
             error && " border-red-500"
           } `}
-          onChange={(e) => setValue(e)}
+          onChange={(e) => {
+            setValue(e);
+            // find in data?.priceRules?.results the rule with id e.target.value
+            // and set it in the state
+            let index = data?.priceRules?.results?.findIndex(
+              (rule: any) => rule.id == e.target.value
+            );
+            if (index !== undefined && index !== -1) {
+              onSelect(
+                data?.priceRules?.results
+                  ? data?.priceRules?.results[index]
+                  : null
+              );
+            } else {
+              onSelect(null);
+            }
+          }}
         >
           <option value={-1}>-</option>
           {data?.priceRules?.results?.map((rule: any) => (
@@ -62,7 +98,8 @@ export const SelectPrice: React.FC<ISelectPriceInput> = ({
               key={`rule-${rule.id}`}
               selected={rule.id == value}
             >
-              {rule.amount} {rule.type === "PERCENT" ? "%" : "€"}
+              {rule.description} {rule.amount}{" "}
+              {rule.type === "PERCENT" ? "%" : "€"}
             </option>
           ))}
         </select>

@@ -34,7 +34,7 @@ export const Benefits = () => {
         </div>
 
         <div className="p-4 mb-1 bg-white shadow rounded overflow-x-auto">
-          {/* {data?.benefits?.total} resultats */}
+          {data?.benefits?.total} resultats
         </div>
 
         <div className="p-4 mb-6 bg-white shadow rounded overflow-x-auto">

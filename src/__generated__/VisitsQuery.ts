@@ -46,6 +46,7 @@ export interface VisitsQuery_visits {
   hasMore: boolean | null;
   ok: boolean | null;
   error: string | null;
+  total: number | null;
   results: VisitsQuery_visits_results[] | null;
 }
 

@@ -16,6 +16,7 @@ import { useSite } from "../hooks";
 import { Button, EmptyList, Loading } from "../../../components";
 import { FilesPreview } from "../../../components/files-preview";
 import { CreateUploadModal } from "../../uploads/modals";
+import { CreateWorkOrder } from "../../work-orders/pages";
 
 type ISiteParams = {
   id: string;
@@ -406,10 +407,12 @@ export const Site: React.FC = () => {
 
               <div className="grid -mx-2 mt-2   justify-items-center ">
                 <div className="w-full md:w-1/2 px-2">
-                  <CreateEmplacement
-                    onCompleted={refetch}
-                    defaultValues={{ siteId: +id! }}
-                  />
+                  <div
+                    className="btn"
+                    onClick={() => navigate(`/work-order/create?siteId=${id}`)}
+                  >
+                    Nouveau BI
+                  </div>
                 </div>
               </div>
             </div>
